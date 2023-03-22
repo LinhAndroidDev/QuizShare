@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.adapter.ViewPagerAdapter
 import com.example.appthitracnghiem.connectivity.CheckConnect
+import com.example.appthitracnghiem.ui.intro.adapter.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_intro.*
 
 @Suppress("DEPRECATION")
