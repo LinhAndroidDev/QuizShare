@@ -3,7 +3,6 @@ package com.example.appthitracnghiem.ui.login
 import android.app.ProgressDialog
 import android.graphics.Typeface
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.PasswordTransformationMethod
@@ -19,7 +18,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.base.api.ApiService
-import com.example.appthitracnghiem.model.Email
+import com.example.appthitracnghiem.utils.Email
 import com.example.appthitracnghiem.model.LoginSuccessful
 import com.example.appthitracnghiem.model.ViewModelGeneral
 import com.example.appthitracnghiem.ui.base.BaseFragment
@@ -55,11 +54,11 @@ class Fragment_Register : BaseFragment() {
             register()
         }
 
-        setText()
-
         loginNow.setOnClickListener {
             activity?.finish()
         }
+
+        setText()
 
         hidePassword()
     }

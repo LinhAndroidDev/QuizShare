@@ -29,17 +29,17 @@ class FragmentIntroLogin : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         loginIntro.setOnClickListener {
-            var intent : Intent = Intent(requireActivity(), LoginActivity::class.java)
+            var intent: Intent = Intent(requireActivity(), LoginActivity::class.java)
             startActivity(intent)
         }
 
         registerIntro.setOnClickListener {
-            var intent : Intent = Intent(requireActivity(), RegisterActivity::class.java)
+            var intent: Intent = Intent(requireActivity(), RegisterActivity::class.java)
             startActivity(intent)
         }
 
         toDoLate.setOnClickListener {
-            var intent : Intent = Intent(requireActivity(), HomeActivity::class.java)
+            var intent: Intent = Intent(requireActivity(), HomeActivity::class.java)
             startActivity(intent)
         }
 

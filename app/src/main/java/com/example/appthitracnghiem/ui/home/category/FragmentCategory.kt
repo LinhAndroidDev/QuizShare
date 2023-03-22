@@ -32,7 +32,7 @@ class FragmentCategory : BaseFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    lateinit var viewModelGeneral : ViewModelGeneral
+    lateinit var viewModelGeneral: ViewModelGeneral
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,7 +42,7 @@ class FragmentCategory : BaseFragment() {
         }
 
         searchCategory.setOnClickListener {
-            var intent : Intent = Intent(requireActivity(),SearchSubject::class.java)
+            var intent: Intent = Intent(requireActivity(), SearchSubject::class.java)
             startActivity(intent)
         }
 
@@ -50,8 +50,8 @@ class FragmentCategory : BaseFragment() {
 
         viewModelGeneral.getListSubject()
 
-    var gridLayoutManager : GridLayoutManager = GridLayoutManager(requireActivity(),2)
-    recycleListSubject.layoutManager = gridLayoutManager
+        var gridLayoutManager: GridLayoutManager = GridLayoutManager(requireActivity(), 2)
+        recycleListSubject.layoutManager = gridLayoutManager
 
         getData()
 
@@ -62,25 +62,28 @@ class FragmentCategory : BaseFragment() {
     }
 
     private fun setText() {
-        val semibold : Typeface? = ResourcesCompat.getFont(requireActivity(),R.font.svn_gilroy_semibold)
+        val semibold: Typeface? =
+            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         textSubject.typeface = semibold
     }
 
     private fun getLoading() {
-        viewModelGeneral.loadingSubjectLive.observe(requireActivity(), Observer { loadingSubjectLive ->
-            if(loadingSubjectLive != null && loadingSubject != null) {
-                if (loadingSubjectLive == false) {
-                    loadingSubject.visibility = View.INVISIBLE
-                } else if (loadingSubjectLive == true) {
-                    loadingSubject.visibility = View.VISIBLE
+        viewModelGeneral.loadingSubjectLive.observe(
+            requireActivity(),
+            Observer { loadingSubjectLive ->
+                if (loadingSubjectLive != null && loadingSubject != null) {
+                    if (loadingSubjectLive == false) {
+                        loadingSubject.visibility = View.INVISIBLE
+                    } else if (loadingSubjectLive == true) {
+                        loadingSubject.visibility = View.VISIBLE
+                    }
                 }
-            }
-        })
+            })
     }
 
     private fun getData() {
-        viewModelGeneral.listSubjectLive.observe(requireActivity(), Observer { listSubject->
-            if(listSubject != null && recycleListSubject != null) {
+        viewModelGeneral.listSubjectLive.observe(requireActivity(), Observer { listSubject ->
+            if (listSubject != null && recycleListSubject != null) {
                 var subjectAdapter: SubjectAdapter = SubjectAdapter(listSubject, requireActivity())
                 recycleListSubject.adapter = subjectAdapter
                 subjectAdapter.notifyDataSetChanged()

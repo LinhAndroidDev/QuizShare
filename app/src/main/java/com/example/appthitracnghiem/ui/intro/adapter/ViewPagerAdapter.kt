@@ -9,7 +9,7 @@ import com.example.appthitracnghiem.ui.intro.FragmentIntroLogin
 import com.example.appthitracnghiem.ui.intro.FragmentIntroSecond
 import com.example.appthitracnghiem.ui.intro.FragmentIntroThird
 
-enum class Page(val fragment : Class<out Fragment>){
+enum class Page(val fragment: Class<out Fragment>) {
     FragmentFirst(FragmentIntroFirst::class.java),
     FragmentSecond(FragmentIntroSecond::class.java),
     FragmentThird(FragmentIntroThird::class.java)
@@ -19,7 +19,7 @@ enum class Page(val fragment : Class<out Fragment>){
 class ViewPagerAdapter(fm: FragmentManager, behavior: Int) :
     FragmentStatePagerAdapter(fm, behavior) {
 
-    private var page : MutableList<Page> = mutableListOf<Page>().apply {
+    private var page: MutableList<Page> = mutableListOf<Page>().apply {
         addAll(Page.values())
     }
 

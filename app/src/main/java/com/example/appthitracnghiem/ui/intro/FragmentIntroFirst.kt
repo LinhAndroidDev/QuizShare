@@ -29,7 +29,8 @@ class FragmentIntroFirst : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val semibold : Typeface? = ResourcesCompat.getFont(requireActivity(),R.font.svn_gilroy_semibold)
+        val semibold: Typeface? =
+            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         textIntroFirst.typeface = semibold
     }
 

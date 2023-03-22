@@ -42,7 +42,7 @@ class FragmentSetting : BaseFragment() {
 
         setText()
 
-        updateInfo.setOnClickListener{
+        updateInfo.setOnClickListener {
             replaceFragment(FragmentUpdateInfor())
         }
 
@@ -57,11 +57,16 @@ class FragmentSetting : BaseFragment() {
         setBottomShare()
     }
 
-    private fun replaceFragment(fm : Fragment){
+    private fun replaceFragment(fm: Fragment) {
         val fragment = requireActivity().supportFragmentManager.beginTransaction()
         fragment.addToBackStack(null)
-        fragment.setCustomAnimations(R.anim.animation_scale_enter_right,R.anim.animation_scale_exit_left,R.anim.animation_scale_enter_left,R.anim.animation_scale_exit_right)
-        fragment.replace(R.id.replaceFragmentSetting,fm).commit()
+        fragment.setCustomAnimations(
+            R.anim.animation_scale_enter_right,
+            R.anim.animation_scale_exit_left,
+            R.anim.animation_scale_enter_left,
+            R.anim.animation_scale_exit_right
+        )
+        fragment.replace(R.id.replaceFragmentSetting, fm).commit()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,7 +91,8 @@ class FragmentSetting : BaseFragment() {
 
     /** set font*/
     private fun setText() {
-        val semibold : Typeface? = ResourcesCompat.getFont(requireActivity(),R.font.svn_gilroy_semibold)
+        val semibold: Typeface? =
+            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         txtSetting.typeface = semibold
     }
 
@@ -98,10 +104,10 @@ class FragmentSetting : BaseFragment() {
         layoutLogout.isEnabled = false
 
         logout.setOnClickListener {
-            if(bottomShareBehavior.state != BottomSheetBehavior.STATE_EXPANDED){
+            if (bottomShareBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
                 bottomShareBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                 layoutLogoutCover.visibility = View.VISIBLE
-            }else{
+            } else {
                 bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 layoutLogoutCover.visibility = View.GONE
             }
@@ -114,7 +120,7 @@ class FragmentSetting : BaseFragment() {
         }
 
         logoutNow.setOnClickListener {
-            val intent : Intent = Intent(requireActivity(),LoginActivity::class.java)
+            val intent: Intent = Intent(requireActivity(), LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }

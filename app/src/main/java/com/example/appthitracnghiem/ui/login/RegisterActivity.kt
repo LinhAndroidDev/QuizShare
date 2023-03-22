@@ -13,29 +13,29 @@ class RegisterActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        if(CheckConnect.haveNetworkConnected(this@RegisterActivity)){
+        if (CheckConnect.haveNetworkConnected(this@RegisterActivity)) {
             replaceFragmentRegister(Fragment_Register())
-        }else{
-            CheckConnect.showToastShort(this@RegisterActivity,"Bạn đang ngoại tuyến")
+        } else {
+            CheckConnect.showToastShort(this@RegisterActivity, "Bạn đang ngoại tuyến")
         }
     }
 
-    fun replaceFragmentRegister(fragment : Fragment){
-        var fm : FragmentTransaction = supportFragmentManager.beginTransaction()
+    fun replaceFragmentRegister(fragment: Fragment) {
+        var fm: FragmentTransaction = supportFragmentManager.beginTransaction()
         fm.addToBackStack("Fragment_Register")
-        fm.replace(R.id.registerContainerID,fragment).commit()
+        fm.replace(R.id.registerContainerID, fragment).commit()
     }
 
     override fun onBackPressed() {
         var fragment = supportFragmentManager.findFragmentById(R.id.registerContainerID)
 
-        if(fragment != null && fragment is BaseFragment){
-            if(fragment.onFragmentBack()){
+        if (fragment != null && fragment is BaseFragment) {
+            if (fragment.onFragmentBack()) {
                 finish()
-            }else{
+            } else {
                 super.onBackPressed()
             }
-        }else{
+        } else {
             super.onBackPressed()
         }
     }

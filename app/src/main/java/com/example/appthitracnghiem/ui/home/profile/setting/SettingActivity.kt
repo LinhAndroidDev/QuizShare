@@ -15,22 +15,22 @@ class SettingActivity : BaseActivity() {
     }
 
     /** Replace Fragment*/
-    private fun replaceFragment(fm : Fragment){
+    private fun replaceFragment(fm: Fragment) {
         val fragment = supportFragmentManager.beginTransaction()
         fragment.addToBackStack(null)
-        fragment.replace(R.id.replaceFragmentSetting,fm).commit()
+        fragment.replace(R.id.replaceFragmentSetting, fm).commit()
     }
 
     /** Click back*/
     override fun onBackPressed() {
         val fm = supportFragmentManager.findFragmentById(R.id.replaceFragmentSetting)
-        if(fm != null && fm is BaseFragment){
-            if(fm.onFragmentBack()){
+        if (fm != null && fm is BaseFragment) {
+            if (fm.onFragmentBack()) {
                 finish()
-            } else{
+            } else {
                 super.onBackPressed()
             }
-        } else{
+        } else {
             super.onBackPressed()
         }
     }

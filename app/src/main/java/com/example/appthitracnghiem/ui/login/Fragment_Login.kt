@@ -23,7 +23,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.base.api.ApiService
-import com.example.appthitracnghiem.model.Email
+import com.example.appthitracnghiem.utils.Email
 import com.example.appthitracnghiem.model.LoginSuccessful
 import com.example.appthitracnghiem.model.ViewModelGeneral
 import com.example.appthitracnghiem.ui.base.BaseFragment
@@ -48,12 +48,12 @@ class Fragment_Login : BaseFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    lateinit var viewModelGeneral : ViewModelGeneral
+    lateinit var viewModelGeneral: ViewModelGeneral
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
-    var checkSave : Boolean = false
-    lateinit var strEmail : String
-    lateinit var strPassword : String
+    var checkSave: Boolean = false
+    lateinit var strEmail: String
+    lateinit var strPassword: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -70,11 +70,17 @@ class Fragment_Login : BaseFragment() {
         }
 
         forgetPassword.setOnClickListener {
-            val fragmentForgetpassword : Fragment_ForgetPassword = Fragment_ForgetPassword()
-            val fm : FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-            fm.setCustomAnimations(R.anim.anim_translate_enter_right,R.anim.anim_translate_exit_left,R.anim.anim_translate_enter_left,R.anim.anim_translate_exit_right)
+            val fragmentForgetpassword: Fragment_ForgetPassword = Fragment_ForgetPassword()
+            val fm: FragmentTransaction =
+                requireActivity().supportFragmentManager.beginTransaction()
+            fm.setCustomAnimations(
+                R.anim.anim_translate_enter_right,
+                R.anim.anim_translate_exit_left,
+                R.anim.anim_translate_enter_left,
+                R.anim.anim_translate_exit_right
+            )
             fm.addToBackStack("Fragment_ForgetPassword")
-            fm.replace(R.id.loginContainerID,fragmentForgetpassword).commit()
+            fm.replace(R.id.loginContainerID, fragmentForgetpassword).commit()
         }
 
         clickLogin()
@@ -86,7 +92,8 @@ class Fragment_Login : BaseFragment() {
     private fun setText() {
         forgetPassword.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
-        val semibold : Typeface? = ResourcesCompat.getFont(requireActivity(),R.font.svn_gilroy_semibold)
+        val semibold: Typeface? =
+            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         textGoogle.typeface = semibold
         textFacebook.typeface = semibold
         textApple.typeface = semibold
@@ -103,26 +110,30 @@ class Fragment_Login : BaseFragment() {
             strEmail = edtEnterEmailLogin.text.toString().trim()
             strPassword = passwordLogin.text.toString().trim()
 
-            if(strEmail.isEmpty() || strPassword.isEmpty()){
-                setNote(R.string.txt_notification_login,R.color.color_green)
-            }else{
-                val email : Email = Email(strEmail,strPassword)
+            if (strEmail.isEmpty() || strPassword.isEmpty()) {
+                setNote(R.string.txt_notification_login, R.color.color_green)
+            } else {
+                val email: Email = Email(strEmail, strPassword)
 
-                if(!email.isValidEmail()){
-                    setNote(R.string.txt_warning_login,R.color.color_red)
-                }else{
-                    if(!email.isPassword()){
-                        setNote(R.string.txt_warning_password,R.color.color_red)
-                    }else{
+                if (!email.isValidEmail()) {
+                    setNote(R.string.txt_warning_login, R.color.color_red)
+                } else {
+                    if (!email.isPassword()) {
+                        setNote(R.string.txt_warning_password, R.color.color_red)
+                    } else {
                         warningLogin.visibility = View.GONE
-                        val progressDialog : ProgressDialog = ProgressDialog(requireActivity())
+                        val progressDialog: ProgressDialog = ProgressDialog(requireActivity())
                         progressDialog.setMessage("Please wait ...")
                         progressDialog.show()
 
-                        val requestBodyStrEmail : RequestBody = RequestBody.create("multipart/from-data".toMediaTypeOrNull(), strEmail)
-                        val requestBodyStrPassword : RequestBody = RequestBody.create("multipart/from-data".toMediaTypeOrNull(), strPassword)
+                        val requestBodyStrEmail: RequestBody =
+                            RequestBody.create("multipart/from-data".toMediaTypeOrNull(), strEmail)
+                        val requestBodyStrPassword: RequestBody = RequestBody.create(
+                            "multipart/from-data".toMediaTypeOrNull(),
+                            strPassword
+                        )
 
-                        val countDownTimer : CountDownTimer = object : CountDownTimer(3000,3000){
+                        val countDownTimer: CountDownTimer = object : CountDownTimer(3000, 3000) {
                             override fun onTick(millisUntilFinished: Long) {
 
                             }
@@ -131,32 +142,49 @@ class Fragment_Login : BaseFragment() {
                                 progressDialog.dismiss()
 
                                 viewModelGeneral.postRetrofit.create(ApiService::class.java)
-                                    .loginUser(requestBodyStrEmail,requestBodyStrPassword)
+                                    .loginUser(requestBodyStrEmail, requestBodyStrPassword)
                                     .enqueue(object : retrofit2.Callback<LoginSuccessful> {
                                         override fun onFailure(
                                             call: retrofit2.Call<LoginSuccessful>,
                                             t: Throwable,
                                         ) {
-                                            Toast.makeText(requireContext(),"Error",Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Error",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
                                         }
 
                                         override fun onResponse(
                                             call: retrofit2.Call<LoginSuccessful>,
                                             response: retrofit2.Response<LoginSuccessful>,
                                         ) {
-                                            if(response.isSuccessful){
-                                                val loginSuccessful : LoginSuccessful? = response.body()
-                                                if(loginSuccessful!!.status == 0){
-                                                    val intent : Intent = Intent(requireActivity(),HomeActivity::class.java)
-                                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                            if (response.isSuccessful) {
+                                                val loginSuccessful: LoginSuccessful? =
+                                                    response.body()
+                                                if (loginSuccessful!!.status == 0) {
+                                                    val intent: Intent = Intent(
+                                                        requireActivity(),
+                                                        HomeActivity::class.java
+                                                    )
+                                                    intent.flags =
+                                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                                     startActivity(intent)
 
-                                                    saveAccount(strEmail,strPassword);
-                                                }else{
-                                                    Toast.makeText(requireActivity(),"Email hoặc mật khẩu không chính xác",Toast.LENGTH_SHORT).show()
+                                                    saveAccount(strEmail, strPassword);
+                                                } else {
+                                                    Toast.makeText(
+                                                        requireActivity(),
+                                                        "Email hoặc mật khẩu không chính xác",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
                                                 }
-                                            }else{
-                                                Toast.makeText(requireActivity(),"Lỗi kết nối Server",Toast.LENGTH_SHORT).show()
+                                            } else {
+                                                Toast.makeText(
+                                                    requireActivity(),
+                                                    "Lỗi kết nối Server",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
                                             }
                                         }
 
@@ -168,43 +196,44 @@ class Fragment_Login : BaseFragment() {
             }
         }
 
-        google.setOnClickListener{
-            val intent : Intent = Intent()
+        google.setOnClickListener {
+            val intent: Intent = Intent()
             intent.action = Intent.ACTION_VIEW
-            intent.data = Uri.parse("https://accounts.google.com/v3/signin/identifier?dsh=S-620025444%3A1673854670857931&authuser=0&continue=http%3A%2F%2Fsupport.google.com%2Fmail%2Fanswer%2F8494%3Fhl%3Dvi%26co%3DGENIE.Platform%253DDesktop&ec=GAlAdQ&hl=vi&flowName=GlifWebSignIn&flowEntry=AddSession")
+            intent.data =
+                Uri.parse("https://accounts.google.com/v3/signin/identifier?dsh=S-620025444%3A1673854670857931&authuser=0&continue=http%3A%2F%2Fsupport.google.com%2Fmail%2Fanswer%2F8494%3Fhl%3Dvi%26co%3DGENIE.Platform%253DDesktop&ec=GAlAdQ&hl=vi&flowName=GlifWebSignIn&flowEntry=AddSession")
             startActivity(intent)
         }
 
-        facebook.setOnClickListener{
-            val intent : Intent = Intent()
+        facebook.setOnClickListener {
+            val intent: Intent = Intent()
             intent.action = Intent.ACTION_VIEW
             intent.data = Uri.parse("https://www.facebook.com")
             startActivity(intent)
         }
     }
 
-    private fun saveAccount(email : String,password : String) {
-        if(checkForgetPassword.isChecked){
-            editor.putBoolean("checkSave",true)
+    private fun saveAccount(email: String, password: String) {
+        if (checkForgetPassword.isChecked) {
+            editor.putBoolean("checkSave", true)
             editor.commit()
-            editor.putString("email",email)
+            editor.putString("email", email)
             editor.commit()
-            editor.putString("password",password)
+            editor.putString("password", password)
             editor.commit()
-        }else{
-            editor.putBoolean("checkSave",false)
+        } else {
+            editor.putBoolean("checkSave", false)
             editor.commit()
-            editor.putString("email","")
+            editor.putString("email", "")
             editor.commit()
-            editor.putString("password","")
+            editor.putString("password", "")
             editor.commit()
         }
     }
 
-    fun checkSaveAccount(){
-        checkSave = sharedPreferences.getBoolean("checkSave",false)
-        strEmail = sharedPreferences.getString("email","").toString()
-        strPassword = sharedPreferences.getString("password","").toString()
+    fun checkSaveAccount() {
+        checkSave = sharedPreferences.getBoolean("checkSave", false)
+        strEmail = sharedPreferences.getString("email", "").toString()
+        strPassword = sharedPreferences.getString("password", "").toString()
 
         edtEnterEmailLogin.setText(strEmail)
         passwordLogin.setText(strPassword)
@@ -212,17 +241,17 @@ class Fragment_Login : BaseFragment() {
     }
 
     private fun hidePassword() {
-        if(passwordLogin.transformationMethod == PasswordTransformationMethod.getInstance()) {
+        if (passwordLogin.transformationMethod == PasswordTransformationMethod.getInstance()) {
             passwordLogin.transformationMethod = null
             hidePasswordLogin.setBackgroundResource(R.drawable.icon_show_password_grey)
-        }else if(passwordLogin.transformationMethod == null){
+        } else if (passwordLogin.transformationMethod == null) {
             passwordLogin.transformationMethod = PasswordTransformationMethod.getInstance()
             hidePasswordLogin.setBackgroundResource(R.drawable.icon_hint_grey)
         }
     }
 
-    fun setNote(string : Int, color : Int){
-        val circle : Animation = AnimationUtils.loadAnimation(requireActivity(),R.anim.anim_shake)
+    fun setNote(string: Int, color: Int) {
+        val circle: Animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.anim_shake)
         warningLogin.text = getString(string)
         warningLogin.setTextColor(resources.getColor(color))
         warningLogin.visibility = View.VISIBLE

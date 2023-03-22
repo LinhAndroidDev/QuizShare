@@ -35,20 +35,21 @@ class FragmentHome : BaseFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    lateinit var viewModelGeneral : ViewModelGeneral
+    lateinit var viewModelGeneral: ViewModelGeneral
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(bottomWrap != null){
-            scrollHome.setOnTouchListener(TranslateAnimation(requireActivity(),bottomWrap))
+        if (bottomWrap != null) {
+            scrollHome.setOnTouchListener(TranslateAnimation(requireActivity(), bottomWrap))
         }
 
         viewModelGeneral = ViewModelProvider(requireActivity())[ViewModelGeneral::class.java]
         viewModelGeneral.getDataQuiz()
 
-        val linearLayoutManager : LinearLayoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
+        val linearLayoutManager: LinearLayoutManager =
+            LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         recycleListLiveQuizzes.layoutManager = linearLayoutManager
 
         getData()
@@ -59,14 +60,15 @@ class FragmentHome : BaseFragment() {
     }
 
     private fun setText() {
-        val semibold : Typeface? = ResourcesCompat.getFont(requireActivity(),R.font.svn_gilroy_semibold)
+        val semibold: Typeface? =
+            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         textHome.typeface = semibold
         textQuizHome.typeface = semibold
     }
 
     private fun getLoading() {
         viewModelGeneral.loadingQuizLive.observe(requireActivity(), Observer { loadingQuizLive ->
-            if(loadingQuizLive != null && loadingQuiz != null) {
+            if (loadingQuizLive != null && loadingQuiz != null) {
                 if (loadingQuizLive == true) {
                     loadingQuiz.visibility = View.VISIBLE
                 } else if (loadingQuizLive == false) {
@@ -79,7 +81,7 @@ class FragmentHome : BaseFragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun getData() {
         viewModelGeneral.listQuizLive.observe(requireActivity(), Observer { listQuiz ->
-            if(listQuiz != null && recycleListLiveQuizzes != null) {
+            if (listQuiz != null && recycleListLiveQuizzes != null) {
                 val adapterQuiz: QuizAdapter = QuizAdapter(listQuiz, requireActivity())
                 recycleListLiveQuizzes.adapter = adapterQuiz
                 adapterQuiz.notifyDataSetChanged()

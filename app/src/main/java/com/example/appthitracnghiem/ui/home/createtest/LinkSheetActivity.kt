@@ -22,7 +22,7 @@ class LinkSheetActivity : AppCompatActivity() {
 
     /** set font*/
     private fun setText() {
-        val semibold : Typeface? = ResourcesCompat.getFont(this,R.font.svn_gilroy_semibold)
+        val semibold: Typeface? = ResourcesCompat.getFont(this, R.font.svn_gilroy_semibold)
         txtGoogleSheet.typeface = semibold
     }
 }

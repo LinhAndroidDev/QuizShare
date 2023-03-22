@@ -39,21 +39,22 @@ class FragmentSettingNewPassword : BaseFragment() {
         setText()
 
         showUpdatePassWord.setOnClickListener {
-            if(passwordUpdate.transformationMethod == PasswordTransformationMethod.getInstance()) {
+            if (passwordUpdate.transformationMethod == PasswordTransformationMethod.getInstance()) {
                 passwordUpdate.transformationMethod = null
                 showUpdatePassWord.setImageResource(R.drawable.icon_show_password_grey)
-            }else if(passwordUpdate.transformationMethod == null){
+            } else if (passwordUpdate.transformationMethod == null) {
                 passwordUpdate.transformationMethod = PasswordTransformationMethod.getInstance()
                 showUpdatePassWord.setImageResource(R.drawable.icon_hint_grey)
             }
         }
 
         showRepeatUpdatePassWord.setOnClickListener {
-            if(repeatPasswordUpdate.transformationMethod == PasswordTransformationMethod.getInstance()) {
+            if (repeatPasswordUpdate.transformationMethod == PasswordTransformationMethod.getInstance()) {
                 repeatPasswordUpdate.transformationMethod = null
                 showRepeatUpdatePassWord.setImageResource(R.drawable.icon_show_password_grey)
-            }else if(repeatPasswordUpdate.transformationMethod == null){
-                repeatPasswordUpdate.transformationMethod = PasswordTransformationMethod.getInstance()
+            } else if (repeatPasswordUpdate.transformationMethod == null) {
+                repeatPasswordUpdate.transformationMethod =
+                    PasswordTransformationMethod.getInstance()
                 showRepeatUpdatePassWord.setImageResource(R.drawable.icon_hint_grey)
             }
         }
@@ -61,7 +62,8 @@ class FragmentSettingNewPassword : BaseFragment() {
 
     /** set font*/
     private fun setText() {
-        val semibold : Typeface? = ResourcesCompat.getFont(requireActivity(),R.font.svn_gilroy_semibold)
+        val semibold: Typeface? =
+            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         txtMatKhauMoi.typeface = semibold
     }
 

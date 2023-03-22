@@ -8,8 +8,9 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.example.appthitracnghiem.R
 
-class TranslateAnimation(context: Context,viewAnimation: View) : View.OnTouchListener{
-    var gestureDetector : GestureDetector = GestureDetector(context,
+class TranslateAnimation(context: Context, viewAnimation: View) : View.OnTouchListener {
+    var gestureDetector: GestureDetector = GestureDetector(
+        context,
         SimpleGestureDetector(viewAnimation)
     )
 
@@ -18,8 +19,8 @@ class TranslateAnimation(context: Context,viewAnimation: View) : View.OnTouchLis
     }
 
     class SimpleGestureDetector(viewAnimation: View) : GestureDetector.SimpleOnGestureListener() {
-        var viewAnimation : View = viewAnimation
-        var isFinishAnimation : Boolean = true
+        var viewAnimation: View = viewAnimation
+        var isFinishAnimation: Boolean = true
 
         override fun onScroll(
             e1: MotionEvent,
@@ -27,21 +28,22 @@ class TranslateAnimation(context: Context,viewAnimation: View) : View.OnTouchLis
             distanceX: Float,
             distanceY: Float
         ): Boolean {
-            if(distanceY > 0){
+            if (distanceY > 0) {
                 hiddenView()
-            }else{
+            } else {
                 showView()
             }
             return super.onScroll(e1, e2, distanceX, distanceY)
         }
 
         private fun showView() {
-            if(viewAnimation == null || viewAnimation.visibility == View.VISIBLE){
+            if (viewAnimation == null || viewAnimation.visibility == View.VISIBLE) {
                 return
             }
 
-            val animationUp : Animation = AnimationUtils.loadAnimation(viewAnimation.context, R.anim.move_up)
-            animationUp.setAnimationListener(object : Animation.AnimationListener{
+            val animationUp: Animation =
+                AnimationUtils.loadAnimation(viewAnimation.context, R.anim.move_up)
+            animationUp.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationStart(p0: Animation?) {
                     viewAnimation.visibility = View.VISIBLE
                     isFinishAnimation = false
@@ -57,18 +59,19 @@ class TranslateAnimation(context: Context,viewAnimation: View) : View.OnTouchLis
 
             })
 
-            if(isFinishAnimation){
+            if (isFinishAnimation) {
                 viewAnimation.startAnimation(animationUp)
             }
         }
 
         private fun hiddenView() {
-            if(viewAnimation == null || viewAnimation.visibility == View.GONE){
+            if (viewAnimation == null || viewAnimation.visibility == View.GONE) {
                 return
             }
 
-            val animationDown : Animation = AnimationUtils.loadAnimation(viewAnimation.context, R.anim.move_down)
-            animationDown.setAnimationListener(object : Animation.AnimationListener{
+            val animationDown: Animation =
+                AnimationUtils.loadAnimation(viewAnimation.context, R.anim.move_down)
+            animationDown.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationStart(p0: Animation?) {
                     viewAnimation.visibility = View.VISIBLE
                     isFinishAnimation = false
@@ -85,7 +88,7 @@ class TranslateAnimation(context: Context,viewAnimation: View) : View.OnTouchLis
 
             })
 
-            if(isFinishAnimation){
+            if (isFinishAnimation) {
                 viewAnimation.startAnimation(animationDown)
             }
         }

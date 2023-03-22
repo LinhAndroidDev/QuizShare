@@ -11,20 +11,22 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.Subject
 import com.squareup.picasso.Picasso
 
-class SubjectAdapter(private val listSubject : List<Subject>, val context: Context) : RecyclerView.Adapter<SubjectAdapter.SubjectViewHolder>() {
+class SubjectAdapter(private val listSubject: List<Subject>, val context: Context) :
+    RecyclerView.Adapter<SubjectAdapter.SubjectViewHolder>() {
     class SubjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var imageSubject : ImageView = itemView.findViewById(R.id.imageSubject)
-        var nameSubject : TextView = itemView.findViewById(R.id.nameSubject)
-        var detailSubject : TextView = itemView.findViewById(R.id.detailSubject)
+        var imageSubject: ImageView = itemView.findViewById(R.id.imageSubject)
+        var nameSubject: TextView = itemView.findViewById(R.id.nameSubject)
+        var detailSubject: TextView = itemView.findViewById(R.id.detailSubject)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
-        var itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_subject,parent,false)
+        var itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.layout_subject, parent, false)
         return SubjectViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
-        var subject : Subject = listSubject[position]
+        var subject: Subject = listSubject[position]
         Picasso.get().load(subject.imageSubject)
             .placeholder(R.drawable.loadimage)
             .error(R.drawable.errorimage)

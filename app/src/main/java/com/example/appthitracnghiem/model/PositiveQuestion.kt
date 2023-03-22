@@ -1,3 +1,3 @@
 package com.example.appthitracnghiem.model
 
-data class PositiveQuestion(val number : Int)
+data class PositiveQuestion(val number: Int)

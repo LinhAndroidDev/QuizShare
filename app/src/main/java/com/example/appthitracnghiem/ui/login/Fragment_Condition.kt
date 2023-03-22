@@ -29,9 +29,6 @@ class Fragment_Condition : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         backLogin.setOnClickListener {
-//            var intent : Intent = Intent(activity,LoginActivity::class.java)
-//            startActivity(intent)
-//            activity?.finish()
             activity?.finish()
         }
     }

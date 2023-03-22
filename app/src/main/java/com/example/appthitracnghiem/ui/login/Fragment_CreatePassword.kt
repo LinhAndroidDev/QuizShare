@@ -27,23 +27,29 @@ class Fragment_CreatePassword : BaseFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    lateinit var email : String
+    lateinit var email: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val bundle : Bundle = requireArguments()
+        val bundle: Bundle = requireArguments()
         email = bundle.getString("email").toString()
 
         resetPassword.setOnClickListener {
-            val password : String = newPasswordCreate.text.toString()
-            val progressDialog : ProgressDialog = ProgressDialog(requireActivity())
+            val password: String = newPasswordCreate.text.toString()
+            val progressDialog: ProgressDialog = ProgressDialog(requireActivity())
             progressDialog.setMessage("Đang cập nhật mật khẩu")
 
-            val fragmentLogin : Fragment_Login = Fragment_Login()
-            val fm : FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-            fm.setCustomAnimations(R.anim.animation_scale_enter_right,R.anim.animation_scale_exit_left,R.anim.animation_scale_enter_left,R.anim.animation_scale_exit_right)
-            fm.replace(R.id.loginContainerID,fragmentLogin).commit()
+            val fragmentLogin: Fragment_Login = Fragment_Login()
+            val fm: FragmentTransaction =
+                requireActivity().supportFragmentManager.beginTransaction()
+            fm.setCustomAnimations(
+                R.anim.anim_translate_enter_right,
+                R.anim.anim_translate_exit_left,
+                R.anim.anim_translate_enter_left,
+                R.anim.anim_translate_exit_right
+            )
+            fm.replace(R.id.loginContainerID, fragmentLogin).commit()
         }
 
         hidePassword()
@@ -52,20 +58,20 @@ class Fragment_CreatePassword : BaseFragment() {
 
     private fun hidePassword() {
         hidePasswordCreate.setOnClickListener {
-            if(newPasswordCreate.transformationMethod == PasswordTransformationMethod.getInstance()) {
+            if (newPasswordCreate.transformationMethod == PasswordTransformationMethod.getInstance()) {
                 newPasswordCreate.transformationMethod = null
                 hidePasswordCreate.setBackgroundResource(R.drawable.icon_show_password_grey)
-            }else if(newPasswordCreate.transformationMethod == null){
+            } else if (newPasswordCreate.transformationMethod == null) {
                 newPasswordCreate.transformationMethod = PasswordTransformationMethod.getInstance()
                 hidePasswordCreate.setBackgroundResource(R.drawable.icon_hint_grey)
             }
         }
 
         hidePasswordRepeat.setOnClickListener {
-            if(newPasswordRepeat.transformationMethod == PasswordTransformationMethod.getInstance()) {
+            if (newPasswordRepeat.transformationMethod == PasswordTransformationMethod.getInstance()) {
                 newPasswordRepeat.transformationMethod = null
                 hidePasswordRepeat.setBackgroundResource(R.drawable.icon_show_password_grey)
-            }else if(newPasswordRepeat.transformationMethod == null){
+            } else if (newPasswordRepeat.transformationMethod == null) {
                 newPasswordRepeat.transformationMethod = PasswordTransformationMethod.getInstance()
                 hidePasswordRepeat.setBackgroundResource(R.drawable.icon_hint_grey)
             }

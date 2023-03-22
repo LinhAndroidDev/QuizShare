@@ -7,20 +7,23 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.connectivity.CheckConnect
+import com.example.appthitracnghiem.ui.base.BaseActivity
 import com.example.appthitracnghiem.ui.intro.adapter.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_intro.*
 
 @Suppress("DEPRECATION")
-class IntroActivity : AppCompatActivity() {
+class IntroActivity : BaseActivity() {
     private lateinit var viewPagerAdapter: ViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
 
-        if(CheckConnect.haveNetworkConnected(this@IntroActivity)){
-            viewPagerAdapter = ViewPagerAdapter(supportFragmentManager,
-                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
+        if (CheckConnect.haveNetworkConnected(this@IntroActivity)) {
+            viewPagerAdapter = ViewPagerAdapter(
+                supportFragmentManager,
+                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+            )
 
             viewPagerIntro.adapter = viewPagerAdapter
             indicatorIntro.setViewPager(viewPagerIntro)
@@ -30,12 +33,12 @@ class IntroActivity : AppCompatActivity() {
             clickNext()
 
             skip.setOnClickListener {
-                var intent : Intent = Intent(this,IntroLoginActivity::class.java)
+                val intent: Intent = Intent(this, IntroLoginActivity::class.java)
                 startActivity(intent)
                 finish()
             }
-        }else{
-            CheckConnect.showToastShort(this@IntroActivity,"Bạn đang ngoại tuyến")
+        } else {
+            CheckConnect.showToastShort(this@IntroActivity, "Bạn đang ngoại tuyến")
         }
     }
 
@@ -44,7 +47,7 @@ class IntroActivity : AppCompatActivity() {
         nextIntro.setOnClickListener {
             when (viewPagerIntro.currentItem) {
                 2 -> {
-                    var intent : Intent = Intent(this,IntroLoginActivity::class.java)
+                    var intent: Intent = Intent(this, IntroLoginActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
@@ -56,7 +59,7 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun hideButton() {
-        viewPagerIntro.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+        viewPagerIntro.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,

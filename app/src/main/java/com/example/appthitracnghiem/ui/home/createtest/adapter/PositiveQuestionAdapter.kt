@@ -11,20 +11,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.PositiveQuestion
 
-class PositiveQuestionAdapter(val listPossitive : List<PositiveQuestion>,val context: Context) : RecyclerView.Adapter<PositiveQuestionAdapter.PositiveViewHolder>() {
-    var number : Int = -1
+class PositiveQuestionAdapter(val listPossitive: List<PositiveQuestion>, val context: Context) :
+    RecyclerView.Adapter<PositiveQuestionAdapter.PositiveViewHolder>() {
+    var number: Int = -1
+
     class PositiveViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var txtPositive : TextView = itemView.findViewById(R.id.txtPositive)
+        var txtPositive: TextView = itemView.findViewById(R.id.txtPositive)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PositiveViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_position_question,parent,false)
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.layout_position_question, parent, false)
         return PositiveViewHolder(itemView)
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: PositiveViewHolder, position: Int) {
-        val positiveQuestion : PositiveQuestion = listPossitive[position]
+        val positiveQuestion: PositiveQuestion = listPossitive[position]
         holder.txtPositive.text = positiveQuestion.number.toString()
 
 
@@ -33,10 +36,10 @@ class PositiveQuestionAdapter(val listPossitive : List<PositiveQuestion>,val con
             notifyDataSetChanged()
         }
 
-        if(number == position){
+        if (number == position) {
             holder.txtPositive.setTextColor(Color.WHITE)
             holder.txtPositive.setBackgroundResource(R.drawable.select_positive_quiz)
-        }else{
+        } else {
             holder.txtPositive.setTextColor(Color.BLACK)
             holder.txtPositive.setBackgroundResource(R.drawable.un_select_positive_quiz)
         }

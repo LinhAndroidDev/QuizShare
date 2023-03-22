@@ -20,7 +20,8 @@ object CheckConnect {
                     "WIFI",
                     ignoreCase = true
                 )
-            ) if (ni.isConnected) haveConnectedWifi = true
+            )
+            if (ni.isConnected) haveConnectedWifi = true
             if (ni.typeName.equals(
                     "MOBILE",
                     ignoreCase = true

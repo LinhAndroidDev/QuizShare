@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -35,7 +36,7 @@ class FragmentCreateTest : BaseFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private val GALLERY_RED_CODE : Int = 1000
+    private val GALLERY_RED_CODE: Int = 1000
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,56 +46,63 @@ class FragmentCreateTest : BaseFragment() {
         setBottomShare()
 
         menuCreateTest.setOnClickListener {
-            showMenuCreate(menuCreateTest,R.layout.popup_create_test,0,-30,Gravity.BOTTOM)
+            showMenuCreate(menuCreateTest, R.layout.popup_create_test, 0, -30, Gravity.BOTTOM)
         }
 
         selectDepartment.setOnClickListener {
-            showMenuCreate(selectDepartment,R.layout.popup_select_partment,0,-30,Gravity.BOTTOM)
+            showMenuCreate(selectDepartment, R.layout.popup_select_partment, 0, -30, Gravity.BOTTOM)
         }
 
         selectMode.setOnClickListener {
-            showMenuCreate(selectMode,R.layout.popup_select_mode,0,-30,Gravity.BOTTOM)
+            showMenuCreate(selectMode, R.layout.popup_select_mode, 0, -30, Gravity.BOTTOM)
         }
 
         addCoverImage.setOnClickListener {
-            val intent : Intent = Intent(Intent.ACTION_PICK)
+            val intent: Intent = Intent(Intent.ACTION_PICK)
             intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            startActivityForResult(intent,GALLERY_RED_CODE)
+            startActivityForResult(intent, GALLERY_RED_CODE)
         }
 
         googleSheet.setOnClickListener {
-            val intent : Intent = Intent(requireActivity(),LinkSheetActivity::class.java)
+            val intent: Intent = Intent(requireActivity(), LinkSheetActivity::class.java)
             startActivity(intent)
         }
 
         createTest.setOnClickListener {
-            val intent : Intent = Intent(requireActivity(),CreateTestActivity::class.java)
-            startActivity(intent)
+            val strNumberQuiz : String = edtNumberQuiz.text.toString()
+            if(strNumberQuiz.isEmpty()){
+                Toast.makeText(requireActivity(),"Bạn chưa nhập câu hỏi số",Toast.LENGTH_SHORT).show()
+            }else{
+                val intent: Intent = Intent(requireActivity(), CreateTestActivity::class.java)
+                intent.putExtra("numberQuiz",strNumberQuiz)
+                startActivity(intent)
+            }
         }
 
-        shareWithFacebook.setOnClickListener{
-            val intent : Intent = Intent()
+        shareWithFacebook.setOnClickListener {
+            val intent: Intent = Intent()
             intent.action = Intent.ACTION_VIEW
             intent.data = Uri.parse("https://www.facebook.com")
             startActivity(intent)
         }
 
         shareWithMail.setOnClickListener {
-            val intent : Intent = Intent()
+            val intent: Intent = Intent()
             intent.action = Intent.ACTION_VIEW
-            intent.data = Uri.parse("https://accounts.google.com/v3/signin/identifier?dsh=S-620025444%3A1673854670857931&authuser=0&continue=http%3A%2F%2Fsupport.google.com%2Fmail%2Fanswer%2F8494%3Fhl%3Dvi%26co%3DGENIE.Platform%253DDesktop&ec=GAlAdQ&hl=vi&flowName=GlifWebSignIn&flowEntry=AddSession")
+            intent.data =
+                Uri.parse("https://accounts.google.com/v3/signin/identifier?dsh=S-620025444%3A1673854670857931&authuser=0&continue=http%3A%2F%2Fsupport.google.com%2Fmail%2Fanswer%2F8494%3Fhl%3Dvi%26co%3DGENIE.Platform%253DDesktop&ec=GAlAdQ&hl=vi&flowName=GlifWebSignIn&flowEntry=AddSession")
             startActivity(intent)
         }
     }
 
     /** Share Test*/
     private fun setBottomShare() {
-        layoutBottomShare.setOnTouchListener { v, event ->  true }
+        layoutBottomShare.setOnTouchListener { v, event -> true }
         var bottomShareBehavior = BottomSheetBehavior.from(layoutBottomShare)
         shareTest.setOnClickListener {
-            if(bottomShareBehavior.state != BottomSheetBehavior.STATE_EXPANDED){
+            if (bottomShareBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
                 bottomShareBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-            }else{
+            } else {
                 bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }
@@ -102,31 +110,33 @@ class FragmentCreateTest : BaseFragment() {
 
 
     /** Get Image from Storage*/
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(resultCode == AppCompatActivity.RESULT_OK){
-            if(requestCode == GALLERY_RED_CODE){
+        if (resultCode == AppCompatActivity.RESULT_OK) {
+            if (requestCode == GALLERY_RED_CODE) {
                 imageCover.setImageURI(data?.data)
             }
         }
     }
 
     /** show menu add test */
-    private fun showMenuCreate(anchor: View,layout : Int,x : Int,y : Int,position : Int) {
-        val popUpView : View = View.inflate(requireActivity(),layout,null)
+    private fun showMenuCreate(anchor: View, layout: Int, x: Int, y: Int, position: Int) {
+        val popUpView: View = View.inflate(requireActivity(), layout, null)
 
         val width = ViewGroup.LayoutParams.WRAP_CONTENT
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
-        val focusable : Boolean = true
+        val focusable: Boolean = true
 
-        val popupWindow : PopupWindow = PopupWindow(popUpView,width,height,focusable)
+        val popupWindow: PopupWindow = PopupWindow(popUpView, width, height, focusable)
         popupWindow.showAsDropDown(anchor, x, y, position)
     }
 
     /** set font **/
     private fun setText() {
-        val semibold : Typeface? = ResourcesCompat.getFont(requireActivity(),R.font.svn_gilroy_semibold)
+        val semibold: Typeface? =
+            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         txtAddTest.typeface = semibold
         txtTiltle.typeface = semibold
         txtDownTest.typeface = semibold

@@ -36,25 +36,26 @@ class FragmentProfile : BaseFragment() {
         }
 
         setting.setOnClickListener {
-            var intent : Intent = Intent(requireActivity(), SettingActivity::class.java)
+            val intent: Intent = Intent(requireActivity(), SettingActivity::class.java)
             startActivity(intent)
         }
 
         progressNumberDay.progress = 80
 
-        percentColum(30,80,60)
+        percentColum(30, 80, 60)
 
         setText()
     }
 
-    private fun percentColum(math : Int, science : Int, painting : Int) {
+    private fun percentColum(math: Int, science: Int, painting: Int) {
         progressMath.progress = math.toFloat()
         progressScience.progress = science.toFloat()
         progressPainting.progress = painting.toFloat()
     }
 
     private fun setText() {
-        val semibold : Typeface? = ResourcesCompat.getFont(requireActivity(),R.font.svn_gilroy_semibold)
+        val semibold: Typeface? =
+            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         txtName.typeface = semibold
         txtProfile.typeface = semibold
     }

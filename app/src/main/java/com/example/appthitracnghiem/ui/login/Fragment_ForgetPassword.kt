@@ -30,21 +30,27 @@ class Fragment_ForgetPassword : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         sendTo.setOnClickListener {
-            val edtEmail : String = emailForgetPassword.text.toString()
-            val bundle : Bundle = Bundle()
-            bundle.putString("email",edtEmail)
-            val fragmentCreatepassword : Fragment_CreatePassword = Fragment_CreatePassword()
-            val fm : FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-            fm.setCustomAnimations(R.anim.animation_scale_enter_right,R.anim.animation_scale_exit_left,R.anim.animation_scale_enter_left,R.anim.animation_scale_exit_right)
+            val edtEmail: String = emailForgetPassword.text.toString()
+            val bundle: Bundle = Bundle()
+            bundle.putString("email", edtEmail)
+            val fragmentCreatepassword: Fragment_CreatePassword = Fragment_CreatePassword()
+            val fm: FragmentTransaction =
+                requireActivity().supportFragmentManager.beginTransaction()
+            fm.setCustomAnimations(
+                R.anim.anim_translate_enter_right,
+                R.anim.anim_translate_exit_left,
+                R.anim.anim_translate_enter_left,
+                R.anim.anim_translate_exit_right
+            )
             fm.addToBackStack("Fragment_CreatePassword")
-            fm.replace(R.id.loginContainerID,fragmentCreatepassword).commit()
+            fm.replace(R.id.loginContainerID, fragmentCreatepassword).commit()
             fragmentCreatepassword.arguments = bundle
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("ForgetPassword","onCreate")
+        Log.d("ForgetPassword", "onCreate")
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -56,7 +62,7 @@ class Fragment_ForgetPassword : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        Log.d("ForgetPassword","onCreateView")
+        Log.d("ForgetPassword", "onCreateView")
         return inflater.inflate(R.layout.fragment__forget_password, container, false)
     }
 

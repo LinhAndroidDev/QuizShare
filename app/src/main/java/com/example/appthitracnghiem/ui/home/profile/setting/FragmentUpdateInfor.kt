@@ -40,7 +40,8 @@ class FragmentUpdateInfor : BaseFragment() {
 
     /** set font*/
     private fun setText() {
-        val semibold : Typeface? = ResourcesCompat.getFont(requireActivity(),R.font.svn_gilroy_semibold)
+        val semibold: Typeface? =
+            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         txtCapNhatThongTin.typeface = semibold
     }
 

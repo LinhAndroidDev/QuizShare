@@ -34,7 +34,8 @@ class FragmentHistory : BaseFragment() {
     }
 
     private fun setText() {
-        val semibold : Typeface? = ResourcesCompat.getFont(requireActivity(),R.font.svn_gilroy_semibold)
+        val semibold: Typeface? =
+            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         txtLichSu.typeface = semibold
         txtLichSuThi.typeface = semibold
         txtDaLuu.typeface = semibold

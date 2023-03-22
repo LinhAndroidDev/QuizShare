@@ -12,8 +12,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ViewModelGeneral : ViewModel() {
-    lateinit var retrofit : Retrofit
-    lateinit var postRetrofit : Retrofit
+    lateinit var retrofit: Retrofit
+    lateinit var postRetrofit: Retrofit
     val listQuizLive = MutableLiveData<MutableList<Quiz>>()
     val loadingQuizLive = MutableLiveData(false)
     val listSubjectLive = MutableLiveData<MutableList<Subject>>()
@@ -24,8 +24,8 @@ class ViewModelGeneral : ViewModel() {
         initPostRetrofit()
     }
 
-     private fun initRetrofit(){
-        val gson : Gson = GsonBuilder().setDateFormat("dd-MM-yy").create()
+    private fun initRetrofit() {
+        val gson: Gson = GsonBuilder().setDateFormat("dd-MM-yy").create()
 
         retrofit = Retrofit.Builder()
             .baseUrl("https://firebasestorage.googleapis.com/v0/b/realtime-64f58.appspot.com/o/")
@@ -33,8 +33,8 @@ class ViewModelGeneral : ViewModel() {
             .build()
     }
 
-    private fun initPostRetrofit(){
-        val gson : Gson = GsonBuilder().setDateFormat("dd-MM-yy").create()
+    private fun initPostRetrofit() {
+        val gson: Gson = GsonBuilder().setDateFormat("dd-MM-yy").create()
 
         postRetrofit = Retrofit.Builder()
             .baseUrl("http://192.168.10.33/tracnghiem/")
@@ -42,11 +42,11 @@ class ViewModelGeneral : ViewModel() {
             .build()
     }
 
-    fun getDataQuiz(){
+    fun getDataQuiz() {
         loadingQuizLive.postValue(true)
         retrofit.create(ApiService::class.java)
-            .getListQuiz("media","1dd6d12d-c075-46fe-8fde-342cc7d0b49b")
-            .enqueue(object : Callback<List<Quiz>>{
+            .getListQuiz("media", "1dd6d12d-c075-46fe-8fde-342cc7d0b49b")
+            .enqueue(object : Callback<List<Quiz>> {
                 override fun onResponse(call: Call<List<Quiz>>, response: Response<List<Quiz>>) {
                     listQuizLive.postValue(response.body() as MutableList<Quiz>?)
                     loadingQuizLive.postValue(false)
@@ -59,12 +59,15 @@ class ViewModelGeneral : ViewModel() {
             })
     }
 
-    fun getListSubject(){
+    fun getListSubject() {
         loadingSubjectLive.postValue(true)
         retrofit.create(ApiService::class.java)
-            .getListSubject("media","e6a753c7-ae4d-43f8-88f5-3909fc3e2919")
-            .enqueue(object : Callback<List<Subject>>{
-                override fun onResponse(call: Call<List<Subject>>, response: Response<List<Subject>>) {
+            .getListSubject("media", "e6a753c7-ae4d-43f8-88f5-3909fc3e2919")
+            .enqueue(object : Callback<List<Subject>> {
+                override fun onResponse(
+                    call: Call<List<Subject>>,
+                    response: Response<List<Subject>>
+                ) {
                     listSubjectLive.postValue(response.body() as MutableList<Subject>?)
                     loadingSubjectLive.postValue(false)
                 }
