@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundIntro"
+    tools:context=".ui.intro.IntroActivity">
+
+    <Button
+        android:id="@+id/skip"
+        android:layout_margin="5dp"
+        android:background="@drawable/next"
+        android:layout_alignParentEnd="true"
+        android:layout_width="45dp"
+        android:layout_height="45dp"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerIntro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/indicatorIntro"
+        android:layout_gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="120dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:ci_drawable="@drawable/indicator"/>
+    <ImageButton
+        android:id="@+id/nextIntro"
+        android:background="@drawable/buttonnext"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="33dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"/>
+</RelativeLayout>

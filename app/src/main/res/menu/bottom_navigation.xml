@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/home"
+        android:title="home"
+        android:icon="@drawable/home_select"/>
+    <item android:id="@+id/discover"
+        android:title="discover"
+        android:icon="@drawable/create"/>
+    <item android:id="@+id/seacrhHome"
+        android:title="" />
+    <item android:id="@+id/leaderboard"
+        android:title="leaderboard"
+        android:icon="@drawable/leaderboard"/>
+    <item android:id="@+id/profile"
+        android:title="profile"
+        android:icon="@drawable/profile"/>
+</menu>
