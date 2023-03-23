@@ -6,16 +6,16 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.connectivity.CheckConnect
+import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseActivity
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.category.FragmentCategory
 import com.example.appthitracnghiem.ui.home.createtest.FragmentCreateTest
 import com.example.appthitracnghiem.ui.home.historytest.FragmentHistory
 import com.example.appthitracnghiem.ui.home.profile.FragmentProfile
-import com.example.appthitracnghiem.utils.PreferenceUtil
 import kotlinx.android.synthetic.main.activity_home_page.*
 
-class HomeActivity : BaseActivity() {
+class HomeActivity : BaseActivity<EmptyViewModel>() {
     private var backPressTime: Long = 0
     var CHECK_SHOW_TUTORIAL: String = "CHECK_SHOW_TUTORIAL"
 
@@ -23,10 +23,6 @@ class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_page)
-
-        mPreferenceUtil.defaultPref().edit().putBoolean(CHECK_SHOW_TUTORIAL, true).apply()
-//        mPreferenceUtil.defaultPref().getBoolean("CHECK_SHOW_TUTORIAL", false)
-
         if (CheckConnect.haveNetworkConnected(this@HomeActivity)) {
             resetTab()
             functionHome.isSelected = true
@@ -129,7 +125,7 @@ class HomeActivity : BaseActivity() {
     override fun onBackPressed() {
         val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
 
-        if (fm != null && fm is BaseFragment) {
+        if (fm != null && fm is BaseFragment<*>) {
             if (fm.onFragmentBack()) {
                 if (backPressTime + 2000 > System.currentTimeMillis()) {
                     finish()

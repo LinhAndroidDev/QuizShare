@@ -1,4 +1,4 @@
-package com.example.appthitracnghiem.ui.login
+package com.example.appthitracnghiem.ui.login_need_refactor
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.login.Fragment_Login
 import kotlinx.android.synthetic.main.fragment__create_password.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,7 +25,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 @Suppress("DEPRECATION")
-class Fragment_CreatePassword : BaseFragment() {
+class Fragment_CreatePassword : BaseFragment<EmptyViewModel>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null

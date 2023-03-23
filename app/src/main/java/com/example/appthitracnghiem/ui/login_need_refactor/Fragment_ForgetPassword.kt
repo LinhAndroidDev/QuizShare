@@ -1,4 +1,4 @@
-package com.example.appthitracnghiem.ui.login
+package com.example.appthitracnghiem.ui.login_need_refactor
 
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment__forget_password.*
 
@@ -21,7 +22,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [Fragment_ForgetPassword.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Fragment_ForgetPassword : BaseFragment() {
+class Fragment_ForgetPassword : BaseFragment<EmptyViewModel>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null

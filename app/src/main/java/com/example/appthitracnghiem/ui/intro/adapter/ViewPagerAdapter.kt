@@ -1,11 +1,9 @@
 package com.example.appthitracnghiem.ui.intro.adapter
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.appthitracnghiem.ui.intro.FragmentIntroFirst
-import com.example.appthitracnghiem.ui.intro.FragmentIntroLogin
 import com.example.appthitracnghiem.ui.intro.FragmentIntroSecond
 import com.example.appthitracnghiem.ui.intro.FragmentIntroThird
 

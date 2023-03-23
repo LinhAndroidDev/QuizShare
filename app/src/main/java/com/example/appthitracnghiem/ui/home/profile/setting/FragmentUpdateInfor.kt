@@ -2,12 +2,13 @@ package com.example.appthitracnghiem.ui.home.profile.setting
 
 import android.graphics.Typeface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_setting_new_password.*
@@ -23,7 +24,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [FragmentUpdateInfor.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FragmentUpdateInfor : BaseFragment() {
+class FragmentUpdateInfor : BaseFragment<EmptyViewModel>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null

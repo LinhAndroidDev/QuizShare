@@ -1,12 +1,12 @@
-package com.example.appthitracnghiem.ui.login
+package com.example.appthitracnghiem.ui.login_need_refactor
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment__condition.*
 
@@ -20,7 +20,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [Fragment_Condition.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Fragment_Condition : BaseFragment() {
+class Fragment_Condition : BaseFragment<EmptyViewModel>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null

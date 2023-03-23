@@ -60,7 +60,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.login.RegisterActivity"
+            android:name=".ui.login_need_refactor.RegisterActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

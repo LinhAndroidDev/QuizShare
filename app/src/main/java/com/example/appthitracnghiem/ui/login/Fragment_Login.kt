@@ -8,7 +8,6 @@ import android.graphics.Paint
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.preference.PreferenceManager
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
@@ -16,22 +15,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.ui.base.api.ApiService
-import com.example.appthitracnghiem.utils.Email
-import com.example.appthitracnghiem.model.LoginSuccessful
 import com.example.appthitracnghiem.model.ViewModelGeneral
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.home.HomeActivity
+import com.example.appthitracnghiem.ui.login_need_refactor.Fragment_ForgetPassword
+import com.example.appthitracnghiem.ui.login_need_refactor.RegisterActivity
 import kotlinx.android.synthetic.main.fragment__login.*
-import kotlinx.android.synthetic.main.fragment__login.view.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,7 +38,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 @Suppress("DEPRECATION")
-class Fragment_Login : BaseFragment() {
+class Fragment_Login : BaseFragment<LoginViewModel>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -54,10 +48,12 @@ class Fragment_Login : BaseFragment() {
     var checkSave: Boolean = false
     lateinit var strEmail: String
     lateinit var strPassword: String
+    lateinit var progressDialog: ProgressDialog
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        progressDialog = ProgressDialog(requireActivity())
         viewModelGeneral = ViewModelProvider(requireActivity())[ViewModelGeneral::class.java]
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity())
@@ -88,6 +84,37 @@ class Fragment_Login : BaseFragment() {
         setText()
     }
 
+    override fun bindData() {
+        super.bindData()
+        viewModel.loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                progressDialog.setMessage("Please wait ...")
+                progressDialog.show()
+            } else {
+                progressDialog.dismiss()
+            }
+        }
+
+        viewModel.successLoginLiveData.observe(viewLifecycleOwner) {
+            val intent = Intent(
+                requireActivity(),
+                HomeActivity::class.java
+            )
+            intent.flags =
+                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            saveAccount(strEmail, strPassword);
+        }
+
+        viewModel.noteLiveData.observe(viewLifecycleOwner) { model ->
+            if (model.isValidate) {
+                warningLogin.visibility = View.GONE
+            } else {
+                setNote(model.resMsgError, model.resColorError)
+            }
+        }
+    }
+
     /** set font*/
     private fun setText() {
         forgetPassword.paintFlags = Paint.UNDERLINE_TEXT_FLAG
@@ -109,91 +136,7 @@ class Fragment_Login : BaseFragment() {
         login.setOnClickListener {
             strEmail = edtEnterEmailLogin.text.toString().trim()
             strPassword = passwordLogin.text.toString().trim()
-
-            if (strEmail.isEmpty() || strPassword.isEmpty()) {
-                setNote(R.string.txt_notification_login, R.color.color_green)
-            } else {
-                val email: Email = Email(strEmail, strPassword)
-
-                if (!email.isValidEmail()) {
-                    setNote(R.string.txt_warning_login, R.color.color_red)
-                } else {
-                    if (!email.isPassword()) {
-                        setNote(R.string.txt_warning_password, R.color.color_red)
-                    } else {
-                        warningLogin.visibility = View.GONE
-                        val progressDialog: ProgressDialog = ProgressDialog(requireActivity())
-                        progressDialog.setMessage("Please wait ...")
-                        progressDialog.show()
-
-                        val requestBodyStrEmail: RequestBody =
-                            RequestBody.create("multipart/from-data".toMediaTypeOrNull(), strEmail)
-                        val requestBodyStrPassword: RequestBody = RequestBody.create(
-                            "multipart/from-data".toMediaTypeOrNull(),
-                            strPassword
-                        )
-
-                        val countDownTimer: CountDownTimer = object : CountDownTimer(3000, 3000) {
-                            override fun onTick(millisUntilFinished: Long) {
-
-                            }
-
-                            override fun onFinish() {
-                                progressDialog.dismiss()
-
-                                viewModelGeneral.postRetrofit.create(ApiService::class.java)
-                                    .loginUser(requestBodyStrEmail, requestBodyStrPassword)
-                                    .enqueue(object : retrofit2.Callback<LoginSuccessful> {
-                                        override fun onFailure(
-                                            call: retrofit2.Call<LoginSuccessful>,
-                                            t: Throwable,
-                                        ) {
-                                            Toast.makeText(
-                                                requireContext(),
-                                                "Error",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        }
-
-                                        override fun onResponse(
-                                            call: retrofit2.Call<LoginSuccessful>,
-                                            response: retrofit2.Response<LoginSuccessful>,
-                                        ) {
-                                            if (response.isSuccessful) {
-                                                val loginSuccessful: LoginSuccessful? =
-                                                    response.body()
-                                                if (loginSuccessful!!.status == 0) {
-                                                    val intent: Intent = Intent(
-                                                        requireActivity(),
-                                                        HomeActivity::class.java
-                                                    )
-                                                    intent.flags =
-                                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    startActivity(intent)
-
-                                                    saveAccount(strEmail, strPassword);
-                                                } else {
-                                                    Toast.makeText(
-                                                        requireActivity(),
-                                                        "Email hoặc mật khẩu không chính xác",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-                                                }
-                                            } else {
-                                                Toast.makeText(
-                                                    requireActivity(),
-                                                    "Lỗi kết nối Server",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
-                                        }
-
-                                    })
-                            }
-                        }.start()
-                    }
-                }
-            }
+            viewModel.login(strEmail, strPassword)
         }
 
         google.setOnClickListener {

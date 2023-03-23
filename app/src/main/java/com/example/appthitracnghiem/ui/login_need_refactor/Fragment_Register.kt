@@ -1,4 +1,4 @@
-package com.example.appthitracnghiem.ui.login
+package com.example.appthitracnghiem.ui.login_need_refactor
 
 import android.app.ProgressDialog
 import android.graphics.Typeface
@@ -17,11 +17,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.ui.base.api.ApiService
-import com.example.appthitracnghiem.utils.Email
+import com.example.appthitracnghiem.data.remote.ApiService
 import com.example.appthitracnghiem.model.LoginSuccessful
 import com.example.appthitracnghiem.model.ViewModelGeneral
+import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.utils.Email
 import kotlinx.android.synthetic.main.fragment__register.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -39,7 +40,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 @Suppress("DEPRECATION")
-class Fragment_Register : BaseFragment() {
+class Fragment_Register : BaseFragment<EmptyViewModel>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null

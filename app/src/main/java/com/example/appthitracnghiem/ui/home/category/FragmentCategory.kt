@@ -3,18 +3,19 @@ package com.example.appthitracnghiem.ui.home.category
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.ui.home.category.adapter.SubjectAdapter
 import com.example.appthitracnghiem.model.ViewModelGeneral
+import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.home.category.adapter.SubjectAdapter
 import com.example.appthitracnghiem.ui.home.category.search.SearchSubject
 import kotlinx.android.synthetic.main.fragment_category.*
 
@@ -28,7 +29,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [FragmentCategory.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FragmentCategory : BaseFragment() {
+class FragmentCategory : BaseFragment<EmptyViewModel>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null

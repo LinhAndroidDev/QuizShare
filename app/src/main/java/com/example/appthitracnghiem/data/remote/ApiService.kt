@@ -1,5 +1,6 @@
-package com.example.appthitracnghiem.ui.base.api
+package com.example.appthitracnghiem.data.remote
 
+import com.example.appthitracnghiem.data.remote.entity.LoginResponse
 import com.example.appthitracnghiem.model.LoginSuccessful
 import com.example.appthitracnghiem.model.Quiz
 import com.example.appthitracnghiem.model.Subject
@@ -25,8 +26,8 @@ interface ApiService {
 
     @Multipart
     @POST("login.php")
-    fun loginUser(@Part("email") email: RequestBody, @Part("password") password : RequestBody)
-            : Call<LoginSuccessful>
+    fun loginUser(@Part("email") email: RequestBody, @Part("password") password: RequestBody)
+            : Call<LoginResponse>
 
     @Multipart
     @POST("forgetpassword.php")

@@ -12,10 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.ui.home.createtest.adapter.PositiveQuestionAdapter
 import com.example.appthitracnghiem.model.PositiveQuestion
+import com.example.appthitracnghiem.ui.home.createtest.adapter.PositiveQuestionAdapter
 import kotlinx.android.synthetic.main.activity_create_test.*
-import kotlinx.android.synthetic.main.fragment_create_test.*
 
 @Suppress("DEPRECATION")
 class CreateTestActivity : AppCompatActivity() {

@@ -10,12 +10,11 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.login.LoginActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.fragment_create_test.*
 import kotlinx.android.synthetic.main.fragment_setting.*
-import kotlinx.android.synthetic.main.layout_bottom_share.*
 import kotlinx.android.synthetic.main.layout_logout.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,7 +27,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [FragmentSetting.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FragmentSetting : BaseFragment() {
+class FragmentSetting : BaseFragment<EmptyViewModel>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null

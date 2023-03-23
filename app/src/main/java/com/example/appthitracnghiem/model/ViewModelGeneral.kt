@@ -2,7 +2,7 @@ package com.example.appthitracnghiem.model
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.appthitracnghiem.ui.base.api.ApiService
+import com.example.appthitracnghiem.data.remote.ApiService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call

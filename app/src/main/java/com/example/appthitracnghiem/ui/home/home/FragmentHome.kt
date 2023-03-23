@@ -14,10 +14,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.ui.home.home.adapter.QuizAdapter
-import com.example.appthitracnghiem.ui.base.animation.TranslateAnimation
 import com.example.appthitracnghiem.model.ViewModelGeneral
+import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.base.animation.TranslateAnimation
+import com.example.appthitracnghiem.ui.home.home.adapter.QuizAdapter
 import kotlinx.android.synthetic.main.activity_home_page.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -31,7 +32,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [FragmentHome.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FragmentHome : BaseFragment() {
+class FragmentHome : BaseFragment<EmptyViewModel>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null

@@ -2,17 +2,17 @@ package com.example.appthitracnghiem.ui.intro
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.connectivity.CheckConnect
+import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseActivity
 import com.example.appthitracnghiem.ui.intro.adapter.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_intro.*
 
 @Suppress("DEPRECATION")
-class IntroActivity : BaseActivity() {
+class IntroActivity : BaseActivity<EmptyViewModel>() {
     private lateinit var viewPagerAdapter: ViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
