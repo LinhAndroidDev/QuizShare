@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1099291457022",
+    "project_id": "appthitracnghiem-e5a9c",
+    "storage_bucket": "appthitracnghiem-e5a9c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1099291457022:android:3a07b6b56896da77107caf",
+        "android_client_info": {
+          "package_name": "com.example.appthitracnghiem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1099291457022-9dfa642lbprdugr77k4o8b9v7o67s98r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.appthitracnghiem",
+            "certificate_hash": "f0ce42a3f029a83b3d2c14c8ba9987ac2d490e17"
+          }
+        },
+        {
+          "client_id": "1099291457022-ogqh3k1qd6jccn4g9opkui040mf8p48q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhQrl8TCFvX3CYabDARwDo0oV3y0DiNPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1099291457022-ogqh3k1qd6jccn4g9opkui040mf8p48q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
