@@ -16,7 +16,7 @@ import retrofit2.Response
 class LoginViewModel : BaseViewModel() {
     val loadingLiveData = MutableLiveData<Boolean>()
     val successLoginLiveData = MutableLiveData<Boolean>()
-    val noteLiveData = MutableLiveData<ValidateModel>()
+    val validateLiveData = MutableLiveData<ValidateModel>()
 
     fun isFirstInstallApp(): Boolean {
         return mPreferenceUtil.defaultPref()
@@ -51,9 +51,9 @@ class LoginViewModel : BaseViewModel() {
     }
 
     fun login(strEmail: String, strPassword: String) {
-        val noteModel = validateLogin(strEmail, strPassword)
-        noteLiveData.value = noteModel
-        if (noteModel.isValidate) {
+        val validateModel = validateLogin(strEmail, strPassword)
+        validateLiveData.value = validateModel
+        if (validateModel.isValidate) {
             requestLogin(strEmail, strPassword)
         }
     }

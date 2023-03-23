@@ -106,7 +106,7 @@ class Fragment_Login : BaseFragment<LoginViewModel>() {
             saveAccount(strEmail, strPassword);
         }
 
-        viewModel.noteLiveData.observe(viewLifecycleOwner) { model ->
+        viewModel.validateLiveData.observe(viewLifecycleOwner) { model ->
             if (model.isValidate) {
                 warningLogin.visibility = View.GONE
             } else {
