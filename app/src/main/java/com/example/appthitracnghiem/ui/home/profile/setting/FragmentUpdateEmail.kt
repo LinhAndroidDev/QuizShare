@@ -32,11 +32,15 @@ class FragmentUpdateEmail : BaseFragment<EmptyViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        click()
+
+        setText()
+    }
+
+    private fun click() {
         backUpdateEmail.setOnClickListener {
             activity?.onBackPressed()
         }
-
-        setText()
     }
 
     /** set font*/

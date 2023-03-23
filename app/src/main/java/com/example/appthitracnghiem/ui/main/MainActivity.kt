@@ -20,9 +20,6 @@ class MainActivity : BaseActivity<LoginViewModel>() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val mySharedPreferences: MySharedPreferences = MySharedPreferences(this@MainActivity)
-//        val checkShowTutorial: CheckShowTutorial = CheckShowTutorial(this@MainActivity)
-
         val animLogo: Animation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_logo)
         logo.startAnimation(animLogo)
 

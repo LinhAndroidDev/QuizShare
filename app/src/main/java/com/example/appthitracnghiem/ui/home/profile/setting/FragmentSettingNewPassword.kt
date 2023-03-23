@@ -6,6 +6,8 @@ import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
@@ -33,31 +35,22 @@ class FragmentSettingNewPassword : BaseFragment<EmptyViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setText()
+
+        click()
+    }
+
+    private fun click() {
         backUpdateNewPassWord.setOnClickListener {
             activity?.onBackPressed()
         }
 
-        setText()
-
         showUpdatePassWord.setOnClickListener {
-            if (passwordUpdate.transformationMethod == PasswordTransformationMethod.getInstance()) {
-                passwordUpdate.transformationMethod = null
-                showUpdatePassWord.setImageResource(R.drawable.icon_show_password_grey)
-            } else if (passwordUpdate.transformationMethod == null) {
-                passwordUpdate.transformationMethod = PasswordTransformationMethod.getInstance()
-                showUpdatePassWord.setImageResource(R.drawable.icon_hint_grey)
-            }
+            hidePassword(passwordUpdate,showUpdatePassWord)
         }
 
         showRepeatUpdatePassWord.setOnClickListener {
-            if (repeatPasswordUpdate.transformationMethod == PasswordTransformationMethod.getInstance()) {
-                repeatPasswordUpdate.transformationMethod = null
-                showRepeatUpdatePassWord.setImageResource(R.drawable.icon_show_password_grey)
-            } else if (repeatPasswordUpdate.transformationMethod == null) {
-                repeatPasswordUpdate.transformationMethod =
-                    PasswordTransformationMethod.getInstance()
-                showRepeatUpdatePassWord.setImageResource(R.drawable.icon_hint_grey)
-            }
+            hidePassword(repeatPasswordUpdate,showRepeatUpdatePassWord)
         }
     }
 
@@ -66,6 +59,16 @@ class FragmentSettingNewPassword : BaseFragment<EmptyViewModel>() {
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         txtMatKhauMoi.typeface = semibold
+    }
+
+    private fun hidePassword(password: EditText, hide: ImageView) {
+        if (password.transformationMethod == PasswordTransformationMethod.getInstance()) {
+            password.transformationMethod = null
+            hide.setBackgroundResource(R.drawable.icon_show_password_grey)
+        } else if (newPasswordCreate.transformationMethod == null) {
+            password.transformationMethod = PasswordTransformationMethod.getInstance()
+            hide.setBackgroundResource(R.drawable.icon_hint_grey)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

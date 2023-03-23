@@ -1,28 +1,26 @@
-package com.example.appthitracnghiem.ui.login_need_refactor
+package com.example.appthitracnghiem.ui.login.forgetpassword
 
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment__forget_password.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+/**
+ * A simple [Fragment] subclass.
+ * Use the [FragmentForgetPassword.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [Fragment_ForgetPassword.newInstance] factory method to
- * create an instance of this fragment.
- */
-class Fragment_ForgetPassword : BaseFragment<EmptyViewModel>() {
+class FragmentForgetPassword : BaseFragment<EmptyViewModel>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -30,11 +28,15 @@ class Fragment_ForgetPassword : BaseFragment<EmptyViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        click()
+    }
+
+    private fun click() {
         sendTo.setOnClickListener {
             val edtEmail: String = emailForgetPassword.text.toString()
             val bundle: Bundle = Bundle()
             bundle.putString("email", edtEmail)
-            val fragmentCreatepassword: Fragment_CreatePassword = Fragment_CreatePassword()
+            val fragmentCreatepassword: FragmentCreatePassword = FragmentCreatePassword()
             val fm: FragmentTransaction =
                 requireActivity().supportFragmentManager.beginTransaction()
             fm.setCustomAnimations(
@@ -84,7 +86,7 @@ class Fragment_ForgetPassword : BaseFragment<EmptyViewModel>() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Fragment_ForgetPassword().apply {
+            FragmentForgetPassword().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

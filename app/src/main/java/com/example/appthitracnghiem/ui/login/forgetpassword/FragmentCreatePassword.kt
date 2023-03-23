@@ -1,4 +1,4 @@
-package com.example.appthitracnghiem.ui.login_need_refactor
+package com.example.appthitracnghiem.ui.login.forgetpassword
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -6,26 +6,26 @@ import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import com.example.appthitracnghiem.ui.login.Fragment_Login
+import com.example.appthitracnghiem.ui.login.FragmentLogin
 import kotlinx.android.synthetic.main.fragment__create_password.*
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Fragment_CreatePassword.newInstance] factory method to
+ * Use the [FragmentCreatePassword.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
 @Suppress("DEPRECATION")
-class Fragment_CreatePassword : BaseFragment<EmptyViewModel>() {
+class FragmentCreatePassword : BaseFragment<EmptyViewModel>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -37,12 +37,16 @@ class Fragment_CreatePassword : BaseFragment<EmptyViewModel>() {
         val bundle: Bundle = requireArguments()
         email = bundle.getString("email").toString()
 
+        click()
+    }
+
+    private fun click() {
         resetPassword.setOnClickListener {
             val password: String = newPasswordCreate.text.toString()
             val progressDialog: ProgressDialog = ProgressDialog(requireActivity())
             progressDialog.setMessage("Đang cập nhật mật khẩu")
 
-            val fragmentLogin: Fragment_Login = Fragment_Login()
+            val fragmentLogin: FragmentLogin = FragmentLogin()
             val fm: FragmentTransaction =
                 requireActivity().supportFragmentManager.beginTransaction()
             fm.setCustomAnimations(
@@ -54,29 +58,22 @@ class Fragment_CreatePassword : BaseFragment<EmptyViewModel>() {
             fm.replace(R.id.loginContainerID, fragmentLogin).commit()
         }
 
-        hidePassword()
-
-    }
-
-    private fun hidePassword() {
         hidePasswordCreate.setOnClickListener {
-            if (newPasswordCreate.transformationMethod == PasswordTransformationMethod.getInstance()) {
-                newPasswordCreate.transformationMethod = null
-                hidePasswordCreate.setBackgroundResource(R.drawable.icon_show_password_grey)
-            } else if (newPasswordCreate.transformationMethod == null) {
-                newPasswordCreate.transformationMethod = PasswordTransformationMethod.getInstance()
-                hidePasswordCreate.setBackgroundResource(R.drawable.icon_hint_grey)
-            }
+            hidePassword(newPasswordCreate, hidePasswordCreate)
         }
 
         hidePasswordRepeat.setOnClickListener {
-            if (newPasswordRepeat.transformationMethod == PasswordTransformationMethod.getInstance()) {
-                newPasswordRepeat.transformationMethod = null
-                hidePasswordRepeat.setBackgroundResource(R.drawable.icon_show_password_grey)
-            } else if (newPasswordRepeat.transformationMethod == null) {
-                newPasswordRepeat.transformationMethod = PasswordTransformationMethod.getInstance()
-                hidePasswordRepeat.setBackgroundResource(R.drawable.icon_hint_grey)
-            }
+            hidePassword(newPasswordRepeat, hidePasswordRepeat)
+        }
+    }
+
+    private fun hidePassword(password: EditText, hide: ImageView) {
+        if (password.transformationMethod == PasswordTransformationMethod.getInstance()) {
+            password.transformationMethod = null
+            hide.setBackgroundResource(R.drawable.icon_show_password_grey)
+        } else if (newPasswordCreate.transformationMethod == null) {
+            password.transformationMethod = PasswordTransformationMethod.getInstance()
+            hide.setBackgroundResource(R.drawable.icon_hint_grey)
         }
     }
 
@@ -113,7 +110,7 @@ class Fragment_CreatePassword : BaseFragment<EmptyViewModel>() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Fragment_CreatePassword().apply {
+            FragmentCreatePassword().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

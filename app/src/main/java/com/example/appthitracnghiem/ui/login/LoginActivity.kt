@@ -17,7 +17,7 @@ class LoginActivity : BaseActivity<EmptyViewModel>() {
         setContentView(R.layout.activity_login)
 
         if (CheckConnect.haveNetworkConnected(this@LoginActivity)) {
-            replaceFragmentLogin(Fragment_Login())
+            replaceFragmentLogin(FragmentLogin())
         } else {
             CheckConnect.showToastShort(this@LoginActivity, "Bạn đang ngoại tuyến")
         }

@@ -23,7 +23,7 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.ViewModelGeneral
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.home.HomeActivity
-import com.example.appthitracnghiem.ui.login_need_refactor.Fragment_ForgetPassword
+import com.example.appthitracnghiem.ui.login.forgetpassword.FragmentForgetPassword
 import com.example.appthitracnghiem.ui.login_need_refactor.RegisterActivity
 import kotlinx.android.synthetic.main.fragment__login.*
 
@@ -34,11 +34,11 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Fragment_Login.newInstance] factory method to
+ * Use the [FragmentLogin.newInstance] factory method to
  * create an instance of this fragment.
  */
 @Suppress("DEPRECATION")
-class Fragment_Login : BaseFragment<LoginViewModel>() {
+class FragmentLogin : BaseFragment<LoginViewModel>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -66,7 +66,7 @@ class Fragment_Login : BaseFragment<LoginViewModel>() {
         }
 
         forgetPassword.setOnClickListener {
-            val fragmentForgetpassword: Fragment_ForgetPassword = Fragment_ForgetPassword()
+            val fragmentForgetpassword: FragmentForgetPassword = FragmentForgetPassword()
             val fm: FragmentTransaction =
                 requireActivity().supportFragmentManager.beginTransaction()
             fm.setCustomAnimations(
@@ -234,7 +234,7 @@ class Fragment_Login : BaseFragment<LoginViewModel>() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Fragment_Login().apply {
+            FragmentLogin().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

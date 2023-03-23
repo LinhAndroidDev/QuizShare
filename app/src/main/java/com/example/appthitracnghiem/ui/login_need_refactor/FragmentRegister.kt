@@ -36,11 +36,11 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Fragment_Register.newInstance] factory method to
+ * Use the [FragmentRegister.newInstance] factory method to
  * create an instance of this fragment.
  */
 @Suppress("DEPRECATION")
-class Fragment_Register : BaseFragment<EmptyViewModel>() {
+class FragmentRegister : BaseFragment<EmptyViewModel>() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -131,8 +131,8 @@ class Fragment_Register : BaseFragment<EmptyViewModel>() {
                     if (response.isSuccessful) {
                         when (response.body()?.status) {
                             0 -> {
-                                val fragmentCondition: Fragment_Condition =
-                                    Fragment_Condition()
+                                val fragmentCondition: FragmentCondition =
+                                    FragmentCondition()
                                 val fm: FragmentTransaction =
                                     requireActivity().supportFragmentManager.beginTransaction()
                                 fm.addToBackStack("Fragment_Register")
@@ -225,7 +225,7 @@ class Fragment_Register : BaseFragment<EmptyViewModel>() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Fragment_Register().apply {
+            FragmentRegister().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

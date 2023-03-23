@@ -15,7 +15,7 @@ class RegisterActivity : BaseActivity<EmptyViewModel>() {
         setContentView(R.layout.activity_register)
 
         if (CheckConnect.haveNetworkConnected(this@RegisterActivity)) {
-            replaceFragmentRegister(Fragment_Register())
+            replaceFragmentRegister(FragmentRegister())
         } else {
             CheckConnect.showToastShort(this@RegisterActivity, "Bạn đang ngoại tuyến")
         }
