@@ -14,7 +14,7 @@ import com.example.appthitracnghiem.ui.login.LoginActivity
 import com.example.appthitracnghiem.ui.login.LoginViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity<LoginViewModel>() {
+class MainActivity : BaseActivity<MainViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +23,10 @@ class MainActivity : BaseActivity<LoginViewModel>() {
         val animLogo: Animation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_logo)
         logo.startAnimation(animLogo)
 
+        flashScreen()
+    }
+
+    private fun flashScreen() {
         val countDownTimer: CountDownTimer = object : CountDownTimer(3000, 3000) {
             override fun onTick(millisUntilFinished: Long) {
 

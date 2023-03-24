@@ -33,7 +33,8 @@
     <string name="txtRegisterNow">Đăng kí ngay</string>
     <string name="txt_notification_login">Vui lòng nhập thông tin để đăng nhập</string>
     <string name="txt_warning_login">Email hoặc số điện thoại không chính xác</string>
-    <string name="txt_warning_password">Mật khẩu phải có ít nhất 6 kí tự</string>
+    <string name="txt_warning_phone">Nhập lại số điện thoại</string>
+    <string name="txt_warning_password">Mật khẩu phải lớn hơn 6 kí tự</string>
 
     <!--    Fragment Forget Password-->
     <string name="txtSend">Gửi</string>

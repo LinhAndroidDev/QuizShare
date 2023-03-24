@@ -30,51 +30,55 @@ class HomeActivity : BaseActivity<EmptyViewModel>() {
 
             bottomWrap?.setOnTouchListener { _, _ -> true }
 
-            iconSearch.setOnClickListener {
-                val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
-                if (fm !is FragmentCategory) {
-                    resetTab()
-                    replaceFragment(FragmentCategory())
-                }
-            }
-
-            functionHome.setOnClickListener {
-                val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
-                if (fm !is FragmentHome) {
-                    resetTab()
-                    functionHome.isSelected = true
-                    replaceFragment(FragmentHome())
-                }
-            }
-
-            functionCreate.setOnClickListener {
-                val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
-                if (fm !is FragmentCreateTest) {
-                    resetTab()
-                    functionCreate.isSelected = true
-                    replaceFragment(FragmentCreateTest())
-                }
-            }
-
-            functionLeaderboard.setOnClickListener {
-                val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
-                if (fm !is FragmentHistory) {
-                    resetTab()
-                    functionLeaderboard.isSelected = true
-                    replaceFragment(FragmentHistory())
-                }
-            }
-
-            functionProfile.setOnClickListener {
-                val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
-                if (fm !is FragmentProfile) {
-                    resetTab()
-                    functionProfile.isSelected = true
-                    replaceFragment(FragmentProfile())
-                }
-            }
+            click()
         } else {
             CheckConnect.showToastShort(this@HomeActivity, "Bạn đang ngoại tuyến")
+        }
+    }
+
+    private fun click() {
+        iconSearch.setOnClickListener {
+            val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
+            if (fm !is FragmentCategory) {
+                resetTab()
+                replaceFragment(FragmentCategory())
+            }
+        }
+
+        functionHome.setOnClickListener {
+            val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
+            if (fm !is FragmentHome) {
+                resetTab()
+                functionHome.isSelected = true
+                replaceFragment(FragmentHome())
+            }
+        }
+
+        functionCreate.setOnClickListener {
+            val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
+            if (fm !is FragmentCreateTest) {
+                resetTab()
+                functionCreate.isSelected = true
+                replaceFragment(FragmentCreateTest())
+            }
+        }
+
+        functionLeaderboard.setOnClickListener {
+            val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
+            if (fm !is FragmentHistory) {
+                resetTab()
+                functionLeaderboard.isSelected = true
+                replaceFragment(FragmentHistory())
+            }
+        }
+
+        functionProfile.setOnClickListener {
+            val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
+            if (fm !is FragmentProfile) {
+                resetTab()
+                functionProfile.isSelected = true
+                replaceFragment(FragmentProfile())
+            }
         }
     }
 

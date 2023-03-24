@@ -8,7 +8,7 @@ object ApiClient {
     const val STATUS_CODE_SUCCESS = 200
 
     //Todo: Change BASE_URL
-    const val BASE_URL = "https://google.com/"
+    const val BASE_URL = "https://asia-northeast1-quiz-app-traning.cloudfunctions.net/"
     private var RETROFIT: Retrofit? = null
     private var API_SERVICE: ApiService? = null
 

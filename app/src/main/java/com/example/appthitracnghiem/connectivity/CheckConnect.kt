@@ -16,17 +16,10 @@ object CheckConnect {
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfos = connectivityManager.allNetworkInfo
         for (ni in networkInfos) {
-            if (ni.typeName.equals(
-                    "WIFI",
-                    ignoreCase = true
-                )
-            )
-            if (ni.isConnected) haveConnectedWifi = true
-            if (ni.typeName.equals(
-                    "MOBILE",
-                    ignoreCase = true
-                )
-            ) if (ni.isConnected) haveConnectedMobile = true
+            if (ni.typeName.equals("WIFI", ignoreCase = true) && ni.isConnected)
+                haveConnectedWifi = true
+            if (ni.typeName.equals("MOBILE", ignoreCase = true) && ni.isConnected)
+                haveConnectedMobile = true
         }
         return haveConnectedWifi || haveConnectedMobile
     }

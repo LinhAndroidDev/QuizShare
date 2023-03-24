@@ -1,5 +1,6 @@
 package com.example.appthitracnghiem.ui.login
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.data.remote.ApiClient
@@ -18,19 +19,9 @@ class LoginViewModel : BaseViewModel() {
     val successLoginLiveData = MutableLiveData<Boolean>()
     val validateLiveData = MutableLiveData<ValidateModel>()
 
-    fun isFirstInstallApp(): Boolean {
-        return mPreferenceUtil.defaultPref()
-            .getBoolean(PreferenceKey.KEY_FIRST_INSTALL, true)
-    }
-
-    fun clearFirstInstallApp() {
+    fun confirmLoggedIn(){
         mPreferenceUtil.defaultPref().edit()
-            .putBoolean(PreferenceKey.KEY_FIRST_INSTALL, false).apply()
-    }
-
-    fun isUserLoggedIn(): Boolean {
-        return mPreferenceUtil.defaultPref()
-            .getBoolean(PreferenceKey.KEY_USER_LOGGED_IN, false)
+            .putBoolean(PreferenceKey.KEY_USER_LOGGED_IN, true).apply()
     }
 
     private fun validateLogin(strEmail: String, strPassword: String): ValidateModel {
@@ -38,14 +29,14 @@ class LoginViewModel : BaseViewModel() {
             ValidateModel(false, R.string.txt_notification_login, R.color.color_green)
         } else {
             val email: Email = Email(strEmail, strPassword)
-            if (!email.isValidEmail()) {
-                ValidateModel(false, R.string.txt_warning_login, R.color.color_red)
-            } else {
+            if (email.isValidEmail() || email.isValidPhone()) {
                 if (!email.isPassword()) {
                     ValidateModel(false, R.string.txt_warning_password, R.color.color_red)
                 } else {
                     ValidateModel(true, -1, -1)
                 }
+            } else {
+                ValidateModel(false, R.string.txt_warning_login, R.color.color_red)
             }
         }
     }
@@ -60,14 +51,9 @@ class LoginViewModel : BaseViewModel() {
 
     private fun requestLogin(strEmail: String, strPassword: String) {
         loadingLiveData.value = true
-        val requestBodyStrEmail: RequestBody =
-            RequestBody.create("multipart/from-data".toMediaTypeOrNull(), strEmail)
-        val requestBodyStrPassword: RequestBody = RequestBody.create(
-            "multipart/from-data".toMediaTypeOrNull(),
-            strPassword
-        )
+        val requestLogin = RequestLogin(strEmail,strPassword)
         ApiClient.shared()
-            .loginUser(requestBodyStrEmail, requestBodyStrPassword)
+            .loginUser(requestLogin)
             .enqueue(object : Callback<LoginResponse> {
                 override fun onResponse(
                     call: Call<LoginResponse>,
@@ -77,8 +63,7 @@ class LoginViewModel : BaseViewModel() {
                     if (response.isSuccessful) {
                         if (response.body()?.statusCode == ApiClient.STATUS_CODE_SUCCESS) {
                             successLoginLiveData.value = true
-                            mPreferenceUtil.defaultPref().edit()
-                                .putBoolean(PreferenceKey.KEY_USER_LOGGED_IN, true).apply()
+                            confirmLoggedIn()
                         } else {
                             val errorMessage = response.body()?.message
                                 ?: "Email hoặc mật khẩu không chính xác"
@@ -95,6 +80,7 @@ class LoginViewModel : BaseViewModel() {
                 ) {
                     loadingLiveData.value = false
                     errorApiLiveData.value = t.message
+                    Log.e("TAG", "Error ${t.message}")
                 }
             })
     }

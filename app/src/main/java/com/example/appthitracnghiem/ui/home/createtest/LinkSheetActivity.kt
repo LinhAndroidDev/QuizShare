@@ -12,11 +12,15 @@ class LinkSheetActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_link_sheet)
 
+        click()
+
+        setText()
+    }
+
+    private fun click() {
         backLinkSheet.setOnClickListener {
             onBackPressed()
         }
-
-        setText()
     }
 
     /** set font*/

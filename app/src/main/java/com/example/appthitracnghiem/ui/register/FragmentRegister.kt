@@ -1,38 +1,40 @@
-package com.example.appthitracnghiem.ui.login_need_refactor
+package com.example.appthitracnghiem.ui.register
 
 import android.app.ProgressDialog
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.TextUtils
 import android.text.method.PasswordTransformationMethod
 import android.text.style.StyleSpan
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.data.remote.ApiClient
 import com.example.appthitracnghiem.data.remote.ApiService
+import com.example.appthitracnghiem.data.remote.entity.RegisterResponse
 import com.example.appthitracnghiem.model.LoginSuccessful
 import com.example.appthitracnghiem.model.ViewModelGeneral
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.utils.Email
+import kotlinx.android.synthetic.main.fragment__create_password.*
 import kotlinx.android.synthetic.main.fragment__register.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -40,16 +42,27 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 @Suppress("DEPRECATION")
-class FragmentRegister : BaseFragment<EmptyViewModel>() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class FragmentRegister : BaseFragment<RegisterViewModel>() {
     lateinit var viewModelGeneral: ViewModelGeneral
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModelGeneral = ViewModelProvider(requireActivity())[ViewModelGeneral::class.java]
+
+        click()
+
+        setText()
+    }
+
+    private fun click() {
+        hidePasswordRegister.setOnClickListener {
+            hidePassword(passwordRegister, hidePasswordRegister)
+        }
+
+        hidePasswordRegisterRepeat.setOnClickListener {
+            hidePassword(passwordRegisterRepeat, hidePasswordRegisterRepeat)
+        }
 
         registerAccount.setOnClickListener {
             register()
@@ -58,44 +71,19 @@ class FragmentRegister : BaseFragment<EmptyViewModel>() {
         loginNow.setOnClickListener {
             activity?.finish()
         }
-
-        setText()
-
-        hidePassword()
-    }
-
-    private fun hidePassword() {
-        hidePasswordRegister.setOnClickListener {
-            if (passwordRegister.transformationMethod == PasswordTransformationMethod.getInstance()) {
-                passwordRegister.transformationMethod = null
-                hidePasswordRegister.setBackgroundResource(R.drawable.icon_show_password_grey)
-            } else if (passwordRegister.transformationMethod == null) {
-                passwordRegister.transformationMethod = PasswordTransformationMethod.getInstance()
-                hidePasswordRegister.setBackgroundResource(R.drawable.icon_hint_grey)
-            }
-        }
-
-        hidePasswordRegisterRepeat.setOnClickListener {
-            if (passwordRegisterRepeat.transformationMethod == PasswordTransformationMethod.getInstance()) {
-                passwordRegisterRepeat.transformationMethod = null
-                hidePasswordRegisterRepeat.setBackgroundResource(R.drawable.icon_show_password_grey)
-            } else if (passwordRegisterRepeat.transformationMethod == null) {
-                passwordRegisterRepeat.transformationMethod =
-                    PasswordTransformationMethod.getInstance()
-                hidePasswordRegisterRepeat.setBackgroundResource(R.drawable.icon_hint_grey)
-            }
-        }
     }
 
     private fun register() {
         val progressDialog: ProgressDialog = ProgressDialog(requireActivity())
         progressDialog.setMessage("Đang cập nhật tài khoản")
         val strName = edtEnterNameRegister.text.toString().trim()
+        val strYearOfBirth = edtEnterYearOfBirthRegister.text.toString().trim()
         val strEmail = edtEnterEmailRegister.text.toString().trim()
+        val strPhone = edtPhoneRegister.text.toString().trim()
         val strPassword = passwordRegister.text.toString().trim()
         val strPasswordRepeat = passwordRegisterRepeat.text.toString().trim()
 
-        if (strName.isEmpty() || strEmail.isEmpty() || strPassword.isEmpty() || strPasswordRepeat.isEmpty()) {
+        if (strName.isEmpty() || strYearOfBirth.isEmpty() || strEmail.isEmpty() || strPhone.isEmpty() || strPassword.isEmpty() || strPasswordRepeat.isEmpty()) {
             setNote(R.string.txt_notification_register, R.color.color_green)
             return
         }
@@ -108,29 +96,31 @@ class FragmentRegister : BaseFragment<EmptyViewModel>() {
             setNote(R.string.txt_warning_password, R.color.color_red)
             return
         }
+        if (!Patterns.PHONE.matcher(strPhone)
+                .matches() || strPhone.length < 10
+        ) {
+            setNote(R.string.txt_warning_phone, R.color.color_red)
+            return
+        }
         if (strPassword != strPasswordRepeat) {
             setNote(R.string.txtEnterRepeatPassword, R.color.color_red)
             return
         }
         progressDialog.show()
-        val requestBodyStrEmail: RequestBody =
-            RequestBody.create("multipart/from-data".toMediaTypeOrNull(), strEmail)
-        val requestBodyStrPassword: RequestBody = RequestBody.create(
-            "multipart/from-data".toMediaTypeOrNull(),
-            strPassword
-        )
+
+        val requestRegister = RequestRegister(strEmail,strName,strPhone,strYearOfBirth.toInt(),strPassword)
 
         viewModelGeneral.postRetrofit.create(ApiService::class.java)
-            .registerUser(requestBodyStrEmail, requestBodyStrPassword)
-            .enqueue(object : retrofit2.Callback<LoginSuccessful> {
+            .registerUser(requestRegister)
+            .enqueue(object : retrofit2.Callback<RegisterResponse> {
                 override fun onResponse(
-                    call: Call<LoginSuccessful>,
-                    response: Response<LoginSuccessful>,
+                    call: Call<RegisterResponse>,
+                    response: Response<RegisterResponse>,
                 ) {
                     progressDialog.dismiss()
                     if (response.isSuccessful) {
-                        when (response.body()?.status) {
-                            0 -> {
+                        when (response.body()?.statusCode) {
+                            ApiClient.STATUS_CODE_SUCCESS -> {
                                 val fragmentCondition: FragmentCondition =
                                     FragmentCondition()
                                 val fm: FragmentTransaction =
@@ -160,7 +150,7 @@ class FragmentRegister : BaseFragment<EmptyViewModel>() {
                 }
 
                 override fun onFailure(
-                    call: Call<LoginSuccessful>,
+                    call: Call<RegisterResponse>,
                     t: Throwable
                 ) {
                     progressDialog.dismiss()
@@ -192,11 +182,13 @@ class FragmentRegister : BaseFragment<EmptyViewModel>() {
         warningRegister.startAnimation(circle)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private fun hidePassword(password: EditText, hide: ImageView) {
+        if (password.transformationMethod == PasswordTransformationMethod.getInstance()) {
+            password.transformationMethod = null
+            hide.setBackgroundResource(R.drawable.icon_show_password_grey)
+        } else if (newPasswordCreate.transformationMethod == null) {
+            password.transformationMethod = PasswordTransformationMethod.getInstance()
+            hide.setBackgroundResource(R.drawable.icon_hint_grey)
         }
     }
 
@@ -211,25 +203,5 @@ class FragmentRegister : BaseFragment<EmptyViewModel>() {
     override fun onFragmentBack(): Boolean {
 
         return true
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Fragment_Register.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentRegister().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

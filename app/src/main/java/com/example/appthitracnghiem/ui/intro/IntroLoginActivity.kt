@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.home.home.HomeActivity
 import com.example.appthitracnghiem.ui.login.LoginActivity
-import com.example.appthitracnghiem.ui.login_need_refactor.RegisterActivity
+import com.example.appthitracnghiem.ui.register.RegisterActivity
 import kotlinx.android.synthetic.main.fragment_intro_login.*
 
 class IntroLoginActivity : AppCompatActivity() {
@@ -19,6 +19,10 @@ class IntroLoginActivity : AppCompatActivity() {
 
         overridePendingTransition(R.anim.anim_translate_enter_right, R.anim.anim_translate_exit_left)
 
+        click()
+    }
+
+    private fun click() {
         loginIntro.setOnClickListener {
             val intent: Intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)

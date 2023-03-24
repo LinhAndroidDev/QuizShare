@@ -1,9 +1,12 @@
 package com.example.appthitracnghiem.data.remote
 
 import com.example.appthitracnghiem.data.remote.entity.LoginResponse
+import com.example.appthitracnghiem.data.remote.entity.RegisterResponse
 import com.example.appthitracnghiem.model.LoginSuccessful
 import com.example.appthitracnghiem.model.Quiz
 import com.example.appthitracnghiem.model.Subject
+import com.example.appthitracnghiem.ui.login.RequestLogin
+import com.example.appthitracnghiem.ui.register.RequestRegister
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -19,14 +22,12 @@ interface ApiService {
     fun getListSubject(@Query("alt")  alt : String
                        ,@Query("token") token : String) : Call<List<Subject>>
 
-    @Multipart
-    @POST("register.php")
-    fun registerUser(@Part("email") email: RequestBody, @Part("password") password : RequestBody)
-    : Call<LoginSuccessful>
+    @POST("register")
+    fun registerUser(@Body requestRegister: RequestRegister)
+    : Call<RegisterResponse>
 
-    @Multipart
-    @POST("login.php")
-    fun loginUser(@Part("email") email: RequestBody, @Part("password") password: RequestBody)
+    @POST("login")
+    fun loginUser(@Body requestLogin: RequestLogin)
             : Call<LoginResponse>
 
     @Multipart

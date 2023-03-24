@@ -1,4 +1,4 @@
-package com.example.appthitracnghiem.ui.login_need_refactor
+package com.example.appthitracnghiem.ui.register
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -22,13 +22,13 @@ class RegisterActivity : BaseActivity<EmptyViewModel>() {
     }
 
     fun replaceFragmentRegister(fragment: Fragment) {
-        var fm: FragmentTransaction = supportFragmentManager.beginTransaction()
+        val fm: FragmentTransaction = supportFragmentManager.beginTransaction()
         fm.addToBackStack("Fragment_Register")
         fm.replace(R.id.registerContainerID, fragment).commit()
     }
 
     override fun onBackPressed() {
-        var fragment = supportFragmentManager.findFragmentById(R.id.registerContainerID)
+        val fragment = supportFragmentManager.findFragmentById(R.id.registerContainerID)
 
         if (fragment != null && fragment is BaseFragment<*>) {
             if (fragment.onFragmentBack()) {

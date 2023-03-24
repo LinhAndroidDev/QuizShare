@@ -10,6 +10,10 @@ class SearchSubject : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_subject)
 
+        click()
+    }
+
+    private fun click() {
         backSearchSubject.setOnClickListener {
             onBackPressed()
         }

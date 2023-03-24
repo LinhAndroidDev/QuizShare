@@ -15,6 +15,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -24,13 +26,9 @@ import com.example.appthitracnghiem.model.ViewModelGeneral
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.home.HomeActivity
 import com.example.appthitracnghiem.ui.login.forgetpassword.FragmentForgetPassword
-import com.example.appthitracnghiem.ui.login_need_refactor.RegisterActivity
+import com.example.appthitracnghiem.ui.register.RegisterActivity
+import kotlinx.android.synthetic.main.fragment__create_password.*
 import kotlinx.android.synthetic.main.fragment__login.*
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -39,9 +37,6 @@ private const val ARG_PARAM2 = "param2"
  */
 @Suppress("DEPRECATION")
 class FragmentLogin : BaseFragment<LoginViewModel>() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     lateinit var viewModelGeneral: ViewModelGeneral
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
@@ -61,25 +56,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
 
         checkSaveAccount()
 
-        hidePasswordLogin.setOnClickListener {
-            hidePassword()
-        }
-
-        forgetPassword.setOnClickListener {
-            val fragmentForgetpassword: FragmentForgetPassword = FragmentForgetPassword()
-            val fm: FragmentTransaction =
-                requireActivity().supportFragmentManager.beginTransaction()
-            fm.setCustomAnimations(
-                R.anim.anim_translate_enter_right,
-                R.anim.anim_translate_exit_left,
-                R.anim.anim_translate_enter_left,
-                R.anim.anim_translate_exit_right
-            )
-            fm.addToBackStack("Fragment_ForgetPassword")
-            fm.replace(R.id.loginContainerID, fragmentForgetpassword).commit()
-        }
-
-        clickLogin()
+        click()
 
         setText()
     }
@@ -127,7 +104,25 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
     }
 
     @SuppressLint("ResourceAsColor")
-    private fun clickLogin() {
+    private fun click() {
+        hidePasswordLogin.setOnClickListener {
+            hidePassword(passwordLogin,hidePasswordLogin)
+        }
+
+        forgetPassword.setOnClickListener {
+            val fragmentForgetpassword: FragmentForgetPassword = FragmentForgetPassword()
+            val fm: FragmentTransaction =
+                requireActivity().supportFragmentManager.beginTransaction()
+            fm.setCustomAnimations(
+                R.anim.anim_translate_enter_right,
+                R.anim.anim_translate_exit_left,
+                R.anim.anim_translate_enter_left,
+                R.anim.anim_translate_exit_right
+            )
+            fm.addToBackStack("Fragment_ForgetPassword")
+            fm.replace(R.id.loginContainerID, fragmentForgetpassword).commit()
+        }
+
         registerNow.setOnClickListener {
             val intent: Intent = Intent(activity, RegisterActivity::class.java)
             startActivity(intent)
@@ -183,13 +178,13 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
         checkForgetPassword.isChecked = true
     }
 
-    private fun hidePassword() {
-        if (passwordLogin.transformationMethod == PasswordTransformationMethod.getInstance()) {
-            passwordLogin.transformationMethod = null
-            hidePasswordLogin.setBackgroundResource(R.drawable.icon_show_password_grey)
-        } else if (passwordLogin.transformationMethod == null) {
-            passwordLogin.transformationMethod = PasswordTransformationMethod.getInstance()
-            hidePasswordLogin.setBackgroundResource(R.drawable.icon_hint_grey)
+    private fun hidePassword(password: EditText, hide: ImageView) {
+        if (password.transformationMethod == PasswordTransformationMethod.getInstance()) {
+            password.transformationMethod = null
+            hide.setBackgroundResource(R.drawable.icon_show_password_grey)
+        } else if (newPasswordCreate.transformationMethod == null) {
+            password.transformationMethod = PasswordTransformationMethod.getInstance()
+            hide.setBackgroundResource(R.drawable.icon_hint_grey)
         }
     }
 
@@ -199,14 +194,6 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
         warningLogin.setTextColor(resources.getColor(color))
         warningLogin.visibility = View.VISIBLE
         warningLogin.startAnimation(circle)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -220,25 +207,5 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
     override fun onFragmentBack(): Boolean {
 
         return true
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Fragment_Login.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentLogin().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

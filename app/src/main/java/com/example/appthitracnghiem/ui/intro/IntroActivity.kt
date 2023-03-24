@@ -30,24 +30,25 @@ class IntroActivity : BaseActivity<EmptyViewModel>() {
 
             hideButton()
 
-            clickNext()
+            click()
 
-            skip.setOnClickListener {
-                val intent: Intent = Intent(this, IntroLoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
         } else {
             CheckConnect.showToastShort(this@IntroActivity, "Bạn đang ngoại tuyến")
         }
     }
 
     /** Next ViewPager*/
-    private fun clickNext() {
+    private fun click() {
+        skip.setOnClickListener {
+            val intent: Intent = Intent(this, IntroLoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         nextIntro.setOnClickListener {
             when (viewPagerIntro.currentItem) {
                 2 -> {
-                    var intent: Intent = Intent(this, IntroLoginActivity::class.java)
+                    val intent: Intent = Intent(this, IntroLoginActivity::class.java)
                     startActivity(intent)
                     finish()
                 }

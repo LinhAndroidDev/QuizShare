@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.login_need_refactor.FragmentRegister">
+    tools:context=".ui.register.FragmentRegister">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,7 +56,7 @@
             android:paddingEnd="50dp"
             android:hint="@string/edtEnterYearOfBirth"
             android:textColorHint="@color/color_to_do_late"
-            android:inputType="textEmailAddress"/>
+            android:inputType="number"/>
         <TextView
             android:text="@string/txtEmailRegister"
             android:textSize="16sp"
@@ -96,7 +96,7 @@
             android:paddingEnd="50dp"
             android:hint="@string/edtEnterPhoneRegister"
             android:textColorHint="@color/color_to_do_late"
-            android:inputType="textEmailAddress"
+            android:inputType="phone"
             tools:ignore="TextFields" />
         <TextView
             android:text="@string/password"

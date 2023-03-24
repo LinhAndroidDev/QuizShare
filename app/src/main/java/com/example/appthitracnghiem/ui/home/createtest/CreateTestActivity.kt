@@ -26,27 +26,28 @@ class CreateTestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_test)
 
-//        numberQuiz = intent.extras?.getString("numberQuiz")!!.toInt()
         val numberQuiz = intent.getStringExtra("numberQuiz")?.toInt()
-
-        backCreateTest.setOnClickListener {
-            finish()
-        }
-
-        setText()
 
         val linearLayoutManager: LinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recycleListNumber.layoutManager = linearLayoutManager
 
         listPositiveQuestion = arrayListOf()
-
-        for(i in 0 until numberQuiz!!){
-            listPositiveQuestion.add(PositiveQuestion(i+1))
+        for (i in 0 until numberQuiz!!) {
+            listPositiveQuestion.add(PositiveQuestion(i + 1))
         }
-
         positiveQuestionAdapter = PositiveQuestionAdapter(listPositiveQuestion, this)
         recycleListNumber.adapter = positiveQuestionAdapter
+
+        click()
+
+        setText()
+    }
+
+    private fun click() {
+        backCreateTest.setOnClickListener {
+            finish()
+        }
 
         addCoverImageCreateTest.setOnClickListener {
             val intent: Intent = Intent(Intent.ACTION_PICK)

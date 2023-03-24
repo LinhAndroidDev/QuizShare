@@ -25,7 +25,7 @@ class LoginActivity : BaseActivity<EmptyViewModel>() {
 
     private fun replaceFragmentLogin(fragment: Fragment) {
         val fm: FragmentTransaction = supportFragmentManager.beginTransaction()
-        fm.addToBackStack("Fragment_Login")
+        fm.addToBackStack("FragmentLogin")
         fm.replace(R.id.loginContainerID, fragment).commit()
     }
 

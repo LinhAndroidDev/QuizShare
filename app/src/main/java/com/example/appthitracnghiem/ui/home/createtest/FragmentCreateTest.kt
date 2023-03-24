@@ -1,5 +1,6 @@
 package com.example.appthitracnghiem.ui.home.createtest
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
@@ -21,11 +22,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_create_test.*
 import kotlinx.android.synthetic.main.layout_bottom_share.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 /**
  * A simple [Fragment] subclass.
  * Use the [FragmentCreateTest.newInstance] factory method to
@@ -33,18 +29,19 @@ private const val ARG_PARAM2 = "param2"
  */
 @Suppress("DEPRECATION")
 class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private val GALLERY_RED_CODE: Int = 1000
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setText()
-
         setBottomShare()
 
+        click()
+
+        setText()
+    }
+
+    private fun click() {
         menuCreateTest.setOnClickListener {
             showMenuCreate(menuCreateTest, R.layout.popup_create_test, 0, -30, Gravity.BOTTOM)
         }
@@ -69,12 +66,13 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
         }
 
         createTest.setOnClickListener {
-            val strNumberQuiz : String = edtNumberQuiz.text.toString()
-            if(strNumberQuiz.isEmpty()){
-                Toast.makeText(requireActivity(),"Bạn chưa nhập câu hỏi số",Toast.LENGTH_SHORT).show()
-            }else{
+            val strNumberQuiz: String = edtNumberQuiz.text.toString()
+            if (strNumberQuiz.isEmpty()) {
+                Toast.makeText(requireActivity(), "Bạn chưa nhập câu hỏi số", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
                 val intent: Intent = Intent(requireActivity(), CreateTestActivity::class.java)
-                intent.putExtra("numberQuiz",strNumberQuiz)
+                intent.putExtra("numberQuiz", strNumberQuiz)
                 startActivity(intent)
             }
         }
@@ -96,9 +94,10 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
     }
 
     /** Share Test*/
+    @SuppressLint("ClickableViewAccessibility")
     private fun setBottomShare() {
-        layoutBottomShare.setOnTouchListener { v, event -> true }
-        var bottomShareBehavior = BottomSheetBehavior.from(layoutBottomShare)
+        layoutBottomShare.setOnTouchListener { _, _ -> true }
+        val bottomShareBehavior = BottomSheetBehavior.from(layoutBottomShare)
         shareTest.setOnClickListener {
             if (bottomShareBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
                 bottomShareBehavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -147,14 +146,6 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
         txtDetail.typeface = semibold
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -165,25 +156,5 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
 
     override fun onFragmentBack(): Boolean {
         return false
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentCreateTest.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentCreateTest().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
