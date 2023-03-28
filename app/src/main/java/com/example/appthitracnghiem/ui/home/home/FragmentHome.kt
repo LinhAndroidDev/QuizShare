@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.base.animation.TranslateAnimation
 import com.example.appthitracnghiem.ui.home.home.adapter.QuizAdapter
+import com.example.appthitracnghiem.ui.home.home.adapter.ViewPagerDepartment
 import kotlinx.android.synthetic.main.activity_home_page.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -27,27 +29,23 @@ import kotlinx.android.synthetic.main.fragment_home.*
  * Use the [FragmentHome.newInstance] factory method to
  * create an instance of this fragment.
  */
+@Suppress("DEPRECATION")
 class FragmentHome : BaseFragment<EmptyViewModel>() {
-    lateinit var viewModelGeneral: ViewModelGeneral
+    lateinit var viewPagerDepartment : ViewPagerDepartment
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewPagerDepartment = ViewPagerDepartment(requireActivity().supportFragmentManager,
+            FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
+        pageDepartment.adapter = viewPagerDepartment
+
+        tabDepartment.setupWithViewPager(pageDepartment)
+
         if (bottomWrap != null) {
             scrollHome.setOnTouchListener(TranslateAnimation(requireActivity(), bottomWrap))
         }
-
-        viewModelGeneral = ViewModelProvider(requireActivity())[ViewModelGeneral::class.java]
-        viewModelGeneral.getDataQuiz()
-
-        val linearLayoutManager: LinearLayoutManager =
-            LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-        recycleListLiveQuizzes.layoutManager = linearLayoutManager
-
-        getData()
-
-        getLoading()
 
         setText()
     }
@@ -56,30 +54,6 @@ class FragmentHome : BaseFragment<EmptyViewModel>() {
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         textHome.typeface = semibold
-        textQuizHome.typeface = semibold
-    }
-
-    private fun getLoading() {
-        viewModelGeneral.loadingQuizLive.observe(requireActivity(), Observer { loadingQuizLive ->
-            if (loadingQuizLive != null && loadingQuiz != null) {
-                if (loadingQuizLive == true) {
-                    loadingQuiz.visibility = View.VISIBLE
-                } else if (loadingQuizLive == false) {
-                    loadingQuiz.visibility = View.INVISIBLE
-                }
-            }
-        })
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private fun getData() {
-        viewModelGeneral.listQuizLive.observe(requireActivity(), Observer { listQuiz ->
-            if (listQuiz != null && recycleListLiveQuizzes != null) {
-                val adapterQuiz: QuizAdapter = QuizAdapter(listQuiz, requireActivity())
-                recycleListLiveQuizzes.adapter = adapterQuiz
-                adapterQuiz.notifyDataSetChanged()
-            }
-        })
     }
 
     override fun onCreateView(

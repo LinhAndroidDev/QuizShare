@@ -16,7 +16,7 @@ class ViewModelGeneral : ViewModel() {
     lateinit var postRetrofit: Retrofit
     val listQuizLive = MutableLiveData<MutableList<Quiz>>()
     val loadingQuizLive = MutableLiveData(false)
-    val listSubjectLive = MutableLiveData<MutableList<Subject>>()
+    val listSubjectLive = MutableLiveData<MutableList<RecommandSubject>>()
     val loadingSubjectLive = MutableLiveData(false)
 
     init {
@@ -63,16 +63,16 @@ class ViewModelGeneral : ViewModel() {
         loadingSubjectLive.postValue(true)
         retrofit.create(ApiService::class.java)
             .getListSubject("media", "e6a753c7-ae4d-43f8-88f5-3909fc3e2919")
-            .enqueue(object : Callback<List<Subject>> {
+            .enqueue(object : Callback<List<RecommandSubject>> {
                 override fun onResponse(
-                    call: Call<List<Subject>>,
-                    response: Response<List<Subject>>
+                    call: Call<List<RecommandSubject>>,
+                    response: Response<List<RecommandSubject>>
                 ) {
-                    listSubjectLive.postValue(response.body() as MutableList<Subject>?)
+                    listSubjectLive.postValue(response.body() as MutableList<RecommandSubject>?)
                     loadingSubjectLive.postValue(false)
                 }
 
-                override fun onFailure(call: Call<List<Subject>>, t: Throwable) {
+                override fun onFailure(call: Call<List<RecommandSubject>>, t: Throwable) {
                     loadingSubjectLive.postValue(false)
                 }
 

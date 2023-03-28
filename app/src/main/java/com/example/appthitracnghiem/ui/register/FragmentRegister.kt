@@ -28,7 +28,9 @@ import com.example.appthitracnghiem.model.LoginSuccessful
 import com.example.appthitracnghiem.model.ViewModelGeneral
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.login.forgetpassword.FragmentCreatePassword
 import com.example.appthitracnghiem.utils.Email
+import com.skydoves.progressview.progressView
 import kotlinx.android.synthetic.main.fragment__create_password.*
 import kotlinx.android.synthetic.main.fragment__register.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -44,15 +46,53 @@ import retrofit2.Response
 @Suppress("DEPRECATION")
 class FragmentRegister : BaseFragment<RegisterViewModel>() {
     lateinit var viewModelGeneral: ViewModelGeneral
+    lateinit var progressDialog: ProgressDialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        progressDialog = ProgressDialog(requireActivity())
 
         viewModelGeneral = ViewModelProvider(requireActivity())[ViewModelGeneral::class.java]
 
         click()
 
         setText()
+    }
+
+    override fun bindData() {
+        super.bindData()
+
+        viewModel.loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                progressDialog.setMessage("Đang cập nhật tài khoản")
+                progressDialog.show()
+            } else {
+                progressDialog.dismiss()
+            }
+        }
+
+        viewModel.successRegisterLiveData.observe(viewLifecycleOwner) { isSuccess ->
+            val fragmentCondition: FragmentCondition = FragmentCondition()
+            val fm: FragmentTransaction =
+                requireActivity().supportFragmentManager.beginTransaction()
+            fm.setCustomAnimations(
+                R.anim.anim_translate_enter_right,
+                R.anim.anim_translate_exit_left,
+                R.anim.anim_translate_enter_left,
+                R.anim.anim_translate_exit_right
+            )
+            fm.addToBackStack("Fragment_Condition")
+            fm.replace(R.id.registerContainerID, fragmentCondition).commit()
+        }
+
+        viewModel.validateLiveData.observe(viewLifecycleOwner) { model ->
+            if (model.isValidate) {
+                warningRegister.visibility = View.GONE
+            } else {
+                setNote(model.resMsgError, model.resColorError)
+            }
+        }
     }
 
     private fun click() {
@@ -65,102 +105,26 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
         }
 
         registerAccount.setOnClickListener {
-            register()
+            val strName = edtEnterNameRegister.text.toString().trim()
+            val strYearOfBirth = edtEnterYearOfBirthRegister.text.toString().trim()
+            val strEmail = edtEnterEmailRegister.text.toString().trim()
+            val strPhone = edtPhoneRegister.text.toString().trim()
+            val strPassword = passwordRegister.text.toString().trim()
+            val strPasswordRepeat = passwordRegisterRepeat.text.toString().trim()
+
+            viewModel.register(
+                strEmail,
+                strName,
+                strPhone,
+                strYearOfBirth,
+                strPassword,
+                strPasswordRepeat
+            )
         }
 
         loginNow.setOnClickListener {
             activity?.finish()
         }
-    }
-
-    private fun register() {
-        val progressDialog: ProgressDialog = ProgressDialog(requireActivity())
-        progressDialog.setMessage("Đang cập nhật tài khoản")
-        val strName = edtEnterNameRegister.text.toString().trim()
-        val strYearOfBirth = edtEnterYearOfBirthRegister.text.toString().trim()
-        val strEmail = edtEnterEmailRegister.text.toString().trim()
-        val strPhone = edtPhoneRegister.text.toString().trim()
-        val strPassword = passwordRegister.text.toString().trim()
-        val strPasswordRepeat = passwordRegisterRepeat.text.toString().trim()
-
-        if (strName.isEmpty() || strYearOfBirth.isEmpty() || strEmail.isEmpty() || strPhone.isEmpty() || strPassword.isEmpty() || strPasswordRepeat.isEmpty()) {
-            setNote(R.string.txt_notification_register, R.color.color_green)
-            return
-        }
-        val email: Email = Email(strEmail, strPassword)
-        if (!email.isValidEmail()) {
-            setNote(R.string.txt_warning_login, R.color.color_red)
-            return
-        }
-        if (!email.isPassword()) {
-            setNote(R.string.txt_warning_password, R.color.color_red)
-            return
-        }
-        if (!Patterns.PHONE.matcher(strPhone)
-                .matches() || strPhone.length < 10
-        ) {
-            setNote(R.string.txt_warning_phone, R.color.color_red)
-            return
-        }
-        if (strPassword != strPasswordRepeat) {
-            setNote(R.string.txtEnterRepeatPassword, R.color.color_red)
-            return
-        }
-        progressDialog.show()
-
-        val requestRegister = RequestRegister(strEmail,strName,strPhone,strYearOfBirth.toInt(),strPassword)
-
-        viewModelGeneral.postRetrofit.create(ApiService::class.java)
-            .registerUser(requestRegister)
-            .enqueue(object : retrofit2.Callback<RegisterResponse> {
-                override fun onResponse(
-                    call: Call<RegisterResponse>,
-                    response: Response<RegisterResponse>,
-                ) {
-                    progressDialog.dismiss()
-                    if (response.isSuccessful) {
-                        when (response.body()?.statusCode) {
-                            ApiClient.STATUS_CODE_SUCCESS -> {
-                                val fragmentCondition: FragmentCondition =
-                                    FragmentCondition()
-                                val fm: FragmentTransaction =
-                                    requireActivity().supportFragmentManager.beginTransaction()
-                                fm.addToBackStack("Fragment_Register")
-                                fm.replace(
-                                    R.id.registerContainerID,
-                                    fragmentCondition
-                                ).commit()
-                            }
-                            2 -> {
-                                Toast.makeText(
-                                    requireActivity(),
-                                    "Tài khoản đã tồn tại",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                            else -> {
-                                Toast.makeText(
-                                    requireActivity(),
-                                    "Lỗi",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-                    }
-                }
-
-                override fun onFailure(
-                    call: Call<RegisterResponse>,
-                    t: Throwable
-                ) {
-                    progressDialog.dismiss()
-                    Toast.makeText(
-                        requireActivity(),
-                        "Lỗi kết nối Server",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            })
     }
 
     private fun setText() {
@@ -186,7 +150,7 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
         if (password.transformationMethod == PasswordTransformationMethod.getInstance()) {
             password.transformationMethod = null
             hide.setBackgroundResource(R.drawable.icon_show_password_grey)
-        } else if (newPasswordCreate.transformationMethod == null) {
+        } else if (password.transformationMethod == null) {
             password.transformationMethod = PasswordTransformationMethod.getInstance()
             hide.setBackgroundResource(R.drawable.icon_hint_grey)
         }

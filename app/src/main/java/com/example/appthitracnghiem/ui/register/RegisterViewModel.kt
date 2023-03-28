@@ -26,11 +26,11 @@ class RegisterViewModel : BaseViewModel() {
         strEmail: String,
         strName: String,
         strPhone: String,
-        strYearOfBirth: Int,
+        strYearOfBirth: String,
         strPassword: String,
         strPasswordRepeat: String
     ): ValidateModel {
-        return if (strName.isEmpty() || strYearOfBirth == null || strEmail.isEmpty() || strPhone.isEmpty() || strPassword.isEmpty() || strPasswordRepeat.isEmpty()) {
+        return if (strName.isEmpty() || strYearOfBirth.isEmpty() || strEmail.isEmpty() || strPhone.isEmpty() || strPassword.isEmpty() || strPasswordRepeat.isEmpty()) {
             ValidateModel(false, R.string.txt_notification_register, R.color.color_green)
         } else {
             val email: Email = Email(strEmail, strPassword)
@@ -56,7 +56,7 @@ class RegisterViewModel : BaseViewModel() {
         strEmail: String,
         strName: String,
         strPhone: String,
-        strYearOfBirth: Int,
+        strYearOfBirth: String,
         strPassword: String,
         strPasswordRepeat: String
     ){
@@ -71,7 +71,7 @@ class RegisterViewModel : BaseViewModel() {
         strEmail: String,
         strName: String,
         strPhone: String,
-        strYearOfBirth: Int,
+        strYearOfBirth: String,
         strPassword: String
     ) {
         loadingLiveData.value = true
@@ -93,6 +93,9 @@ class RegisterViewModel : BaseViewModel() {
                             }
                             400 -> {
                                 errorApiLiveData.value = "Tài khoản đã tồn tại"
+                            }
+                            500 -> {
+                                errorApiLiveData.value = "Server not responding"
                             }
                         }
                     }

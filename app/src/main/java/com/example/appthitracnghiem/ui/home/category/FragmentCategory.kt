@@ -82,7 +82,7 @@ class FragmentCategory : BaseFragment<EmptyViewModel>() {
     private fun getData() {
         viewModelGeneral.listSubjectLive.observe(requireActivity(), Observer { listSubject ->
             if (listSubject != null && recycleListSubject != null) {
-                var subjectAdapter: SubjectAdapter = SubjectAdapter(listSubject, requireActivity())
+                val subjectAdapter: SubjectAdapter = SubjectAdapter(listSubject, requireActivity())
                 recycleListSubject.adapter = subjectAdapter
                 subjectAdapter.notifyDataSetChanged()
             }

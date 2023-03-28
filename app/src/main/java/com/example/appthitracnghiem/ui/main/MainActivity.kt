@@ -8,10 +8,9 @@ import android.view.animation.AnimationUtils
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.connectivity.CheckConnect
 import com.example.appthitracnghiem.ui.base.BaseActivity
-import com.example.appthitracnghiem.ui.home.home.HomeActivity
+import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.intro.IntroActivity
 import com.example.appthitracnghiem.ui.login.LoginActivity
-import com.example.appthitracnghiem.ui.login.LoginViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<MainViewModel>() {

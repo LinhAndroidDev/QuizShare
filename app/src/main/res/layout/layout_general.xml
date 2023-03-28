@@ -17,7 +17,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/imageQuiz"
+            android:id="@+id/image"
             android:layout_width="70dp"
             android:layout_height="70dp" />
 
@@ -29,29 +29,29 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/topicQuiz"
+                android:id="@+id/topic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Kiểm tra toán thống kê"
-                android:textColor="#111"
-                android:textSize="19dp" />
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/detailQuiz"
+                android:id="@+id/detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Math 12 Quizzes"
-                android:textSize="15dp" />
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 
     <ImageView
-        android:layout_width="4dp"
-        android:layout_height="12dp"
-        android:layout_alignParentRight="true"
+        android:layout_width="20dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="25dp"
-        android:background="@drawable/icon_next" />
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/icon_next_black" />
 </RelativeLayout>

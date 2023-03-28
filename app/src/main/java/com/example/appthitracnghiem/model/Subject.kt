@@ -1,7 +1,3 @@
 package com.example.appthitracnghiem.model
 
-data class Subject(
-    val detailSubject: String,
-    val imageSubject: String,
-    val nameSubject: String,
-)
+class Subject(val id: Int, val image: String, val title: String, val description: String)

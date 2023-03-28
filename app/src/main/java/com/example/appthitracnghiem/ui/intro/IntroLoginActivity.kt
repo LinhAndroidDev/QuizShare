@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.ui.home.home.HomeActivity
+import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.login.LoginActivity
 import com.example.appthitracnghiem.ui.register.RegisterActivity
 import kotlinx.android.synthetic.main.fragment_intro_login.*

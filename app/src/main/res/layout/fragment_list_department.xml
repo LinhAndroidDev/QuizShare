@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.test.FragmentListDepartment"
+    tools:context=".ui.department.listdepartment.FragmentListDepartment"
     android:background="@color/backgroundIntro">
     <LinearLayout
         android:layout_width="match_parent"
@@ -69,53 +69,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/textNatural"
-                        android:text="Khoa tự nhiên"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_alignParentRight="true"
-                        android:text="Xem tất cả"
-                        android:textSize="14sp"
-                        android:textColor="@color/color_purple"
-                        android:layout_centerVertical="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </RelativeLayout>
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginTop="16dp"
-                    android:id="@+id/recycleListNatural"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-                <RelativeLayout
-                    android:layout_marginTop="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/textScience"
-                        android:text="Khoa Khoa Học"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_alignParentEnd="true"
-                        android:text="Xem tất cả"
-                        android:textSize="14sp"
-                        android:textColor="@color/color_purple"
-                        android:layout_centerVertical="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </RelativeLayout>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginTop="16dp"
-                    android:id="@+id/recycleListScience"
+                    android:layout_marginTop="24dp"
+                    android:id="@+id/recycleDetailListDepartment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
             </LinearLayout>

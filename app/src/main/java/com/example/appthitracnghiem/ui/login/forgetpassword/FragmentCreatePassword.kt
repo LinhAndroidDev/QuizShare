@@ -65,7 +65,7 @@ class FragmentCreatePassword : BaseFragment<EmptyViewModel>() {
         if (password.transformationMethod == PasswordTransformationMethod.getInstance()) {
             password.transformationMethod = null
             hide.setBackgroundResource(R.drawable.icon_show_password_grey)
-        } else if (newPasswordCreate.transformationMethod == null) {
+        } else if (password.transformationMethod == null) {
             password.transformationMethod = PasswordTransformationMethod.getInstance()
             hide.setBackgroundResource(R.drawable.icon_hint_grey)
         }

@@ -1,9 +1,10 @@
-package com.example.appthitracnghiem.ui.home.home
+package com.example.appthitracnghiem.ui.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.connectivity.CheckConnect
 import com.example.appthitracnghiem.ui.EmptyViewModel
@@ -12,12 +13,15 @@ import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.category.FragmentCategory
 import com.example.appthitracnghiem.ui.home.createtest.FragmentCreateTest
 import com.example.appthitracnghiem.ui.home.historytest.FragmentHistory
+import com.example.appthitracnghiem.ui.home.home.FragmentHome
+import com.example.appthitracnghiem.ui.home.home.adapter.ViewPagerDepartment
 import com.example.appthitracnghiem.ui.home.profile.FragmentProfile
 import kotlinx.android.synthetic.main.activity_home_page.*
+import kotlinx.android.synthetic.main.fragment_home.*
 
+@Suppress("DEPRECATION")
 class HomeActivity : BaseActivity<EmptyViewModel>() {
     private var backPressTime: Long = 0
-    var CHECK_SHOW_TUTORIAL: String = "CHECK_SHOW_TUTORIAL"
 
     @SuppressLint("ClickableViewAccessibility", "CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {

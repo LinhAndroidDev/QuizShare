@@ -74,7 +74,7 @@
     <string name="txtHightLight">NỔI BẬT</string>
     <string name="txtTitleHome">Tham gia giải bài tập với nhiều dạng đề khác nhau từ mọi người</string>
     <string name="txtFindID">Tìm ID</string>
-    <string name="txtQuestionDirect">Câu đố trực tiếp</string>
+    <string name="txtListDepartment">Danh sách khoa</string>
     <string name="txtSeeAll">Xem tất cả</string>
 
     <!--    Fragment Category-->

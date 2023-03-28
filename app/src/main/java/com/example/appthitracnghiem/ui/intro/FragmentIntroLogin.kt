@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.ui.home.home.HomeActivity
+import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.login.LoginActivity
 import com.example.appthitracnghiem.ui.register.RegisterActivity
 import kotlinx.android.synthetic.main.fragment_intro_login.*

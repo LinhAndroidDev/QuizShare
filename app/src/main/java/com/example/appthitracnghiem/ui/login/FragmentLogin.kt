@@ -24,7 +24,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.ViewModelGeneral
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import com.example.appthitracnghiem.ui.home.home.HomeActivity
+import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.login.forgetpassword.FragmentForgetPassword
 import com.example.appthitracnghiem.ui.register.RegisterActivity
 import kotlinx.android.synthetic.main.fragment__create_password.*
@@ -48,6 +48,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         progressDialog = ProgressDialog(requireActivity())
         viewModelGeneral = ViewModelProvider(requireActivity())[ViewModelGeneral::class.java]
 
@@ -182,7 +183,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
         if (password.transformationMethod == PasswordTransformationMethod.getInstance()) {
             password.transformationMethod = null
             hide.setBackgroundResource(R.drawable.icon_show_password_grey)
-        } else if (newPasswordCreate.transformationMethod == null) {
+        } else if (password.transformationMethod == null) {
             password.transformationMethod = PasswordTransformationMethod.getInstance()
             hide.setBackgroundResource(R.drawable.icon_hint_grey)
         }

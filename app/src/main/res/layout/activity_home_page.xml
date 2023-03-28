@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/backgroundIntro"
-    tools:context=".ui.home.home.HomeActivity">
+    tools:context=".ui.home.HomeActivity">
 
     <RelativeLayout
         android:id="@+id/changeIdHome"
