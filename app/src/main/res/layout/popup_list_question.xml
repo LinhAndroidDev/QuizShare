@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <ImageView
-        android:layout_marginStart="39dp"
+        android:layout_marginStart="@dimen/start_margin"
         android:layout_alignParentBottom="true"
         android:background="@drawable/icon_tab_list_question"
         android:layout_width="40dp"

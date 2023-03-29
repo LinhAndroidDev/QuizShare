@@ -1,0 +1,238 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.appthitracnghiem"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+8-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="33" />
+9-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml
+10
+11    <supports-screens
+11-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:6:5-11:36
+12        android:anyDensity="true"
+12-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:10:9-34
+13        android:largeScreens="true"
+13-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:8:9-36
+14        android:normalScreens="true"
+14-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:7:9-37
+15        android:resizeable="true"
+15-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:11:9-34
+16        android:smallScreens="true"
+16-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:6:23-50
+17        android:xlargeScreens="true" />
+17-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:9:9-37
+18
+19    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+19-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:13:5-79
+19-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:13:22-76
+20    <uses-permission android:name="android.permission.INTERNET" />
+20-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:14:5-67
+20-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:14:22-64
+21
+22    <application
+22-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:16:5-106:19
+23        android:allowBackup="true"
+23-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:17:9-35
+24        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+24-->[androidx.core:core:1.8.0] C:\Users\Admin\.gradle\caches\transforms-3\205feb206244c8c1b4b56fcdc8d69988\transformed\core-1.8.0\AndroidManifest.xml:24:18-86
+25        android:dataExtractionRules="@xml/data_extraction_rules"
+25-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:18:9-65
+26        android:debuggable="true"
+27        android:fullBackupContent="@xml/backup_rules"
+27-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:19:9-54
+28        android:icon="@mipmap/ic_launcher"
+28-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:20:9-43
+29        android:label="@string/app_name"
+29-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:21:9-41
+30        android:roundIcon="@mipmap/ic_launcher_round"
+30-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:22:9-54
+31        android:supportsRtl="true"
+31-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:23:9-35
+32        android:testOnly="true"
+33        android:theme="@style/Theme.AppThiTracNghiem"
+33-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:24:9-54
+34        android:usesCleartextTraffic="true" >
+34-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:25:9-44
+35        <activity
+35-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:27:9-29:40
+36            android:name="com.example.appthitracnghiem.ui.exercise.ExerciseActivity"
+36-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:28:13-57
+37            android:exported="false" />
+37-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:29:13-37
+38        <activity
+38-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:30:9-36:20
+39            android:name="com.example.appthitracnghiem.ui.home.createtest.CreateTestActivity"
+39-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:31:13-66
+40            android:exported="false" >
+40-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:32:13-37
+41            <meta-data
+41-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:33:13-35:36
+42                android:name="android.app.lib_name"
+42-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:34:17-52
+43                android:value="" />
+43-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:35:17-33
+44        </activity>
+45        <activity
+45-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:37:9-43:20
+46            android:name="com.example.appthitracnghiem.ui.home.createtest.LinkSheetActivity"
+46-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:38:13-65
+47            android:exported="false" >
+47-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:39:13-37
+48            <meta-data
+48-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:33:13-35:36
+49                android:name="android.app.lib_name"
+49-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:34:17-52
+50                android:value="" />
+50-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:35:17-33
+51        </activity>
+52        <activity
+52-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:44:9-50:20
+53            android:name="com.example.appthitracnghiem.ui.home.category.search.SearchSubject"
+53-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:45:13-66
+54            android:exported="false" >
+54-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:46:13-37
+55            <meta-data
+55-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:33:13-35:36
+56                android:name="android.app.lib_name"
+56-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:34:17-52
+57                android:value="" />
+57-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:35:17-33
+58        </activity>
+59        <activity
+59-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:51:9-57:20
+60            android:name="com.example.appthitracnghiem.ui.intro.IntroLoginActivity"
+60-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:52:13-56
+61            android:exported="false" >
+61-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:53:13-37
+62            <meta-data
+62-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:33:13-35:36
+63                android:name="android.app.lib_name"
+63-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:34:17-52
+64                android:value="" />
+64-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:35:17-33
+65        </activity>
+66        <activity
+66-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:58:9-64:20
+67            android:name="com.example.appthitracnghiem.ui.home.profile.setting.SettingActivity"
+67-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:59:13-68
+68            android:exported="false" >
+68-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:60:13-37
+69            <meta-data
+69-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:33:13-35:36
+70                android:name="android.app.lib_name"
+70-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:34:17-52
+71                android:value="" />
+71-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:35:17-33
+72        </activity>
+73        <activity
+73-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:65:9-71:20
+74            android:name="com.example.appthitracnghiem.ui.home.HomeActivity"
+74-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:66:13-49
+75            android:exported="false" >
+75-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:67:13-37
+76            <meta-data
+76-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:33:13-35:36
+77                android:name="android.app.lib_name"
+77-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:34:17-52
+78                android:value="" />
+78-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:35:17-33
+79        </activity>
+80        <activity
+80-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:72:9-78:20
+81            android:name="com.example.appthitracnghiem.ui.register.RegisterActivity"
+81-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:73:13-57
+82            android:exported="false" >
+82-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:74:13-37
+83            <meta-data
+83-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:33:13-35:36
+84                android:name="android.app.lib_name"
+84-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:34:17-52
+85                android:value="" />
+85-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:35:17-33
+86        </activity>
+87        <activity
+87-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:79:9-85:20
+88            android:name="com.example.appthitracnghiem.ui.login.LoginActivity"
+88-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:80:13-51
+89            android:exported="false" >
+89-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:81:13-37
+90            <meta-data
+90-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:33:13-35:36
+91                android:name="android.app.lib_name"
+91-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:34:17-52
+92                android:value="" />
+92-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:35:17-33
+93        </activity>
+94        <activity
+94-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:86:9-92:20
+95            android:name="com.example.appthitracnghiem.ui.intro.IntroActivity"
+95-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:87:13-51
+96            android:exported="false" >
+96-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:88:13-37
+97            <meta-data
+97-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:33:13-35:36
+98                android:name="android.app.lib_name"
+98-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:34:17-52
+99                android:value="" />
+99-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:35:17-33
+100        </activity>
+101        <activity
+101-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:93:9-105:20
+102            android:name="com.example.appthitracnghiem.ui.main.MainActivity"
+102-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:94:13-49
+103            android:exported="true" >
+103-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:95:13-36
+104            <intent-filter>
+104-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:96:13-100:29
+105                <action android:name="android.intent.action.MAIN" />
+105-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:97:17-69
+105-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:97:25-66
+106
+107                <category android:name="android.intent.category.LAUNCHER" />
+107-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:99:17-77
+107-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:99:27-74
+108            </intent-filter>
+109
+110            <meta-data
+110-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:33:13-35:36
+111                android:name="android.app.lib_name"
+111-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:34:17-52
+112                android:value="" />
+112-->C:\Users\Admin\AndroidStudioProjects\quiz-android\app\src\main\AndroidManifest.xml:35:17-33
+113        </activity>
+114
+115        <provider
+115-->[com.squareup.picasso:picasso:2.8] C:\Users\Admin\.gradle\caches\transforms-3\5a1c4b97a85ec170b891604c93406514\transformed\picasso-2.8\AndroidManifest.xml:8:9-11:40
+116            android:name="com.squareup.picasso.PicassoProvider"
+116-->[com.squareup.picasso:picasso:2.8] C:\Users\Admin\.gradle\caches\transforms-3\5a1c4b97a85ec170b891604c93406514\transformed\picasso-2.8\AndroidManifest.xml:9:13-64
+117            android:authorities="com.example.appthitracnghiem.com.squareup.picasso"
+117-->[com.squareup.picasso:picasso:2.8] C:\Users\Admin\.gradle\caches\transforms-3\5a1c4b97a85ec170b891604c93406514\transformed\picasso-2.8\AndroidManifest.xml:10:13-72
+118            android:exported="false" />
+118-->[com.squareup.picasso:picasso:2.8] C:\Users\Admin\.gradle\caches\transforms-3\5a1c4b97a85ec170b891604c93406514\transformed\picasso-2.8\AndroidManifest.xml:11:13-37
+119        <provider
+119-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Admin\.gradle\caches\transforms-3\412372332f980a5c4ef0364c55a99af0\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+120            android:name="androidx.startup.InitializationProvider"
+120-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Admin\.gradle\caches\transforms-3\412372332f980a5c4ef0364c55a99af0\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+121            android:authorities="com.example.appthitracnghiem.androidx-startup"
+121-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Admin\.gradle\caches\transforms-3\412372332f980a5c4ef0364c55a99af0\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+122            android:exported="false" >
+122-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Admin\.gradle\caches\transforms-3\412372332f980a5c4ef0364c55a99af0\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+123            <meta-data
+123-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Admin\.gradle\caches\transforms-3\412372332f980a5c4ef0364c55a99af0\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+124                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+124-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Admin\.gradle\caches\transforms-3\412372332f980a5c4ef0364c55a99af0\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+125                android:value="androidx.startup" />
+125-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Admin\.gradle\caches\transforms-3\412372332f980a5c4ef0364c55a99af0\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+126            <meta-data
+126-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Admin\.gradle\caches\transforms-3\a8199b6bb025d711471524267dd78014\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
+127                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+127-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Admin\.gradle\caches\transforms-3\a8199b6bb025d711471524267dd78014\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
+128                android:value="androidx.startup" />
+128-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Admin\.gradle\caches\transforms-3\a8199b6bb025d711471524267dd78014\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
+129        </provider>
+130    </application>
+131
+132</manifest>
