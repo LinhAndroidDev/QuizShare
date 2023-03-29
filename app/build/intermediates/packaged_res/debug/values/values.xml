@@ -31,7 +31,7 @@
     <color name="white">#FFFFFF</color>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="txt">30dp</dimen>
+    <dimen name="start_margin">20dp</dimen>
     <string name="Fifty">50%</string>
     <string name="OneHundred">100%</string>
     <string name="SevenFive">75%</string>

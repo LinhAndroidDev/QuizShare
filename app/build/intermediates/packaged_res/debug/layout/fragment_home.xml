@@ -159,6 +159,11 @@
                     android:textAlignment="center"
                     app:tabSelectedTextColor="@color/black"
                     app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"/>
+                <ImageView
+                    android:src="@drawable/icon_line_home"
+                    android:layout_marginHorizontal="23dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/pageDepartment"
