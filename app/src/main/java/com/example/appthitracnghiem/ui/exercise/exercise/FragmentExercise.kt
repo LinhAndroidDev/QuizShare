@@ -1,6 +1,9 @@
 package com.example.appthitracnghiem.ui.exercise.exercise
 
 import android.annotation.SuppressLint
+import android.graphics.RenderEffect
+import android.graphics.Shader
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -63,14 +66,16 @@ class FragmentExercise : BaseFragment<EmptyViewModel>() {
                 if (minutes == 0 && seconds < 1) {
                     this.cancel()
                     val fragmentPoint: FragmentPoint = FragmentPoint()
-                    val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
-                    fm.setCustomAnimations(
+
+                    val fm: FragmentTransaction? =
+                        activity?.supportFragmentManager?.beginTransaction()
+                    fm?.setCustomAnimations(
                         R.anim.anim_up_enter,
                         R.anim.anim_ignored_out,
                         R.anim.anim_ignored_in,
                         R.anim.anim_down_enter
                     )
-                    fm.replace(R.id.changeIdExercise, fragmentPoint).addToBackStack(null).commit()
+                    fm?.replace(R.id.changeIdExercise, fragmentPoint)?.addToBackStack(null)?.commit()
                 }
                 if (countTime != null && txtTime != null) {
                     if (seconds < 10) {
@@ -90,28 +95,37 @@ class FragmentExercise : BaseFragment<EmptyViewModel>() {
     }
 
     private fun click() {
-//        choose1.setOnClickListener {
-//            clickChoose(choose1)
-//        }
-//
-//        choose2.setOnClickListener {
-//            clickChoose(choose1)
-//        }
-//
-//        choose3.setOnClickListener {
-//            clickChoose(choose1)
-//        }
-//
-//        choose4.setOnClickListener {
-//            clickChoose(choose1)
-//        }
+        choose1.setOnClickListener {
+            clickChoose(choose1)
+        }
+
+        choose2.setOnClickListener {
+            clickChoose(choose2)
+        }
+
+        choose3.setOnClickListener {
+            clickChoose(choose3)
+        }
+
+        choose4.setOnClickListener {
+            clickChoose(choose4)
+        }
 
         menuQuestion.setOnClickListener {
             showMenuQuestion(menuQuestion, R.layout.popup_list_question, 0, -560, Gravity.TOP)
         }
 
-        nextQuestion.setOnClickListener {
+        finishQuiz.setOnClickListener {
             layoutSubmit.visibility = View.VISIBLE
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                layoutExercise.setRenderEffect(
+                    RenderEffect.createBlurEffect(
+                        50f,
+                        50f,
+                        Shader.TileMode.MIRROR
+                    )
+                )
+            }
         }
 
         submit.setOnClickListener {
@@ -129,6 +143,9 @@ class FragmentExercise : BaseFragment<EmptyViewModel>() {
 
         backSubmit.setOnClickListener {
             layoutSubmit.visibility = View.GONE
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                layoutExercise.setRenderEffect(null)
+            }
         }
 
         backExercise.setOnClickListener {
@@ -141,7 +158,13 @@ class FragmentExercise : BaseFragment<EmptyViewModel>() {
         choose2.isSelected = false
         choose3.isSelected = false
         choose4.isSelected = false
+        choose1.setBackgroundResource(R.drawable.un_select_text_view)
+        choose2.setBackgroundResource(R.drawable.un_select_text_view)
+        choose3.setBackgroundResource(R.drawable.un_select_text_view)
+        choose4.setBackgroundResource(R.drawable.un_select_text_view)
+
         choose.isSelected = true
+        choose.setBackgroundResource(R.drawable.select_text_view)
     }
 
     private fun showMenuQuestion(view: View, layout: Int, x: Int, y: Int, position: Int) {
@@ -172,11 +195,12 @@ class FragmentExercise : BaseFragment<EmptyViewModel>() {
 
         val grid: GridLayoutManager = GridLayoutManager(requireActivity(), 5)
 
-        val v = LayoutInflater.from(requireActivity()).inflate(R.layout.popup_list_question, null)
+//        val v = LayoutInflater.from(requireActivity()).inflate(R.layout.popup_list_question, null)
 
-        val recycleQuestion: RecyclerView = v.findViewById(R.id.recycleViewMenuQuestion)
-        recycleQuestion.layoutManager = grid
-        recycleQuestion.adapter = menuQuestionAdapter
+//        val recycleQuestion: RecyclerView = v.findViewById(R.id.recycleViewMenuQuestion)
+
+        recycleViewMenuQuestion.layoutManager = grid
+        recycleViewMenuQuestion.adapter = menuQuestionAdapter
     }
 
     override fun onFragmentBack(): Boolean {

@@ -53,7 +53,8 @@
                 android:paddingVertical="16dp"
                 android:paddingStart="56dp"
                 android:paddingEnd="24dp"
-                android:text="Tìm đề"
+                android:hint="Tìm đề"
+                android:textColorHint="@color/white"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -114,6 +115,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"/>
         </LinearLayout>
     </LinearLayout>
 

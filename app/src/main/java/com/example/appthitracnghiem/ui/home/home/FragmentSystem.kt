@@ -22,15 +22,11 @@ import kotlinx.android.synthetic.main.fragment_system.*
  */
 class FragmentSystem : BaseFragment<SystemViewModel>() {
     private lateinit var adapterQuiz: DepartmentAdapter
-    lateinit var viewModelGeneral: ViewModelGeneral
     private var accessToken: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxpbmhAZ21haWwuY29tIiwiaWQiOjU3LCJleHBpcnlfYXQiOjE2ODExOTgwNTguMjY1MTM4Nn0.TsEHWCgfCW4l9V9XV4wroA2Ry9PwI9XMdyyYX4TUVxg"
     private var user_id: Int = 57
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        viewModelGeneral = ViewModelProvider(requireActivity())[ViewModelGeneral::class.java]
-//        viewModelGeneral.getDataQuiz()
 
         accessToken = requireActivity().intent.getStringExtra("accessToken").toString()
         user_id = requireActivity().intent.getIntExtra("user_id",0)
@@ -38,10 +34,6 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
         val linearLayoutManager: LinearLayoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         recycleListLiveQuizzes.layoutManager = linearLayoutManager
-
-//        getLoading()
-
-//        getData()
 
         setText()
     }
@@ -71,29 +63,6 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         textQuizHome.typeface = semibold
     }
-
-//    private fun getLoading() {
-//        viewModelGeneral.loadingQuizLive.observe(requireActivity(), Observer { loadingQuizLive ->
-//            if (loadingQuizLive != null && loadingQuiz != null) {
-//                if (loadingQuizLive && recycleListLiveQuizzes.adapter == null) {
-//                    loadingQuiz.visibility = View.VISIBLE
-//                } else if (!loadingQuizLive) {
-//                    loadingQuiz.visibility = View.INVISIBLE
-//                }
-//            }
-//        })
-//    }
-
-//    @SuppressLint("NotifyDataSetChanged")
-//    private fun getData() {
-//        viewModelGeneral.listQuizLive.observe(requireActivity(), Observer { listQuiz ->
-//            if (listQuiz != null) {
-//                adapterQuiz = DepartmentAdapter(listQuiz, requireActivity())
-//                recycleListLiveQuizzes.adapter = adapterQuiz
-//                adapterQuiz.notifyDataSetChanged()
-//            }
-//        })
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

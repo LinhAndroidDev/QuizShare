@@ -3,6 +3,11 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        mavenCentral() {
+            content {
+                includeModule("com.eightbitlab", "blurview")
+            }
+        }
     }
 }
 dependencyResolutionManagement {
@@ -10,6 +15,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenCentral() {
+            content {
+                includeModule("com.eightbitlab", "blurview")
+            }
+        }
     }
 }
 rootProject.name = "AppThiTracNghiem"
