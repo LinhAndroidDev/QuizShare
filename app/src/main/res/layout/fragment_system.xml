@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.jpardogo.android.googleprogressbar.library.GoogleProgressBar
-            android:id="@+id/loadingQuiz"
+            android:id="@+id/loadingDepartment"
             android:layout_marginTop="70dp"
             android:layout_marginBottom="120dp"
             android:layout_centerHorizontal="true"

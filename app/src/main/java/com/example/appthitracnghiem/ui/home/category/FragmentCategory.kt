@@ -69,9 +69,9 @@ class FragmentCategory : BaseFragment<EmptyViewModel>() {
             requireActivity(),
             Observer { loadingSubjectLive ->
                 if (loadingSubjectLive != null && loadingSubject != null) {
-                    if (loadingSubjectLive == false) {
+                    if (!loadingSubjectLive) {
                         loadingSubject.visibility = View.INVISIBLE
-                    } else if (loadingSubjectLive) {
+                    } else if (loadingSubjectLive && recycleListSubject.adapter == null) {
                         loadingSubject.visibility = View.VISIBLE
                     }
                 }

@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.home.profile.setting.SettingActivity
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 /**
@@ -27,6 +29,8 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
         progressNumberDay.progress = 80
 
         percentColum(30, 80, 60)
+
+        (activity as HomeActivity).hideTabBar(scrollProfile)
 
         click()
 

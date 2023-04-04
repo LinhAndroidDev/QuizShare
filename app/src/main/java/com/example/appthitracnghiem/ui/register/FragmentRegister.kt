@@ -45,15 +45,12 @@ import retrofit2.Response
  */
 @Suppress("DEPRECATION")
 class FragmentRegister : BaseFragment<RegisterViewModel>() {
-    lateinit var viewModelGeneral: ViewModelGeneral
     lateinit var progressDialog: ProgressDialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         progressDialog = ProgressDialog(requireActivity())
-
-        viewModelGeneral = ViewModelProvider(requireActivity())[ViewModelGeneral::class.java]
 
         click()
 

@@ -13,7 +13,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.ViewModelGeneral
-import com.example.appthitracnghiem.ui.home.home.adapter.QuizAdapter
+import com.example.appthitracnghiem.ui.EmptyViewModel
+import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.home.home.adapter.DepartmentAdapter
+import com.example.appthitracnghiem.ui.home.home.adapter.SystemViewModel
 import kotlinx.android.synthetic.main.fragment_from_user.*
 import kotlinx.android.synthetic.main.fragment_system.*
 
@@ -22,7 +25,8 @@ import kotlinx.android.synthetic.main.fragment_system.*
  * Use the [FragmentSystem.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FragmentSystem : Fragment() {
+class FragmentSystem : BaseFragment<SystemViewModel>() {
+    lateinit var adapterQuiz: DepartmentAdapter
     lateinit var viewModelGeneral: ViewModelGeneral
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,11 +39,30 @@ class FragmentSystem : Fragment() {
             LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         recycleListLiveQuizzes.layoutManager = linearLayoutManager
 
-        getLoading()
+//        getLoading()
 
-        getData()
+//        getData()
 
         setText()
+    }
+
+    override fun bindData() {
+        super.bindData()
+
+        viewModel.loadingData.observe(viewLifecycleOwner){ isLoading ->
+            if(isLoading){
+                loadingDepartment.visibility = View.VISIBLE
+            }else{
+                loadingDepartment.visibility = View.GONE
+            }
+        }
+
+        viewModel.listDepartmentLiveData.observe(viewLifecycleOwner){ listDepart ->
+            adapterQuiz = DepartmentAdapter(listDepart,requireActivity())
+            recycleListLiveQuizzes.adapter = adapterQuiz
+        }
+
+        viewModel.getDataDepartment()
     }
 
     private fun setText() {
@@ -48,28 +71,28 @@ class FragmentSystem : Fragment() {
         textQuizHome.typeface = semibold
     }
 
-    private fun getLoading() {
-        viewModelGeneral.loadingQuizLive.observe(requireActivity(), Observer { loadingQuizLive ->
-            if (loadingQuizLive != null && loadingQuiz != null) {
-                if (loadingQuizLive) {
-                    loadingQuiz.visibility = View.VISIBLE
-                } else if (!loadingQuizLive) {
-                    loadingQuiz.visibility = View.INVISIBLE
-                }
-            }
-        })
-    }
+//    private fun getLoading() {
+//        viewModelGeneral.loadingQuizLive.observe(requireActivity(), Observer { loadingQuizLive ->
+//            if (loadingQuizLive != null && loadingQuiz != null) {
+//                if (loadingQuizLive && recycleListLiveQuizzes.adapter == null) {
+//                    loadingQuiz.visibility = View.VISIBLE
+//                } else if (!loadingQuizLive) {
+//                    loadingQuiz.visibility = View.INVISIBLE
+//                }
+//            }
+//        })
+//    }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun getData() {
-        viewModelGeneral.listQuizLive.observe(requireActivity(), Observer { listQuiz ->
-            if (listQuiz != null && recycleListLiveQuizzes != null) {
-                val adapterQuiz: QuizAdapter = QuizAdapter(listQuiz, requireActivity())
-                recycleListLiveQuizzes.adapter = adapterQuiz
-                adapterQuiz.notifyDataSetChanged()
-            }
-        })
-    }
+//    @SuppressLint("NotifyDataSetChanged")
+//    private fun getData() {
+//        viewModelGeneral.listQuizLive.observe(requireActivity(), Observer { listQuiz ->
+//            if (listQuiz != null) {
+//                adapterQuiz = DepartmentAdapter(listQuiz, requireActivity())
+//                recycleListLiveQuizzes.adapter = adapterQuiz
+//                adapterQuiz.notifyDataSetChanged()
+//            }
+//        })
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="ring"
-            android:thicknessRatio="16"
+            android:thicknessRatio="20"
             android:useLevel="false">
             <solid android:color="@color/white"/>
         </shape>
@@ -11,7 +11,7 @@
         <rotate android:fromDegrees="270"
             android:toDegrees="270">
             <shape android:shape="ring"
-                android:thicknessRatio="16"
+                android:thicknessRatio="20"
                 android:useLevel="true">
                 <solid android:color="@color/backgroundIntro"/>
             </shape>

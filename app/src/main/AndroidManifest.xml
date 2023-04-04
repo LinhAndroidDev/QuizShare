@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.appthitracnghiem">
 
-    <supports-screens android:smallScreens="true"
-        android:normalScreens="true"
-        android:largeScreens="true"
-        android:xlargeScreens="true"
+    <supports-screens
         android:anyDensity="true"
-        android:resizeable="true"/>
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,6 +25,9 @@
         android:theme="@style/Theme.AppThiTracNghiem"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".HistoryTopicActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.exercise.ExerciseActivity"
             android:exported="false" />

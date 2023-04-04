@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ViewModelGeneral : ViewModel() {
     lateinit var retrofit: Retrofit
     lateinit var postRetrofit: Retrofit
-    val listQuizLive = MutableLiveData<MutableList<Quiz>>()
+    val listQuizLive = MutableLiveData<MutableList<Department>>()
     val loadingQuizLive = MutableLiveData(false)
     val listSubjectLive = MutableLiveData<MutableList<RecommandSubject>>()
     val loadingSubjectLive = MutableLiveData(false)
@@ -46,13 +46,13 @@ class ViewModelGeneral : ViewModel() {
         loadingQuizLive.postValue(true)
         retrofit.create(ApiService::class.java)
             .getListQuiz("media", "1dd6d12d-c075-46fe-8fde-342cc7d0b49b")
-            .enqueue(object : Callback<List<Quiz>> {
-                override fun onResponse(call: Call<List<Quiz>>, response: Response<List<Quiz>>) {
-                    listQuizLive.postValue(response.body() as MutableList<Quiz>?)
+            .enqueue(object : Callback<List<Department>> {
+                override fun onResponse(call: Call<List<Department>>, response: Response<List<Department>>) {
+                    listQuizLive.postValue(response.body() as MutableList<Department>?)
                     loadingQuizLive.postValue(false)
                 }
 
-                override fun onFailure(call: Call<List<Quiz>>, t: Throwable) {
+                override fun onFailure(call: Call<List<Department>>, t: Throwable) {
                     loadingQuizLive.postValue(false)
                 }
 

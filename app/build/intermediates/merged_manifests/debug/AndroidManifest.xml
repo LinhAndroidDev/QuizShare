@@ -33,6 +33,9 @@
         android:theme="@style/Theme.AppThiTracNghiem"
         android:usesCleartextTraffic="true" >
         <activity
+            android:name="com.example.appthitracnghiem.HistoryTopicActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.appthitracnghiem.ui.exercise.ExerciseActivity"
             android:exported="false" />
         <activity

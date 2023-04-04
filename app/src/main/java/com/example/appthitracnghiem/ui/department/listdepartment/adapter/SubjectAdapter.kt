@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.Subject
+import com.example.appthitracnghiem.ui.department.listtest.FragmentListTest
 import com.squareup.picasso.Picasso
 
 class SubjectAdapter(val context: Context, private val listSubject: List<Subject>) :
@@ -22,7 +25,7 @@ class SubjectAdapter(val context: Context, private val listSubject: List<Subject
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): SubjectAdapter.ViewHolderSubject {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_general, parent, false)
@@ -37,6 +40,22 @@ class SubjectAdapter(val context: Context, private val listSubject: List<Subject
             .into(holder.image)
         holder.title.text = subject.title
         holder.description.text = subject.description
+
+        holder.itemView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                val activity = context as AppCompatActivity
+                val fragmentListTest: FragmentListTest = FragmentListTest()
+                val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
+                fm.setCustomAnimations(
+                    R.anim.anim_up_enter,
+                    R.anim.anim_ignored_out,
+                    R.anim.anim_ignored_in,
+                    R.anim.anim_down_enter
+                )
+                fm.replace(R.id.changeIdHome, fragmentListTest).addToBackStack(null).commit()
+            }
+
+        })
     }
 
     override fun getItemCount(): Int {

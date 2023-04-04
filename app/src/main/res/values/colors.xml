@@ -23,6 +23,7 @@
     <color name="color_login_other">#0C092A</color>
     <color name="color_purple">#6a5ae0</color>
     <color name="color_green">#0ADF13</color>
+    <color name="color_grey_blur">#CCCCCC</color>
 
     <!--    Design color background-->
     <color name="color_gray_purple">#E3E0F9</color>
@@ -34,4 +35,5 @@
     <color name="bg_edit_text">#f2f4f7</color>
     <color name="bg_intro_login">#2CFFFFFF</color>
     <color name="bg_search">#48111111</color>
+    <color name="color_grey">#DDDDDD</color>
 </resources>

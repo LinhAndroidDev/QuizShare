@@ -1,5 +1,6 @@
-package com.example.appthitracnghiem.ui.home.historytest
+package com.example.appthitracnghiem.ui.home.history
 
+import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.home.history.test.FragmentHistoryTest
 import kotlinx.android.synthetic.main.fragment_create_test.*
 import kotlinx.android.synthetic.main.fragment_history.*
 
@@ -23,7 +26,18 @@ class FragmentHistory : BaseFragment<EmptyViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        click()
+
         setText()
+    }
+
+    @SuppressLint("CommitTransaction")
+    private fun click() {
+        historyTest.setOnClickListener{
+            val fragmentHistoryTest: FragmentHistoryTest = FragmentHistoryTest()
+            val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
+            fm.replace(R.id.changeIdHome,fragmentHistoryTest).addToBackStack(null).commit()
+        }
     }
 
     private fun setText() {

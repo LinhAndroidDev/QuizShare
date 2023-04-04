@@ -15,7 +15,11 @@ class TranslateAnimation(context: Context, viewAnimation: View) : View.OnTouchLi
     )
 
     override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
-        return gestureDetector.onTouchEvent(p1!!)
+        return if(p1 != null){
+            gestureDetector.onTouchEvent(p1)
+        }else{
+            false
+        }
     }
 
     class SimpleGestureDetector(viewAnimation: View) : GestureDetector.SimpleOnGestureListener() {
@@ -28,7 +32,7 @@ class TranslateAnimation(context: Context, viewAnimation: View) : View.OnTouchLi
             distanceX: Float,
             distanceY: Float
         ): Boolean {
-            if (distanceY > 0) {
+            if (distanceY >= 0) {
                 hiddenView()
             } else {
                 showView()
