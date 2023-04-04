@@ -1,6 +1,5 @@
 package com.example.appthitracnghiem.ui.home.home
 
-import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,15 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.ViewModelGeneral
-import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.home.adapter.DepartmentAdapter
-import com.example.appthitracnghiem.ui.home.home.adapter.SystemViewModel
 import kotlinx.android.synthetic.main.fragment_from_user.*
 import kotlinx.android.synthetic.main.fragment_system.*
 
@@ -26,14 +21,19 @@ import kotlinx.android.synthetic.main.fragment_system.*
  * create an instance of this fragment.
  */
 class FragmentSystem : BaseFragment<SystemViewModel>() {
-    lateinit var adapterQuiz: DepartmentAdapter
+    private lateinit var adapterQuiz: DepartmentAdapter
     lateinit var viewModelGeneral: ViewModelGeneral
+    private var accessToken: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxpbmhAZ21haWwuY29tIiwiaWQiOjU3LCJleHBpcnlfYXQiOjE2ODExOTgwNTguMjY1MTM4Nn0.TsEHWCgfCW4l9V9XV4wroA2Ry9PwI9XMdyyYX4TUVxg"
+    private var user_id: Int = 57
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModelGeneral = ViewModelProvider(requireActivity())[ViewModelGeneral::class.java]
-        viewModelGeneral.getDataQuiz()
+//        viewModelGeneral = ViewModelProvider(requireActivity())[ViewModelGeneral::class.java]
+//        viewModelGeneral.getDataQuiz()
+
+        accessToken = requireActivity().intent.getStringExtra("accessToken").toString()
+        user_id = requireActivity().intent.getIntExtra("user_id",0)
 
         val linearLayoutManager: LinearLayoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
@@ -62,7 +62,8 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
             recycleListLiveQuizzes.adapter = adapterQuiz
         }
 
-        viewModel.getDataDepartment()
+        val requestGetListDepartment = RequestGetListDepartment(user_id,"")
+        viewModel.getDataDepartment(accessToken,requestGetListDepartment)
     }
 
     private fun setText() {

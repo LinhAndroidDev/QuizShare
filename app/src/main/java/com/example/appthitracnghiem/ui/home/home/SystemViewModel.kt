@@ -1,36 +1,36 @@
-package com.example.appthitracnghiem.ui.home.home.adapter
+package com.example.appthitracnghiem.ui.home.home
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.appthitracnghiem.data.remote.ApiClient
 import com.example.appthitracnghiem.data.remote.entity.FromSystemResponse
 import com.example.appthitracnghiem.model.Department
 import com.example.appthitracnghiem.ui.base.BaseViewModel
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import javax.security.auth.callback.Callback
 
 class SystemViewModel : BaseViewModel() {
-    val loadingData = MutableLiveData<Boolean>()
-    val listDepartmentLiveData = MutableLiveData<MutableList<Department>>()
+    var loadingData = MutableLiveData<Boolean>()
+    var listDepartmentLiveData = MutableLiveData<MutableList<Department>>()
 
-    init {
-        getDataDepartment()
-    }
-
-    fun getDataDepartment(){
+    fun getDataDepartment(accessToken: String,requestGetListDepartment: RequestGetListDepartment){
         loadingData.value = true
-        ApiClient.shared().getDepartmentList().enqueue(object : retrofit2.Callback<FromSystemResponse> {
+        ApiClient.shared().getDepartmentList(accessToken,requestGetListDepartment).enqueue(object : retrofit2.Callback<FromSystemResponse> {
             override fun onResponse(
                 call: Call<FromSystemResponse>,
                 response: Response<FromSystemResponse>,
             ) {
+                Log.e("TAG", Gson().toJson(response.body()?.result))
                 loadingData.value = false
-                listDepartmentLiveData.value = response.body().result
+                listDepartmentLiveData.value = response.body()?.result as MutableList<Department>
             }
 
             override fun onFailure(call: Call<FromSystemResponse>, t: Throwable) {
                 loadingData.value = false
+                errorApiLiveData.value = t.message
             }
 
         })

@@ -30,28 +30,25 @@ class DepartmentAdapter(private val listQuiz: List<Department>, val context: Con
 
     override fun onBindViewHolder(holder: ViewHolderQuiz, position: Int) {
         val quiz: Department = listQuiz[position]
-        Picasso.get().load(quiz.image)
+        Picasso.get().load("https://storage.googleapis.com/quiz-app-storage/department/"+quiz.image)
             .placeholder(R.drawable.loadimage)
             .error(R.drawable.errorimage)
             .into(holder.image)
-        holder.title.text = quiz.topic
-        holder.description.text = quiz.detail
+        holder.title.text = quiz.title
+        holder.description.text = quiz.description
 
-        holder.itemView.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                val activity = v!!.context as AppCompatActivity
-                val fragmentListDepartment: FragmentListDepartment = FragmentListDepartment()
-                val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                fm.setCustomAnimations(
-                    R.anim.anim_up_enter,
-                    R.anim.anim_ignored_out,
-                    R.anim.anim_ignored_in,
-                    R.anim.anim_down_enter
-                )
-                fm.replace(R.id.changeIdHome, fragmentListDepartment).addToBackStack(null).commit()
-            }
-
-        })
+        holder.itemView.setOnClickListener { v ->
+            val activity = v!!.context as AppCompatActivity
+            val fragmentListDepartment: FragmentListDepartment = FragmentListDepartment()
+            val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
+            fm.setCustomAnimations(
+                R.anim.anim_up_enter,
+                R.anim.anim_ignored_out,
+                R.anim.anim_ignored_in,
+                R.anim.anim_down_enter
+            )
+            fm.replace(R.id.changeIdHome, fragmentListDepartment).addToBackStack(null).commit()
+        }
     }
 
     override fun getItemCount(): Int {

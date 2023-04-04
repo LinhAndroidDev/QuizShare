@@ -8,6 +8,7 @@ import com.example.appthitracnghiem.data.remote.entity.LoginResponse
 import com.example.appthitracnghiem.ui.base.BaseViewModel
 import com.example.appthitracnghiem.utils.Email
 import com.example.appthitracnghiem.utils.PreferenceKey
+import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -18,6 +19,8 @@ class LoginViewModel : BaseViewModel() {
     val loadingLiveData = MutableLiveData<Boolean>()
     val successLoginLiveData = MutableLiveData<Boolean>()
     val validateLiveData = MutableLiveData<ValidateModel>()
+    val accessTokenLiveData = MutableLiveData<String>()
+    val userIdLiveData = MutableLiveData<Int>()
 
     fun confirmLoggedIn(){
         mPreferenceUtil.defaultPref().edit()
@@ -61,14 +64,27 @@ class LoginViewModel : BaseViewModel() {
                 ) {
                     loadingLiveData.value = false
                     if (response.isSuccessful) {
-                        if (response.body()?.statusCode == ApiClient.STATUS_CODE_SUCCESS) {
-                            successLoginLiveData.value = true
-                            confirmLoggedIn()
-                        } else {
-                            val errorMessage = response.body()?.message
-                                ?: "Email hoặc mật khẩu không chính xác"
-                            errorApiLiveData.value = errorMessage
+                        response.body()?.let { body ->
+                            if (body.statusCode == ApiClient.STATUS_CODE_SUCCESS) {
+                                body.result?.let { result ->
+                                    successLoginLiveData.value = true
+                                    accessTokenLiveData.value = result.access_token
+                                    if (result.user_id != null) {
+                                        userIdLiveData.value = result.user_id
+                                        confirmLoggedIn()
+                                    } else {
+                                        errorApiLiveData.value = "User id null"
+                                    }
+
+                                }
+                            } else {
+                                val errorMessage = response.body()?.message
+                                    ?: "Email hoặc mật khẩu không chính xác"
+                                errorApiLiveData.value = errorMessage
+                            }
+
                         }
+
                     } else {
                         errorApiLiveData.value = "Lỗi kết nối Server ${response.code()}"
                     }
