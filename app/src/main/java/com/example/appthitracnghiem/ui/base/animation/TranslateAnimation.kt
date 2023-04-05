@@ -1,6 +1,7 @@
 package com.example.appthitracnghiem.ui.base.animation
 
 import android.content.Context
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -14,12 +15,11 @@ class TranslateAnimation(context: Context, viewAnimation: View) : View.OnTouchLi
         SimpleGestureDetector(viewAnimation)
     )
 
-    override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
-        return if(p1 != null){
-            gestureDetector.onTouchEvent(p1)
-        }else{
-            false
-        }
+    override fun onTouch(p0: View?, p1: MotionEvent): Boolean {
+        Log.e("P1", "confirm P1 ${p1 == null}")
+        Log.e("P1", "confirm p0 ${p0 == null}")
+        Log.e("P1", "confirm gestureDetector ${gestureDetector == null}")
+        return gestureDetector.onTouchEvent(p1)
     }
 
     class SimpleGestureDetector(viewAnimation: View) : GestureDetector.SimpleOnGestureListener() {
@@ -37,6 +37,8 @@ class TranslateAnimation(context: Context, viewAnimation: View) : View.OnTouchLi
             } else {
                 showView()
             }
+            Log.e("onScroll", "confirm e1 ${e1 == null}")
+            Log.e("onScroll", "confirm e2 ${e2 == null}")
             return super.onScroll(e1, e2, distanceX, distanceY)
         }
 

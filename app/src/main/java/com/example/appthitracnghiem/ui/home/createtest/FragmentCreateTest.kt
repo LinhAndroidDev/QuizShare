@@ -36,7 +36,7 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as HomeActivity).hideTabBar(scrollCreateTest)
+//        (activity as HomeActivity).hideTabBar(scrollCreateTest)
 
         setBottomShare()
 

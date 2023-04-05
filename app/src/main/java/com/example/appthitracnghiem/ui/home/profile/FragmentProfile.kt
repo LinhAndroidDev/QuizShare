@@ -30,7 +30,7 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
 
         percentColum(30, 80, 60)
 
-        (activity as HomeActivity).hideTabBar(scrollProfile)
+//        (activity as HomeActivity).hideTabBar(scrollProfile)
 
         click()
 

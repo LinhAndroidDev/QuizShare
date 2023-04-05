@@ -1,5 +1,7 @@
 package com.example.appthitracnghiem.ui.login
 
+import android.annotation.SuppressLint
+import android.util.JsonToken
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.appthitracnghiem.R
@@ -19,12 +21,23 @@ class LoginViewModel : BaseViewModel() {
     val loadingLiveData = MutableLiveData<Boolean>()
     val successLoginLiveData = MutableLiveData<Boolean>()
     val validateLiveData = MutableLiveData<ValidateModel>()
-    val accessTokenLiveData = MutableLiveData<String>()
-    val userIdLiveData = MutableLiveData<Int>()
 
     fun confirmLoggedIn(){
         mPreferenceUtil.defaultPref().edit()
             .putBoolean(PreferenceKey.KEY_USER_LOGGED_IN, true).apply()
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    fun savedAuthentication(token:String, id: Int) {
+        mPreferenceUtil.defaultPref().edit()
+            .putString(PreferenceKey.AUTHORIZATION,token).apply()
+        mPreferenceUtil.defaultPref().edit()
+            .putInt(PreferenceKey.USER_ID,id).apply()
+    }
+
+    fun getAuthentication(): String? {
+        return mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.AUTHORIZATION,null)
     }
 
     private fun validateLogin(strEmail: String, strPassword: String): ValidateModel {
@@ -68,9 +81,8 @@ class LoginViewModel : BaseViewModel() {
                             if (body.statusCode == ApiClient.STATUS_CODE_SUCCESS) {
                                 body.result?.let { result ->
                                     successLoginLiveData.value = true
-                                    accessTokenLiveData.value = result.access_token
                                     if (result.user_id != null) {
-                                        userIdLiveData.value = result.user_id
+                                        savedAuthentication(result.access_token.toString(),result.user_id)
                                         confirmLoggedIn()
                                     } else {
                                         errorApiLiveData.value = "User id null"

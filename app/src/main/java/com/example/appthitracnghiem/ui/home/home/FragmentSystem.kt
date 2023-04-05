@@ -12,6 +12,7 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.ViewModelGeneral
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.home.adapter.DepartmentAdapter
+import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment_from_user.*
 import kotlinx.android.synthetic.main.fragment_system.*
 
@@ -22,14 +23,11 @@ import kotlinx.android.synthetic.main.fragment_system.*
  */
 class FragmentSystem : BaseFragment<SystemViewModel>() {
     private lateinit var adapterQuiz: DepartmentAdapter
-    private var accessToken: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxpbmhAZ21haWwuY29tIiwiaWQiOjU3LCJleHBpcnlfYXQiOjE2ODExOTgwNTguMjY1MTM4Nn0.TsEHWCgfCW4l9V9XV4wroA2Ry9PwI9XMdyyYX4TUVxg"
-    private var user_id: Int = 57
+    lateinit var accessToken: String
+    var user_id: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        accessToken = requireActivity().intent.getStringExtra("accessToken").toString()
-        user_id = requireActivity().intent.getIntExtra("user_id",0)
 
         val linearLayoutManager: LinearLayoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
@@ -54,6 +52,10 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
             recycleListLiveQuizzes.adapter = adapterQuiz
         }
 
+        accessToken = viewModel.mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.AUTHORIZATION,"").toString()
+        user_id = viewModel.mPreferenceUtil.defaultPref()
+            .getInt(PreferenceKey.USER_ID,0)
         val requestGetListDepartment = RequestGetListDepartment(user_id,"")
         viewModel.getDataDepartment(accessToken,requestGetListDepartment)
     }

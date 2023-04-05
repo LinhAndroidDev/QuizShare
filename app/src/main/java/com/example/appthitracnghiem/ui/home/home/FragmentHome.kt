@@ -37,7 +37,7 @@ class FragmentHome : BaseFragment<EmptyViewModel>() {
 
         tabDepartment.setupWithViewPager(pageDepartment)
 
-        (activity as HomeActivity).hideTabBar(scrollHome)
+//        (activity as HomeActivity).hideTabBar(scrollHome)
 
         setText()
     }

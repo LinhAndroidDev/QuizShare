@@ -16,6 +16,8 @@ import com.squareup.picasso.Picasso
 
 class DepartmentAdapter(private val listQuiz: List<Department>, val context: Context) :
     RecyclerView.Adapter<DepartmentAdapter.ViewHolderQuiz>() {
+    val path: String ="https://storage.googleapis.com/quiz-app-storage/department/"
+
     class ViewHolderQuiz(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var image: ImageView = itemView.findViewById(R.id.image)
         var title: TextView = itemView.findViewById(R.id.topic)
@@ -30,7 +32,7 @@ class DepartmentAdapter(private val listQuiz: List<Department>, val context: Con
 
     override fun onBindViewHolder(holder: ViewHolderQuiz, position: Int) {
         val quiz: Department = listQuiz[position]
-        Picasso.get().load("https://storage.googleapis.com/quiz-app-storage/department/"+quiz.image)
+        Picasso.get().load(path + quiz.image)
             .placeholder(R.drawable.loadimage)
             .error(R.drawable.errorimage)
             .into(holder.image)
@@ -38,7 +40,7 @@ class DepartmentAdapter(private val listQuiz: List<Department>, val context: Con
         holder.description.text = quiz.description
 
         holder.itemView.setOnClickListener { v ->
-            val activity = v!!.context as AppCompatActivity
+            val activity = v?.context as AppCompatActivity
             val fragmentListDepartment: FragmentListDepartment = FragmentListDepartment()
             val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
             fm.setCustomAnimations(

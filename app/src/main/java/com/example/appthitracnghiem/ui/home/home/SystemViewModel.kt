@@ -23,7 +23,6 @@ class SystemViewModel : BaseViewModel() {
                 call: Call<FromSystemResponse>,
                 response: Response<FromSystemResponse>,
             ) {
-                Log.e("TAG", Gson().toJson(response.body()?.result))
                 loadingData.value = false
                 listDepartmentLiveData.value = response.body()?.result as MutableList<Department>
             }

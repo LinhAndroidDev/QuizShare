@@ -44,8 +44,8 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
     lateinit var strEmail: String
     lateinit var strPassword: String
     lateinit var progressDialog: ProgressDialog
-    var accessToken: String = ""
-    var user_id: Int = 0
+    lateinit var token: String
+    var useId: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -81,8 +81,6 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
             )
             intent.flags =
                 Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            intent.putExtra("accessToken", accessToken)
-            intent.putExtra("user_id", user_id)
             startActivity(intent)
             saveAccount(strEmail, strPassword);
         }
@@ -93,14 +91,6 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
             } else {
                 setNote(model.resMsgError, model.resColorError)
             }
-        }
-
-        viewModel.accessTokenLiveData.observe(viewLifecycleOwner) { accessTokenLiveData ->
-            accessToken = accessTokenLiveData
-        }
-
-        viewModel.userIdLiveData.observe(viewLifecycleOwner) { userIdLiveData ->
-            user_id = userIdLiveData
         }
     }
 
