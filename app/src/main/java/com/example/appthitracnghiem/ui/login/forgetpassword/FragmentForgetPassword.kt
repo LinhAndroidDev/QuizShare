@@ -17,12 +17,17 @@ import kotlinx.android.synthetic.main.fragment__forget_password.*
  * create an instance of this fragment.
  */
 
-class FragmentForgetPassword : BaseFragment<EmptyViewModel>() {
+class FragmentForgetPassword : BaseFragment<ForgetPasswordViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         click()
+    }
+
+    override fun bindData() {
+        super.bindData()
+
     }
 
     private fun click() {

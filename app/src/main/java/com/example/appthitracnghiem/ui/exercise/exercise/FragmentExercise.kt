@@ -193,14 +193,16 @@ class FragmentExercise : BaseFragment<EmptyViewModel>() {
 
         menuQuestionAdapter = MenuQuestionAdapter(requireActivity(), listQuestion)
 
-        val grid: GridLayoutManager = GridLayoutManager(requireActivity(), 5)
+//        val grid: GridLayoutManager = GridLayoutManager(requireActivity(), 5)
 
-//        val v = LayoutInflater.from(requireActivity()).inflate(R.layout.popup_list_question, null)
+        val v = LayoutInflater.from(requireActivity()).inflate(R.layout.popup_list_question, null)
 
-//        val recycleQuestion: RecyclerView = v.findViewById(R.id.recycleViewMenuQuestion)
+        val recycleQuestion: RecyclerView = v.findViewById(R.id.recycleViewMenuQuestion)
 
-        recycleViewMenuQuestion.layoutManager = grid
-        recycleViewMenuQuestion.adapter = menuQuestionAdapter
+        val mLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(requireActivity(),5)
+
+        recycleQuestion.layoutManager = mLayoutManager
+        recycleQuestion.adapter = menuQuestionAdapter
     }
 
     override fun onFragmentBack(): Boolean {

@@ -40,7 +40,7 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
         super.bindData()
 
         viewModel.loadingData.observe(viewLifecycleOwner){ isLoading ->
-            if(isLoading){
+            if(isLoading && recycleListLiveQuizzes.adapter == null){
                 loadingDepartment.visibility = View.VISIBLE
             }else{
                 loadingDepartment.visibility = View.GONE

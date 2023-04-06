@@ -15,10 +15,6 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-
         viewModel =
             ViewModelProviders.of(this)[(this::class.java.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<V>]
         viewModel.mPreferenceUtil = PreferenceUtil(this)

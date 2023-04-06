@@ -1,13 +1,14 @@
 package com.example.appthitracnghiem.data.remote
 
-import com.example.appthitracnghiem.data.remote.entity.FromSystemResponse
-import com.example.appthitracnghiem.data.remote.entity.LoginResponse
-import com.example.appthitracnghiem.data.remote.entity.RegisterResponse
+import com.example.appthitracnghiem.data.remote.entity.*
 import com.example.appthitracnghiem.model.LoginSuccessful
 import com.example.appthitracnghiem.model.Department
 import com.example.appthitracnghiem.model.RecommandSubject
+import com.example.appthitracnghiem.ui.department.listdepartment.RequestDepartmentInfo
+import com.example.appthitracnghiem.ui.home.category.RequestCategory
 import com.example.appthitracnghiem.ui.home.home.RequestGetListDepartment
 import com.example.appthitracnghiem.ui.login.RequestLogin
+import com.example.appthitracnghiem.ui.login.forgetpassword.RequestEmailVerification
 import com.example.appthitracnghiem.ui.register.RequestRegister
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -34,14 +35,23 @@ interface ApiService {
     fun loginUser(@Body requestLogin: RequestLogin)
             : Call<LoginResponse>
 
+    @POST("forgotPassword")
+    fun emailVerification(@Body requestEmailVerification: RequestEmailVerification)
+            : Call<EmailVerificationResponse>
+
+    @POST("searchSubject")
+    fun getCategory(@Header("Authorization") header: String,
+                    @Body requestCategory: RequestCategory
+    ): Call<CategoryResponse>
+
     @POST("getDepartmentList")
     fun getDepartmentList(
         @Header("Authorization") header: String,
         @Body requestGetListDepartment: RequestGetListDepartment
     ): Call<FromSystemResponse>
 
-    @Multipart
-    @POST("forgetpassword.php")
-    fun forgetPassword(@Part("email") email: RequestBody, @Part("password") password: RequestBody)
-            : Call<LoginSuccessful>
+    @POST("listDepartmentInfo")
+    fun getListDepartmentInfo(@Header("Authorization") header: String,
+    @Body requestDepartmentInfo: RequestDepartmentInfo
+    ): Call<DepartmentResponse>
 }

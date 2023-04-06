@@ -108,7 +108,6 @@ class LoginViewModel : BaseViewModel() {
                 ) {
                     loadingLiveData.value = false
                     errorApiLiveData.value = t.message
-                    Log.e("TAG", "Error ${t.message}")
                 }
             })
     }

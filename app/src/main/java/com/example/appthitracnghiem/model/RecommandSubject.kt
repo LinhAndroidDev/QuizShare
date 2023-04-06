@@ -1,7 +1,9 @@
 package com.example.appthitracnghiem.model
 
 data class RecommandSubject(
-    val detailSubject: String,
+    val id: Int,
+    val description: String,
     val imageSubject: String,
-    val nameSubject: String,
+    val title: String,
+    val count_exam: Int
 )

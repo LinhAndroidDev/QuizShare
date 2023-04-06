@@ -130,10 +130,10 @@ class HomeActivity : BaseActivity<EmptyViewModel>() {
         fm.replace(R.id.changeIdHome, fragment).addToBackStack(null).commit()
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    internal fun hideTabBar(bottomWrapView: NestedScrollView){
-        bottomWrapView.setOnTouchListener(TranslateAnimation(this, bottomWrap))
-    }
+//    @SuppressLint("ClickableViewAccessibility")
+//    internal fun hideTabBar(bottomWrapView: NestedScrollView?){
+//        bottomWrapView?.setOnTouchListener(TranslateAnimation(this, bottomWrap))
+//    }
 
     /** Click Back */
     override fun onBackPressed() {

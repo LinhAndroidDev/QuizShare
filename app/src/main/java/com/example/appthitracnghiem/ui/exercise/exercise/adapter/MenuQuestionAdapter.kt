@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.PositiveQuestion
 
-class MenuQuestionAdapter(val context: Context, private val listQuestion: List<PositiveQuestion>) : RecyclerView.Adapter<MenuQuestionAdapter.ViewHolderQuestion>() {
+class MenuQuestionAdapter(val context: Context, private val listQuestion: List<PositiveQuestion>)
+    : RecyclerView.Adapter<MenuQuestionAdapter.ViewHolderQuestion>() {
 
     class ViewHolderQuestion(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtQuestion: TextView = itemView.findViewById(R.id.txtQuestion)

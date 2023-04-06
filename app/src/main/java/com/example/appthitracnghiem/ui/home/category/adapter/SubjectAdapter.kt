@@ -20,19 +20,19 @@ class SubjectAdapter(private val listSubject: List<RecommandSubject>, val contex
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
-        var itemView =
+        val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_subject, parent, false)
         return SubjectViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
-        var subject: RecommandSubject = listSubject[position]
+        val subject: RecommandSubject = listSubject[position]
         Picasso.get().load(subject.imageSubject)
             .placeholder(R.drawable.loadimage)
             .error(R.drawable.errorimage)
             .into(holder.imageSubject)
-        holder.nameSubject.text = subject.nameSubject
-        holder.detailSubject.text = subject.detailSubject
+        holder.nameSubject.text = subject.title
+        holder.detailSubject.text = subject.description
     }
 
     override fun getItemCount(): Int {

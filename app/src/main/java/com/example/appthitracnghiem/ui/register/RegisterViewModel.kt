@@ -92,10 +92,10 @@ class RegisterViewModel : BaseViewModel() {
                                 successRegisterLiveData.value = true
                             }
                             ApiClient.STATUS_USER_EXIST -> {
-                                errorApiLiveData.value = "Tài khoản đã tồn tại"
+                                errorApiLiveData.value = response.body()?.message
                             }
                             ApiClient.STATUS_CODE_SERVER_NOT_RESPONSE -> {
-                                errorApiLiveData.value = "Server not responding"
+                                errorApiLiveData.value = response.body()?.message
                             }
                         }
                     }
