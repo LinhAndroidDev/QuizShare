@@ -7,6 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiClient {
     const val STATUS_CODE_SUCCESS = 200
     const val STATUS_USER_EXIST = 400
+    const val STATUS_INVALID_TOKEN = 401
     const val STATUS_CODE_SERVER_NOT_RESPONSE = 500
 
     //Todo: Change BASE_URL

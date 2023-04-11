@@ -85,37 +85,41 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setBottomShare() {
-        val bottomShareBehavior = BottomSheetBehavior.from(layoutLogout)
-        layoutLogoutCover.setOnTouchListener { v, event -> true }
+//        val bottomShareBehavior = BottomSheetBehavior.from(layoutLogout)
+//        layoutLogoutCover.setOnTouchListener { v, event -> true }
 
-        layoutLogout.isEnabled = false
+//        layoutLogout.isEnabled = false
 
         logout.setOnClickListener {
-            if (bottomShareBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
-                bottomShareBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-                layoutLogoutCover.visibility = View.VISIBLE
-            } else {
-                bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                layoutLogoutCover.visibility = View.GONE
-            }
-        }
-
-        layoutLogout.setOnTouchListener { v, event ->
-            bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            layoutLogoutCover.visibility = View.GONE
-            true
-        }
-
-        logoutNow.setOnClickListener {
             viewModel.confirmLoggedOut()
             val intent: Intent = Intent(requireActivity(), LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+//            if (bottomShareBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
+//                bottomShareBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+//                layoutLogoutCover.visibility = View.VISIBLE
+//            } else {
+//                bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+//                layoutLogoutCover.visibility = View.GONE
+//            }
         }
 
-        cancel.setOnClickListener {
-            bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            layoutLogoutCover.visibility = View.GONE
-        }
+//        layoutLogout.setOnTouchListener { v, event ->
+//            bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+//            layoutLogoutCover.visibility = View.GONE
+//            true
+//        }
+
+//        logoutNow.setOnClickListener {
+//            viewModel.confirmLoggedOut()
+//            val intent: Intent = Intent(requireActivity(), LoginActivity::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            startActivity(intent)
+//        }
+
+//        cancel.setOnClickListener {
+//            bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+//            layoutLogoutCover.visibility = View.GONE
+//        }
     }
 }

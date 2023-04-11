@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_profile.*
  * Use the [FragmentProfile.newInstance] factory method to
  * create an instance of this fragment.
  */
+@Suppress("DEPRECATION")
 class FragmentProfile : BaseFragment<EmptyViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

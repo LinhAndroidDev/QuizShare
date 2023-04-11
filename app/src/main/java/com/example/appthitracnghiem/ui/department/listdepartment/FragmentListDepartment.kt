@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
@@ -15,6 +16,8 @@ import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.base.BaseViewModel
 import com.example.appthitracnghiem.ui.department.listdepartment.adapter.ListDepartmentAdapter
+import com.example.appthitracnghiem.ui.home.home.RequestGetListDepartment
+import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment_list_department.*
 
 /**
@@ -23,26 +26,42 @@ import kotlinx.android.synthetic.main.fragment_list_department.*
  * create an instance of this fragment.
  */
 @Suppress("DEPRECATION")
-class FragmentListDepartment : BaseFragment<EmptyViewModel>() {
-    lateinit var listDetailDepartment : MutableList<DetailDepartment>
+class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
     lateinit var listDepartmentAdapter: ListDepartmentAdapter
+    lateinit var accessToken: String
+    var user_id: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        listDetailDepartment = mutableListOf()
-        listDetailDepartment.add(DetailDepartment(1,"Khoa tự nhiên"))
-        listDetailDepartment.add(DetailDepartment(2,"Khoa khoa học"))
-        listDetailDepartment.add(DetailDepartment(3,"Khoa sinh học"))
-
-        listDepartmentAdapter = ListDepartmentAdapter(requireActivity(),listDetailDepartment)
-
-        val linear : LinearLayoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
-        recycleDetailListDepartment.layoutManager = linear
-        recycleDetailListDepartment.adapter = listDepartmentAdapter
-
         click()
 
+    }
+
+    override fun bindData() {
+        super.bindData()
+
+        viewModel.loadingDepartmentLiveData.observe(viewLifecycleOwner){ isLoading->
+            if(isLoading && recycleDetailListDepartment.adapter == null){
+                loadingDepartmentInfo.visibility = View.VISIBLE
+            }else{
+                loadingDepartmentInfo.visibility = View.INVISIBLE
+            }
+        }
+
+        viewModel.listDepartmentLiveData.observe(viewLifecycleOwner){ listDepartment->
+            listDepartmentAdapter = ListDepartmentAdapter(requireActivity(),listDepartment)
+            val linear : LinearLayoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
+            recycleDetailListDepartment.layoutManager = linear
+            recycleDetailListDepartment.adapter = listDepartmentAdapter
+        }
+
+        accessToken = viewModel.mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.AUTHORIZATION,"").toString()
+        user_id = viewModel.mPreferenceUtil.defaultPref()
+            .getInt(PreferenceKey.USER_ID,0)
+        val requestDepartmentInfo: RequestDepartmentInfo = RequestDepartmentInfo(user_id)
+        viewModel.getDataDepartmentDetail(accessToken, requestDepartmentInfo)
     }
 
     private fun click() {

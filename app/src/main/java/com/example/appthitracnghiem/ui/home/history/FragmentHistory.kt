@@ -36,7 +36,7 @@ class FragmentHistory : BaseFragment<EmptyViewModel>() {
         historyTest.setOnClickListener{
             val fragmentHistoryTest: FragmentHistoryTest = FragmentHistoryTest()
             val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
-            fm.replace(R.id.changeIdHome,fragmentHistoryTest).addToBackStack(null).commit()
+            fm.add(R.id.changeIdHome,fragmentHistoryTest).addToBackStack(null).commit()
         }
     }
 

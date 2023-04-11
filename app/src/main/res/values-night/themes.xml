@@ -10,8 +10,9 @@
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/backgroundIntro</item>
-        <!-- Customize your theme here. -->
+        <item name="android:statusBarColor">#00639CFD</item>
         <item name="colorAccent">@color/backgroundIntro</item>
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 </resources>

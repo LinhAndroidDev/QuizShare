@@ -31,7 +31,7 @@ class HomeActivity : BaseActivity<EmptyViewModel>() {
         if (CheckConnect.haveNetworkConnected(this@HomeActivity)) {
             resetTab()
             functionHome.isSelected = true
-            replaceFragment(FragmentHome())
+            addFragment(FragmentHome())
 
             bottomWrap?.setOnTouchListener { _, _ -> true }
 
@@ -46,7 +46,7 @@ class HomeActivity : BaseActivity<EmptyViewModel>() {
             val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
             if (fm !is FragmentCategory) {
                 resetTab()
-                replaceFragment(FragmentCategory())
+                addFragment(FragmentCategory())
             }
         }
 
@@ -55,7 +55,13 @@ class HomeActivity : BaseActivity<EmptyViewModel>() {
             if (fm !is FragmentHome) {
                 resetTab()
                 functionHome.isSelected = true
-                replaceFragment(FragmentHome())
+                val fragmentHome: FragmentHome = FragmentHome()
+                val fm = supportFragmentManager.beginTransaction()
+                fm.setCustomAnimations(
+                    R.anim.animation_enter_right, R.anim.animation_exit_left,
+                    R.anim.animation_enter_left, R.anim.animation_exit_right
+                )
+                fm.replace(R.id.changeIdHome, fragmentHome).addToBackStack(null).commit()
             }
         }
 
@@ -64,7 +70,7 @@ class HomeActivity : BaseActivity<EmptyViewModel>() {
             if (fm !is FragmentCreateTest) {
                 resetTab()
                 functionCreate.isSelected = true
-                replaceFragment(FragmentCreateTest())
+                addFragment(FragmentCreateTest())
             }
         }
 
@@ -73,7 +79,7 @@ class HomeActivity : BaseActivity<EmptyViewModel>() {
             if (fm !is FragmentHistory) {
                 resetTab()
                 functionLeaderboard.isSelected = true
-                replaceFragment(FragmentHistory())
+                addFragment(FragmentHistory())
             }
         }
 
@@ -82,7 +88,7 @@ class HomeActivity : BaseActivity<EmptyViewModel>() {
             if (fm !is FragmentProfile) {
                 resetTab()
                 functionProfile.isSelected = true
-                replaceFragment(FragmentProfile())
+                addFragment(FragmentProfile())
             }
         }
     }
@@ -121,13 +127,13 @@ class HomeActivity : BaseActivity<EmptyViewModel>() {
     }
 
     /** Replace Fragment */
-    fun replaceFragment(fragment: Fragment) {
+    fun addFragment(fragment: Fragment) {
         val fm = supportFragmentManager.beginTransaction()
         fm.setCustomAnimations(
             R.anim.animation_enter_right, R.anim.animation_exit_left,
             R.anim.animation_enter_left, R.anim.animation_exit_right
         )
-        fm.replace(R.id.changeIdHome, fragment).addToBackStack(null).commit()
+        fm.add(R.id.changeIdHome, fragment).addToBackStack(null).commit()
     }
 
 //    @SuppressLint("ClickableViewAccessibility")

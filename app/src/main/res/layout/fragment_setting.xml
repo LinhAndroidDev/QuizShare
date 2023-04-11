@@ -380,5 +380,5 @@
             android:layout_height="match_parent"
             android:visibility="gone"/>
     </RelativeLayout>
-    <include layout="@layout/layout_logout"/>
+<!--    <include layout="@layout/layout_logout"/>-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

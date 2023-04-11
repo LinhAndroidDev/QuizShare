@@ -37,7 +37,6 @@ import kotlinx.android.synthetic.main.fragment__login.*
  */
 @Suppress("DEPRECATION")
 class FragmentLogin : BaseFragment<LoginViewModel>() {
-    lateinit var viewModelGeneral: ViewModelGeneral
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
     var checkSave: Boolean = false
@@ -51,7 +50,6 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         progressDialog = ProgressDialog(requireActivity())
-        viewModelGeneral = ViewModelProvider(requireActivity())[ViewModelGeneral::class.java]
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity())
         editor = sharedPreferences.edit()

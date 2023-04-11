@@ -49,7 +49,7 @@ class DepartmentAdapter(private val listQuiz: List<Department>, val context: Con
                 R.anim.anim_ignored_in,
                 R.anim.anim_down_enter
             )
-            fm.replace(R.id.changeIdHome, fragmentListDepartment).addToBackStack(null).commit()
+            fm.add(R.id.changeIdHome, fragmentListDepartment).addToBackStack(null).commit()
         }
     }
 

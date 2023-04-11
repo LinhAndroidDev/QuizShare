@@ -6,8 +6,6 @@ import android.graphics.Shader
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.Handler
-import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,20 +22,18 @@ import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.FragmentPoint
 import com.example.appthitracnghiem.ui.exercise.exercise.adapter.MenuQuestionAdapter
-import com.example.appthitracnghiem.ui.home.createtest.adapter.PositiveQuestionAdapter
-import kotlinx.android.synthetic.main.fragment_exercise.*
-import kotlinx.android.synthetic.main.fragment_exercise.view.*
+import kotlinx.android.synthetic.main.fragment_exam.*
 import kotlinx.android.synthetic.main.layout_logout.*
 import kotlinx.android.synthetic.main.popup_list_question.*
 import kotlinx.android.synthetic.main.popup_list_question.view.*
 
 /**
  * A simple [Fragment] subclass.
- * Use the [FragmentExercise.newInstance] factory method to
+ * Use the [FragmentExam.newInstance] factory method to
  * create an instance of this fragment.
  */
 @Suppress("DEPRECATION")
-class FragmentExercise : BaseFragment<EmptyViewModel>() {
+class FragmentExam : BaseFragment<EmptyViewModel>() {
     private lateinit var listQuestion: MutableList<PositiveQuestion>
     private lateinit var menuQuestionAdapter: MenuQuestionAdapter
     lateinit var countDownTimer: CountDownTimer
@@ -138,7 +134,7 @@ class FragmentExercise : BaseFragment<EmptyViewModel>() {
                 R.anim.anim_ignored_in,
                 R.anim.anim_down_enter
             )
-            fm.replace(R.id.changeIdExercise, fragmentPoint).addToBackStack(null).commit()
+            fm.replace(R.id.changeIdExam, fragmentPoint).addToBackStack(null).commit()
         }
 
         backSubmit.setOnClickListener {
@@ -206,7 +202,7 @@ class FragmentExercise : BaseFragment<EmptyViewModel>() {
     }
 
     override fun onFragmentBack(): Boolean {
-        return false
+        return true
     }
 
     override fun onCreateView(
@@ -214,6 +210,6 @@ class FragmentExercise : BaseFragment<EmptyViewModel>() {
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_exercise, container, false)
+        return inflater.inflate(R.layout.fragment_exam, container, false)
     }
 }

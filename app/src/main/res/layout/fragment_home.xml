@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="61dp"
             android:layout_marginEnd="20dp"
             android:layout_alignParentEnd="true"
             android:src="@drawable/rt"
@@ -31,7 +31,7 @@
                     android:text="@string/txtHello"
                     android:textSize="17sp"
                     android:textColor="@color/white"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="61dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
@@ -172,7 +172,7 @@
                     />
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="20dp" />
+                    android:layout_height="120dp" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

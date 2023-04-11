@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundIntro"
-    tools:context=".ui.exercise.exercise.FragmentExercise">
+    tools:context=".ui.exercise.exercise.FragmentExam">
 
     <LinearLayout
         android:id="@+id/layoutExercise"
@@ -275,8 +275,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginHorizontal="25dp"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="32dp"
-                app:cardElevation="0dp">
+                app:cardCornerRadius="32dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -45,44 +45,12 @@ class ListDepartmentAdapter(
     ) {
         val detailDepartment: DetailDepartment = listDepartment[position]
         holder.txtNameDepartment.text = detailDepartment.title
-        val linearLayoutManager: LinearLayoutManager =
+        val linearLayoutManager: LinearLayoutManager = 
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         holder.recycleViewListSubjectDepartment.layoutManager = linearLayoutManager
-        val listSubject: MutableList<Subject> = arrayListOf()
-        listSubject.add(
-            Subject(
-                0,
-                R.drawable.icon_test_subject,
-                "Toán học",
-                "Khoa học tự nhiên - 123 đề"
-            )
-        )
-        listSubject.add(
-            Subject(
-                1,
-                R.drawable.icon_test_subject,
-                "Toán học",
-                "Khoa học tự nhiên - 123 đề"
-            )
-        )
-        listSubject.add(
-            Subject(
-                2,
-                R.drawable.icon_test_subject,
-                "Toán học",
-                "Khoa học tự nhiên - 123 đề"
-            )
-        )
-        listSubject.add(
-            Subject(
-                3,
-                R.drawable.icon_test_subject,
-                "Toán học",
-                "Khoa học tự nhiên - 123 đề"
-            )
-        )
+//        val listSubject: MutableList<Subject> = arrayListOf()
 
-        val subjectAdapter: SubjectAdapter = SubjectAdapter(context, listSubject)
+        val subjectAdapter: SubjectAdapter = SubjectAdapter(context, detailDepartment.subjects)
         holder.recycleViewListSubjectDepartment.adapter = subjectAdapter
     }
 

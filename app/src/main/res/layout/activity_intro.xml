@@ -9,11 +9,11 @@
 
     <Button
         android:id="@+id/skip"
-        android:layout_margin="10dp"
+        android:layout_margin="30dp"
         android:background="@drawable/ic_action_next"
         android:layout_alignParentEnd="true"
-        android:layout_width="45dp"
-        android:layout_height="45dp"/>
+        android:layout_width="35dp"
+        android:layout_height="30dp"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPagerIntro"

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.model.DetailDepartment
 import com.example.appthitracnghiem.model.Subject
 import com.example.appthitracnghiem.ui.department.listtest.FragmentListTest
 import com.squareup.picasso.Picasso
@@ -34,7 +35,7 @@ class SubjectAdapter(val context: Context, private val listSubject: List<Subject
 
     override fun onBindViewHolder(holder: SubjectAdapter.ViewHolderSubject, position: Int) {
         val subject: Subject = listSubject[position]
-        Picasso.get().load(subject.image)
+        Picasso.get().load("https://storage.googleapis.com/quiz-app-storage/subject/"+subject.image)
             .error(R.drawable.errorimage)
             .placeholder(R.drawable.loadimage)
             .into(holder.image)
@@ -52,7 +53,7 @@ class SubjectAdapter(val context: Context, private val listSubject: List<Subject
                     R.anim.anim_ignored_in,
                     R.anim.anim_down_enter
                 )
-                fm.replace(R.id.changeIdHome, fragmentListTest).addToBackStack(null).commit()
+                fm.add(R.id.changeIdHome, fragmentListTest).addToBackStack(null).commit()
             }
 
         })

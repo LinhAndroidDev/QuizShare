@@ -2,15 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.appthitracnghiem">
-
-    <supports-screens
-        android:anyDensity="true"
-        android:largeScreens="true"
-        android:normalScreens="true"
-        android:resizeable="true"
-        android:smallScreens="true"
-        android:xlargeScreens="true" />
-
+    <!-- <supports-screens -->
+    <!-- android:anyDensity="true" -->
+    <!-- android:largeScreens="true" -->
+    <!-- android:normalScreens="true" -->
+    <!-- android:resizeable="true" -->
+    <!-- android:smallScreens="true" -->
+    <!-- android:xlargeScreens="true" /> -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -26,7 +24,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".HistoryTopicActivity"
+            android:name=".ui.exercise.ExamActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.home.history.test.HistoryTopicActivity"
             android:exported="false" />
         <activity
             android:name=".ui.exercise.ExerciseActivity"
