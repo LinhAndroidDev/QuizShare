@@ -12,13 +12,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.model.Exam
 import com.example.appthitracnghiem.model.Test
 import com.example.appthitracnghiem.ui.exercise.ExerciseActivity
+import com.squareup.picasso.Picasso
 
-class TestAdapter(val context: Context, private var listTest: MutableList<Test>) :
+class TestAdapter(val context: Context, private var listTest: MutableList<Exam>) :
     RecyclerView.Adapter<TestAdapter.TestViewHolder>(), Filterable{
 
-    var listTestOld: MutableList<Test> = listTest
+    var listTestOld: MutableList<Exam> = listTest
 
     class TestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.topic)
@@ -33,10 +35,13 @@ class TestAdapter(val context: Context, private var listTest: MutableList<Test>)
     }
 
     override fun onBindViewHolder(holder: TestAdapter.TestViewHolder, position: Int) {
-        val test: Test = listTest[position]
-        holder.image.setImageResource(test.image)
-        holder.title.text = test.title
-        holder.description.text = test.description
+        val exam: Exam = listTest[position]
+        Picasso.get().load(exam.image)
+            .error(R.drawable.errorimage)
+            .placeholder(R.drawable.loadimage)
+            .into(holder.image)
+        holder.title.text = exam.title
+        holder.description.text = exam.number.toString() + " Câu trắc nghiệm"
 
         holder.itemView.setOnClickListener {
             val intent: Intent = Intent(context, ExerciseActivity::class.java)
@@ -56,7 +61,7 @@ class TestAdapter(val context: Context, private var listTest: MutableList<Test>)
                 if(txtString.isEmpty()){
                     listTest = listTestOld
                 }else{
-                    val list: MutableList<Test> = mutableListOf()
+                    val list: MutableList<Exam> = mutableListOf()
                     for(test in listTestOld){
                         if(test.title.lowercase().contains(txtString)){
                             list.add(test)
@@ -74,7 +79,7 @@ class TestAdapter(val context: Context, private var listTest: MutableList<Test>)
             @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(strTxt: CharSequence?, p1: FilterResults?) {
                 if(p1?.values != null){
-                    listTest = p1.values as MutableList<Test>
+                    listTest = p1.values as MutableList<Exam>
                     notifyDataSetChanged()
                 }
             }

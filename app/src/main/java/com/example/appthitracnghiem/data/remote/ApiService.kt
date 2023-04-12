@@ -5,6 +5,7 @@ import com.example.appthitracnghiem.model.LoginSuccessful
 import com.example.appthitracnghiem.model.Department
 import com.example.appthitracnghiem.model.RecommandSubject
 import com.example.appthitracnghiem.ui.department.listdepartment.RequestDepartmentInfo
+import com.example.appthitracnghiem.ui.department.listtest.RequestListExam
 import com.example.appthitracnghiem.ui.home.category.RequestCategory
 import com.example.appthitracnghiem.ui.home.home.RequestGetListDepartment
 import com.example.appthitracnghiem.ui.login.RequestLogin
@@ -54,4 +55,9 @@ interface ApiService {
     fun getListDepartmentInfo(@Header("Authorization") header: String,
     @Body requestDepartmentInfo: RequestDepartmentInfo
     ): Call<DepartmentResponse>
+
+    @POST("listExam")
+    fun getListExam(@Header("Authorization") header: String,
+                              @Body requestListExam: RequestListExam
+    ): Call<ListExamResponse>
 }

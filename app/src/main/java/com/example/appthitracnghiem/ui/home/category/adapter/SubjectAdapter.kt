@@ -31,8 +31,8 @@ class SubjectAdapter(private val listSubject: List<RecommandSubject>, val contex
             .placeholder(R.drawable.loadimage)
             .error(R.drawable.errorimage)
             .into(holder.imageSubject)
-        holder.nameSubject.text = subject.title
-        holder.detailSubject.text = subject.description
+        holder.nameSubject.text = subject.nameSubject
+        holder.detailSubject.text = subject.detailSubject
     }
 
     override fun getItemCount(): Int {

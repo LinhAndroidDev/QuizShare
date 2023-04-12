@@ -15,6 +15,7 @@ import retrofit2.Response
 class ListDepartmentViewModel : BaseViewModel() {
     val listDepartmentLiveData = MutableLiveData<MutableList<DetailDepartment>>()
     val loadingDepartmentLiveData = MutableLiveData<Boolean>()
+    val idDepartmentLiveData = MutableLiveData<Int>()
 
     fun getDataDepartmentDetail(header: String, requestDepartmentInfo: RequestDepartmentInfo){
         loadingDepartmentLiveData.value = true
@@ -29,7 +30,6 @@ class ListDepartmentViewModel : BaseViewModel() {
                         when (body.statusCode) {
                             ApiClient.STATUS_CODE_SUCCESS -> {
                                 listDepartmentLiveData.value = body.result
-                                Log.d("Successful",ApiClient.STATUS_CODE_SUCCESS.toString())
                             }
                             ApiClient.STATUS_INVALID_TOKEN -> {
                                 errorApiLiveData.value = body.message

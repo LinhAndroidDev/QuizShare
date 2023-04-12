@@ -1,6 +1,7 @@
 package com.example.appthitracnghiem.ui.department.listdepartment.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,8 @@ class SubjectAdapter(val context: Context, private val listSubject: List<Subject
 
         holder.itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
+                val bundle: Bundle = Bundle()
+                bundle.putInt("ID", subject.id)
                 val activity = context as AppCompatActivity
                 val fragmentListTest: FragmentListTest = FragmentListTest()
                 val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
@@ -54,6 +57,7 @@ class SubjectAdapter(val context: Context, private val listSubject: List<Subject
                     R.anim.anim_down_enter
                 )
                 fm.add(R.id.changeIdHome, fragmentListTest).addToBackStack(null).commit()
+                fragmentListTest.arguments = bundle
             }
 
         })
