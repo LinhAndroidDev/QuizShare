@@ -41,6 +41,15 @@ android {
     viewBinding {
         enabled = true
     }
+
+    flavorDimensions 'quiz_flavor'
+    productFlavors{
+        development{
+            dimension = 'quiz_flavor'
+            buildConfigField "String", "BASE_URL_IMAGE_SUBJECT", '"https://storage.googleapis.com/quiz-app-storage/subject/"'
+            buildConfigField "String", "BASE_URL_IMAGE_DEPARTMENT", '"https://storage.googleapis.com/quiz-app-storage/department/"'
+        }
+    }
 }
 
 dependencies {
@@ -68,4 +77,6 @@ dependencies {
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.jjoe64:graphview:4.2.1'
+
+    implementation 'com.mikhaellopez:circularprogressbar:3.1.0'
 }

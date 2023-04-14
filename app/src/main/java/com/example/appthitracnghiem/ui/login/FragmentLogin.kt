@@ -25,8 +25,10 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.ViewModelGeneral
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.HomeActivity
+import com.example.appthitracnghiem.ui.home.RequestUserInfo
 import com.example.appthitracnghiem.ui.login.forgetpassword.FragmentForgetPassword
 import com.example.appthitracnghiem.ui.register.RegisterActivity
+import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment__create_password.*
 import kotlinx.android.synthetic.main.fragment__login.*
 
@@ -90,6 +92,25 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
                 setNote(model.resMsgError, model.resColorError)
             }
         }
+
+        viewModel.nameUserLiveData.observe(viewLifecycleOwner) {
+            viewModel.mPreferenceUtil.defaultPref()
+                .edit().putString(PreferenceKey.USER_NAME,it)
+                .apply()
+        }
+
+        viewModel.avartarUserLiveData.observe(viewLifecycleOwner) {
+            viewModel.mPreferenceUtil.defaultPref()
+                .edit().putString(PreferenceKey.USER_AVATAR,it)
+                .apply()
+        }
+
+        val accessToken = viewModel.mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.AUTHORIZATION,"").toString()
+        val userId = viewModel.mPreferenceUtil.defaultPref()
+            .getInt(PreferenceKey.USER_ID,0)
+        val requestUserInfo: RequestUserInfo = RequestUserInfo(userId)
+        viewModel.getDataUserInfo(accessToken, requestUserInfo)
     }
 
     /** set font*/

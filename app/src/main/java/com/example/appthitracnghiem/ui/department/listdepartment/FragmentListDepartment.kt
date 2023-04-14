@@ -6,17 +6,11 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.model.DetailDepartment
-import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import com.example.appthitracnghiem.ui.base.BaseViewModel
 import com.example.appthitracnghiem.ui.department.listdepartment.adapter.ListDepartmentAdapter
-import com.example.appthitracnghiem.ui.home.home.RequestGetListDepartment
 import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment_list_department.*
 

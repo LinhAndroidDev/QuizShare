@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.exercise.FragmentPoint">
+    tools:context=".ui.exercise.exercise.FragmentPoint">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,13 +46,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="31dp">
-                    <ProgressBar
+                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
                         android:id="@+id/progressPoint"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:indeterminateOnly="false"
-                        android:progressDrawable="@drawable/layer_point"
-                        android:progress="80"/>
+                        android:layout_width="148dp"
+                        android:layout_height="148dp"
+                        app:cpb_background_progressbar_width="10dp"
+                        app:cpb_progressbar_width="10dp"
+                        app:cpb_round_border="true"
+                        app:cpb_background_progressbar_color="@color/white"
+                        app:cpb_progressbar_color="@color/pink_purple"/>
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

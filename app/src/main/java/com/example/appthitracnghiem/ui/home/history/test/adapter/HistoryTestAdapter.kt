@@ -8,13 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.Test
-import com.example.appthitracnghiem.ui.department.listtest.adapter.TestAdapter
-import com.example.appthitracnghiem.ui.exercise.ExerciseActivity
-import com.example.appthitracnghiem.ui.home.history.test.FragmentHistoryTopic
 import com.example.appthitracnghiem.ui.home.history.test.HistoryTopicActivity
 
 class HistoryTestAdapter(val context: Context, val listTest: List<Test>) : RecyclerView.Adapter<HistoryTestAdapter.TestViewHolder>() {

@@ -2,12 +2,14 @@ package com.example.appthitracnghiem.ui.department.listdepartment.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
@@ -45,10 +47,11 @@ class ListDepartmentAdapter(
     ) {
         val detailDepartment: DetailDepartment = listDepartment[position]
         holder.txtNameDepartment.text = detailDepartment.title
+        val semibold: Typeface? = ResourcesCompat.getFont(context,R.font.svn_gilroy_semibold)
+        holder.txtNameDepartment.typeface = semibold
         val linearLayoutManager: LinearLayoutManager = 
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         holder.recycleViewListSubjectDepartment.layoutManager = linearLayoutManager
-//        val listSubject: MutableList<Subject> = arrayListOf()
 
         val subjectAdapter: SubjectAdapter = SubjectAdapter(context, detailDepartment.subjects)
         holder.recycleViewListSubjectDepartment.adapter = subjectAdapter

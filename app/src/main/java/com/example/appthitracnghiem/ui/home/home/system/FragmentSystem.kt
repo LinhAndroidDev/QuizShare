@@ -1,4 +1,4 @@
-package com.example.appthitracnghiem.ui.home.home
+package com.example.appthitracnghiem.ui.home.home.system
 
 import android.graphics.Typeface
 import android.os.Bundle
@@ -9,9 +9,8 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.model.ViewModelGeneral
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import com.example.appthitracnghiem.ui.home.home.adapter.DepartmentAdapter
+import com.example.appthitracnghiem.ui.home.home.system.adapter.DepartmentAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment_from_user.*
 import kotlinx.android.synthetic.main.fragment_system.*

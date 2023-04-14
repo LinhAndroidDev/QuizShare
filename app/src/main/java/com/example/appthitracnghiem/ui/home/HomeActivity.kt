@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.connectivity.CheckConnect
 import com.example.appthitracnghiem.ui.EmptyViewModel
@@ -17,11 +18,13 @@ import com.example.appthitracnghiem.ui.home.createtest.FragmentCreateTest
 import com.example.appthitracnghiem.ui.home.history.FragmentHistory
 import com.example.appthitracnghiem.ui.home.home.FragmentHome
 import com.example.appthitracnghiem.ui.home.profile.FragmentProfile
+import com.example.appthitracnghiem.utils.PreferenceKey
+import com.example.appthitracnghiem.utils.PreferenceUtil
 import kotlinx.android.synthetic.main.activity_home_page.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 @Suppress("DEPRECATION")
-class HomeActivity : BaseActivity<EmptyViewModel>() {
+class HomeActivity : BaseActivity<HomeViewModel>() {
     private var backPressTime: Long = 0
 
     @SuppressLint("ClickableViewAccessibility", "CommitPrefEdits")
@@ -40,6 +43,30 @@ class HomeActivity : BaseActivity<EmptyViewModel>() {
             CheckConnect.showToastShort(this@HomeActivity, "Bạn đang ngoại tuyến")
         }
     }
+
+//    @SuppressLint("CommitPrefEdits")
+//    override fun bindData() {
+//        super.bindData()
+//
+//        viewModel.nameUserLiveData.observe(this, Observer {
+//            viewModel.mPreferenceUtil.defaultPref()
+//                .edit().putString(PreferenceKey.USER_NAME,it)
+//                .apply()
+//        })
+//
+//        viewModel.avartarUserLiveData.observe(this, Observer {
+//            viewModel.mPreferenceUtil.defaultPref()
+//                .edit().putString(PreferenceKey.USER_AVATAR,it)
+//                .apply()
+//        })
+//
+//        val accessToken = viewModel.mPreferenceUtil.defaultPref()
+//            .getString(PreferenceKey.AUTHORIZATION,"").toString()
+//        val userId = viewModel.mPreferenceUtil.defaultPref()
+//            .getInt(PreferenceKey.USER_ID,0)
+//        val requestUserInfo: RequestUserInfo = RequestUserInfo(userId)
+//        viewModel.getDataUserInfo(accessToken, requestUserInfo)
+//    }
 
     private fun click() {
         iconSearch.setOnClickListener {

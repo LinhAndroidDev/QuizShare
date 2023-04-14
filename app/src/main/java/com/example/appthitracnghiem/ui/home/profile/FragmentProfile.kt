@@ -13,6 +13,7 @@ import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.home.profile.setting.SettingActivity
+import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 
@@ -27,9 +28,12 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        progressNumberDay.progress = 80
-
         percentColum(30, 80, 60)
+
+        progressNumberDay.apply {
+            progressMax = 100f
+            setProgressWithAnimation(80f,3000)
+        }
 
 //        (activity as HomeActivity).hideTabBar(scrollProfile)
 
@@ -56,6 +60,9 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
     }
 
     private fun setText() {
+        txtName.text = viewModel.mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.USER_NAME, "")
+
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         txtName.typeface = semibold

@@ -3,8 +3,8 @@ package com.example.appthitracnghiem.ui.home.home.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.example.appthitracnghiem.ui.home.home.FragmentFromUser
-import com.example.appthitracnghiem.ui.home.home.FragmentSystem
+import com.example.appthitracnghiem.ui.home.home.user.FragmentFromUser
+import com.example.appthitracnghiem.ui.home.home.system.FragmentSystem
 
 enum class Page(val title: String, val fragment: Class<out Fragment>) {
     FragmentFirst("Hệ thống", FragmentSystem::class.java),

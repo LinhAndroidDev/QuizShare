@@ -1,11 +1,11 @@
-package com.example.appthitracnghiem.ui.exercise
+package com.example.appthitracnghiem.ui.exercise.exercise
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
@@ -15,12 +15,18 @@ import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import kotlinx.android.synthetic.main.fragment_point.*
 import kotlinx.android.synthetic.main.fragment_point.view.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 @Suppress("DEPRECATION")
 class FragmentPoint : BaseFragment<EmptyViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        progressPoint.apply {
+            progressMax = 100f
+            setProgressWithAnimation(80f,3000)
+        }
 
         val lineSeries = LineGraphSeries(
             arrayOf(

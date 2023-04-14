@@ -1,5 +1,6 @@
 package com.example.appthitracnghiem.ui.home.home
 
+import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
@@ -14,7 +15,10 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.HomeActivity
+import com.example.appthitracnghiem.ui.home.HomeViewModel
+import com.example.appthitracnghiem.ui.home.RequestUserInfo
 import com.example.appthitracnghiem.ui.home.home.adapter.ViewPagerDepartment
+import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.activity_home_page.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -24,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
  * create an instance of this fragment.
  */
 @Suppress("DEPRECATION")
-class FragmentHome : BaseFragment<EmptyViewModel>() {
+class FragmentHome : BaseFragment<HomeViewModel>() {
     lateinit var viewPagerDepartment : ViewPagerDepartment
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -42,7 +46,34 @@ class FragmentHome : BaseFragment<EmptyViewModel>() {
         setText()
     }
 
+//    @SuppressLint("CommitPrefEdits")
+//    override fun bindData() {
+//        super.bindData()
+//
+//        viewModel.nameUserLiveData.observe(viewLifecycleOwner) {
+//            viewModel.mPreferenceUtil.defaultPref()
+//                .edit().putString(PreferenceKey.USER_NAME,it)
+//                .apply()
+//        }
+//
+//        viewModel.avartarUserLiveData.observe(viewLifecycleOwner) {
+//            viewModel.mPreferenceUtil.defaultPref()
+//                .edit().putString(PreferenceKey.USER_AVATAR,it)
+//                .apply()
+//        }
+//
+//        val accessToken = viewModel.mPreferenceUtil.defaultPref()
+//            .getString(PreferenceKey.AUTHORIZATION,"").toString()
+//        val userId = viewModel.mPreferenceUtil.defaultPref()
+//            .getInt(PreferenceKey.USER_ID,0)
+//        val requestUserInfo: RequestUserInfo = RequestUserInfo(userId)
+//        viewModel.getDataUserInfo(accessToken, requestUserInfo)
+//    }
+
     private fun setText() {
+        txtNameUserHome.text = viewModel.mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.USER_NAME,"")
+
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         textHome.typeface = semibold

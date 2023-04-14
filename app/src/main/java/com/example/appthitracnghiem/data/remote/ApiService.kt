@@ -1,17 +1,17 @@
 package com.example.appthitracnghiem.data.remote
 
 import com.example.appthitracnghiem.data.remote.entity.*
-import com.example.appthitracnghiem.model.LoginSuccessful
 import com.example.appthitracnghiem.model.Department
 import com.example.appthitracnghiem.model.RecommandSubject
 import com.example.appthitracnghiem.ui.department.listdepartment.RequestDepartmentInfo
 import com.example.appthitracnghiem.ui.department.listtest.RequestListExam
+import com.example.appthitracnghiem.ui.exercise.exercise.RequestExamQuestion
+import com.example.appthitracnghiem.ui.home.RequestUserInfo
 import com.example.appthitracnghiem.ui.home.category.RequestCategory
-import com.example.appthitracnghiem.ui.home.home.RequestGetListDepartment
+import com.example.appthitracnghiem.ui.home.home.system.RequestGetListDepartment
 import com.example.appthitracnghiem.ui.login.RequestLogin
 import com.example.appthitracnghiem.ui.login.forgetpassword.RequestEmailVerification
 import com.example.appthitracnghiem.ui.register.RequestRegister
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -60,4 +60,14 @@ interface ApiService {
     fun getListExam(@Header("Authorization") header: String,
                               @Body requestListExam: RequestListExam
     ): Call<ListExamResponse>
+
+    @POST("examListQuestion")
+    fun getExamListQuestion(@Header("Authorization") header: String,
+                    @Body requestExamQuestion: RequestExamQuestion
+    ): Call<ExamQuestionResponse>
+
+    @POST("getUserInfo")
+    fun getUserInfo(@Header("Authorization") header: String,
+                            @Body requestUserInfo: RequestUserInfo
+    ): Call<UserResponse>
 }

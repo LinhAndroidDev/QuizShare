@@ -8,11 +8,12 @@ class UserResponse(
     BaseResponse<UserResponse.Result>() {
     data class Result(
         val access_token: String?,
+        val avatar: String?,
         val email: String?,
-        val user_id: Int?,
+        val id: Int?,
         val name: String?,
         val phone_number: String?,
-        val year_of_birth: Int?,
+        val birthday: Int?,
         val role : Int?,
         val status : Int?
     )

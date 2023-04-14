@@ -3,6 +3,7 @@ package com.example.appthitracnghiem.ui.department.listtest.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,17 +11,21 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.Exam
-import com.example.appthitracnghiem.model.Test
-import com.example.appthitracnghiem.ui.exercise.ExerciseActivity
+import com.example.appthitracnghiem.ui.exercise.topic.ExerciseActivity
+import com.example.appthitracnghiem.utils.PreferenceKey
+import com.example.appthitracnghiem.utils.PreferenceUtil
 import com.squareup.picasso.Picasso
 
 class TestAdapter(val context: Context, private var listTest: MutableList<Exam>) :
     RecyclerView.Adapter<TestAdapter.TestViewHolder>(), Filterable{
 
     var listTestOld: MutableList<Exam> = listTest
+    var id_exam: Int = 0
+    var time_exam: Int = 0
 
     class TestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.topic)
@@ -46,11 +51,22 @@ class TestAdapter(val context: Context, private var listTest: MutableList<Exam>)
         holder.itemView.setOnClickListener {
             val intent: Intent = Intent(context, ExerciseActivity::class.java)
             context.startActivity(intent)
+            saveKey(exam.id,exam.time)
         }
     }
 
     override fun getItemCount(): Int {
         return listTest.size
+    }
+
+    fun saveKey(id: Int, time: Int){
+        val mPreferenceUtil: PreferenceUtil = PreferenceUtil(context)
+        mPreferenceUtil.defaultPref().edit()
+            .putInt(PreferenceKey.ID_EXAM,id)
+            .apply()
+        mPreferenceUtil.defaultPref().edit()
+            .putInt(PreferenceKey.TIME_EXAM,time)
+            .apply()
     }
 
     override fun getFilter(): Filter {

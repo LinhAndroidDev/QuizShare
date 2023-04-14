@@ -1,4 +1,4 @@
-package com.example.appthitracnghiem.ui.home.home
+package com.example.appthitracnghiem.ui.home.home.user
 
 import android.graphics.Typeface
 import android.os.Bundle

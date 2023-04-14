@@ -20,8 +20,8 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.PositiveQuestion
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import com.example.appthitracnghiem.ui.exercise.FragmentPoint
 import com.example.appthitracnghiem.ui.exercise.exercise.adapter.MenuQuestionAdapter
+import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment_exam.*
 import kotlinx.android.synthetic.main.layout_logout.*
 import kotlinx.android.synthetic.main.popup_list_question.*
@@ -33,7 +33,7 @@ import kotlinx.android.synthetic.main.popup_list_question.view.*
  * create an instance of this fragment.
  */
 @Suppress("DEPRECATION")
-class FragmentExam : BaseFragment<EmptyViewModel>() {
+class FragmentExam : BaseFragment<ExamViewModel>() {
     private lateinit var listQuestion: MutableList<PositiveQuestion>
     private lateinit var menuQuestionAdapter: MenuQuestionAdapter
     lateinit var countDownTimer: CountDownTimer
@@ -41,14 +41,40 @@ class FragmentExam : BaseFragment<EmptyViewModel>() {
     var totalCount: Int = 0
     var minutes: Int = 0
     var seconds: Int = 0
+    var position: Int = 0
+    var size: Int = 0
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setTime(timeSever)
+        val time = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.TIME_EXAM,0)
+        setTime(1)
 
         click()
+    }
+
+    override fun bindData() {
+        super.bindData()
+
+        viewModel.listExamQuestionLiveData.observe(viewLifecycleOwner){
+            titleExam.text = it[position].question_title
+            choose1.text = it[position].answer_list[0].content
+            choose2.text = it[position].answer_list[1].content
+            choose3.text = it[position].answer_list[2].content
+            size = it[position].answer_list.size
+            if(size > 3){
+                choose4.text = it[position].answer_list[3].content
+            }else{
+                choose4.visibility = View.INVISIBLE
+            }
+        }
+
+        val user_id = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.USER_ID,0)
+        val accessToken = viewModel.mPreferenceUtil.defaultPref().getString(PreferenceKey.AUTHORIZATION,"").toString()
+        val id_exam = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.ID_EXAM,0)
+        val requestExamQuestion: RequestExamQuestion = RequestExamQuestion(user_id,id_exam)
+        viewModel.getExamListQuestion(accessToken, requestExamQuestion)
     }
 
     private fun setTime(time: Int) {
@@ -71,7 +97,7 @@ class FragmentExam : BaseFragment<EmptyViewModel>() {
                         R.anim.anim_ignored_in,
                         R.anim.anim_down_enter
                     )
-                    fm?.replace(R.id.changeIdExercise, fragmentPoint)?.addToBackStack(null)?.commit()
+                    fm?.replace(R.id.changeIdExam, fragmentPoint)?.addToBackStack(null)?.commit()
                 }
                 if (countTime != null && txtTime != null) {
                     if (seconds < 10) {
@@ -91,6 +117,45 @@ class FragmentExam : BaseFragment<EmptyViewModel>() {
     }
 
     private fun click() {
+        nextQuestion.setOnClickListener {
+            if(position < size){
+            position++
+            setUnText()
+            viewModel.listExamQuestionLiveData.observe(viewLifecycleOwner){
+                titleExam.text = it[position].question_title
+                choose1.text = it[position].answer_list[0].content
+                choose2.text = it[position].answer_list[1].content
+                choose3.text = it[position].answer_list[2].content
+                val size = it[position].answer_list.size
+                if(size > 3){
+                    choose4.text = it[position].answer_list[3].content
+                }else{
+                    choose4.visibility = View.INVISIBLE
+                }
+            }
+        }
+        }
+
+        backQuestion.setOnClickListener {
+            if(position > 0){
+                position--
+                setUnText()
+                viewModel.listExamQuestionLiveData.observe(viewLifecycleOwner){
+                    titleExam.text = it[position].question_title
+                    choose1.text = it[position].answer_list[0].content
+                    choose2.text = it[position].answer_list[1].content
+                    choose3.text = it[position].answer_list[2].content
+                    val size = it[position].answer_list.size
+                    if(size > 3){
+                        choose4.text = it[position].answer_list[3].content
+                        choose4.visibility = View.VISIBLE
+                    }else{
+                        choose4.visibility = View.INVISIBLE
+                    }
+                }
+            }
+        }
+
         choose1.setOnClickListener {
             clickChoose(choose1)
         }
@@ -154,13 +219,17 @@ class FragmentExam : BaseFragment<EmptyViewModel>() {
         choose2.isSelected = false
         choose3.isSelected = false
         choose4.isSelected = false
+        setUnText()
+
+        choose.isSelected = true
+        choose.setBackgroundResource(R.drawable.select_text_view)
+    }
+
+    private fun setUnText() {
         choose1.setBackgroundResource(R.drawable.un_select_text_view)
         choose2.setBackgroundResource(R.drawable.un_select_text_view)
         choose3.setBackgroundResource(R.drawable.un_select_text_view)
         choose4.setBackgroundResource(R.drawable.un_select_text_view)
-
-        choose.isSelected = true
-        choose.setBackgroundResource(R.drawable.select_text_view)
     }
 
     private fun showMenuQuestion(view: View, layout: Int, x: Int, y: Int, position: Int) {

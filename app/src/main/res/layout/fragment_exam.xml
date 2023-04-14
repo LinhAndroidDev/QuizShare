@@ -90,6 +90,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/titleExam"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -207,6 +208,7 @@
                             android:orientation="horizontal">
 
                             <androidx.cardview.widget.CardView
+                                android:id="@+id/backQuestion"
                                 android:layout_width="56dp"
                                 android:layout_height="56dp"
                                 app:cardBackgroundColor="@color/backgroundIntro"

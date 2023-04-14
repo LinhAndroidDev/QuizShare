@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.exercise.ExerciseActivity"
+    tools:context=".ui.exercise.topic.ExerciseActivity"
     android:orientation="vertical"
     android:id="@+id/changeIdExercise">
 

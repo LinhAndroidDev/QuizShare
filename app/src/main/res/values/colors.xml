@@ -24,6 +24,7 @@
     <color name="color_purple">#6a5ae0</color>
     <color name="color_green">#0ADF13</color>
     <color name="color_grey_blur">#CCCCCC</color>
+    <color name="color_hide">#00111111</color>
 
     <!--    Design color background-->
     <color name="color_stroke_txt">#FF6666</color>

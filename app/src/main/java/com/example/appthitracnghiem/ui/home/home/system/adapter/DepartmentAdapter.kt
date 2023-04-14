@@ -1,4 +1,4 @@
-package com.example.appthitracnghiem.ui.home.home.adapter
+package com.example.appthitracnghiem.ui.home.home.system.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -16,7 +16,6 @@ import com.squareup.picasso.Picasso
 
 class DepartmentAdapter(private val listQuiz: List<Department>, val context: Context) :
     RecyclerView.Adapter<DepartmentAdapter.ViewHolderQuiz>() {
-    val path: String ="https://storage.googleapis.com/quiz-app-storage/department/"
 
     class ViewHolderQuiz(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var image: ImageView = itemView.findViewById(R.id.image)
@@ -32,7 +31,7 @@ class DepartmentAdapter(private val listQuiz: List<Department>, val context: Con
 
     override fun onBindViewHolder(holder: ViewHolderQuiz, position: Int) {
         val quiz: Department = listQuiz[position]
-        Picasso.get().load(path + quiz.image)
+        Picasso.get().load(quiz.image)
             .placeholder(R.drawable.loadimage)
             .error(R.drawable.errorimage)
             .into(holder.image)

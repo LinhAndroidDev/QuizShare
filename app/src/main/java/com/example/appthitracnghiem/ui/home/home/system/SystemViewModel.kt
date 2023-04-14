@@ -1,16 +1,12 @@
-package com.example.appthitracnghiem.ui.home.home
+package com.example.appthitracnghiem.ui.home.home.system
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.appthitracnghiem.data.remote.ApiClient
 import com.example.appthitracnghiem.data.remote.entity.FromSystemResponse
 import com.example.appthitracnghiem.model.Department
 import com.example.appthitracnghiem.ui.base.BaseViewModel
-import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.Retrofit
-import javax.security.auth.callback.Callback
 
 class SystemViewModel : BaseViewModel() {
     var loadingData = MutableLiveData<Boolean>()

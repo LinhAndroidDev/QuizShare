@@ -1,4 +1,4 @@
-package com.example.appthitracnghiem.ui.exercise
+package com.example.appthitracnghiem.ui.exercise.topic
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,39 +6,45 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_answer.*
+import com.example.appthitracnghiem.ui.exercise.exercise.ExamActivity
+import kotlinx.android.synthetic.main.fragment_topic.*
 
-@Suppress("DEPRECATION")
-class FragmentAnswer : BaseFragment<EmptyViewModel>() {
+/**
+ * A simple [Fragment] subclass.
+ * Use the [FragmentTopic.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class FragmentTopic : BaseFragment<EmptyViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        answer1.setBackgroundResource(R.drawable.bg_answer_fail)
-        answer3.setBackgroundResource(R.drawable.select_text_view)
 
         click()
     }
 
     private fun click() {
-        backAnswer.setOnClickListener {
+        backTopic.setOnClickListener {
             activity?.onBackPressed()
+        }
+
+        doTestNow.setOnClickListener {
+            val intent: Intent = Intent(requireActivity(), ExamActivity::class.java)
+            startActivity(intent)
         }
     }
 
     override fun onFragmentBack(): Boolean {
-        return false
+        return true
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_answer, container, false)
+        return inflater.inflate(R.layout.fragment_topic, container, false)
     }
 }
