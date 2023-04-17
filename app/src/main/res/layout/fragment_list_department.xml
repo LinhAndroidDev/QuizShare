@@ -51,7 +51,8 @@
             android:paddingEnd="24dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:ignore="Deprecated" />
 
         <ImageView
             android:layout_width="24dp"

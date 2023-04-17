@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_system.*
  * create an instance of this fragment.
  */
 class FragmentSystem : BaseFragment<SystemViewModel>() {
-    private lateinit var adapterQuiz: DepartmentAdapter
+    private lateinit var adapterFromSystem: DepartmentAdapter
     lateinit var accessToken: String
     var user_id: Int = 0
 
@@ -47,8 +47,8 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
         }
 
         viewModel.listDepartmentLiveData.observe(viewLifecycleOwner){ listDepart ->
-            adapterQuiz = DepartmentAdapter(listDepart,requireActivity())
-            recycleListLiveQuizzes.adapter = adapterQuiz
+            adapterFromSystem = DepartmentAdapter(listDepart,requireActivity())
+            recycleListLiveQuizzes.adapter = adapterFromSystem
         }
 
         accessToken = viewModel.mPreferenceUtil.defaultPref()

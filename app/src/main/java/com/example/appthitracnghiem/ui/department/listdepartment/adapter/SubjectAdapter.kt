@@ -48,6 +48,7 @@ class SubjectAdapter(val context: Context, private val listSubject: List<Subject
             override fun onClick(v: View?) {
                 val bundle: Bundle = Bundle()
                 bundle.putInt("ID", subject.id)
+                bundle.putString("title", subject.title)
                 val activity = context as AppCompatActivity
                 val fragmentListTest: FragmentListTest = FragmentListTest()
                 val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()

@@ -37,7 +37,6 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
     private lateinit var listQuestion: MutableList<PositiveQuestion>
     private lateinit var menuQuestionAdapter: MenuQuestionAdapter
     lateinit var countDownTimer: CountDownTimer
-    private val timeSever: Int = 2
     var totalCount: Int = 0
     var minutes: Int = 0
     var seconds: Int = 0
@@ -61,8 +60,12 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             titleExam.text = it[position].question_title
             choose1.text = it[position].answer_list[0].content
             choose2.text = it[position].answer_list[1].content
-            choose3.text = it[position].answer_list[2].content
             size = it[position].answer_list.size
+            if(size > 2){
+                choose3.text = it[position].answer_list[2].content
+            }else{
+                choose3.visibility = View.INVISIBLE
+            }
             if(size > 3){
                 choose4.text = it[position].answer_list[3].content
             }else{
@@ -78,7 +81,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
     }
 
     private fun setTime(time: Int) {
-        totalCount = time * 60
+        totalCount = time * 60 + 5
         countDownTimer = object : CountDownTimer(600000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 totalCount--
@@ -102,7 +105,9 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                 if (countTime != null && txtTime != null) {
                     if (seconds < 10) {
                         txtTime.text = "Còn lại $minutes:0$seconds phút"
-                    } else {
+                    } else if(minutes < 1){
+                        txtTime.text = "Còn lại $minutes:$seconds giây"
+                    } else{
                         txtTime.text = "Còn lại $minutes:$seconds phút"
                     }
                     countTime.progress = (totalCount * 100 / (time * 60)).toFloat()

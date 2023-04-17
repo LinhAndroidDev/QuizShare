@@ -44,30 +44,6 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
         }
     }
 
-//    @SuppressLint("CommitPrefEdits")
-//    override fun bindData() {
-//        super.bindData()
-//
-//        viewModel.nameUserLiveData.observe(this, Observer {
-//            viewModel.mPreferenceUtil.defaultPref()
-//                .edit().putString(PreferenceKey.USER_NAME,it)
-//                .apply()
-//        })
-//
-//        viewModel.avartarUserLiveData.observe(this, Observer {
-//            viewModel.mPreferenceUtil.defaultPref()
-//                .edit().putString(PreferenceKey.USER_AVATAR,it)
-//                .apply()
-//        })
-//
-//        val accessToken = viewModel.mPreferenceUtil.defaultPref()
-//            .getString(PreferenceKey.AUTHORIZATION,"").toString()
-//        val userId = viewModel.mPreferenceUtil.defaultPref()
-//            .getInt(PreferenceKey.USER_ID,0)
-//        val requestUserInfo: RequestUserInfo = RequestUserInfo(userId)
-//        viewModel.getDataUserInfo(accessToken, requestUserInfo)
-//    }
-
     private fun click() {
         iconSearch.setOnClickListener {
             val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)

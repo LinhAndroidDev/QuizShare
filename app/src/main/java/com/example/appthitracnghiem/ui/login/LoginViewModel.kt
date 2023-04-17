@@ -84,6 +84,7 @@ class LoginViewModel : BaseViewModel() {
                                     if (result.user_id != null) {
                                         savedAuthentication(result.access_token.toString(),result.user_id)
                                         confirmLoggedIn()
+
                                         val accessToken = mPreferenceUtil.defaultPref()
                                             .getString(PreferenceKey.AUTHORIZATION,"").toString()
                                         val userId = mPreferenceUtil.defaultPref()
@@ -96,15 +97,13 @@ class LoginViewModel : BaseViewModel() {
 
                                 }
                             } else {
-                                val errorMessage = response.body()?.message
-                                    ?: "Email hoặc mật khẩu không chính xác"
-                                errorApiLiveData.value = errorMessage
+                                errorApiLiveData.value = response.body()?.message
                             }
 
                         }
 
                     } else {
-                        errorApiLiveData.value = "Lỗi kết nối Server ${response.code()}"
+                        errorApiLiveData.value = response.body()?.message
                     }
                 }
 

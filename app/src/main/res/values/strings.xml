@@ -3,6 +3,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="facebook_app_id">6079211382101210</string>
+    <string name="facebook_client_token">91aa2bd6091511bfc8d45cb71c0f9cf0</string>
+
     <!--    General App-->
     <string name="login">Đăng nhập</string>
     <string name="register">Đăng kí</string>
@@ -75,6 +78,7 @@
     <string name="txtTitleHome">Tham gia giải bài tập với nhiều dạng đề khác nhau từ mọi người</string>
     <string name="txtFindID">Tìm ID</string>
     <string name="txtListDepartment">Danh sách khoa</string>
+    <string name="txtListDepartmentFromUser">Danh sách khoa từ người dùng</string>
     <string name="txtSeeAll">Xem tất cả</string>
 
     <!--    Fragment Category-->

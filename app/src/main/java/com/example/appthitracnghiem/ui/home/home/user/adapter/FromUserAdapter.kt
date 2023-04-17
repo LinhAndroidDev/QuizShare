@@ -1,4 +1,4 @@
-package com.example.appthitracnghiem.ui.home.home.system.adapter
+package com.example.appthitracnghiem.ui.home.home.user.adapter
 
 import android.content.Context
 import android.os.Bundle
@@ -14,13 +14,13 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.Department
 import com.example.appthitracnghiem.ui.department.listdepartment.FragmentListDepartment
 import com.example.appthitracnghiem.ui.home.home.system.FragmentSystem
+import com.example.appthitracnghiem.ui.home.home.system.adapter.DepartmentAdapter
 import com.example.appthitracnghiem.ui.home.home.user.FragmentFromUser
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.PreferenceUtil
 import com.squareup.picasso.Picasso
 
-class DepartmentAdapter(private val listQuiz: List<Department>, val context: Context) :
-    RecyclerView.Adapter<DepartmentAdapter.ViewHolderQuiz>() {
+class FromUserAdapter(private val listQuiz: List<Department>, val context: Context) : RecyclerView.Adapter<DepartmentAdapter.ViewHolderQuiz>(){
 
     class ViewHolderQuiz(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var image: ImageView = itemView.findViewById(R.id.image)
@@ -28,13 +28,20 @@ class DepartmentAdapter(private val listQuiz: List<Department>, val context: Con
         var description: TextView = itemView.findViewById(R.id.detail)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderQuiz {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): DepartmentAdapter.ViewHolderQuiz {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_general, parent, false)
-        return ViewHolderQuiz(itemView)
+        return DepartmentAdapter.ViewHolderQuiz(itemView)
     }
 
-    override fun onBindViewHolder(holder: ViewHolderQuiz, position: Int) {
+    override fun getItemCount(): Int {
+        return listQuiz.size
+    }
+
+    override fun onBindViewHolder(holder: DepartmentAdapter.ViewHolderQuiz, position: Int) {
         val quiz: Department = listQuiz[position]
         Picasso.get().load(quiz.image)
             .placeholder(R.drawable.loadimage)
@@ -45,14 +52,13 @@ class DepartmentAdapter(private val listQuiz: List<Department>, val context: Con
 
         holder.itemView.setOnClickListener { v ->
             val activity = v?.context as AppCompatActivity
-            val fragment = activity.supportFragmentManager.findFragmentById(R.id.changeIdHome)
+            val fragnment = activity.supportFragmentManager.findFragmentById(R.id.changeIdHome)
             val mPreferenceUtil: PreferenceUtil = PreferenceUtil(activity)
             mPreferenceUtil.defaultPref().edit()
-                .putInt(PreferenceKey.TYPE, 0)
+                .putInt(PreferenceKey.TYPE, 1)
                 .apply()
             val bundle: Bundle = Bundle()
             bundle.putString("title", quiz.title)
-
             val fragmentListDepartment: FragmentListDepartment = FragmentListDepartment()
             val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
             fm.setCustomAnimations(
@@ -64,9 +70,5 @@ class DepartmentAdapter(private val listQuiz: List<Department>, val context: Con
             fm.add(R.id.changeIdHome, fragmentListDepartment).addToBackStack(null).commit()
             fragmentListDepartment.arguments = bundle
         }
-    }
-
-    override fun getItemCount(): Int {
-        return listQuiz.size
-    }
+        }
 }

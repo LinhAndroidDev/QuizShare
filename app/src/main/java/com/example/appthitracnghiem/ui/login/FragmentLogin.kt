@@ -105,12 +105,12 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
                 .apply()
         }
 
-        val accessToken = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.AUTHORIZATION,"").toString()
-        val userId = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.USER_ID,0)
-        val requestUserInfo: RequestUserInfo = RequestUserInfo(userId)
-        viewModel.getDataUserInfo(accessToken, requestUserInfo)
+//        val accessToken = viewModel.mPreferenceUtil.defaultPref()
+//            .getString(PreferenceKey.AUTHORIZATION,"").toString()
+//        val userId = viewModel.mPreferenceUtil.defaultPref()
+//            .getInt(PreferenceKey.USER_ID,0)
+//        val requestUserInfo: RequestUserInfo = RequestUserInfo(userId)
+//        viewModel.getDataUserInfo(accessToken, requestUserInfo)
     }
 
     /** set font*/

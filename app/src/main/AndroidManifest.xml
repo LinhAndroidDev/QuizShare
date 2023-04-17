@@ -2,15 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.appthitracnghiem">
-    <!-- <supports-screens -->
-    <!-- android:anyDensity="true" -->
-    <!-- android:largeScreens="true" -->
-    <!-- android:normalScreens="true" -->
-    <!-- android:resizeable="true" -->
-    <!-- android:smallScreens="true" -->
-    <!-- android:xlargeScreens="true" /> -->
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove"/>
 
     <application
         android:allowBackup="true"
@@ -24,6 +20,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31"
         android:networkSecurityConfig="@xml/network">
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
+        <meta-data android:name="com.facebook.sdk.ClientToken"
+            android:value="@string/facebook_client_token"/>
+        <provider android:authorities="com.facebook.app.FacebookContentProvider6079211382101210"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true" />
+
         <activity
             android:name=".ui.exercise.exercise.ExamActivity"
             android:exported="false" />

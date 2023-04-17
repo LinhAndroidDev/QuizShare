@@ -9,4 +9,5 @@ object PreferenceKey {
     var TIME_EXAM: String = "TIME_EXAM"
     var USER_NAME: String = "USER_NAME"
     var USER_AVATAR: String = "USER_AVATAR"
+    var TYPE: String = "TYPE"
 }

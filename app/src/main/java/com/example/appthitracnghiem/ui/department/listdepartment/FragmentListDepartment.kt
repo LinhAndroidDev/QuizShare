@@ -28,6 +28,12 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        val bundle: Bundle = requireArguments()
+//        if(bundle.getString("title").toString().isNotEmpty()){
+//            val title: String = bundle.getString("title").toString()
+//            searchDepartment.setText(title)
+//        }
+
         click()
 
     }
