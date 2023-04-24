@@ -9,6 +9,7 @@
     <!--Design colors General-->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="white_blur">#E2FFFFFF</color>
     <color name="color_number_position">#858494</color>
 
     <!--    Design color TextView-->

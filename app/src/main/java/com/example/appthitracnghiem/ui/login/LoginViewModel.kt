@@ -23,8 +23,6 @@ class LoginViewModel : BaseViewModel() {
     val loadingLiveData = MutableLiveData<Boolean>()
     val successLoginLiveData = MutableLiveData<Boolean>()
     val validateLiveData = MutableLiveData<ValidateModel>()
-    var nameUserLiveData = MutableLiveData<String>()
-    var avartarUserLiveData = MutableLiveData<String>()
 
     fun confirmLoggedIn(){
         mPreferenceUtil.defaultPref().edit()
@@ -84,13 +82,6 @@ class LoginViewModel : BaseViewModel() {
                                     if (result.user_id != null) {
                                         savedAuthentication(result.access_token.toString(),result.user_id)
                                         confirmLoggedIn()
-
-                                        val accessToken = mPreferenceUtil.defaultPref()
-                                            .getString(PreferenceKey.AUTHORIZATION,"").toString()
-                                        val userId = mPreferenceUtil.defaultPref()
-                                            .getInt(PreferenceKey.USER_ID,0)
-                                        val requestUserInfo: RequestUserInfo = RequestUserInfo(userId)
-                                        getDataUserInfo(accessToken,requestUserInfo)
                                     } else {
                                         errorApiLiveData.value = "User id null"
                                     }
@@ -114,43 +105,6 @@ class LoginViewModel : BaseViewModel() {
                     loadingLiveData.value = false
                     errorApiLiveData.value = t.message
                 }
-            })
-    }
-
-    fun getDataUserInfo(header: String, requestUserInfo: RequestUserInfo){
-        ApiClient.shared().getUserInfo(header, requestUserInfo)
-            .enqueue(object : Callback<UserResponse> {
-                override fun onResponse(
-                    call: Call<UserResponse>,
-                    response: Response<UserResponse>
-                ) {
-                    response.body()?.let {
-                        if(it.statusCode == ApiClient.STATUS_CODE_SUCCESS){
-                            mPreferenceUtil.defaultPref()
-                                .edit().putString(PreferenceKey.USER_NAME,it.result?.name)
-                                .apply()
-                            mPreferenceUtil.defaultPref()
-                                .edit().putString(PreferenceKey.USER_AVATAR,it.result?.avatar)
-                                .apply()
-//                            nameUserLiveData.value = it.result?.name
-//                            avartarUserLiveData.value = it.result?.avatar
-                        }
-                        if(it.statusCode == ApiClient.STATUS_INVALID_TOKEN){
-                            errorApiLiveData.value = it.message
-                        }
-                        if (it.statusCode == ApiClient.STATUS_USER_EXIST){
-                            errorApiLiveData.value = it.message
-                        }
-                        if (it.statusCode == ApiClient.STATUS_CODE_SERVER_NOT_RESPONSE){
-                            errorApiLiveData.value = it.message
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                    errorApiLiveData.value = t.message
-                }
-
             })
     }
 }

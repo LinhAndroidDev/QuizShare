@@ -1,6 +1,7 @@
 package com.example.appthitracnghiem.ui.home.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
@@ -11,14 +12,16 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.home.HomeViewModel
 import com.example.appthitracnghiem.ui.home.RequestUserInfo
 import com.example.appthitracnghiem.ui.home.home.adapter.ViewPagerDepartment
+import com.example.appthitracnghiem.ui.home.profile.setting.ChangeAvatarActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_home_page.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -44,36 +47,47 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
 //        (activity as HomeActivity).hideTabBar(scrollHome)
 
         setText()
+
+        click()
+
+        val accessToken = viewModel.mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.AUTHORIZATION,"").toString()
+        val userId = viewModel.mPreferenceUtil.defaultPref()
+            .getInt(PreferenceKey.USER_ID,0)
+        val requestUserInfo: RequestUserInfo = RequestUserInfo(userId)
+        viewModel.getDataUserInfo(accessToken, requestUserInfo)
     }
 
-//    @SuppressLint("CommitPrefEdits")
-//    override fun bindData() {
-//        super.bindData()
-//
-//        viewModel.nameUserLiveData.observe(viewLifecycleOwner) {
-//            viewModel.mPreferenceUtil.defaultPref()
-//                .edit().putString(PreferenceKey.USER_NAME,it)
-//                .apply()
-//        }
-//
-//        viewModel.avartarUserLiveData.observe(viewLifecycleOwner) {
-//            viewModel.mPreferenceUtil.defaultPref()
-//                .edit().putString(PreferenceKey.USER_AVATAR,it)
-//                .apply()
-//        }
-//
-//        val accessToken = viewModel.mPreferenceUtil.defaultPref()
-//            .getString(PreferenceKey.AUTHORIZATION,"").toString()
-//        val userId = viewModel.mPreferenceUtil.defaultPref()
-//            .getInt(PreferenceKey.USER_ID,0)
-//        val requestUserInfo: RequestUserInfo = RequestUserInfo(userId)
-//        viewModel.getDataUserInfo(accessToken, requestUserInfo)
-//    }
+    private fun click() {
+        avatarUseHome.setOnClickListener {
+            val intent: Intent = Intent(requireActivity(),ChangeAvatarActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    override fun bindData() {
+        super.bindData()
+
+        viewModel.nameUserLiveData.observe(viewLifecycleOwner) {
+            viewModel.mPreferenceUtil.defaultPref()
+                .edit().putString(PreferenceKey.USER_NAME,it)
+                .apply()
+            txtNameUserHome.text = it
+        }
+
+        viewModel.avartarUserLiveData.observe(viewLifecycleOwner) {
+            viewModel.mPreferenceUtil.defaultPref()
+                .edit().putString(PreferenceKey.USER_AVATAR,it)
+                .apply()
+            Picasso.get().load("https://img2.thuthuatphanmem.vn/uploads/2019/01/04/hinh-anh-dep-co-gai-de-thuong_025103410.jpg")
+                .placeholder(R.drawable.loadimage)
+                .error(R.drawable.icon_error)
+                .into(avatarUseHome)
+        }
+    }
 
     private fun setText() {
-        txtNameUserHome.text = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.USER_NAME,"")
-
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         textHome.typeface = semibold

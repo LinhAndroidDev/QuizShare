@@ -1,38 +1,45 @@
 package com.example.appthitracnghiem.ui.exercise.exercise
 
 import android.annotation.SuppressLint
+import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.RenderEffect
 import android.graphics.Shader
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.LinearLayout.LayoutParams
 import android.widget.PopupWindow
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.marginStart
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.model.Exam
+import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.model.PositiveQuestion
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.adapter.MenuQuestionAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment_exam.*
+import kotlinx.android.synthetic.main.fragment_list_test.*
+import kotlinx.android.synthetic.main.layout_loading.*
 import kotlinx.android.synthetic.main.layout_logout.*
 import kotlinx.android.synthetic.main.popup_list_question.*
 import kotlinx.android.synthetic.main.popup_list_question.view.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentExam.newInstance] factory method to
- * create an instance of this fragment.
- */
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION", "NAME_SHADOWING")
 class FragmentExam : BaseFragment<ExamViewModel>() {
     private lateinit var listQuestion: MutableList<PositiveQuestion>
     private lateinit var menuQuestionAdapter: MenuQuestionAdapter
@@ -40,15 +47,17 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
     var totalCount: Int = 0
     var minutes: Int = 0
     var seconds: Int = 0
-    var position: Int = 0
-    var size: Int = 0
+    var positionQuestion: Int = 0
+    private var SIZE_LIST_QUIZ: Int = 0
+    lateinit var listExamQuestion: MutableList<ExamQuestion>
+    var onSelectAnswer: ((Int) -> Unit)? = null
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val time = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.TIME_EXAM,0)
-        setTime(1)
+        val time = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.TIME_EXAM, 0)
+        setTime(time)
 
         click()
     }
@@ -56,32 +65,31 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
     override fun bindData() {
         super.bindData()
 
-        viewModel.listExamQuestionLiveData.observe(viewLifecycleOwner){
-            titleExam.text = it[position].question_title
-            choose1.text = it[position].answer_list[0].content
-            choose2.text = it[position].answer_list[1].content
-            size = it[position].answer_list.size
-            if(size > 2){
-                choose3.text = it[position].answer_list[2].content
-            }else{
-                choose3.visibility = View.INVISIBLE
-            }
-            if(size > 3){
-                choose4.text = it[position].answer_list[3].content
-            }else{
-                choose4.visibility = View.INVISIBLE
+        viewModel.loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                layoutLoading.visibility = View.VISIBLE
+            } else {
+                layoutLoading.visibility = View.GONE
             }
         }
 
-        val user_id = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.USER_ID,0)
-        val accessToken = viewModel.mPreferenceUtil.defaultPref().getString(PreferenceKey.AUTHORIZATION,"").toString()
-        val id_exam = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.ID_EXAM,0)
-        val requestExamQuestion: RequestExamQuestion = RequestExamQuestion(user_id,id_exam)
+        viewModel.listExamQuestionLiveData.observe(viewLifecycleOwner) {
+            listExamQuestion = it
+            SIZE_LIST_QUIZ = it.size
+            setTextView(positionQuestion)
+        }
+
+        val user_id = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.USER_ID, 0)
+        val accessToken =
+            viewModel.mPreferenceUtil.defaultPref().getString(PreferenceKey.AUTHORIZATION, "")
+                .toString()
+        val id_exam = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.ID_EXAM, 0)
+        val requestExamQuestion: RequestExamQuestion = RequestExamQuestion(user_id, id_exam)
         viewModel.getExamListQuestion(accessToken, requestExamQuestion)
     }
 
     private fun setTime(time: Int) {
-        totalCount = time * 60 + 5
+        totalCount = time * 60
         countDownTimer = object : CountDownTimer(600000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 totalCount--
@@ -105,9 +113,9 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                 if (countTime != null && txtTime != null) {
                     if (seconds < 10) {
                         txtTime.text = "Còn lại $minutes:0$seconds phút"
-                    } else if(minutes < 1){
+                    } else if (minutes < 1) {
                         txtTime.text = "Còn lại $minutes:$seconds giây"
-                    } else{
+                    } else {
                         txtTime.text = "Còn lại $minutes:$seconds phút"
                     }
                     countTime.progress = (totalCount * 100 / (time * 60)).toFloat()
@@ -123,62 +131,22 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
     private fun click() {
         nextQuestion.setOnClickListener {
-            if(position < size){
-            position++
-            setUnText()
-            viewModel.listExamQuestionLiveData.observe(viewLifecycleOwner){
-                titleExam.text = it[position].question_title
-                choose1.text = it[position].answer_list[0].content
-                choose2.text = it[position].answer_list[1].content
-                choose3.text = it[position].answer_list[2].content
-                val size = it[position].answer_list.size
-                if(size > 3){
-                    choose4.text = it[position].answer_list[3].content
-                }else{
-                    choose4.visibility = View.INVISIBLE
-                }
+            if (positionQuestion < SIZE_LIST_QUIZ - 1) {
+                onSelectAnswer?.invoke(positionQuestion)
+                positionQuestion++
+                setTextView(positionQuestion)
             }
-        }
         }
 
         backQuestion.setOnClickListener {
-            if(position > 0){
-                position--
-                setUnText()
-                viewModel.listExamQuestionLiveData.observe(viewLifecycleOwner){
-                    titleExam.text = it[position].question_title
-                    choose1.text = it[position].answer_list[0].content
-                    choose2.text = it[position].answer_list[1].content
-                    choose3.text = it[position].answer_list[2].content
-                    val size = it[position].answer_list.size
-                    if(size > 3){
-                        choose4.text = it[position].answer_list[3].content
-                        choose4.visibility = View.VISIBLE
-                    }else{
-                        choose4.visibility = View.INVISIBLE
-                    }
-                }
+            if (positionQuestion > 0) {
+                positionQuestion--
+                setTextView(positionQuestion)
             }
         }
 
-        choose1.setOnClickListener {
-            clickChoose(choose1)
-        }
-
-        choose2.setOnClickListener {
-            clickChoose(choose2)
-        }
-
-        choose3.setOnClickListener {
-            clickChoose(choose3)
-        }
-
-        choose4.setOnClickListener {
-            clickChoose(choose4)
-        }
-
         menuQuestion.setOnClickListener {
-            showMenuQuestion(menuQuestion, R.layout.popup_list_question, 0, -560, Gravity.TOP)
+            showMenuQuestion(menuQuestion, R.layout.popup_list_question, 0, 160, Gravity.BOTTOM)
         }
 
         finishQuiz.setOnClickListener {
@@ -219,60 +187,63 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         }
     }
 
-    private fun clickChoose(choose: TextView) {
-        choose1.isSelected = false
-        choose2.isSelected = false
-        choose3.isSelected = false
-        choose4.isSelected = false
-        setUnText()
-
-        choose.isSelected = true
-        choose.setBackgroundResource(R.drawable.select_text_view)
-    }
-
-    private fun setUnText() {
-        choose1.setBackgroundResource(R.drawable.un_select_text_view)
-        choose2.setBackgroundResource(R.drawable.un_select_text_view)
-        choose3.setBackgroundResource(R.drawable.un_select_text_view)
-        choose4.setBackgroundResource(R.drawable.un_select_text_view)
-    }
-
-    private fun showMenuQuestion(view: View, layout: Int, x: Int, y: Int, position: Int) {
-        val popUpView: View = View.inflate(requireActivity(), layout, null)
+    private fun showMenuQuestion(view: View, popupViewId: Int, x: Int, y: Int, gravity: Int) {
+        val popUpView: View = View.inflate(requireActivity(), popupViewId, null)
 
         val width = ViewGroup.LayoutParams.MATCH_PARENT
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
         val focusable: Boolean = true
 
         val popupWindow: PopupWindow = PopupWindow(popUpView, width, height, focusable)
-        popupWindow.showAsDropDown(view, x, y, position)
+        popupWindow.showAtLocation(view, gravity, x, y)
 
         listQuestion = mutableListOf()
-        listQuestion.add(PositiveQuestion(1))
-        listQuestion.add(PositiveQuestion(2))
-        listQuestion.add(PositiveQuestion(3))
-        listQuestion.add(PositiveQuestion(4))
-        listQuestion.add(PositiveQuestion(5))
-        listQuestion.add(PositiveQuestion(6))
-        listQuestion.add(PositiveQuestion(7))
-        listQuestion.add(PositiveQuestion(8))
-        listQuestion.add(PositiveQuestion(9))
-        listQuestion.add(PositiveQuestion(10))
-        listQuestion.add(PositiveQuestion(11))
-        listQuestion.add(PositiveQuestion(12))
+        for (i in 0 until SIZE_LIST_QUIZ) {
+            listQuestion.add(PositiveQuestion(i + 1))
+        }
 
         menuQuestionAdapter = MenuQuestionAdapter(requireActivity(), listQuestion)
+        menuQuestionAdapter.onClickItem = { positionItem ->
+            positionQuestion = positionItem
+            setTextView(positionQuestion)
+        }
+        val recycleQuestion: RecyclerView = popUpView.findViewById(R.id.recycleViewMenuQuestion)
 
-//        val grid: GridLayoutManager = GridLayoutManager(requireActivity(), 5)
-
-        val v = LayoutInflater.from(requireActivity()).inflate(R.layout.popup_list_question, null)
-
-        val recycleQuestion: RecyclerView = v.findViewById(R.id.recycleViewMenuQuestion)
-
-        val mLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(requireActivity(),5)
+        val mLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(requireActivity(), 5)
 
         recycleQuestion.layoutManager = mLayoutManager
         recycleQuestion.adapter = menuQuestionAdapter
+    }
+
+    @SuppressLint("ResourceAsColor")
+    fun setTextView(psQuestion: Int) {
+        val arrayTxtQuestion = arrayListOf<TextView>()
+
+        titleExam.text = listExamQuestion[psQuestion].question_title
+        val sizeAnswer = listExamQuestion[psQuestion].answer_list.size
+        llContainerAnswerOptions.removeAllViews()
+        arrayTxtQuestion.clear()
+        for (i in 0 until sizeAnswer) {
+            val txtQuesion = TextView(requireActivity())
+            llContainerAnswerOptions.addView(txtQuesion)
+            arrayTxtQuestion.add(txtQuesion)
+            val params: LinearLayout.LayoutParams =
+                LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+            params.setMargins(16, 16, 16, 16)
+            txtQuesion.setPadding(32, 24, 32, 24)
+            txtQuesion.layoutParams = params
+            txtQuesion.textSize = 16F
+            txtQuesion.text = listExamQuestion[psQuestion].answer_list[i].content
+            txtQuesion.setTextColor(Color.BLACK)
+            txtQuesion.setBackgroundResource(R.drawable.un_select_text_view)
+
+            txtQuesion.setOnClickListener {
+                for(i in 0 until arrayTxtQuestion.size){
+                    arrayTxtQuestion[i].setBackgroundResource(R.drawable.un_select_text_view)
+                }
+                txtQuesion.setBackgroundResource(R.drawable.select_text_view)
+            }
+        }
     }
 
     override fun onFragmentBack(): Boolean {

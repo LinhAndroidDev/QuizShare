@@ -63,6 +63,7 @@
                     android:layout_centerVertical="true"/>
             </RelativeLayout>
             <ImageView
+                android:id="@+id/menuHistoryTest"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:src="@drawable/icon_managa_test"

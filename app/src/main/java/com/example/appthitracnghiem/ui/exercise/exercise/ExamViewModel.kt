@@ -13,18 +13,17 @@ import retrofit2.Response
 class ExamViewModel : BaseViewModel() {
     val listExamQuestionLiveData = MutableLiveData<MutableList<ExamQuestion>>()
     val title = MutableLiveData<String>()
-    val answer1 = MutableLiveData<String>()
-    val answer2 = MutableLiveData<String>()
-    val answer3 = MutableLiveData<String>()
-    val answer4 = MutableLiveData<String>()
+    val loadingLiveData = MutableLiveData<Boolean>()
 
     fun getExamListQuestion(header: String, requestExamQuestion: RequestExamQuestion){
+        loadingLiveData.value = true
         ApiClient.shared().getExamListQuestion(header, requestExamQuestion)
             .enqueue(object : Callback<ExamQuestionResponse> {
                 override fun onResponse(
                     call: Call<ExamQuestionResponse>,
                     response: Response<ExamQuestionResponse>
                 ) {
+                    loadingLiveData.value = false
                     response.body()?.let { body->
                         if(body.statusCode == ApiClient.STATUS_CODE_SUCCESS){
                             listExamQuestionLiveData.value = body.result.exam_question_list
@@ -42,6 +41,7 @@ class ExamViewModel : BaseViewModel() {
                 }
 
                 override fun onFailure(call: Call<ExamQuestionResponse>, t: Throwable) {
+                    loadingLiveData.value = false
                     errorApiLiveData.value = t.message
                 }
 

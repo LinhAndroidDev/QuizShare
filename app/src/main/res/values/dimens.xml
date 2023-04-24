@@ -4,4 +4,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="start_margin">20dp</dimen>
+    <dimen name="start_quiz_answer">24dp</dimen>
+    <dimen name="end_quiz_answer">24dp</dimen>
+    <dimen name="top_quiz_answer">16dp</dimen>
+    <dimen name="bottom_quiz_answer">16dp</dimen>
 </resources>

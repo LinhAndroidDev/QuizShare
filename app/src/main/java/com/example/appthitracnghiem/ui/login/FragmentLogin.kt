@@ -61,6 +61,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
         click()
 
         setText()
+
     }
 
     override fun bindData() {
@@ -83,6 +84,8 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
                 Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
             saveAccount(strEmail, strPassword);
+            val t = viewModel.mPreferenceUtil.defaultPref()
+                .getString(PreferenceKey.USER_NAME,"")
         }
 
         viewModel.validateLiveData.observe(viewLifecycleOwner) { model ->
@@ -92,25 +95,6 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
                 setNote(model.resMsgError, model.resColorError)
             }
         }
-
-        viewModel.nameUserLiveData.observe(viewLifecycleOwner) {
-            viewModel.mPreferenceUtil.defaultPref()
-                .edit().putString(PreferenceKey.USER_NAME,it)
-                .apply()
-        }
-
-        viewModel.avartarUserLiveData.observe(viewLifecycleOwner) {
-            viewModel.mPreferenceUtil.defaultPref()
-                .edit().putString(PreferenceKey.USER_AVATAR,it)
-                .apply()
-        }
-
-//        val accessToken = viewModel.mPreferenceUtil.defaultPref()
-//            .getString(PreferenceKey.AUTHORIZATION,"").toString()
-//        val userId = viewModel.mPreferenceUtil.defaultPref()
-//            .getInt(PreferenceKey.USER_ID,0)
-//        val requestUserInfo: RequestUserInfo = RequestUserInfo(userId)
-//        viewModel.getDataUserInfo(accessToken, requestUserInfo)
     }
 
     /** set font*/

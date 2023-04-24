@@ -13,6 +13,7 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.history.question.FragmentHistoryQuestion
+import com.example.appthitracnghiem.ui.home.history.saved.FragmentHistoryDepartmentSaved
 import com.example.appthitracnghiem.ui.home.history.test.FragmentHistoryTest
 import kotlinx.android.synthetic.main.fragment_create_test.*
 import kotlinx.android.synthetic.main.fragment_history.*
@@ -44,6 +45,12 @@ class FragmentHistory : BaseFragment<EmptyViewModel>() {
             val fragmentHistoryQuestion: FragmentHistoryQuestion = FragmentHistoryQuestion()
             val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
             fm.add(R.id.changeIdHome,fragmentHistoryQuestion).addToBackStack(null).commit()
+        }
+
+        saved.setOnClickListener {
+            val fragmentHistorySaved: FragmentHistoryDepartmentSaved = FragmentHistoryDepartmentSaved()
+            val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
+            fm.add(R.id.changeIdHome,fragmentHistorySaved).addToBackStack(null).commit()
         }
     }
 

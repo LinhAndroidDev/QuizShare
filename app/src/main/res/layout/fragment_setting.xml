@@ -23,6 +23,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <ImageView
+                        android:layout_centerVertical="true"
                         android:id="@+id/backSetting"
                         android:src="@drawable/icon_back_black"
                         android:layout_width="30dp"

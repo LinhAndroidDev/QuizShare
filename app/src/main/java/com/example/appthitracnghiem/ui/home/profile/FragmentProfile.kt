@@ -14,6 +14,7 @@ import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.home.profile.setting.SettingActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 
@@ -34,6 +35,11 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
             progressMax = 100f
             setProgressWithAnimation(80f,3000)
         }
+
+        Picasso.get().load("https://img2.thuthuatphanmem.vn/uploads/2019/01/04/hinh-anh-dep-co-gai-de-thuong_025103410.jpg")
+            .placeholder(R.drawable.loadimage)
+            .error(R.drawable.icon_error)
+            .into(avatarUserProfile)
 
 //        (activity as HomeActivity).hideTabBar(scrollProfile)
 

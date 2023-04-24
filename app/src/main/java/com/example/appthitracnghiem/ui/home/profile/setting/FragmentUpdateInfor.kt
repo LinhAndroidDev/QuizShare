@@ -1,5 +1,6 @@
 package com.example.appthitracnghiem.ui.home.profile.setting
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_setting.*
 import kotlinx.android.synthetic.main.fragment_setting_new_password.*
 import kotlinx.android.synthetic.main.fragment_update_infor.*
 
@@ -19,10 +23,16 @@ import kotlinx.android.synthetic.main.fragment_update_infor.*
  * Use the [FragmentUpdateInfor.newInstance] factory method to
  * create an instance of this fragment.
  */
+@Suppress("DEPRECATION")
 class FragmentUpdateInfor : BaseFragment<EmptyViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Picasso.get().load("https://img2.thuthuatphanmem.vn/uploads/2019/01/04/hinh-anh-dep-co-gai-de-thuong_025103410.jpg")
+            .placeholder(R.drawable.loadimage)
+            .error(R.drawable.icon_error)
+            .into(avatarUpdateInfo)
 
         click()
 
@@ -32,6 +42,11 @@ class FragmentUpdateInfor : BaseFragment<EmptyViewModel>() {
     private fun click() {
         backUpdateInfo.setOnClickListener {
             activity?.onBackPressed()
+        }
+
+        changeAvatar.setOnClickListener {
+            val intent: Intent = Intent(requireActivity(), ChangeAvatarActivity::class.java)
+            startActivity(intent)
         }
     }
 
