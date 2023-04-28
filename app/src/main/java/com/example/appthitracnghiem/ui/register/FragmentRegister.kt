@@ -1,5 +1,6 @@
 package com.example.appthitracnghiem.ui.register
 
+import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.graphics.Typeface
 import android.os.Bundle
@@ -14,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
@@ -37,24 +39,22 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentRegister.newInstance] factory method to
- * create an instance of this fragment.
- */
 @Suppress("DEPRECATION")
 class FragmentRegister : BaseFragment<RegisterViewModel>() {
-    lateinit var progressDialog: ProgressDialog
+
+    private lateinit var progressDialog: ProgressDialog
+
+    private var formatDate = SimpleDateFormat("yyyy/MM/dd", Locale.UK)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         progressDialog = ProgressDialog(requireActivity())
 
-        click()
-
-        setText()
+        initUi()
     }
 
     override fun bindData() {
@@ -92,7 +92,7 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
         }
     }
 
-    private fun click() {
+    private fun initUi() {
         hidePasswordRegister.setOnClickListener {
             hidePassword(passwordRegister, hidePasswordRegister)
         }
@@ -122,6 +122,25 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
         loginNow.setOnClickListener {
             activity?.finish()
         }
+
+        edtEnterYearOfBirthRegister.setOnClickListener {
+
+            val getDate = Calendar.getInstance()
+            val datePicker = DatePickerDialog(requireActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth,DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+
+                val selectDate: Calendar = Calendar.getInstance()
+                selectDate.set(Calendar.YEAR, year)
+                selectDate.set(Calendar.MONTH, month)
+                selectDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+                edtEnterYearOfBirthRegister.setText(formatDate.format(selectDate.time))
+
+            }, getDate.get(Calendar.YEAR), getDate.get((Calendar.MONTH)), getDate.get(Calendar.DAY_OF_MONTH))
+            datePicker.show()
+        }
+
+        setText()
+
     }
 
     private fun setText() {

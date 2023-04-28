@@ -18,10 +18,11 @@ import com.example.appthitracnghiem.model.Subject
 import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.Adapter
 
 class ListDepartmentAdapter(
-    val context: Context,
-    private var listDepartment: MutableList<DetailDepartment>,
+    val context: Context
 ) :
     RecyclerView.Adapter<ListDepartmentAdapter.ViewholderDepartment>(), Filterable {
+
+    var listDepartment: MutableList<DetailDepartment> = mutableListOf()
 
     var listDepartmentOlds: MutableList<DetailDepartment> = listDepartment
 
@@ -53,7 +54,7 @@ class ListDepartmentAdapter(
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         holder.recycleViewListSubjectDepartment.layoutManager = linearLayoutManager
 
-        val subjectAdapter: SubjectAdapter = SubjectAdapter(context, detailDepartment.subjects)
+        val subjectAdapter: SubjectAdapter = SubjectAdapter(holder.txtSeeAll.context, detailDepartment.subjects)
         holder.recycleViewListSubjectDepartment.adapter = subjectAdapter
     }
 
@@ -66,8 +67,8 @@ class ListDepartmentAdapter(
             override fun performFiltering(strTxt: CharSequence?): FilterResults {
                 val strSearch: String = strTxt.toString().lowercase()
 
-                if(strSearch.isEmpty()){
-                    listDepartment = listDepartmentOlds
+                listDepartment = if(strSearch.isEmpty()){
+                    listDepartmentOlds
                 }else{
                     val list: MutableList<DetailDepartment> = mutableListOf()
                     for (department in listDepartmentOlds) {
@@ -76,7 +77,7 @@ class ListDepartmentAdapter(
                         }
                     }
 
-                    listDepartment = list
+                    list
                 }
 
                 val filterResults: FilterResults = FilterResults()

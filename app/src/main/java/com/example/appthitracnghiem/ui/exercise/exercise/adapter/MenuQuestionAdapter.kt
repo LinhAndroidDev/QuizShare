@@ -45,11 +45,6 @@ class MenuQuestionAdapter(val context: Context, private val listQuestion: List<P
         holder.itemView.setOnClickListener {
             onClickItem?.invoke(position)
         }
-
-        val fragmentExam: FragmentExam = FragmentExam()
-        fragmentExam.onSelectAnswer = { positionAnswerSelect->
-            positionComplete = positionAnswerSelect
-        }
     }
 
     override fun getItemCount(): Int {

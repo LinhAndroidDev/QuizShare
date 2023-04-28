@@ -28,6 +28,8 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        listDepartmentAdapter = ListDepartmentAdapter(requireActivity())
+
 //        val bundle: Bundle = requireArguments()
 //        if(bundle.getString("title").toString().isNotEmpty()){
 //            val title: String = bundle.getString("title").toString()
@@ -50,8 +52,9 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
         }
 
         viewModel.listDepartmentLiveData.observe(viewLifecycleOwner){ listDepartment->
-            listDepartmentAdapter = ListDepartmentAdapter(requireActivity(),listDepartment)
-            val linear : LinearLayoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
+            listDepartmentAdapter = ListDepartmentAdapter(requireActivity())
+            val linear = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
+            listDepartmentAdapter.listDepartment =  listDepartment
             recycleDetailListDepartment.layoutManager = linear
             recycleDetailListDepartment.adapter = listDepartmentAdapter
         }
@@ -60,7 +63,7 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
             .getString(PreferenceKey.AUTHORIZATION,"").toString()
         user_id = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID,0)
-        val requestDepartmentInfo: RequestDepartmentInfo = RequestDepartmentInfo(user_id)
+        val requestDepartmentInfo = RequestDepartmentInfo(user_id)
         viewModel.getDataDepartmentDetail(accessToken, requestDepartmentInfo)
     }
 
