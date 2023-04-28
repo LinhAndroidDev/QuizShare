@@ -158,6 +158,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         }
 
         backQuestion.setOnClickListener {
+            listAnswer[positionQuestion] = positiveAnswer
             if (positionQuestion > 0) {
                 positionQuestion--
                 setTextView(positionQuestion)
@@ -247,6 +248,12 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         llContainerAnswerOptions.removeAllViews()
         arrayTxtQuestion.clear()
 
+        if(positiveAnswer >= 0){
+
+        }else{
+            positiveAnswer = -1
+        }
+
         for (i in 0 until sizeAnswer) {
             val txtQuestion = TextView(requireActivity())
             llContainerAnswerOptions.addView(txtQuestion)
@@ -260,8 +267,6 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             txtQuestion.text = listExamQuestion[psQuestion].answer_list[i].content
             txtQuestion.setTextColor(Color.BLACK)
             txtQuestion.setBackgroundResource(R.drawable.un_select_text_view)
-
-            positiveAnswer = -1
 
             txtQuestion.setOnClickListener {
                 for(j in 0 until arrayTxtQuestion.size){
