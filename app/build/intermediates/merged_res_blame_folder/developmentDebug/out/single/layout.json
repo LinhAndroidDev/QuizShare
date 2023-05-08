@@ -1,0 +1,258 @@
+[
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment__register.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment__register.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/popup_select_partment.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/popup_select_partment.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_history_topic.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/activity_history_topic.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_history_topic.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_history_topic.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/popup_create_test_activity.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/popup_create_test_activity.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_setting_new_password.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_setting_new_password.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_update_infor.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_update_infor.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/popup_list_test.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/popup_list_test.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_home_page.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/activity_home_page.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_change_avatar.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/activity_change_avatar.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_create_test.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/activity_create_test.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_list_test.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_list_test.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_intro_login.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/activity_intro_login.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/layout_loading.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/layout_loading.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_login.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/activity_login.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_intro.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/activity_intro.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_home.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_home.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_setting.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/activity_setting.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/popup_list_question.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/popup_list_question.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/layout_position_question.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/layout_position_question.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/layout_bottom_share.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/layout_bottom_share.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/layout_detail_department.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/layout_detail_department.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_intro_first.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_intro_first.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_intro_second.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_intro_second.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment__create_password.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment__create_password.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/layout_subject.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/layout_subject.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_main.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_exam.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/activity_exam.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_history_exam.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_history_exam.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_exercise.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/activity_exercise.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_system.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_system.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment__forget_password.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment__forget_password.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/popup_history_test.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/popup_history_test.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_intro_third.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_intro_third.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/layout_history_question.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/layout_history_question.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_create_test.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_create_test.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_history_saved.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_history_saved.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment__login.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment__login.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_link_sheet.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/activity_link_sheet.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_point.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_point.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_topic.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_topic.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_update_email.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_update_email.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment__condition.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment__condition.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_category.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_category.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/layout_general.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/layout_general.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_history_test_saved.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_history_test_saved.xml"
+    },
+    {
+        "merged": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_intro.xml",
+        "source": "com.example.appthitracnghiem.app-main-50:/layout/activity_intro.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_answer.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_answer.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/layout_logout.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/layout_logout.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_profile.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_profile.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/layout_menu_question.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/layout_menu_question.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_search_subject.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/activity_search_subject.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_intro_login.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_intro_login.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_exam.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_exam.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_from_user.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_from_user.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_history_question.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_history_question.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/popup_create_test.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/popup_create_test.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_register.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/activity_register.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_list_department.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_list_department.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/popup_select_mode.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/popup_select_mode.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_setting.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_setting.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_history_subject_saved.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_history_subject_saved.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_history_test.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_history_test.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_history.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_history.xml"
+    }
+]

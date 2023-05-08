@@ -1,0 +1,380 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.appthitracnghiem"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+8-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="33" />
+9-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+11-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:6:5-79
+11-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:6:22-76
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:7:5-67
+12-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:7:22-64
+13
+14    <queries>
+14-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:17:5-19:15
+15        <package android:name="com.facebook.katana" />
+15-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:18:9-55
+15-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:18:18-52
+16    </queries>
+17
+18    <permission
+18-->[androidx.core:core:1.9.0] /Users/apple/.gradle/caches/transforms-3/f3889f18d4f26e70cef4e17d11226053/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+19        android:name="com.example.appthitracnghiem.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+19-->[androidx.core:core:1.9.0] /Users/apple/.gradle/caches/transforms-3/f3889f18d4f26e70cef4e17d11226053/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+20        android:protectionLevel="signature" />
+20-->[androidx.core:core:1.9.0] /Users/apple/.gradle/caches/transforms-3/f3889f18d4f26e70cef4e17d11226053/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+21
+22    <uses-permission android:name="com.example.appthitracnghiem.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+22-->[androidx.core:core:1.9.0] /Users/apple/.gradle/caches/transforms-3/f3889f18d4f26e70cef4e17d11226053/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
+22-->[androidx.core:core:1.9.0] /Users/apple/.gradle/caches/transforms-3/f3889f18d4f26e70cef4e17d11226053/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
+23    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+23-->[com.android.installreferrer:installreferrer:1.0] /Users/apple/.gradle/caches/transforms-3/2e9926161cb37a44389eef75ac5e18cf/transformed/jetified-installreferrer-1.0/AndroidManifest.xml:9:5-110
+23-->[com.android.installreferrer:installreferrer:1.0] /Users/apple/.gradle/caches/transforms-3/2e9926161cb37a44389eef75ac5e18cf/transformed/jetified-installreferrer-1.0/AndroidManifest.xml:9:22-107
+24
+25    <application
+25-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:12:5-125:19
+26        android:allowBackup="true"
+26-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:13:9-35
+27        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+27-->[androidx.core:core:1.9.0] /Users/apple/.gradle/caches/transforms-3/f3889f18d4f26e70cef4e17d11226053/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+28        android:dataExtractionRules="@xml/data_extraction_rules"
+28-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:14:9-65
+29        android:debuggable="true"
+30        android:fullBackupContent="@xml/backup_rules"
+30-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:15:9-54
+31        android:icon="@mipmap/ic_launcher"
+31-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:16:9-43
+32        android:label="@string/app_name"
+32-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:17:9-41
+33        android:networkSecurityConfig="@xml/network"
+33-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:18:9-53
+34        android:roundIcon="@mipmap/ic_launcher_round"
+34-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:19:9-54
+35        android:supportsRtl="true"
+35-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:20:9-35
+36        android:testOnly="true"
+37        android:theme="@style/Theme.AppThiTracNghiem"
+37-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:21:9-54
+38        android:usesCleartextTraffic="true" >
+38-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:22:9-44
+39        <activity
+39-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:24:9-26:40
+40            android:name="com.example.appthitracnghiem.ui.home.profile.setting.ChangeAvatarActivity"
+40-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:25:13-73
+41            android:exported="false" />
+41-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:26:13-37
+42
+43        <meta-data
+43-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:28:9-30:55
+44            android:name="com.facebook.sdk.ApplicationId"
+44-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:29:13-58
+45            android:value="@string/facebook_app_id" />
+45-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:30:13-52
+46        <meta-data
+46-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:31:9-33:61
+47            android:name="com.facebook.sdk.ClientToken"
+47-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:32:13-56
+48            android:value="@string/facebook_client_token" />
+48-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:33:13-58
+49
+50        <provider
+50-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:35:9-38:39
+51            android:name="com.facebook.FacebookContentProvider"
+51-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:36:13-64
+52            android:authorities="com.facebook.app.FacebookContentProvider6079211382101210"
+52-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:37:13-91
+53            android:exported="true" />
+53-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:38:13-36
+54
+55        <activity
+55-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:40:9-42:40
+56            android:name="com.example.appthitracnghiem.ui.exercise.exercise.ExamActivity"
+56-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:41:13-62
+57            android:exported="false" />
+57-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:42:13-37
+58        <activity
+58-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:43:9-45:40
+59            android:name="com.example.appthitracnghiem.ui.home.history.test.HistoryTopicActivity"
+59-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:44:13-70
+60            android:exported="false" />
+60-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:45:13-37
+61        <activity
+61-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:46:9-48:40
+62            android:name="com.example.appthitracnghiem.ui.exercise.topic.ExerciseActivity"
+62-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:47:13-63
+63            android:exported="false" />
+63-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:48:13-37
+64        <activity
+64-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:49:9-55:20
+65            android:name="com.example.appthitracnghiem.ui.home.createtest.CreateTestActivity"
+65-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:50:13-66
+66            android:exported="false" >
+66-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:51:13-37
+67            <meta-data
+67-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:52:13-54:36
+68                android:name="android.app.lib_name"
+68-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:53:17-52
+69                android:value="" />
+69-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:54:17-33
+70        </activity>
+71        <activity
+71-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:56:9-62:20
+72            android:name="com.example.appthitracnghiem.ui.home.createtest.LinkSheetActivity"
+72-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:57:13-65
+73            android:exported="false" >
+73-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:58:13-37
+74            <meta-data
+74-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:52:13-54:36
+75                android:name="android.app.lib_name"
+75-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:53:17-52
+76                android:value="" />
+76-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:54:17-33
+77        </activity>
+78        <activity
+78-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:63:9-69:20
+79            android:name="com.example.appthitracnghiem.ui.home.category.search.SearchSubject"
+79-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:64:13-66
+80            android:exported="false" >
+80-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:65:13-37
+81            <meta-data
+81-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:52:13-54:36
+82                android:name="android.app.lib_name"
+82-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:53:17-52
+83                android:value="" />
+83-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:54:17-33
+84        </activity>
+85        <activity
+85-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:70:9-76:20
+86            android:name="com.example.appthitracnghiem.ui.intro.IntroLoginActivity"
+86-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:71:13-56
+87            android:exported="false" >
+87-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:72:13-37
+88            <meta-data
+88-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:52:13-54:36
+89                android:name="android.app.lib_name"
+89-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:53:17-52
+90                android:value="" />
+90-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:54:17-33
+91        </activity>
+92        <activity
+92-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:77:9-83:20
+93            android:name="com.example.appthitracnghiem.ui.home.profile.setting.SettingActivity"
+93-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:78:13-68
+94            android:exported="false" >
+94-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:79:13-37
+95            <meta-data
+95-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:52:13-54:36
+96                android:name="android.app.lib_name"
+96-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:53:17-52
+97                android:value="" />
+97-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:54:17-33
+98        </activity>
+99        <activity
+99-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:84:9-90:20
+100            android:name="com.example.appthitracnghiem.ui.home.HomeActivity"
+100-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:85:13-49
+101            android:exported="false" >
+101-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:86:13-37
+102            <meta-data
+102-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:52:13-54:36
+103                android:name="android.app.lib_name"
+103-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:53:17-52
+104                android:value="" />
+104-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:54:17-33
+105        </activity>
+106        <activity
+106-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:91:9-97:20
+107            android:name="com.example.appthitracnghiem.ui.register.RegisterActivity"
+107-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:92:13-57
+108            android:exported="false" >
+108-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:93:13-37
+109            <meta-data
+109-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:52:13-54:36
+110                android:name="android.app.lib_name"
+110-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:53:17-52
+111                android:value="" />
+111-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:54:17-33
+112        </activity>
+113        <activity
+113-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:98:9-104:20
+114            android:name="com.example.appthitracnghiem.ui.login.LoginActivity"
+114-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:99:13-51
+115            android:exported="false" >
+115-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:100:13-37
+116            <meta-data
+116-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:52:13-54:36
+117                android:name="android.app.lib_name"
+117-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:53:17-52
+118                android:value="" />
+118-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:54:17-33
+119        </activity>
+120        <activity
+120-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:105:9-111:20
+121            android:name="com.example.appthitracnghiem.ui.intro.IntroActivity"
+121-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:106:13-51
+122            android:exported="false" >
+122-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:107:13-37
+123            <meta-data
+123-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:52:13-54:36
+124                android:name="android.app.lib_name"
+124-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:53:17-52
+125                android:value="" />
+125-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:54:17-33
+126        </activity>
+127        <activity
+127-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:112:9-124:20
+128            android:name="com.example.appthitracnghiem.ui.main.MainActivity"
+128-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:113:13-49
+129            android:exported="true" >
+129-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:114:13-36
+130            <intent-filter>
+130-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:115:13-119:29
+131                <action android:name="android.intent.action.MAIN" />
+131-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:116:17-69
+131-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:116:25-66
+132
+133                <category android:name="android.intent.category.LAUNCHER" />
+133-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:118:17-77
+133-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:118:27-74
+134            </intent-filter>
+135
+136            <meta-data
+136-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:52:13-54:36
+137                android:name="android.app.lib_name"
+137-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:53:17-52
+138                android:value="" />
+138-->/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/AndroidManifest.xml:54:17-33
+139        </activity>
+140
+141        <service
+141-->[androidx.room:room-runtime:2.5.1] /Users/apple/.gradle/caches/transforms-3/0174fd7e4bc2e0670b7b7586265d54cc/transformed/room-runtime-2.5.1/AndroidManifest.xml:24:9-28:63
+142            android:name="androidx.room.MultiInstanceInvalidationService"
+142-->[androidx.room:room-runtime:2.5.1] /Users/apple/.gradle/caches/transforms-3/0174fd7e4bc2e0670b7b7586265d54cc/transformed/room-runtime-2.5.1/AndroidManifest.xml:25:13-74
+143            android:directBootAware="true"
+143-->[androidx.room:room-runtime:2.5.1] /Users/apple/.gradle/caches/transforms-3/0174fd7e4bc2e0670b7b7586265d54cc/transformed/room-runtime-2.5.1/AndroidManifest.xml:26:13-43
+144            android:exported="false" />
+144-->[androidx.room:room-runtime:2.5.1] /Users/apple/.gradle/caches/transforms-3/0174fd7e4bc2e0670b7b7586265d54cc/transformed/room-runtime-2.5.1/AndroidManifest.xml:27:13-37
+145
+146        <provider
+146-->[com.squareup.picasso:picasso:2.8] /Users/apple/.gradle/caches/transforms-3/134b50ad7dbc556e8eb441c5085169dd/transformed/jetified-picasso-2.8/AndroidManifest.xml:8:9-11:40
+147            android:name="com.squareup.picasso.PicassoProvider"
+147-->[com.squareup.picasso:picasso:2.8] /Users/apple/.gradle/caches/transforms-3/134b50ad7dbc556e8eb441c5085169dd/transformed/jetified-picasso-2.8/AndroidManifest.xml:9:13-64
+148            android:authorities="com.example.appthitracnghiem.com.squareup.picasso"
+148-->[com.squareup.picasso:picasso:2.8] /Users/apple/.gradle/caches/transforms-3/134b50ad7dbc556e8eb441c5085169dd/transformed/jetified-picasso-2.8/AndroidManifest.xml:10:13-72
+149            android:exported="false" />
+149-->[com.squareup.picasso:picasso:2.8] /Users/apple/.gradle/caches/transforms-3/134b50ad7dbc556e8eb441c5085169dd/transformed/jetified-picasso-2.8/AndroidManifest.xml:11:13-37
+150
+151        <activity
+151-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:22:9-25:66
+152            android:name="com.facebook.FacebookActivity"
+152-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:23:13-57
+153            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+153-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:24:13-96
+154            android:theme="@style/com_facebook_activity_theme" />
+154-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:25:13-63
+155        <activity android:name="com.facebook.CustomTabMainActivity" />
+155-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:26:9-71
+155-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:26:19-68
+156        <activity
+156-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:27:9-41:20
+157            android:name="com.facebook.CustomTabActivity"
+157-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:28:13-58
+158            android:exported="true" >
+158-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:29:13-36
+159            <intent-filter>
+159-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:31:13-40:29
+160                <action android:name="android.intent.action.VIEW" />
+160-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:32:17-69
+160-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:32:25-66
+161
+162                <category android:name="android.intent.category.DEFAULT" />
+162-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:34:17-76
+162-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:34:27-73
+163                <category android:name="android.intent.category.BROWSABLE" />
+163-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:35:17-78
+163-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:35:27-75
+164
+165                <data
+165-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:37:17-39:50
+166                    android:host="cct.com.example.appthitracnghiem"
+166-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:38:21-56
+167                    android:scheme="fbconnect" />
+167-->[com.facebook.android:facebook-common:16.0.1] /Users/apple/.gradle/caches/transforms-3/1a343892669201256622815c227079cf/transformed/jetified-facebook-common-16.0.1/AndroidManifest.xml:39:21-47
+168            </intent-filter>
+169        </activity>
+170        <!--
+171         The initialization ContentProvider will call FacebookSdk.sdkInitialize automatically
+172         with the application context. This config is merged in with the host app's manifest,
+173         but there can only be one provider with the same authority activated at any given
+174         point; so if the end user has two or more different apps that use Facebook SDK, only the
+175         first one will be able to use the provider. To work around this problem, we use the
+176         following placeholder in the authority to identify each host application as if it was
+177         a completely different provider.
+178        -->
+179        <provider
+179-->[com.facebook.android:facebook-core:16.0.1] /Users/apple/.gradle/caches/transforms-3/4e432fb2693ab232b731fbf354505dcb/transformed/jetified-facebook-core-16.0.1/AndroidManifest.xml:29:9-32:40
+180            android:name="com.facebook.internal.FacebookInitProvider"
+180-->[com.facebook.android:facebook-core:16.0.1] /Users/apple/.gradle/caches/transforms-3/4e432fb2693ab232b731fbf354505dcb/transformed/jetified-facebook-core-16.0.1/AndroidManifest.xml:30:13-70
+181            android:authorities="com.example.appthitracnghiem.FacebookInitProvider"
+181-->[com.facebook.android:facebook-core:16.0.1] /Users/apple/.gradle/caches/transforms-3/4e432fb2693ab232b731fbf354505dcb/transformed/jetified-facebook-core-16.0.1/AndroidManifest.xml:31:13-72
+182            android:exported="false" />
+182-->[com.facebook.android:facebook-core:16.0.1] /Users/apple/.gradle/caches/transforms-3/4e432fb2693ab232b731fbf354505dcb/transformed/jetified-facebook-core-16.0.1/AndroidManifest.xml:32:13-37
+183
+184        <receiver
+184-->[com.facebook.android:facebook-core:16.0.1] /Users/apple/.gradle/caches/transforms-3/4e432fb2693ab232b731fbf354505dcb/transformed/jetified-facebook-core-16.0.1/AndroidManifest.xml:34:9-40:20
+185            android:name="com.facebook.CurrentAccessTokenExpirationBroadcastReceiver"
+185-->[com.facebook.android:facebook-core:16.0.1] /Users/apple/.gradle/caches/transforms-3/4e432fb2693ab232b731fbf354505dcb/transformed/jetified-facebook-core-16.0.1/AndroidManifest.xml:35:13-86
+186            android:exported="false" >
+186-->[com.facebook.android:facebook-core:16.0.1] /Users/apple/.gradle/caches/transforms-3/4e432fb2693ab232b731fbf354505dcb/transformed/jetified-facebook-core-16.0.1/AndroidManifest.xml:36:13-37
+187            <intent-filter>
+187-->[com.facebook.android:facebook-core:16.0.1] /Users/apple/.gradle/caches/transforms-3/4e432fb2693ab232b731fbf354505dcb/transformed/jetified-facebook-core-16.0.1/AndroidManifest.xml:37:13-39:29
+188                <action android:name="com.facebook.sdk.ACTION_CURRENT_ACCESS_TOKEN_CHANGED" />
+188-->[com.facebook.android:facebook-core:16.0.1] /Users/apple/.gradle/caches/transforms-3/4e432fb2693ab232b731fbf354505dcb/transformed/jetified-facebook-core-16.0.1/AndroidManifest.xml:38:17-95
+188-->[com.facebook.android:facebook-core:16.0.1] /Users/apple/.gradle/caches/transforms-3/4e432fb2693ab232b731fbf354505dcb/transformed/jetified-facebook-core-16.0.1/AndroidManifest.xml:38:25-92
+189            </intent-filter>
+190        </receiver>
+191        <receiver
+191-->[com.facebook.android:facebook-core:16.0.1] /Users/apple/.gradle/caches/transforms-3/4e432fb2693ab232b731fbf354505dcb/transformed/jetified-facebook-core-16.0.1/AndroidManifest.xml:41:9-47:20
+192            android:name="com.facebook.AuthenticationTokenManager$CurrentAuthenticationTokenChangedBroadcastReceiver"
+192-->[com.facebook.android:facebook-core:16.0.1] /Users/apple/.gradle/caches/transforms-3/4e432fb2693ab232b731fbf354505dcb/transformed/jetified-facebook-core-16.0.1/AndroidManifest.xml:42:13-118
+193            android:exported="false" >
+193-->[com.facebook.android:facebook-core:16.0.1] /Users/apple/.gradle/caches/transforms-3/4e432fb2693ab232b731fbf354505dcb/transformed/jetified-facebook-core-16.0.1/AndroidManifest.xml:43:13-37
+194            <intent-filter>
+194-->[com.facebook.android:facebook-core:16.0.1] /Users/apple/.gradle/caches/transforms-3/4e432fb2693ab232b731fbf354505dcb/transformed/jetified-facebook-core-16.0.1/AndroidManifest.xml:44:13-46:29
+195                <action android:name="com.facebook.sdk.ACTION_CURRENT_AUTHENTICATION_TOKEN_CHANGED" />
+195-->[com.facebook.android:facebook-core:16.0.1] /Users/apple/.gradle/caches/transforms-3/4e432fb2693ab232b731fbf354505dcb/transformed/jetified-facebook-core-16.0.1/AndroidManifest.xml:45:17-103
+195-->[com.facebook.android:facebook-core:16.0.1] /Users/apple/.gradle/caches/transforms-3/4e432fb2693ab232b731fbf354505dcb/transformed/jetified-facebook-core-16.0.1/AndroidManifest.xml:45:25-100
+196            </intent-filter>
+197        </receiver>
+198
+199        <provider
+199-->[androidx.emoji2:emoji2:1.2.0] /Users/apple/.gradle/caches/transforms-3/a44fe69b7f5ac0e141d6bda2f04e92a5/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+200            android:name="androidx.startup.InitializationProvider"
+200-->[androidx.emoji2:emoji2:1.2.0] /Users/apple/.gradle/caches/transforms-3/a44fe69b7f5ac0e141d6bda2f04e92a5/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+201            android:authorities="com.example.appthitracnghiem.androidx-startup"
+201-->[androidx.emoji2:emoji2:1.2.0] /Users/apple/.gradle/caches/transforms-3/a44fe69b7f5ac0e141d6bda2f04e92a5/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+202            android:exported="false" >
+202-->[androidx.emoji2:emoji2:1.2.0] /Users/apple/.gradle/caches/transforms-3/a44fe69b7f5ac0e141d6bda2f04e92a5/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+203            <meta-data
+203-->[androidx.emoji2:emoji2:1.2.0] /Users/apple/.gradle/caches/transforms-3/a44fe69b7f5ac0e141d6bda2f04e92a5/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+204                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+204-->[androidx.emoji2:emoji2:1.2.0] /Users/apple/.gradle/caches/transforms-3/a44fe69b7f5ac0e141d6bda2f04e92a5/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+205                android:value="androidx.startup" />
+205-->[androidx.emoji2:emoji2:1.2.0] /Users/apple/.gradle/caches/transforms-3/a44fe69b7f5ac0e141d6bda2f04e92a5/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+206            <meta-data
+206-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/apple/.gradle/caches/transforms-3/baa824db3c1bec348e984fa25af19fb7/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
+207                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+207-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/apple/.gradle/caches/transforms-3/baa824db3c1bec348e984fa25af19fb7/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
+208                android:value="androidx.startup" />
+208-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/apple/.gradle/caches/transforms-3/baa824db3c1bec348e984fa25af19fb7/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
+209        </provider>
+210    </application>
+211
+212</manifest>

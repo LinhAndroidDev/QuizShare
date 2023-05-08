@@ -34,14 +34,14 @@ class MainActivity : BaseActivity<MainViewModel>() {
             override fun onFinish() {
                 if (CheckConnect.haveNetworkConnected(this@MainActivity)) {
                     val intent = if (viewModel.isFirstInstallApp()) {
-                        viewModel.clearFirstInstallApp()
-                        Intent(this@MainActivity, IntroActivity::class.java)
-                    } else {
                         if (viewModel.isUserLoggedIn()) {
                             Intent(this@MainActivity, HomeActivity::class.java)
                         } else {
                             Intent(this@MainActivity, LoginActivity::class.java)
                         }
+                    } else {
+                        viewModel.clearFirstInstallApp()
+                        Intent(this@MainActivity, IntroActivity::class.java)
                     }
                     startActivity(intent)
                 } else {

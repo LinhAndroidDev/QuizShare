@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-44:/values-xhdpi-v4/values-xhdpi-v4.xml",
+            "map": [
+                {
+                    "source": "/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/res/values-xhdpi/dimens.xml",
+                    "from": {
+                        "startLines": "3,4,5",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "127,185,241",
+                        "endColumns": "57,55,43",
+                        "endOffsets": "180,236,280"
+                    },
+                    "to": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,113,169",
+                        "endColumns": "57,55,43",
+                        "endOffsets": "108,164,208"
+                    }
+                }
+            ]
+        }
+    ]
+}

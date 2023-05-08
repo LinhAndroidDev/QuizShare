@@ -24,12 +24,8 @@ import com.example.appthitracnghiem.utils.PreferenceKey
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_home_page.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.layout_loading.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentHome.newInstance] factory method to
- * create an instance of this fragment.
- */
 @Suppress("DEPRECATION")
 class FragmentHome : BaseFragment<HomeViewModel>() {
     lateinit var viewPagerDepartment : ViewPagerDepartment
@@ -48,7 +44,7 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
 
         setText()
 
-        click()
+        initUi()
 
         val accessToken = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.AUTHORIZATION,"").toString()
@@ -58,7 +54,7 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
         viewModel.getDataUserInfo(accessToken, requestUserInfo)
     }
 
-    private fun click() {
+    private fun initUi() {
         avatarUseHome.setOnClickListener {
             val intent: Intent = Intent(requireActivity(),ChangeAvatarActivity::class.java)
             startActivity(intent)
@@ -68,6 +64,14 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
     @SuppressLint("CommitPrefEdits")
     override fun bindData() {
         super.bindData()
+
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){ isLoading->
+            if(isLoading){
+                layoutLoading.visibility = View.VISIBLE
+            }else{
+                layoutLoading.visibility = View.GONE
+            }
+        }
 
         viewModel.nameUserLiveData.observe(viewLifecycleOwner) {
             viewModel.mPreferenceUtil.defaultPref()

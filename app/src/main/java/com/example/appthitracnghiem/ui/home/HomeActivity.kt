@@ -60,10 +60,6 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
                 functionHome.isSelected = true
                 val fragmentHome: FragmentHome = FragmentHome()
                 val fm = supportFragmentManager.beginTransaction()
-                fm.setCustomAnimations(
-                    R.anim.animation_enter_right, R.anim.animation_exit_left,
-                    R.anim.animation_enter_left, R.anim.animation_exit_right
-                )
                 fm.replace(R.id.changeIdHome, fragmentHome).addToBackStack(null).commit()
             }
         }
@@ -132,11 +128,7 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
     /** Replace Fragment */
     fun addFragment(fragment: Fragment) {
         val fm = supportFragmentManager.beginTransaction()
-        fm.setCustomAnimations(
-            R.anim.animation_enter_right, R.anim.animation_exit_left,
-            R.anim.animation_enter_left, R.anim.animation_exit_right
-        )
-        fm.add(R.id.changeIdHome, fragment).addToBackStack(null).commit()
+        fm.replace(R.id.changeIdHome, fragment).addToBackStack(null).commit()
     }
 
 //    @SuppressLint("ClickableViewAccessibility")
@@ -157,8 +149,13 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
                 }
                 backPressTime = System.currentTimeMillis()
             } else {
-                super.onBackPressed()
-                setSelectIcon()
+                if (fm !is FragmentHome) {
+                    resetTab()
+                    functionHome.isSelected = true
+                    val fragmentHome = FragmentHome()
+                    val fragment = supportFragmentManager.beginTransaction()
+                    fragment.replace(R.id.changeIdHome, fragmentHome).addToBackStack(null).commit()
+                }
             }
         } else {
             super.onBackPressed()
