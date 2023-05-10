@@ -10,16 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.home.HomeViewModel
 import com.example.appthitracnghiem.ui.home.RequestUserInfo
 import com.example.appthitracnghiem.ui.home.home.adapter.ViewPagerDepartment
-import com.example.appthitracnghiem.ui.home.profile.setting.ChangeAvatarActivity
+import com.example.appthitracnghiem.ui.home.profile.setting.changeavatar.ChangeAvatarActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_home_page.*
@@ -56,7 +53,7 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
 
     private fun initUi() {
         avatarUseHome.setOnClickListener {
-            val intent: Intent = Intent(requireActivity(),ChangeAvatarActivity::class.java)
+            val intent: Intent = Intent(requireActivity(), ChangeAvatarActivity::class.java)
             startActivity(intent)
         }
     }

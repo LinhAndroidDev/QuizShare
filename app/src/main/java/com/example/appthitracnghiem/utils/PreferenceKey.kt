@@ -11,4 +11,5 @@ object PreferenceKey {
     var USER_AVATAR: String = "USER_AVATAR"
     var TYPE: String = "TYPE"
     var POSITION: String = "POSITION"
+    var ARRAY_LIST_ANSWER: String = "ARRAY_LIST_ANSWER"
 }

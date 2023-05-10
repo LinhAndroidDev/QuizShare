@@ -22,7 +22,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.home.profile.setting.ChangeAvatarActivity"
+            android:name=".ui.home.profile.setting.changeavatar.ChangeAvatarActivity"
             android:exported="false" />
 
         <meta-data

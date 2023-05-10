@@ -14,11 +14,6 @@ import com.example.appthitracnghiem.ui.department.listdepartment.adapter.ListDep
 import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment_list_department.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentListDepartment.newInstance] factory method to
- * create an instance of this fragment.
- */
 @Suppress("DEPRECATION")
 class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
     lateinit var listDepartmentAdapter: ListDepartmentAdapter
@@ -28,15 +23,7 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        listDepartmentAdapter = ListDepartmentAdapter(requireActivity())
-
-//        val bundle: Bundle = requireArguments()
-//        if(bundle.getString("title").toString().isNotEmpty()){
-//            val title: String = bundle.getString("title").toString()
-//            searchDepartment.setText(title)
-//        }
-
-        click()
+        initUi()
 
     }
 
@@ -52,7 +39,7 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
         }
 
         viewModel.listDepartmentLiveData.observe(viewLifecycleOwner){ listDepartment->
-            listDepartmentAdapter = ListDepartmentAdapter(requireActivity())
+            listDepartmentAdapter = ListDepartmentAdapter(requireActivity(), listDepartment)
             val linear = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
             listDepartmentAdapter.listDepartment =  listDepartment
             recycleDetailListDepartment.layoutManager = linear
@@ -67,7 +54,7 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
         viewModel.getDataDepartmentDetail(accessToken, requestDepartmentInfo)
     }
 
-    private fun click() {
+    private fun initUi() {
         backDepartment.setOnClickListener{
             activity?.onBackPressed()
         }

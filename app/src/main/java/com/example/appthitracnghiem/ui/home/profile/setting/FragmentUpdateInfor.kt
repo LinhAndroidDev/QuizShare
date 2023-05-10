@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.home.profile.setting.changeavatar.ChangeAvatarActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_setting.*

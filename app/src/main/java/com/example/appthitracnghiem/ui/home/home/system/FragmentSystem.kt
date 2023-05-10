@@ -28,7 +28,7 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val linearLayoutManager: LinearLayoutManager =
+        val linearLayoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         recycleListLiveQuizzes.layoutManager = linearLayoutManager
 

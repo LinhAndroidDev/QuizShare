@@ -41,8 +41,9 @@ interface ApiService {
             : Call<EmailVerificationResponse>
 
     @POST("searchSubject")
-    fun getCategory(@Header("Authorization") header: String,
-                    @Body requestCategory: RequestCategory
+    fun getCategory(
+        @Header("Authorization") header: String,
+        @Body requestCategory: RequestCategory
     ): Call<CategoryResponse>
 
     @POST("getDepartmentList")
@@ -52,22 +53,32 @@ interface ApiService {
     ): Call<FromSystemResponse>
 
     @POST("listDepartmentInfo")
-    fun getListDepartmentInfo(@Header("Authorization") header: String,
-    @Body requestDepartmentInfo: RequestDepartmentInfo
+    fun getListDepartmentInfo(
+        @Header("Authorization") header: String,
+        @Body requestDepartmentInfo: RequestDepartmentInfo
     ): Call<DepartmentResponse>
 
     @POST("listExam")
-    fun getListExam(@Header("Authorization") header: String,
-                              @Body requestListExam: RequestListExam
+    fun getListExam(
+        @Header("Authorization") header: String,
+        @Body requestListExam: RequestListExam
     ): Call<ListExamResponse>
 
     @POST("examListQuestion")
-    fun getExamListQuestion(@Header("Authorization") header: String,
-                    @Body requestExamQuestion: RequestExamQuestion
+    fun getExamListQuestion(
+        @Header("Authorization") header: String,
+        @Body requestExamQuestion: RequestExamQuestion
     ): Call<ExamQuestionResponse>
 
     @POST("getUserInfo")
-    fun getUserInfo(@Header("Authorization") header: String,
-                            @Body requestUserInfo: RequestUserInfo
+    fun getUserInfo(
+        @Header("Authorization") header: String,
+        @Body requestUserInfo: RequestUserInfo
     ): Call<UserResponse>
+
+//    @POST("postUploadFile")
+//    fun postImage(
+//        @Header("Authorization") header: String,
+//        @Body requestAvatar: RequestAvatar
+//    ): Call<>
 }

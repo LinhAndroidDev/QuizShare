@@ -1,4 +1,4 @@
-package com.example.appthitracnghiem.ui.home.profile.setting
+package com.example.appthitracnghiem.ui.home.profile.setting.changeavatar
 
 import android.graphics.Point
 import android.graphics.Typeface
@@ -39,7 +39,7 @@ class ChangeAvatarActivity : AppCompatActivity() {
 
         setText()
 
-        click()
+        initUi()
     }
 
     private fun setText() {
@@ -47,7 +47,7 @@ class ChangeAvatarActivity : AppCompatActivity() {
         txtChangeAvatar.typeface = semibold
     }
 
-    private fun click() {
+    private fun initUi() {
         backChangeAvatar.setOnClickListener {
             this.onBackPressed()
         }

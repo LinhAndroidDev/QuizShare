@@ -44,7 +44,7 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
 
         setText()
 
-        click()
+        initUi()
     }
 
     private fun setText() {
@@ -65,14 +65,14 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
 
         viewModel.listTestLiveData.observe(viewLifecycleOwner) {
             testAdapter = TestAdapter(requireActivity(), it)
-            val linear: LinearLayoutManager =
+            val linear =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             recycleListTest.layoutManager = linear
             recycleListTest.adapter = testAdapter
         }
     }
 
-    private fun click() {
+    private fun initUi() {
         backTest.setOnClickListener {
             activity?.onBackPressed()
         }
@@ -102,9 +102,9 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
 
         val width = ViewGroup.LayoutParams.WRAP_CONTENT
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
-        val focusable: Boolean = true
+        val focusable = true
 
-        val popupWindow: PopupWindow = PopupWindow(popUpView, width, height, focusable)
+        val popupWindow = PopupWindow(popUpView, width, height, focusable)
         popupWindow.showAsDropDown(anchor, x, y, position)
     }
 

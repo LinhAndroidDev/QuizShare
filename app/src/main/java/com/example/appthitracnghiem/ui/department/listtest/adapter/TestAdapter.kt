@@ -20,12 +20,17 @@ import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.PreferenceUtil
 import com.squareup.picasso.Picasso
 
-class TestAdapter(val context: Context, private var listTest: MutableList<Exam>) :
+class TestAdapter(
+    val context: Context,
+    private var listTest: MutableList<Exam>
+    ) :
     RecyclerView.Adapter<TestAdapter.TestViewHolder>(), Filterable{
 
     var listTestOld: MutableList<Exam> = listTest
-    var id_exam: Int = 0
-    var time_exam: Int = 0
+
+    init {
+        listTestOld = listTest
+    }
 
     class TestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.topic)
@@ -74,8 +79,8 @@ class TestAdapter(val context: Context, private var listTest: MutableList<Exam>)
             override fun performFiltering(strTxt: CharSequence?): FilterResults {
                 val txtString: String = strTxt.toString().lowercase().trim()
 
-                if(txtString.isEmpty()){
-                    listTest = listTestOld
+                listTest = if(txtString.isEmpty()){
+                    listTestOld
                 }else{
                     val list: MutableList<Exam> = mutableListOf()
                     for(test in listTestOld){
@@ -84,7 +89,7 @@ class TestAdapter(val context: Context, private var listTest: MutableList<Exam>)
                         }
                     }
 
-                    listTest = list
+                    list
                 }
 
                 val filterResults: FilterResults = FilterResults()

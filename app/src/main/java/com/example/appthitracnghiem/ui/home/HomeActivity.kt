@@ -38,13 +38,13 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
 
             bottomWrap?.setOnTouchListener { _, _ -> true }
 
-            click()
+            initUi()
         } else {
             CheckConnect.showToastShort(this@HomeActivity, "Bạn đang ngoại tuyến")
         }
     }
 
-    private fun click() {
+    private fun initUi() {
         iconSearch.setOnClickListener {
             val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
             if (fm !is FragmentCategory) {

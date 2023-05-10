@@ -18,13 +18,12 @@ import com.example.appthitracnghiem.model.Subject
 import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.Adapter
 
 class ListDepartmentAdapter(
-    val context: Context
+    val context: Context,
+    var listDepartment: MutableList<DetailDepartment>
 ) :
     RecyclerView.Adapter<ListDepartmentAdapter.ViewholderDepartment>(), Filterable {
 
-    var listDepartment: MutableList<DetailDepartment> = mutableListOf()
-
-    var listDepartmentOlds: MutableList<DetailDepartment> = listDepartment
+    private var listDepartmentOlds: MutableList<DetailDepartment> = listDepartment
 
     class ViewholderDepartment(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var txtNameDepartment: TextView = itemView.findViewById(R.id.txtNameDepartment)
@@ -50,11 +49,11 @@ class ListDepartmentAdapter(
         holder.txtNameDepartment.text = detailDepartment.title
         val semibold: Typeface? = ResourcesCompat.getFont(context,R.font.svn_gilroy_semibold)
         holder.txtNameDepartment.typeface = semibold
-        val linearLayoutManager: LinearLayoutManager = 
+        val linearLayoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         holder.recycleViewListSubjectDepartment.layoutManager = linearLayoutManager
 
-        val subjectAdapter: SubjectAdapter = SubjectAdapter(holder.txtSeeAll.context, detailDepartment.subjects)
+        val subjectAdapter = SubjectAdapter(holder.txtSeeAll.context, detailDepartment.subjects)
         holder.recycleViewListSubjectDepartment.adapter = subjectAdapter
     }
 
@@ -80,7 +79,7 @@ class ListDepartmentAdapter(
                     list
                 }
 
-                val filterResults: FilterResults = FilterResults()
+                val filterResults = FilterResults()
                 filterResults.values = listDepartment
                 return filterResults
             }
