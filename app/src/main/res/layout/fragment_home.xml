@@ -177,7 +177,5 @@
                     android:layout_height="120dp" />
             </LinearLayout>
         </LinearLayout>
-        <include layout="@layout/layout_loading"/>
     </RelativeLayout>
-
 </androidx.core.widget.NestedScrollView>

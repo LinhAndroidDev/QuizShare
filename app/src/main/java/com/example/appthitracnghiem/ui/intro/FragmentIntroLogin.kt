@@ -27,17 +27,12 @@ class FragmentIntroLogin : Fragment() {
 
     private fun click() {
         loginIntro.setOnClickListener {
-            val intent: Intent = Intent(requireActivity(), LoginActivity::class.java)
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
             startActivity(intent)
         }
 
         registerIntro.setOnClickListener {
-            val intent: Intent = Intent(requireActivity(), RegisterActivity::class.java)
-            startActivity(intent)
-        }
-
-        toDoLate.setOnClickListener {
-            val intent: Intent = Intent(requireActivity(), HomeActivity::class.java)
+            val intent = Intent(requireActivity(), RegisterActivity::class.java)
             startActivity(intent)
         }
     }

@@ -10,8 +10,8 @@ import com.example.appthitracnghiem.ui.login.LoginActivity
 import com.example.appthitracnghiem.ui.register.RegisterActivity
 import kotlinx.android.synthetic.main.fragment_intro_login.*
 
+@Suppress("DEPRECATION")
 class IntroLoginActivity : AppCompatActivity() {
-    private var backPressTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,32 +19,22 @@ class IntroLoginActivity : AppCompatActivity() {
 
         overridePendingTransition(R.anim.anim_translate_enter_right, R.anim.anim_translate_exit_left)
 
-        click()
+        initUi()
     }
 
-    private fun click() {
+    private fun initUi() {
         loginIntro.setOnClickListener {
-            val intent: Intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
         registerIntro.setOnClickListener {
-            val intent: Intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-        }
-
-        toDoLate.setOnClickListener {
-            val intent: Intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
     }
 
     override fun onBackPressed() {
-        if (backPressTime + 2000 > System.currentTimeMillis()) {
-            super.onBackPressed()
-        } else {
-            Toast.makeText(this, "Nhấn lần nữa để thoát", Toast.LENGTH_SHORT).show()
-        }
-        backPressTime = System.currentTimeMillis()
+        super.onBackPressed()
     }
 }

@@ -65,14 +65,6 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
     override fun bindData() {
         super.bindData()
 
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){ isLoading->
-            if(isLoading){
-                layoutLoading.visibility = View.VISIBLE
-            }else{
-                layoutLoading.visibility = View.GONE
-            }
-        }
-
         viewModel.nameUserLiveData.observe(viewLifecycleOwner) {
             viewModel.mPreferenceUtil.defaultPref()
                 .edit().putString(PreferenceKey.USER_NAME,it)

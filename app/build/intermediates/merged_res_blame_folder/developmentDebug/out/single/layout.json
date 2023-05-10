@@ -1,27 +1,31 @@
 [
     {
-        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment__register.xml",
-        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment__register.xml"
-    },
-    {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/popup_select_partment.xml",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/popup_select_partment.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment__register.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment__register.xml"
     },
     {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_history_topic.xml",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/activity_history_topic.xml"
     },
     {
-        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_history_topic.xml",
-        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_history_topic.xml"
-    },
-    {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/popup_create_test_activity.xml",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/popup_create_test_activity.xml"
     },
     {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_history_topic.xml",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_history_topic.xml"
+    },
+    {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_setting_new_password.xml",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_setting_new_password.xml"
+    },
+    {
+        "merged": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_intro_login.xml",
+        "source": "com.example.appthitracnghiem.app-main-50:/layout/fragment_intro_login.xml"
     },
     {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_update_infor.xml",
@@ -184,10 +188,6 @@
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_history_test_saved.xml"
     },
     {
-        "merged": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/activity_intro.xml",
-        "source": "com.example.appthitracnghiem.app-main-50:/layout/activity_intro.xml"
-    },
-    {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_answer.xml",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_answer.xml"
     },
@@ -222,6 +222,10 @@
     {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment_history_question.xml",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_history_question.xml"
+    },
+    {
+        "merged": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/fragment__register.xml",
+        "source": "com.example.appthitracnghiem.app-main-50:/layout/fragment__register.xml"
     },
     {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-45:/layout/popup_create_test.xml",

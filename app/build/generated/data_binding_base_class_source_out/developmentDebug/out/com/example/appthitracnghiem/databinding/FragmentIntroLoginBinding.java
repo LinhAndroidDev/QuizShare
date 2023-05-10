@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
@@ -30,16 +29,12 @@ public final class FragmentIntroLoginBinding implements ViewBinding {
   @NonNull
   public final Button registerIntro;
 
-  @NonNull
-  public final TextView toDoLate;
-
   private FragmentIntroLoginBinding(@NonNull RelativeLayout rootView, @NonNull Button loginIntro,
-      @NonNull ImageView logo5, @NonNull Button registerIntro, @NonNull TextView toDoLate) {
+      @NonNull ImageView logo5, @NonNull Button registerIntro) {
     this.rootView = rootView;
     this.loginIntro = loginIntro;
     this.logo5 = logo5;
     this.registerIntro = registerIntro;
-    this.toDoLate = toDoLate;
   }
 
   @Override
@@ -87,14 +82,8 @@ public final class FragmentIntroLoginBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.toDoLate;
-      TextView toDoLate = ViewBindings.findChildViewById(rootView, id);
-      if (toDoLate == null) {
-        break missingId;
-      }
-
       return new FragmentIntroLoginBinding((RelativeLayout) rootView, loginIntro, logo5,
-          registerIntro, toDoLate);
+          registerIntro);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

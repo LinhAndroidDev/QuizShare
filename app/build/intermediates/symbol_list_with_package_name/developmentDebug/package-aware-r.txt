@@ -1593,6 +1593,7 @@ color foreground_material_dark
 color foreground_material_light
 color gray_hint
 color green
+color grey_dark
 color highlighted_text_material_dark
 color highlighted_text_material_light
 color ic_launcher_background
@@ -3050,6 +3051,7 @@ drawable history_quiz
 drawable history_test
 drawable home
 drawable home_select
+drawable ic_action_date
 drawable ic_action_next
 drawable ic_arc1
 drawable ic_arc2
@@ -3914,6 +3916,7 @@ id search_view_toolbar_container
 id search_voice_btn
 id seeAgainHistory
 id seeAnswer
+id selectDate
 id selectDepartment
 id selectMode
 id select_dialog_listview

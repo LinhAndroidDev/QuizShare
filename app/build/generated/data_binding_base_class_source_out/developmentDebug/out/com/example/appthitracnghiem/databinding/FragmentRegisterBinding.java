@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,6 +54,9 @@ public final class FragmentRegisterBinding implements ViewBinding {
   public final Button registerAccount;
 
   @NonNull
+  public final ImageView selectDate;
+
+  @NonNull
   public final TextView textString;
 
   @NonNull
@@ -64,7 +68,8 @@ public final class FragmentRegisterBinding implements ViewBinding {
       @NonNull ImageButton hidePasswordRegister, @NonNull ImageButton hidePasswordRegisterRepeat,
       @NonNull TextView loginNow, @NonNull EditText passwordRegister,
       @NonNull EditText passwordRegisterRepeat, @NonNull Button registerAccount,
-      @NonNull TextView textString, @NonNull TextView warningRegister) {
+      @NonNull ImageView selectDate, @NonNull TextView textString,
+      @NonNull TextView warningRegister) {
     this.rootView = rootView;
     this.edtEnterEmailRegister = edtEnterEmailRegister;
     this.edtEnterNameRegister = edtEnterNameRegister;
@@ -76,6 +81,7 @@ public final class FragmentRegisterBinding implements ViewBinding {
     this.passwordRegister = passwordRegister;
     this.passwordRegisterRepeat = passwordRegisterRepeat;
     this.registerAccount = registerAccount;
+    this.selectDate = selectDate;
     this.textString = textString;
     this.warningRegister = warningRegister;
   }
@@ -167,6 +173,12 @@ public final class FragmentRegisterBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.selectDate;
+      ImageView selectDate = ViewBindings.findChildViewById(rootView, id);
+      if (selectDate == null) {
+        break missingId;
+      }
+
       id = R.id.textString;
       TextView textString = ViewBindings.findChildViewById(rootView, id);
       if (textString == null) {
@@ -182,7 +194,7 @@ public final class FragmentRegisterBinding implements ViewBinding {
       return new FragmentRegisterBinding((NestedScrollView) rootView, edtEnterEmailRegister,
           edtEnterNameRegister, edtEnterYearOfBirthRegister, edtPhoneRegister, hidePasswordRegister,
           hidePasswordRegisterRepeat, loginNow, passwordRegister, passwordRegisterRepeat,
-          registerAccount, textString, warningRegister);
+          registerAccount, selectDate, textString, warningRegister);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

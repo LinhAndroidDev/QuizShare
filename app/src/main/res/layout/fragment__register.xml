@@ -44,19 +44,31 @@
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <EditText
-            android:id="@+id/edtEnterYearOfBirthRegister"
-            android:background="@drawable/background_edittext"
+        <RelativeLayout
             android:layout_marginTop="12dp"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:paddingStart="20dp"
-            android:paddingEnd="50dp"
-            android:hint="@string/edtEnterYearOfBirth"
-            android:textColorHint="@color/color_to_do_late"
-            android:inputType="textEmailAddress"/>
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/edtEnterYearOfBirthRegister"
+                android:background="@drawable/background_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:paddingStart="20dp"
+                android:paddingEnd="50dp"
+                android:hint="@string/edtEnterYearOfBirth"
+                android:textColorHint="@color/color_to_do_late"
+                android:inputType="textEmailAddress"/>
+            <ImageView
+                android:id="@+id/selectDate"
+                android:src="@drawable/ic_action_date"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
+        </RelativeLayout>
         <TextView
             android:text="@string/txtEmailRegister"
             android:textSize="16sp"

@@ -40,5 +40,6 @@
     <color name="bg_search">#48111111</color>
     <color name="bg_submit">#65111111</color>
     <color name="color_grey">#DDDDDD</color>
+    <color name="grey_dark">#878787</color>
     <color name="bg_chart_line">#6A5AE0</color>
 </resources>

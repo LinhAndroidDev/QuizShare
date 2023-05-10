@@ -123,7 +123,7 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
             activity?.finish()
         }
 
-        edtEnterYearOfBirthRegister.setOnClickListener {
+        selectDate.setOnClickListener {
 
             val getDate = Calendar.getInstance()
             val datePicker = DatePickerDialog(requireActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth,DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->

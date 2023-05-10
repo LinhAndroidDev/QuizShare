@@ -1592,6 +1592,7 @@ int color foreground_material_dark 0x7f060086
 int color foreground_material_light 0x7f060087
 int color gray_hint 0x7f060088
 int color green 0x7f060089
+int color grey_dark 0x7f0602bc
 int color highlighted_text_material_dark 0x7f06008a
 int color highlighted_text_material_light 0x7f06008b
 int color ic_launcher_background 0x7f06008c
@@ -3049,6 +3050,7 @@ int drawable history_quiz 0x7f0800c3
 int drawable history_test 0x7f0800c4
 int drawable home 0x7f0800c5
 int drawable home_select 0x7f0800c6
+int drawable ic_action_date 0x7f0801a4
 int drawable ic_action_next 0x7f0800c7
 int drawable ic_arc1 0x7f0800c8
 int drawable ic_arc2 0x7f0800c9
@@ -3913,6 +3915,7 @@ int id search_view_toolbar_container 0x7f0a0278
 int id search_voice_btn 0x7f0a0279
 int id seeAgainHistory 0x7f0a027a
 int id seeAnswer 0x7f0a027b
+int id selectDate 0x7f0a0345
 int id selectDepartment 0x7f0a027c
 int id selectMode 0x7f0a027d
 int id select_dialog_listview 0x7f0a027e

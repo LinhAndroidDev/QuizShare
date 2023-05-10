@@ -8,12 +8,12 @@
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-debug-47:/mipmap-xxhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_icon_setting.png.flat",
-        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/drawable/icon_setting.png"
-    },
-    {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_icon_divider.png.flat",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-debug-47:/drawable/icon_divider.png"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_icon_setting.png.flat",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/drawable/icon_setting.png"
     },
     {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_icon_person.png.flat",
@@ -68,12 +68,12 @@
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-debug-47:/drawable-hdpi/img.png"
     },
     {
-        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_home.png.flat",
-        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/drawable/home.png"
-    },
-    {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_icon_edit.xml.flat",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/drawable/icon_edit.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_home.png.flat",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/drawable/home.png"
     },
     {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_icon_animal.png.flat",
@@ -94,6 +94,10 @@
     {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/layout_fragment_from_user.xml.flat",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment_from_user.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable-hdpi_ic_action_date.png.flat",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-debug-47:/drawable-hdpi/ic_action_date.png"
     },
     {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_effect1.png.flat",
@@ -140,12 +144,12 @@
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/fragment__condition.xml"
     },
     {
-        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_icon_facebook.png.flat",
-        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/drawable/icon_facebook.png"
-    },
-    {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_icon_apple.png.flat",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/drawable/icon_apple.png"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_icon_facebook.png.flat",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/drawable/icon_facebook.png"
     },
     {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/font_svn_gilroy_medium.otf.flat",
@@ -174,6 +178,10 @@
     {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/layout_activity_register.xml.flat",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/activity_register.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable-xxhdpi_ic_action_date.png.flat",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-debug-47:/drawable-xxhdpi/ic_action_date.png"
     },
     {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_icon_menu.png.flat",
@@ -246,6 +254,10 @@
     {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/anim_animation_scale_enter_left.xml.flat",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/anim/animation_scale_enter_left.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable-mdpi_ic_action_date.png.flat",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-debug-47:/drawable-mdpi/ic_action_date.png"
     },
     {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/layout_activity_exam.xml.flat",
@@ -748,10 +760,6 @@
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/layout_menu_question.xml"
     },
     {
-        "merged": "com.example.appthitracnghiem.app-merged_res-46:/layout_activity_intro.xml.flat",
-        "source": "com.example.appthitracnghiem.app-main-50:/layout/activity_intro.xml"
-    },
-    {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable-xhdpi_visibility.png.flat",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-debug-47:/drawable-xhdpi/visibility.png"
     },
@@ -880,12 +888,20 @@
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/anim/animation_exit_left.xml"
     },
     {
+        "merged": "com.example.appthitracnghiem.app-merged_res-46:/drawable-anydpi_ic_action_date.xml.flat",
+        "source": "com.example.appthitracnghiem.app-debug-47:/drawable-anydpi/ic_action_date.xml"
+    },
+    {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_icon_oval_painting.png.flat",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/drawable/icon_oval_painting.png"
     },
     {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/font_svn_gilroy_heavy.otf.flat",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/font/svn_gilroy_heavy.otf"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable-xhdpi_ic_action_date.png.flat",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-debug-47:/drawable-xhdpi/ic_action_date.png"
     },
     {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable-xhdpi_ic_action_next.png.flat",
@@ -960,6 +976,10 @@
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/drawable/icon_next_black.png"
     },
     {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable-anydpi_ic_action_date.xml.flat",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-debug-47:/drawable-anydpi/ic_action_date.xml"
+    },
+    {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_select_positive_quiz.xml.flat",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/drawable/select_positive_quiz.xml"
     },
@@ -968,12 +988,12 @@
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/drawable/icon_back_black.png"
     },
     {
-        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_bg_search.xml.flat",
-        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/drawable/bg_search.xml"
-    },
-    {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/layout_layout_loading.xml.flat",
         "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/layout/layout_loading.xml"
+    },
+    {
+        "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable_bg_search.xml.flat",
+        "source": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-main-50:/drawable/bg_search.xml"
     },
     {
         "merged": "/Users/apple/.gradle/daemon/7.4/com.example.appthitracnghiem.app-merged_res-46:/drawable-anydpi_visibility.xml.flat",

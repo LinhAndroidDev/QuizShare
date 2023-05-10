@@ -58,9 +58,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
 
         checkSaveAccount()
 
-        click()
-
-        setText()
+        initUi()
 
     }
 
@@ -109,7 +107,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
     }
 
     @SuppressLint("ResourceAsColor")
-    private fun click() {
+    private fun initUi() {
         hidePasswordLogin.setOnClickListener {
             hidePassword(passwordLogin, hidePasswordLogin)
         }
@@ -153,6 +151,8 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
             intent.data = Uri.parse("https://www.facebook.com")
             startActivity(intent)
         }
+
+        setText()
     }
 
     private fun saveAccount(email: String, password: String) {
