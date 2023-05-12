@@ -41,7 +41,7 @@ class LoginViewModel : BaseViewModel() {
         return if (strEmail.isEmpty() || strPassword.isEmpty()) {
             ValidateModel(false, R.string.txt_notification_login, R.color.color_green)
         } else {
-            val email: Email = Email(strEmail, strPassword)
+            val email = Email(strEmail, strPassword)
             if (email.isValidEmail() || email.isValidPhone()) {
                 if (!email.isPassword()) {
                     ValidateModel(false, R.string.txt_warning_password, R.color.color_red)

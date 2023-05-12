@@ -37,7 +37,8 @@
             android:paddingEnd="50dp"
             android:textColor="@color/black"
             android:textColorHint="@color/color_to_do_late"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:imeOptions="actionDone"/>
 
         <TextView
             android:text="@string/password"
@@ -63,7 +64,8 @@
                 android:paddingEnd="50dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/color_to_do_late"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:imeOptions="actionDone"/>
 
             <ImageButton
                 android:id="@+id/hidePasswordLogin"

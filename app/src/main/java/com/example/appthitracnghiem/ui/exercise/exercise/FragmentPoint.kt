@@ -1,10 +1,10 @@
 package com.example.appthitracnghiem.ui.exercise.exercise
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
@@ -22,6 +22,24 @@ class FragmentPoint : BaseFragment<EmptyViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initUi()
+    }
+
+    private fun setStatusBar() {
+        val window: Window? = activity?.window
+        window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window?.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.backgroundIntro)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
+    }
+
+    private fun initUi() {
+
+        setStatusBar()
 
         progressPoint.apply {
             progressMax = 100f
@@ -46,10 +64,6 @@ class FragmentPoint : BaseFragment<EmptyViewModel>() {
         )
         graphView.addSeries(lineSeries)
 
-        click()
-    }
-
-    private fun click() {
         backPoint.setOnClickListener {
             activity?.onBackPressed()
         }

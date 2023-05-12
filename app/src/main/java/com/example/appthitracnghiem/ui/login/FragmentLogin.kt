@@ -18,25 +18,16 @@ import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.ViewModelProvider
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.model.ViewModelGeneral
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.HomeActivity
-import com.example.appthitracnghiem.ui.home.RequestUserInfo
 import com.example.appthitracnghiem.ui.login.forgetpassword.FragmentForgetPassword
 import com.example.appthitracnghiem.ui.register.RegisterActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment__create_password.*
 import kotlinx.android.synthetic.main.fragment__login.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentLogin.newInstance] factory method to
- * create an instance of this fragment.
- */
 @Suppress("DEPRECATION")
 class FragmentLogin : BaseFragment<LoginViewModel>() {
     private lateinit var sharedPreferences: SharedPreferences
@@ -45,8 +36,6 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
     lateinit var strEmail: String
     lateinit var strPassword: String
     lateinit var progressDialog: ProgressDialog
-    lateinit var token: String
-    var useId: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -127,7 +116,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
         }
 
         registerNow.setOnClickListener {
-            val intent: Intent = Intent(activity, RegisterActivity::class.java)
+            val intent = Intent(activity, RegisterActivity::class.java)
             startActivity(intent)
         }
 
@@ -138,7 +127,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
         }
 
         google.setOnClickListener {
-            val intent: Intent = Intent()
+            val intent = Intent()
             intent.action = Intent.ACTION_VIEW
             intent.data =
                 Uri.parse("https://accounts.google.com/v3/signin/identifier?dsh=S-620025444%3A1673854670857931&authuser=0&continue=http%3A%2F%2Fsupport.google.com%2Fmail%2Fanswer%2F8494%3Fhl%3Dvi%26co%3DGENIE.Platform%253DDesktop&ec=GAlAdQ&hl=vi&flowName=GlifWebSignIn&flowEntry=AddSession")
@@ -146,7 +135,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
         }
 
         facebook.setOnClickListener {
-            val intent: Intent = Intent()
+            val intent = Intent()
             intent.action = Intent.ACTION_VIEW
             intent.data = Uri.parse("https://www.facebook.com")
             startActivity(intent)
@@ -173,7 +162,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
         }
     }
 
-    fun checkSaveAccount() {
+    private fun checkSaveAccount() {
         checkSave = sharedPreferences.getBoolean("checkSave", false)
         strEmail = sharedPreferences.getString("email", "").toString()
         strPassword = sharedPreferences.getString("password", "").toString()
@@ -193,7 +182,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
         }
     }
 
-    fun setNote(string: Int, color: Int) {
+    private fun setNote(string: Int, color: Int) {
         val circle: Animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.anim_shake)
         warningLogin.text = getString(string)
         warningLogin.setTextColor(resources.getColor(color))
@@ -210,7 +199,6 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
     }
 
     override fun onFragmentBack(): Boolean {
-
         return true
     }
 }

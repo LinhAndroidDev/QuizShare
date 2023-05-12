@@ -3,10 +3,11 @@ package com.example.appthitracnghiem.ui.home.category
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -20,11 +21,7 @@ import com.example.appthitracnghiem.ui.home.category.adapter.SubjectAdapter
 import com.example.appthitracnghiem.ui.home.category.search.SearchSubject
 import kotlinx.android.synthetic.main.fragment_category.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentCategory.newInstance] factory method to
- * create an instance of this fragment.
- */
+@Suppress("DEPRECATION")
 class FragmentCategory : BaseFragment<EmptyViewModel>() {
     lateinit var viewModelGeneral: ViewModelGeneral
 
@@ -35,27 +32,44 @@ class FragmentCategory : BaseFragment<EmptyViewModel>() {
 
         viewModelGeneral.getListSubject()
 
-        val gridLayoutManager: GridLayoutManager = GridLayoutManager(requireActivity(), 2)
+        val gridLayoutManager = GridLayoutManager(requireActivity(), 2)
         recycleListSubject.layoutManager = gridLayoutManager
 
         getData()
 
         getLoading()
 
-        setText()
-
-        click()
+        initUi()
     }
 
-    private fun click() {
+    private fun setStatusBar() {
+        val window: Window? = activity?.window
+        window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window?.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.backgroundIntro)
+
+        val decorView = window?.decorView //set status background black
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            decorView?.systemUiVisibility =
+                decorView?.systemUiVisibility?.and(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv())!!
+        } //set status text  light
+    }
+
+    private fun initUi() {
+
+        setStatusBar()
+
         backCategory.setOnClickListener {
             requireActivity().onBackPressed()
         }
 
         searchCategory.setOnClickListener {
-            val intent: Intent = Intent(requireActivity(), SearchSubject::class.java)
+            val intent = Intent(requireActivity(), SearchSubject::class.java)
             startActivity(intent)
         }
+
+        setText()
     }
 
     private fun setText() {

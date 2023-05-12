@@ -13,8 +13,7 @@
         <item name="android:statusBarColor">#00FFFFFF</item>
         <item name="android:navigationBarColor">#E7E7E7</item>
         <item name="colorAccent">@color/backgroundIntro</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">false</item>
+<!--        <item name="android:windowTranslucentNavigation">false</item>-->
         <!-- Customize your theme here. -->
     </style>
 </resources>

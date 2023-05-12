@@ -56,7 +56,8 @@
                 android:hint="Tìm đề"
                 android:textColorHint="@color/white"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:imeOptions="actionDone"/>
 
             <ImageView
                 android:layout_width="24dp"

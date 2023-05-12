@@ -1,31 +1,44 @@
 package com.example.appthitracnghiem.ui.exercise.topic
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.ExamActivity
 import kotlinx.android.synthetic.main.fragment_topic.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentTopic.newInstance] factory method to
- * create an instance of this fragment.
- */
+@Suppress("DEPRECATION")
 class FragmentTopic : BaseFragment<EmptyViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        click()
+        initUi()
     }
 
-    private fun click() {
+    private fun setStatusBar() {
+        val window: Window? = activity?.window
+        window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window?.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.backgroundIntro)
+
+        val decorView = window?.decorView //set status background black
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            decorView?.systemUiVisibility =
+                decorView?.systemUiVisibility?.and(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv())!!
+        } //set status text  light
+    }
+
+    private fun initUi() {
+
+        setStatusBar()
+
         backTopic.setOnClickListener {
             activity?.onBackPressed()
         }

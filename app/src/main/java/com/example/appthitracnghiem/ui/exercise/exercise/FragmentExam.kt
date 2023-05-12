@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.appthitracnghiem.ui.exercise.exercise
 
 import android.annotation.SuppressLint
@@ -8,13 +10,12 @@ import android.graphics.Shader
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.preference.PreferenceManager
+import android.view.*
 import android.widget.LinearLayout.LayoutParams
 import android.widget.PopupWindow
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,12 +25,16 @@ import com.example.appthitracnghiem.model.PositiveQuestion
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.adapter.MenuQuestionAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_exam.*
 import kotlinx.android.synthetic.main.fragment_list_test.*
 import kotlinx.android.synthetic.main.layout_loading.*
 import kotlinx.android.synthetic.main.layout_logout.*
+import kotlinx.android.synthetic.main.layout_menu_question.*
 import kotlinx.android.synthetic.main.popup_list_question.*
 import kotlinx.android.synthetic.main.popup_list_question.view.*
+import java.lang.reflect.Type
 
 @Suppress("DEPRECATION", "NAME_SHADOWING")
 class FragmentExam : BaseFragment<ExamViewModel>() {
@@ -56,7 +61,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
     private lateinit var listAnswer: ArrayList<Int>
 
-    companion object{
+    companion object {
         var arrayTxtQuestion = arrayListOf<TextView>()
     }
 
@@ -92,9 +97,11 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             setTextView(positionQuestion)
         }
 
-        val user_id = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.USER_ID, 0)
+        val user_id = viewModel.mPreferenceUtil.defaultPref()
+            .getInt(PreferenceKey.USER_ID, 0)
         val accessToken =
-            viewModel.mPreferenceUtil.defaultPref().getString(PreferenceKey.AUTHORIZATION, "")
+            viewModel.mPreferenceUtil.defaultPref()
+                .getString(PreferenceKey.AUTHORIZATION, "")
                 .toString()
         val id_exam = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.ID_EXAM, 0)
         val requestExamQuestion = RequestExamQuestion(user_id, id_exam)
@@ -111,8 +118,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
                 if (minutes == 0 && seconds < 1) {
                     this.cancel()
-                    val fragmentPoint: FragmentPoint = FragmentPoint()
-
+                    val fragmentPoint = FragmentPoint()
                     val fm: FragmentTransaction? =
                         activity?.supportFragmentManager?.beginTransaction()
                     fm?.setCustomAnimations(
@@ -142,7 +148,24 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         }.start()
     }
 
+    private fun setStatusBar() {
+        val window: Window? = activity?.window
+        window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window?.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.backgroundIntro)
+
+        val decorView = window?.decorView //set status background black
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            decorView?.systemUiVisibility =
+                decorView?.systemUiVisibility?.and(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv())!!
+        } //set status text  light
+    }
+
     private fun initUi() {
+
+        setStatusBar()
+
         nextQuestion.setOnClickListener {
             listAnswer[positionQuestion] = positiveAnswer
             if (positionQuestion < SIZE_LIST_QUESTION - 1) {
@@ -151,6 +174,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             } else {
                 showLayoutSubmit()
             }
+            saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
+            getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
         }
 
         backQuestion.setOnClickListener {
@@ -158,6 +183,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             if (positionQuestion > 0) {
                 positionQuestion--
                 setTextView(positionQuestion)
+                saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
+                getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
             }
         }
 
@@ -166,13 +193,12 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         }
 
         finishQuiz.setOnClickListener {
-            getListAnswer()
             showLayoutSubmit()
         }
 
         submit.setOnClickListener {
             countDownTimer.cancel()
-            val fragmentPoint: FragmentPoint = FragmentPoint()
+            val fragmentPoint = FragmentPoint()
             val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
             fm.setCustomAnimations(
                 R.anim.anim_up_enter,
@@ -227,6 +253,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         menuQuestionAdapter.onClickItem = { positionItem ->
             positionQuestion = positionItem
             setTextView(positionQuestion)
+            saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
+            getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
         }
         val recycleQuestion: RecyclerView = popUpView.findViewById(R.id.recycleViewMenuQuestion)
 
@@ -246,19 +274,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         for (i in 0 until sizeAnswer) {
             val txtQuestion = TextView(requireActivity())
 
-//            createTextAnswer(arrayTxtQuestion, txtQuestion, psQuestion, i)
-
-            llContainerAnswerOptions.addView(txtQuestion)
-            arrayTxtQuestion.add(txtQuestion)
-            val params =
-                LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-            params.setMargins(16, 16, 16, 16)
-            txtQuestion.setPadding(32, 24, 32, 24)
-            txtQuestion.layoutParams = params
-            txtQuestion.textSize = 16F
-            txtQuestion.text = listExamQuestion[i].answer_list[i].content
-            txtQuestion.setTextColor(Color.BLACK)
-            txtQuestion.setBackgroundResource(R.drawable.un_select_text_view)
+            createTextAnswer(arrayTxtQuestion, txtQuestion, psQuestion, i)
 
             txtQuestion.setOnClickListener {
                 for (j in 0 until arrayTxtQuestion.size) {
@@ -271,12 +287,15 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         if (listAnswer[psQuestion] >= 0) {
             arrayTxtQuestion[listAnswer[psQuestion]].setBackgroundResource(R.drawable.select_text_view)
         }
-
-//        saveListAnswer(listAnswer)
     }
 
     /** Create Text Answer **/
-    private fun createTextAnswer(arrayTxt: ArrayList<TextView>, txt: TextView, position: Int, i: Int) {
+    private fun createTextAnswer(
+        arrayTxt: ArrayList<TextView>,
+        txt: TextView,
+        position: Int,
+        i: Int,
+    ) {
         llContainerAnswerOptions.addView(txt)
         arrayTxt.add(txt)
         val params =
@@ -290,27 +309,21 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         txt.setBackgroundResource(R.drawable.un_select_text_view)
     }
 
-    @SuppressLint("CommitPrefEdits")
-    private fun saveListAnswer(list: ArrayList<Int>) {
-        val prefs: SharedPreferences? = activity?.getSharedPreferences("preferencename", 0)
-        val editor = prefs?.edit()
-        viewModel.mPreferenceUtil.defaultPref()
-            .edit().putInt(PreferenceKey.ARRAY_LIST_ANSWER, list.size)
-            .apply()
-        for (i in 0 until list.size){
-            editor?.putInt(PreferenceKey.ARRAY_LIST_ANSWER + "_" + i, list[i])
-        }
+    private fun saveListAnswer(list: ArrayList<Int>, key: String?) {
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+        val editor: SharedPreferences.Editor = prefs.edit()
+        val gson = Gson()
+        val json: String = gson.toJson(list)
+        editor.putString(key, json)
+        editor.apply()
     }
 
-    private fun getListAnswer(){
-        val prefs: SharedPreferences? = activity?.getSharedPreferences("preferencename", 0)
-        val size = prefs?.getInt(PreferenceKey.ARRAY_LIST_ANSWER, 0)
-        val array = arrayOfNulls<Int>(size!!)
-
-        for(i in 0 until size){
-            array[i] = prefs.getInt(PreferenceKey.ARRAY_LIST_ANSWER + "_" + i,-1)
-        }
-        val t = array
+    private fun getListAnswer(key: String?): ArrayList<Int> {
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+        val gson = Gson()
+        val json: String? = prefs.getString(key, null)
+        val type: Type = object : TypeToken<ArrayList<Int>>() {}.type
+        return gson.fromJson(json, type)
     }
 
     override fun onFragmentBack(): Boolean {

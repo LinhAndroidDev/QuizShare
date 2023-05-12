@@ -2,27 +2,21 @@ package com.example.appthitracnghiem.ui.home.profile
 
 import android.content.Intent
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.home.profile.setting.SettingActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentProfile.newInstance] factory method to
- * create an instance of this fragment.
- */
 @Suppress("DEPRECATION")
 class FragmentProfile : BaseFragment<EmptyViewModel>() {
 
@@ -33,22 +27,36 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
 
         progressNumberDay.apply {
             progressMax = 100f
-            setProgressWithAnimation(80f,3000)
+            setProgressWithAnimation(80f, 3000)
         }
 
-        Picasso.get().load("https://img2.thuthuatphanmem.vn/uploads/2019/01/04/hinh-anh-dep-co-gai-de-thuong_025103410.jpg")
+        Picasso.get()
+            .load("https://img2.thuthuatphanmem.vn/uploads/2019/01/04/hinh-anh-dep-co-gai-de-thuong_025103410.jpg")
             .placeholder(R.drawable.loadimage)
             .error(R.drawable.icon_error)
             .into(avatarUserProfile)
 
 //        (activity as HomeActivity).hideTabBar(scrollProfile)
 
-        click()
+        initUi()
 
-        setText()
     }
 
-    private fun click() {
+    private fun setStatusBar() {
+        val window: Window? = activity?.window
+        window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window?.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.white)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        };//  set status text dark
+    }
+
+    private fun initUi() {
+
+        setStatusBar()
+
         backProfile.setOnClickListener {
             activity?.onBackPressed()
         }
@@ -57,6 +65,8 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
             val intent: Intent = Intent(requireActivity(), SettingActivity::class.java)
             startActivity(intent)
         }
+
+        setText()
     }
 
     private fun percentColum(math: Int, science: Int, painting: Int) {

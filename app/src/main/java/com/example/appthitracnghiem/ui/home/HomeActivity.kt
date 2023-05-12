@@ -2,28 +2,24 @@ package com.example.appthitracnghiem.ui.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.ImageView
+import android.view.KeyEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.connectivity.CheckConnect
-import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseActivity
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import com.example.appthitracnghiem.ui.base.animation.TranslateAnimation
 import com.example.appthitracnghiem.ui.home.category.FragmentCategory
 import com.example.appthitracnghiem.ui.home.createtest.FragmentCreateTest
 import com.example.appthitracnghiem.ui.home.history.FragmentHistory
 import com.example.appthitracnghiem.ui.home.home.FragmentHome
 import com.example.appthitracnghiem.ui.home.profile.FragmentProfile
-import com.example.appthitracnghiem.utils.PreferenceKey
-import com.example.appthitracnghiem.utils.PreferenceUtil
 import kotlinx.android.synthetic.main.activity_home_page.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION", "DEPRECATED_IDENTITY_EQUALS")
 class HomeActivity : BaseActivity<HomeViewModel>() {
     private var backPressTime: Long = 0
 
@@ -58,7 +54,7 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
             if (fm !is FragmentHome) {
                 resetTab()
                 functionHome.isSelected = true
-                val fragmentHome: FragmentHome = FragmentHome()
+                val fragmentHome = FragmentHome()
                 val fm = supportFragmentManager.beginTransaction()
                 fm.replace(R.id.changeIdHome, fragmentHome).addToBackStack(null).commit()
             }
@@ -138,6 +134,7 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
 
     /** Click Back */
     override fun onBackPressed() {
+
         val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
 
         if (fm != null && fm is BaseFragment<*>) {
@@ -162,4 +159,10 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
             setSelectIcon()
         }
     }
+
+//    fun hideSoftKeyboard() {
+//        val inputMethodManager: InputMethodManager =
+//            getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+//        inputMethodManager.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
+//    }
 }

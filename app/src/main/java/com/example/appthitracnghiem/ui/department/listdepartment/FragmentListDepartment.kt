@@ -1,18 +1,22 @@
 package com.example.appthitracnghiem.ui.department.listdepartment
 
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.department.listdepartment.adapter.ListDepartmentAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment_list_department.*
+
 
 @Suppress("DEPRECATION")
 class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {

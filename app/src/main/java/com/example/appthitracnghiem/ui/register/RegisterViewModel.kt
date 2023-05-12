@@ -28,27 +28,31 @@ class RegisterViewModel : BaseViewModel() {
         strPhone: String,
         strYearOfBirth: String,
         strPassword: String,
-        strPasswordRepeat: String
+        strPasswordRepeat: String,
     ): ValidateModel {
         return if (strName.isEmpty() || strYearOfBirth.isEmpty() || strEmail.isEmpty() || strPhone.isEmpty() || strPassword.isEmpty() || strPasswordRepeat.isEmpty()) {
             ValidateModel(false, R.string.txt_notification_register, R.color.color_green)
         } else {
-            val email: Email = Email(strEmail, strPassword)
+            val email = Email(strEmail, strPassword)
             if (!email.isValidEmail()) {
                 ValidateModel(false, R.string.txt_warning_login, R.color.color_red)
+            } else {
+                if (!Patterns.PHONE.matcher(strPhone)
+                        .matches() || strPhone.length < 10
+                ) {
+                    ValidateModel(false, R.string.txt_warning_phone, R.color.color_red)
+                } else {
+                    if (!email.isPassword()) {
+                        ValidateModel(false, R.string.txt_warning_password, R.color.color_red)
+                    } else {
+                        if (strPassword != strPasswordRepeat) {
+                            ValidateModel(false, R.string.txtEnterRepeatPassword, R.color.color_red)
+                        } else {
+                            ValidateModel(true, -1, -1)
+                        }
+                    }
+                }
             }
-            if (!email.isPassword()) {
-                ValidateModel(false, R.string.txt_warning_password, R.color.color_red)
-            }
-            if (!Patterns.PHONE.matcher(strPhone)
-                    .matches() || strPhone.length < 10
-            ) {
-                ValidateModel(false, R.string.txt_warning_phone, R.color.color_red)
-            }
-            if (strPassword != strPasswordRepeat) {
-                ValidateModel(false, R.string.txtEnterRepeatPassword, R.color.color_red)
-            }
-            ValidateModel(true, -1, -1)
         }
     }
 
@@ -58,12 +62,19 @@ class RegisterViewModel : BaseViewModel() {
         strPhone: String,
         strYearOfBirth: String,
         strPassword: String,
-        strPasswordRepeat: String
-    ){
-        val validateModel = validateRegister(strEmail,strName,strPhone,strYearOfBirth,strPassword,strPasswordRepeat)
+        strPasswordRepeat: String,
+    ) {
+        val validateModel = validateRegister(
+            strEmail,
+            strName,
+            strPhone,
+            strYearOfBirth,
+            strPassword,
+            strPasswordRepeat
+        )
         validateLiveData.value = validateModel
-        if(validateModel.isValidate){
-            requestRegister(strEmail,strName,strPhone,strYearOfBirth,strPassword)
+        if (validateModel.isValidate) {
+            requestRegister(strEmail, strName, strPhone, strYearOfBirth, strPassword)
         }
     }
 
@@ -72,11 +83,12 @@ class RegisterViewModel : BaseViewModel() {
         strName: String,
         strPhone: String,
         strYearOfBirth: String,
-        strPassword: String
+        strPassword: String,
     ) {
         loadingLiveData.value = true
 
-        val requestRegister = RequestRegister(strEmail,strName,strPhone,strYearOfBirth,strPassword)
+        val requestRegister =
+            RequestRegister(strEmail, strName, strPhone, strYearOfBirth, strPassword)
 
         ApiClient.shared()
             .registerUser(requestRegister)
@@ -103,7 +115,7 @@ class RegisterViewModel : BaseViewModel() {
 
                 override fun onFailure(
                     call: Call<RegisterResponse>,
-                    t: Throwable
+                    t: Throwable,
                 ) {
                     loadingLiveData.value = false
                     errorApiLiveData.value = t.message

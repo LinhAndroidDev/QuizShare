@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_marginHorizontal="16dp"
+    android:background="@color/white"
     tools:context=".ui.register.RegisterActivity">
     <LinearLayout
         android:id="@+id/registerContainerID"

@@ -70,7 +70,7 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
         }
 
         viewModel.successRegisterLiveData.observe(viewLifecycleOwner) { isSuccess ->
-            val fragmentCondition: FragmentCondition = FragmentCondition()
+            val fragmentCondition = FragmentCondition()
             val fm: FragmentTransaction =
                 requireActivity().supportFragmentManager.beginTransaction()
             fm.setCustomAnimations(
@@ -145,9 +145,9 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
 
     private fun setText() {
         val strText: String = getString(R.string.txtNoteRegister)
-        val text: SpannableString = SpannableString(strText)
-        val boldStart: StyleSpan = StyleSpan(Typeface.BOLD)
-        val boldEnd: StyleSpan = StyleSpan(Typeface.BOLD)
+        val text = SpannableString(strText)
+        val boldStart = StyleSpan(Typeface.BOLD)
+        val boldEnd = StyleSpan(Typeface.BOLD)
         text.setSpan(boldStart, 43, 53, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         text.setSpan(boldEnd, 57, 74, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 

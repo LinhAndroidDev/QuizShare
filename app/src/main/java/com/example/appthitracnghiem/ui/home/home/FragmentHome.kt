@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.appthitracnghiem.ui.home.home
 
 import android.annotation.SuppressLint
@@ -5,10 +7,8 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.annotation.RequiresApi
+import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.appthitracnghiem.R
@@ -25,9 +25,8 @@ import kotlinx.android.synthetic.main.layout_loading.*
 
 @Suppress("DEPRECATION")
 class FragmentHome : BaseFragment<HomeViewModel>() {
-    lateinit var viewPagerDepartment : ViewPagerDepartment
+    private lateinit var viewPagerDepartment : ViewPagerDepartment
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -39,23 +38,40 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
 
 //        (activity as HomeActivity).hideTabBar(scrollHome)
 
-        setText()
-
         initUi()
 
         val accessToken = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.AUTHORIZATION,"").toString()
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID,0)
-        val requestUserInfo: RequestUserInfo = RequestUserInfo(userId)
+        val requestUserInfo = RequestUserInfo(userId)
         viewModel.getDataUserInfo(accessToken, requestUserInfo)
     }
 
     private fun initUi() {
+
+        setStatusBar()
+
         avatarUseHome.setOnClickListener {
-            val intent: Intent = Intent(requireActivity(), ChangeAvatarActivity::class.java)
+            val intent = Intent(requireActivity(), ChangeAvatarActivity::class.java)
             startActivity(intent)
         }
+
+        setText()
+    }
+
+    private fun setStatusBar() {
+        val window: Window? = activity?.window
+        window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window?.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.backgroundIntro)
+
+        val decorView = window?.decorView //set status background black
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            decorView?.systemUiVisibility =
+                decorView?.systemUiVisibility?.and(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv())!!
+        } //set status text  light
     }
 
     @SuppressLint("CommitPrefEdits")

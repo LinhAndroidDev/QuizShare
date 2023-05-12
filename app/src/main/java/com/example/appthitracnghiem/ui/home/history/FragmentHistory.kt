@@ -2,10 +2,11 @@ package com.example.appthitracnghiem.ui.home.history
 
 import android.annotation.SuppressLint
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -23,32 +24,47 @@ import kotlinx.android.synthetic.main.fragment_history.*
  * Use the [FragmentHistory.newInstance] factory method to
  * create an instance of this fragment.
  */
+@Suppress("DEPRECATION")
 class FragmentHistory : BaseFragment<EmptyViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        click()
+        initUi()
 
         setText()
     }
 
+    private fun setStatusBar() {
+        val window: Window? = activity?.window
+        window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window?.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.white)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        };//  set status text dark
+    }
+
     @SuppressLint("CommitTransaction")
-    private fun click() {
+    private fun initUi() {
+
+        setStatusBar()
+
         historyTest.setOnClickListener{
-            val fragmentHistoryTest: FragmentHistoryTest = FragmentHistoryTest()
+            val fragmentHistoryTest = FragmentHistoryTest()
             val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
             fm.add(R.id.changeIdHome,fragmentHistoryTest).addToBackStack(null).commit()
         }
 
         historyQuiz.setOnClickListener {
-            val fragmentHistoryQuestion: FragmentHistoryQuestion = FragmentHistoryQuestion()
+            val fragmentHistoryQuestion = FragmentHistoryQuestion()
             val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
             fm.add(R.id.changeIdHome,fragmentHistoryQuestion).addToBackStack(null).commit()
         }
 
         saved.setOnClickListener {
-            val fragmentHistorySaved: FragmentHistoryDepartmentSaved = FragmentHistoryDepartmentSaved()
+            val fragmentHistorySaved = FragmentHistoryDepartmentSaved()
             val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
             fm.add(R.id.changeIdHome,fragmentHistorySaved).addToBackStack(null).commit()
         }

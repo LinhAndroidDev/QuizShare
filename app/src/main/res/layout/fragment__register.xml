@@ -36,7 +36,8 @@
             android:paddingEnd="50dp"
             android:hint="@string/txtEnterName"
             android:textColorHint="@color/color_to_do_late"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionDone"/>
         <TextView
             android:text="@string/txtYearOfBirth"
             android:textSize="16sp"
@@ -59,7 +60,8 @@
                 android:paddingEnd="50dp"
                 android:hint="@string/edtEnterYearOfBirth"
                 android:textColorHint="@color/color_to_do_late"
-                android:inputType="textEmailAddress"/>
+                android:inputType="textEmailAddress"
+                android:imeOptions="actionDone"/>
             <ImageView
                 android:id="@+id/selectDate"
                 android:src="@drawable/ic_action_date"
@@ -88,7 +90,8 @@
             android:paddingEnd="50dp"
             android:hint="@string/txtEmailRegister"
             android:textColorHint="@color/color_to_do_late"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionDone"/>
         <TextView
             android:text="@string/txtPhoneRegister"
             android:textSize="16sp"
@@ -109,7 +112,8 @@
             android:hint="@string/edtEnterPhoneRegister"
             android:textColorHint="@color/color_to_do_late"
             android:inputType="phone"
-            tools:ignore="TextFields" />
+            tools:ignore="TextFields"
+            android:imeOptions="actionDone"/>
         <TextView
             android:text="@string/password"
             android:textSize="16sp"
@@ -132,7 +136,8 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="50dp"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:imeOptions="actionDone"/>
             <ImageButton
                 android:id="@+id/hidePasswordRegister"
                 android:layout_centerVertical="true"
@@ -164,7 +169,8 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="50dp"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:imeOptions="actionDone"/>
             <ImageButton
                 android:id="@+id/hidePasswordRegisterRepeat"
                 android:layout_centerVertical="true"
