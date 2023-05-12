@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.example.appthitracnghiem.ui.exercise.exercise
+package com.example.appthitracnghiem.ui.exercise.exercise.exam
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
@@ -23,6 +23,7 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.model.PositiveQuestion
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.exercise.exercise.point.FragmentPoint
 import com.example.appthitracnghiem.ui.exercise.exercise.adapter.MenuQuestionAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.gson.Gson
@@ -57,7 +58,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
     private var SIZE_LIST_QUESTION: Int = 0
 
-    private lateinit var listExamQuestion: MutableList<ExamQuestion>
+    private lateinit var listExamQuestion: ArrayList<ExamQuestion>
 
     private lateinit var listAnswer: ArrayList<Int>
 
@@ -97,14 +98,14 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             setTextView(positionQuestion)
         }
 
-        val user_id = viewModel.mPreferenceUtil.defaultPref()
+        val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
         val accessToken =
             viewModel.mPreferenceUtil.defaultPref()
                 .getString(PreferenceKey.AUTHORIZATION, "")
                 .toString()
-        val id_exam = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.ID_EXAM, 0)
-        val requestExamQuestion = RequestExamQuestion(user_id, id_exam)
+        val idExam = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.ID_EXAM, 0)
+        val requestExamQuestion = RequestExamQuestion(userId, idExam)
         viewModel.getExamListQuestion(accessToken, requestExamQuestion)
     }
 
@@ -159,7 +160,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             decorView?.systemUiVisibility =
                 decorView?.systemUiVisibility?.and(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv())!!
-        } //set status text  light
+        }
     }
 
     private fun initUi() {
@@ -198,6 +199,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
         submit.setOnClickListener {
             countDownTimer.cancel()
+            val bundle = Bundle()
+            bundle.putSerializable("listExamQuestion",listExamQuestion)
             val fragmentPoint = FragmentPoint()
             val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
             fm.setCustomAnimations(
@@ -207,6 +210,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                 R.anim.anim_down_enter
             )
             fm.replace(R.id.changeIdExam, fragmentPoint).addToBackStack(null).commit()
+            fragmentPoint.arguments = bundle
         }
 
         backSubmit.setOnClickListener {

@@ -33,9 +33,9 @@ class FragmentForgetPassword : BaseFragment<ForgetPasswordViewModel>() {
     private fun click() {
         sendTo.setOnClickListener {
             val edtEmail: String = emailForgetPassword.text.toString()
-            val bundle: Bundle = Bundle()
+            val bundle = Bundle()
             bundle.putString("email", edtEmail)
-            val fragmentCreatepassword: FragmentCreatePassword = FragmentCreatePassword()
+            val fragmentCreatePassword = FragmentCreatePassword()
             val fm: FragmentTransaction =
                 requireActivity().supportFragmentManager.beginTransaction()
             fm.setCustomAnimations(
@@ -45,8 +45,8 @@ class FragmentForgetPassword : BaseFragment<ForgetPasswordViewModel>() {
                 R.anim.anim_translate_exit_right
             )
             fm.addToBackStack("Fragment_CreatePassword")
-            fm.replace(R.id.loginContainerID, fragmentCreatepassword).commit()
-            fragmentCreatepassword.arguments = bundle
+            fm.replace(R.id.loginContainerID, fragmentCreatePassword).commit()
+            fragmentCreatePassword.arguments = bundle
         }
     }
 

@@ -7,7 +7,7 @@ data class ExamQuestionResponse(
     override val result: Result
 ) : BaseResponse<ExamQuestionResponse.Result?>(){
     data class Result(
-        val exam_question_list: MutableList<ExamQuestion>?,
+        val exam_question_list: ArrayList<ExamQuestion>?,
         val id: Int
     )
 }

@@ -35,7 +35,9 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
 
         setBottomShare()
 
-        initUi()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            initUi()
+        }
 
         setText()
     }

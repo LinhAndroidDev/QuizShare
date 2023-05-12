@@ -5,18 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.PositiveQuestion
-import com.example.appthitracnghiem.ui.exercise.exercise.ExamViewModel
-import com.example.appthitracnghiem.ui.exercise.exercise.FragmentExam
-import com.example.appthitracnghiem.utils.PreferenceKey
-import com.example.appthitracnghiem.utils.PreferenceUtil
 import kotlinx.android.synthetic.main.layout_menu_question.view.*
-import java.lang.reflect.ParameterizedType
 
 @Suppress("DEPRECATION")
 class MenuQuestionAdapter(val context: Context, private val listQuestion: List<PositiveQuestion>)

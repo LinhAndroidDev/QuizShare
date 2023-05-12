@@ -1,6 +1,5 @@
-package com.example.appthitracnghiem.ui.exercise.exercise
+package com.example.appthitracnghiem.ui.exercise.exercise.exam
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.appthitracnghiem.data.remote.ApiClient
 import com.example.appthitracnghiem.data.remote.entity.ExamQuestionResponse
@@ -11,7 +10,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ExamViewModel : BaseViewModel() {
-    val listExamQuestionLiveData = MutableLiveData<MutableList<ExamQuestion>>()
+    val listExamQuestionLiveData = MutableLiveData<ArrayList<ExamQuestion>>()
     val title = MutableLiveData<String>()
     val loadingLiveData = MutableLiveData<Boolean>()
 

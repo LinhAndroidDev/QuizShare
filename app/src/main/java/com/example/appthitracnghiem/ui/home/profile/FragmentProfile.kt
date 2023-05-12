@@ -5,7 +5,6 @@ import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.view.*
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.example.appthitracnghiem.R

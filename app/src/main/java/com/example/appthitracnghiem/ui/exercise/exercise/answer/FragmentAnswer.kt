@@ -1,4 +1,4 @@
-package com.example.appthitracnghiem.ui.exercise.exercise
+package com.example.appthitracnghiem.ui.exercise.exercise.answer
 
 import android.os.Build
 import android.os.Bundle

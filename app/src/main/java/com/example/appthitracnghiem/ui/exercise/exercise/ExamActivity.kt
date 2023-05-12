@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import com.example.appthitracnghiem.ui.exercise.exercise.FragmentExam
+import com.example.appthitracnghiem.ui.exercise.exercise.exam.FragmentExam
 
 @Suppress("DEPRECATION")
 class ExamActivity : AppCompatActivity() {

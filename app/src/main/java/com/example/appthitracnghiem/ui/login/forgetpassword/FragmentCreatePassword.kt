@@ -31,13 +31,13 @@ class FragmentCreatePassword : BaseFragment<EmptyViewModel>() {
         val bundle: Bundle = requireArguments()
         email = bundle.getString("email").toString()
 
-        click()
+        initUi()
     }
 
-    private fun click() {
+    private fun initUi() {
         resetPassword.setOnClickListener {
             val password: String = newPasswordCreate.text.toString()
-            val progressDialog: ProgressDialog = ProgressDialog(requireActivity())
+            val progressDialog = ProgressDialog(requireActivity())
             progressDialog.setMessage("Đang cập nhật mật khẩu")
 
             val fragmentLogin: FragmentLogin = FragmentLogin()

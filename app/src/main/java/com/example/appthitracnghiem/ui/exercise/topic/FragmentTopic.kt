@@ -1,5 +1,6 @@
 package com.example.appthitracnghiem.ui.exercise.topic
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -10,7 +11,10 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.ExamActivity
+import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment_topic.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Suppress("DEPRECATION")
 class FragmentTopic : BaseFragment<EmptyViewModel>() {
@@ -35,6 +39,7 @@ class FragmentTopic : BaseFragment<EmptyViewModel>() {
         } //set status text  light
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun initUi() {
 
         setStatusBar()
@@ -44,7 +49,12 @@ class FragmentTopic : BaseFragment<EmptyViewModel>() {
         }
 
         doTestNow.setOnClickListener {
-            val intent: Intent = Intent(requireActivity(), ExamActivity::class.java)
+            val sdf = SimpleDateFormat("yyyy/MM/dd hh:mm:ss")
+            val currentDate = sdf.format(Date()).toString()
+            viewModel.mPreferenceUtil.defaultPref()
+                .edit().putString(PreferenceKey.START_DO_TEST,currentDate)
+                .apply()
+            val intent = Intent(requireActivity(), ExamActivity::class.java)
             startActivity(intent)
         }
     }

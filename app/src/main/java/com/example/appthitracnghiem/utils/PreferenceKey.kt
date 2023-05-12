@@ -10,6 +10,6 @@ object PreferenceKey {
     var USER_NAME: String = "USER_NAME"
     var USER_AVATAR: String = "USER_AVATAR"
     var TYPE: String = "TYPE"
-    var POSITION: String = "POSITION"
     var ARRAY_LIST_ANSWER: String = "ARRAY_LIST_ANSWER"
+    var START_DO_TEST: String = "START_DO_TEST"
 }

@@ -2,6 +2,7 @@ package com.example.appthitracnghiem.ui.home.profile.setting.changeavatar
 
 import android.graphics.Point
 import android.graphics.Typeface
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Display
@@ -30,15 +31,6 @@ class ChangeAvatarActivity : AppCompatActivity() {
         strokeAvatar.maxWidth = screenWitch
         strokeAvatar.maxHeight = screenWitch
 
-        Picasso.get().load("https://img2.thuthuatphanmem.vn/uploads/2019/01/04/hinh-anh-dep-co-gai-de-thuong_025103410.jpg")
-            .placeholder(R.drawable.loadimage)
-            .error(R.drawable.icon_error)
-            .centerCrop()
-            .fit()
-            .into(avatarEdit)
-
-        setText()
-
         initUi()
     }
 
@@ -48,8 +40,21 @@ class ChangeAvatarActivity : AppCompatActivity() {
     }
 
     private fun initUi() {
+
+        val strImage: String = intent.getStringExtra("Uri").toString()
+        val uriImage: Uri = Uri.parse(strImage)
+        Picasso.get().load(uriImage)
+            .placeholder(R.drawable.loadimage)
+            .error(R.drawable.icon_error)
+            .centerCrop()
+            .fit()
+            .into(avatarEdit)
+//        avatarEdit.setImageURI(uriImage)
+
         backChangeAvatar.setOnClickListener {
             this.onBackPressed()
         }
+
+        setText()
     }
 }

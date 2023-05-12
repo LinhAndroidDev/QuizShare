@@ -5,7 +5,8 @@ import com.example.appthitracnghiem.model.Department
 import com.example.appthitracnghiem.model.RecommandSubject
 import com.example.appthitracnghiem.ui.department.listdepartment.RequestDepartmentInfo
 import com.example.appthitracnghiem.ui.department.listtest.RequestListExam
-import com.example.appthitracnghiem.ui.exercise.exercise.RequestExamQuestion
+import com.example.appthitracnghiem.ui.exercise.exercise.exam.RequestExamQuestion
+import com.example.appthitracnghiem.ui.exercise.exercise.point.RequestPoint
 import com.example.appthitracnghiem.ui.home.RequestUserInfo
 import com.example.appthitracnghiem.ui.home.category.RequestCategory
 import com.example.appthitracnghiem.ui.home.home.system.RequestGetListDepartment
@@ -69,6 +70,12 @@ interface ApiService {
         @Header("Authorization") header: String,
         @Body requestExamQuestion: RequestExamQuestion
     ): Call<ExamQuestionResponse>
+
+    @POST("submitExam")
+    fun submitExam(
+        @Header("Authorization") header: String,
+        @Body requestPoint: RequestPoint
+    ): Call<PointResponse>
 
     @POST("getUserInfo")
     fun getUserInfo(
