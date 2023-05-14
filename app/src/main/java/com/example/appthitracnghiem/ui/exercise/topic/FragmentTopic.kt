@@ -12,6 +12,7 @@ import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.ExamActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_topic.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,6 +24,30 @@ class FragmentTopic : BaseFragment<EmptyViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         initUi()
+    }
+
+    override fun bindData() {
+        super.bindData()
+
+        val name = viewModel.mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.USER_NAME,"")
+        val avt = viewModel.mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.USER_AVATAR,"")
+
+        val type = viewModel.mPreferenceUtil.defaultPref()
+            .getInt(PreferenceKey.TYPE,-1)
+        if(type == 0){
+            infoTopic.visibility = View.GONE
+            memoryTopic.visibility = View.GONE
+        }else if(type == 1){
+            infoTopic.visibility = View.VISIBLE
+            memoryTopic.visibility = View.VISIBLE
+            nameTopic.text = name
+            Picasso.get().load(avt)
+                .placeholder(R.drawable.loadimage)
+                .error(R.drawable.logo6)
+                .into(avtTopic)
+        }
     }
 
     private fun setStatusBar() {

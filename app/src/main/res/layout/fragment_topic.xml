@@ -121,24 +121,72 @@
                     android:lineSpacingExtra="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/doTestNow"
-                    android:layout_marginTop="76dp"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/infoTopic"
+                    android:layout_marginTop="24dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    app:cardBackgroundColor="@color/backgroundIntro"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="0dp">
+                    android:orientation="horizontal">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/avtTopic"
+                        android:src="@drawable/logo6"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"/>
+                    <LinearLayout
+                        android:layout_marginStart="14dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/nameTopic"
+                            android:text="Nguyễn Hoàng"
+                            android:textSize="14dp"
+                            android:textColor="@color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:text="Người tạo đề"
+                            android:textSize="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <RelativeLayout
+                    android:layout_marginTop="45dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
                     <TextView
-                        android:text="Làm bài ngay"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"
-                        android:paddingHorizontal="34dp"
+                        android:id="@+id/memoryTopic"
+                        android:text="Ghi nhớ đề thi"
+                        android:textSize="16dp"
+                        android:textColor="@color/backgroundIntro"
+                        android:gravity="center"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/boder_change_question"
                         android:paddingVertical="16dp"
+                        android:paddingHorizontal="19dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/doTestNow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        app:cardBackgroundColor="@color/backgroundIntro"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp">
+                        <TextView
+                            android:text="Làm bài ngay"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"
+                            android:gravity="center"
+                            android:paddingHorizontal="34dp"
+                            android:paddingVertical="16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </androidx.cardview.widget.CardView>
+                </RelativeLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>

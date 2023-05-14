@@ -5,7 +5,6 @@ import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.view.*
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -15,7 +14,7 @@ import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.history.question.FragmentHistoryQuestion
 import com.example.appthitracnghiem.ui.home.history.saved.FragmentHistoryDepartmentSaved
-import com.example.appthitracnghiem.ui.home.history.test.FragmentHistoryTest
+import com.example.appthitracnghiem.ui.home.history.test.general.FragmentHistoryTest
 import kotlinx.android.synthetic.main.fragment_create_test.*
 import kotlinx.android.synthetic.main.fragment_history.*
 

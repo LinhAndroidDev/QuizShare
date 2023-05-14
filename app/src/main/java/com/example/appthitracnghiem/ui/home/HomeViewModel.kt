@@ -12,14 +12,17 @@ import retrofit2.Response
 class HomeViewModel : BaseViewModel() {
     var nameUserLiveData = MutableLiveData<String>()
     var avartarUserLiveData = MutableLiveData<String>()
+    var isLoadingLiveData = MutableLiveData<Boolean>()
 
     fun getDataUserInfo(header: String, requestUserInfo: RequestUserInfo){
+        isLoadingLiveData.value = true
         ApiClient.shared().getUserInfo(header, requestUserInfo)
             .enqueue(object : Callback<UserResponse> {
                 override fun onResponse(
                     call: Call<UserResponse>,
                     response: Response<UserResponse>
                 ) {
+                    isLoadingLiveData.value = false
                     response.body()?.let {
                         if(it.statusCode == ApiClient.STATUS_CODE_SUCCESS){
                             nameUserLiveData.value = it.result?.name
@@ -38,6 +41,7 @@ class HomeViewModel : BaseViewModel() {
                 }
 
                 override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                    isLoadingLiveData.value = false
                     errorApiLiveData.value = t.message
                 }
 

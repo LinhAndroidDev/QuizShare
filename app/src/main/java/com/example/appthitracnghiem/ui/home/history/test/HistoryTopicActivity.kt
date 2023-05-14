@@ -15,7 +15,7 @@ class HistoryTopicActivity : AppCompatActivity() {
         replaceFragment(FragmentHistoryTopic())
     }
 
-    fun replaceFragment(fm: Fragment){
+    private fun replaceFragment(fm: Fragment){
         val fragment: FragmentTransaction = supportFragmentManager.beginTransaction()
         fragment.replace(R.id.changeIdTopicHistory,fm).addToBackStack(null).commit()
     }

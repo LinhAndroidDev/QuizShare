@@ -26,13 +26,16 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
 
         progressNumberDay.apply {
             progressMax = 100f
-            setProgressWithAnimation(80f, 3000)
+            setProgressWithAnimation(80f, 2000)
         }
 
+        val avt = viewModel.mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.USER_AVATAR,"")
+
         Picasso.get()
-            .load("https://img2.thuthuatphanmem.vn/uploads/2019/01/04/hinh-anh-dep-co-gai-de-thuong_025103410.jpg")
+            .load(avt)
             .placeholder(R.drawable.loadimage)
-            .error(R.drawable.icon_error)
+            .error(R.drawable.logo6)
             .into(avatarUserProfile)
 
 //        (activity as HomeActivity).hideTabBar(scrollProfile)

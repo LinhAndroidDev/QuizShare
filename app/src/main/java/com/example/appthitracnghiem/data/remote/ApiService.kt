@@ -9,10 +9,15 @@ import com.example.appthitracnghiem.ui.exercise.exercise.exam.RequestExamQuestio
 import com.example.appthitracnghiem.ui.exercise.exercise.point.RequestPoint
 import com.example.appthitracnghiem.ui.home.RequestUserInfo
 import com.example.appthitracnghiem.ui.home.category.RequestCategory
+import com.example.appthitracnghiem.ui.home.history.test.general.RequestExamHistory
 import com.example.appthitracnghiem.ui.home.home.system.RequestGetListDepartment
+import com.example.appthitracnghiem.ui.home.profile.setting.changeavatar.RequestAvatar
 import com.example.appthitracnghiem.ui.login.RequestLogin
 import com.example.appthitracnghiem.ui.login.forgetpassword.RequestEmailVerification
 import com.example.appthitracnghiem.ui.register.RequestRegister
+import com.example.appthitracnghiem.utils.Const
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -83,9 +88,17 @@ interface ApiService {
         @Body requestUserInfo: RequestUserInfo
     ): Call<UserResponse>
 
-//    @POST("postUploadFile")
-//    fun postImage(
-//        @Header("Authorization") header: String,
-//        @Body requestAvatar: RequestAvatar
-//    ): Call<>
+    @Multipart
+    @POST("editAvatar")
+    fun postImage(
+        @Header("Authorization") header: String,
+        @Part(Const.user_id) user_id: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Call<ChangeAvatarResponse>
+
+    @POST("getExamHistoryList")
+    fun getExamHistory(
+        @Header("Authorization") header: String,
+        @Body requestExamHistory: RequestExamHistory
+    ): Call<ExamHistoryResponse>
 }

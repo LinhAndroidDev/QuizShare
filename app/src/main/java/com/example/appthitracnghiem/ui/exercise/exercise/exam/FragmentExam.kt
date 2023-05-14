@@ -15,6 +15,7 @@ import android.view.*
 import android.widget.LinearLayout.LayoutParams
 import android.widget.PopupWindow
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
@@ -46,15 +47,13 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
     private lateinit var countDownTimer: CountDownTimer
 
-    private var totalCount: Int = 0
+    private var TIME_TOTAL: Int = 0
 
-    private var minutes: Int = 0
+    private var MINUTES: Int = 0
 
-    private var seconds: Int = 0
+    private var SECONDS: Int = 0
 
-    private var positionQuestion: Int = 0
-
-    private var positiveAnswer: Int = 0
+    private var POSITIVE_QUESTION: Int = 0
 
     private var SIZE_LIST_QUESTION: Int = 0
 
@@ -95,7 +94,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             for (i in 0 until SIZE_LIST_QUESTION) {
                 listAnswer.add(-1)
             }
-            setTextView(positionQuestion)
+            saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
+            setTextView(POSITIVE_QUESTION)
         }
 
         val userId = viewModel.mPreferenceUtil.defaultPref()
@@ -110,14 +110,14 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
     }
 
     private fun setTime(time: Int) {
-        totalCount = time * 60
+        TIME_TOTAL = time * 60
         countDownTimer = object : CountDownTimer(600000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                totalCount--
-                minutes = totalCount / 60
-                seconds = totalCount % 60
+                TIME_TOTAL--
+                MINUTES = TIME_TOTAL / 60
+                SECONDS = TIME_TOTAL % 60
 
-                if (minutes == 0 && seconds < 1) {
+                if (MINUTES == 0 && SECONDS < 1) {
                     this.cancel()
                     val fragmentPoint = FragmentPoint()
                     val fm: FragmentTransaction? =
@@ -131,14 +131,14 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                     fm?.replace(R.id.changeIdExam, fragmentPoint)?.addToBackStack(null)?.commit()
                 }
                 if (countTime != null && txtTime != null) {
-                    if (seconds < 10) {
-                        txtTime.text = "Còn lại $minutes:0$seconds phút"
-                    } else if (minutes < 1) {
-                        txtTime.text = "Còn lại $minutes:$seconds giây"
+                    if (SECONDS < 10) {
+                        txtTime.text = "Còn lại $MINUTES:0$SECONDS phút"
+                    } else if (MINUTES < 1) {
+                        txtTime.text = "Còn lại $MINUTES:$SECONDS giây"
                     } else {
-                        txtTime.text = "Còn lại $minutes:$seconds phút"
+                        txtTime.text = "Còn lại $MINUTES:$SECONDS phút"
                     }
-                    countTime.progress = (totalCount * 100 / (time * 60)).toFloat()
+                    countTime.progress = (TIME_TOTAL * 100 / (time * 60)).toFloat()
                 }
             }
 
@@ -168,25 +168,21 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         setStatusBar()
 
         nextQuestion.setOnClickListener {
-            listAnswer[positionQuestion] = positiveAnswer
-            if (positionQuestion < SIZE_LIST_QUESTION - 1) {
-                positionQuestion++
-                setTextView(positionQuestion)
+            if (POSITIVE_QUESTION < SIZE_LIST_QUESTION - 1) {
+                POSITIVE_QUESTION++
+                setTextView(POSITIVE_QUESTION)
             } else {
                 showLayoutSubmit()
             }
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
-            getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
         }
 
         backQuestion.setOnClickListener {
-            listAnswer[positionQuestion] = positiveAnswer
-            if (positionQuestion > 0) {
-                positionQuestion--
-                setTextView(positionQuestion)
-                saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
-                getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
+            if (POSITIVE_QUESTION > 0) {
+                POSITIVE_QUESTION--
+                setTextView(POSITIVE_QUESTION)
             }
+            saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
         }
 
         menuQuestion.setOnClickListener {
@@ -198,6 +194,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         }
 
         submit.setOnClickListener {
+            saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
+            getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
             countDownTimer.cancel()
             val bundle = Bundle()
             bundle.putSerializable("listExamQuestion",listExamQuestion)
@@ -221,7 +219,19 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         }
 
         backExercise.setOnClickListener {
-            activity?.onBackPressed()
+            val alertDialog : AlertDialog.Builder = AlertDialog.Builder(requireActivity())
+            alertDialog.setTitle("Thông báo")
+            alertDialog.setIcon(R.drawable.icon_app_thitn)
+            alertDialog.setMessage("Nếu bạn thoát điểm bài thi sẽ không được tính?")
+            alertDialog.setPositiveButton("Vẫn thoát") { _, _ ->
+                for (i in 0 until SIZE_LIST_QUESTION) {
+                    listAnswer.add(-1)
+                }
+                saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
+                activity?.onBackPressed()
+            }
+            alertDialog.setNegativeButton("Không") { _, _ -> }
+            alertDialog.show()
         }
     }
 
@@ -255,10 +265,9 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
         menuQuestionAdapter = MenuQuestionAdapter(requireActivity(), listQuestion)
         menuQuestionAdapter.onClickItem = { positionItem ->
-            positionQuestion = positionItem
-            setTextView(positionQuestion)
+            POSITIVE_QUESTION = positionItem
+            setTextView(POSITIVE_QUESTION)
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
-            getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
         }
         val recycleQuestion: RecyclerView = popUpView.findViewById(R.id.recycleViewMenuQuestion)
 
@@ -285,11 +294,13 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                     arrayTxtQuestion[j].setBackgroundResource(R.drawable.un_select_text_view)
                 }
                 txtQuestion.setBackgroundResource(R.drawable.select_text_view)
-                positiveAnswer = i
+                listAnswer[POSITIVE_QUESTION] = i
             }
         }
-        if (listAnswer[psQuestion] >= 0) {
-            arrayTxtQuestion[listAnswer[psQuestion]].setBackgroundResource(R.drawable.select_text_view)
+
+        val arrAnswer: ArrayList<Int> = getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
+        if (arrAnswer[psQuestion] >= 0) {
+            arrayTxtQuestion[arrAnswer[psQuestion]].setBackgroundResource(R.drawable.select_text_view)
         }
     }
 

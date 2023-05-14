@@ -13,9 +13,11 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.profile.setting.changeavatar.ChangeAvatarActivity
+import com.example.appthitracnghiem.utils.PreferenceKey
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_create_test.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_setting.*
 import kotlinx.android.synthetic.main.fragment_setting_new_password.*
 import kotlinx.android.synthetic.main.fragment_update_infor.*
@@ -27,9 +29,13 @@ class FragmentUpdateInfor : BaseFragment<EmptyViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Picasso.get().load("https://img2.thuthuatphanmem.vn/uploads/2019/01/04/hinh-anh-dep-co-gai-de-thuong_025103410.jpg")
+        val avt = viewModel.mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.USER_AVATAR,"")
+
+        Picasso.get()
+            .load(avt)
             .placeholder(R.drawable.loadimage)
-            .error(R.drawable.icon_error)
+            .error(R.drawable.logo6)
             .into(avatarUpdateInfo)
 
         initUi()

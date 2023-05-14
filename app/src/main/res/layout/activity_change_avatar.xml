@@ -55,7 +55,7 @@
             app:zoomage_zoomable="true"
             app:zoomage_translatable="true"
             app:zoomage_minScale="0.3"
-            app:zoomage_maxScale="8"/>
+            app:zoomage_maxScale="8" />
         <ImageView
             android:id="@+id/strokeAvatar"
             android:scaleType="centerCrop"

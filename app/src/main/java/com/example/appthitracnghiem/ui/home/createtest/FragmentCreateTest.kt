@@ -120,6 +120,14 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
                 bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }
+        layoutCreateTest.setOnTouchListener { _, event ->
+            when(event.actionMasked){
+                MotionEvent.ACTION_UP->{
+                    bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
+            }
+            true
+        }
     }
 
 

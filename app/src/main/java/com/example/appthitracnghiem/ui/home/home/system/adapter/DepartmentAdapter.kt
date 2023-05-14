@@ -19,8 +19,10 @@ import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.PreferenceUtil
 import com.squareup.picasso.Picasso
 
-class DepartmentAdapter(private val listQuiz: List<Department>, val context: Context) :
-    RecyclerView.Adapter<DepartmentAdapter.ViewHolderQuiz>() {
+class DepartmentAdapter(
+    private val listQuiz: List<Department>,
+    val context: Context
+    ) : RecyclerView.Adapter<DepartmentAdapter.ViewHolderQuiz>() {
 
     class ViewHolderQuiz(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var image: ImageView = itemView.findViewById(R.id.image)
@@ -45,15 +47,14 @@ class DepartmentAdapter(private val listQuiz: List<Department>, val context: Con
 
         holder.itemView.setOnClickListener { v ->
             val activity = v?.context as AppCompatActivity
-            val fragment = activity.supportFragmentManager.findFragmentById(R.id.changeIdHome)
-            val mPreferenceUtil: PreferenceUtil = PreferenceUtil(activity)
+            val mPreferenceUtil = PreferenceUtil(activity)
             mPreferenceUtil.defaultPref().edit()
                 .putInt(PreferenceKey.TYPE, 0)
                 .apply()
-            val bundle: Bundle = Bundle()
-            bundle.putString("title", quiz.title)
+//            val bundle = Bundle()
+//            bundle.putString("title", quiz.title)
 
-            val fragmentListDepartment: FragmentListDepartment = FragmentListDepartment()
+            val fragmentListDepartment = FragmentListDepartment()
             val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
             fm.setCustomAnimations(
                 R.anim.anim_up_enter,
@@ -62,7 +63,7 @@ class DepartmentAdapter(private val listQuiz: List<Department>, val context: Con
                 R.anim.anim_down_enter
             )
             fm.add(R.id.changeIdHome, fragmentListDepartment).addToBackStack(null).commit()
-            fragmentListDepartment.arguments = bundle
+//            fragmentListDepartment.arguments = bundle
         }
     }
 

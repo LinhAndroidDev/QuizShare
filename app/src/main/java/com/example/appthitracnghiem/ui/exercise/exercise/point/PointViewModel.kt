@@ -14,14 +14,17 @@ class PointViewModel : BaseViewModel() {
     var numberCorrectLiveData = MutableLiveData<Int>()
     var skipNumberLiveData = MutableLiveData<Int>()
     var wrongNumberLiveData = MutableLiveData<Int>()
+    var isLoadingLiveData = MutableLiveData<Boolean>()
 
     fun getResult(header: String, requestPoint: RequestPoint){
+        isLoadingLiveData.value = true
         ApiClient.shared().submitExam(header, requestPoint)
             .enqueue(object : Callback<PointResponse> {
                 override fun onResponse(
                     call: Call<PointResponse>,
                     response: Response<PointResponse>
                 ) {
+                    isLoadingLiveData.value = false
                     response.body()?.let {
                         when (it.statusCode) {
                             ApiClient.STATUS_CODE_SUCCESS -> {
@@ -45,6 +48,7 @@ class PointViewModel : BaseViewModel() {
                 }
 
                 override fun onFailure(call: Call<PointResponse>, t: Throwable) {
+                    isLoadingLiveData.value = false
                     errorApiLiveData.value = t.message
                 }
 

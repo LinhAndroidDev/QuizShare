@@ -25,6 +25,8 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity() {
             R.anim.anim_translate_enter_right,
             R.anim.anim_translate_exit_left
         )
+
+        bindData()
     }
 
     open fun bindData(){

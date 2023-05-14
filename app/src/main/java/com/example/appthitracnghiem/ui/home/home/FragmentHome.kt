@@ -13,9 +13,11 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.home.HomeViewModel
 import com.example.appthitracnghiem.ui.home.RequestUserInfo
 import com.example.appthitracnghiem.ui.home.home.adapter.ViewPagerDepartment
+import com.example.appthitracnghiem.ui.home.profile.FragmentProfile
 import com.example.appthitracnghiem.ui.home.profile.setting.changeavatar.ChangeAvatarActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.squareup.picasso.Picasso
@@ -51,10 +53,11 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
     private fun initUi() {
 
         setStatusBar()
-
         avatarUseHome.setOnClickListener {
-            val intent = Intent(requireActivity(), ChangeAvatarActivity::class.java)
-            startActivity(intent)
+            val fragmentProfile = FragmentProfile()
+            val fm = activity?.supportFragmentManager?.beginTransaction()
+            fm?.replace(R.id.changeIdHome,fragmentProfile)?.commit()
+            (activity as HomeActivity).clickAvatar()
         }
 
         setText()
@@ -78,6 +81,14 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
     override fun bindData() {
         super.bindData()
 
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
+            if(it){
+                (activity as HomeActivity).loadingVisible(true)
+            }else{
+                (activity as HomeActivity).loadingVisible(false)
+            }
+        }
+
         viewModel.nameUserLiveData.observe(viewLifecycleOwner) {
             viewModel.mPreferenceUtil.defaultPref()
                 .edit().putString(PreferenceKey.USER_NAME,it)
@@ -89,9 +100,9 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
             viewModel.mPreferenceUtil.defaultPref()
                 .edit().putString(PreferenceKey.USER_AVATAR,it)
                 .apply()
-            Picasso.get().load("https://img2.thuthuatphanmem.vn/uploads/2019/01/04/hinh-anh-dep-co-gai-de-thuong_025103410.jpg")
+            Picasso.get().load(it)
                 .placeholder(R.drawable.loadimage)
-                .error(R.drawable.icon_error)
+                .error(R.drawable.logo6)
                 .into(avatarUseHome)
         }
     }

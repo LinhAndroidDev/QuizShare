@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.exercise.exercise.ExamActivity
 import com.example.appthitracnghiem.ui.exercise.exercise.answer.FragmentAnswer
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
@@ -57,13 +58,14 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
         val answerList = HashMap<String,Int?>()
 
         for(i in 0 until listAnswer.size){
-            val value = listExamQuestion[i].answer_list[listAnswer[i]].answer_id
+            val value = listAnswer[i]
             if(value == -1){
-                answerList[(i+1).toString()] == null
+                answerList[(i+1).toString()] = null
             }else{
                 answerList[(i+1).toString()] = listExamQuestion[i].answer_list[listAnswer[i]].answer_id
             }
         }
+
         val startTime = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.START_DO_TEST,"").toString()
 
@@ -81,7 +83,7 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
             }
 
             txtPoint.text = it.toInt().toString()
-            notifiPoint.text = "Bạn nhận được +$it điểm kiểm tra"
+            notifiPoint.text = "Bạn nhận được +${it.toInt()} điểm kiểm tra"
             completePercent.text = "${it.toInt()}%"
         }
 
@@ -99,6 +101,14 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
 
         viewModel.listExamResultLiveData.observe(viewLifecycleOwner){
             val t = it
+        }
+
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
+            if(it){
+                (activity as ExamActivity).loadingVisible(true)
+            }else{
+                (activity as ExamActivity).loadingVisible(false)
+            }
         }
     }
 
@@ -144,7 +154,7 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
         graphView.addSeries(lineSeries)
 
         backPoint.setOnClickListener {
-            activity?.onBackPressed()
+            activity?.finish()
         }
 
         doAgainTest.setOnClickListener {

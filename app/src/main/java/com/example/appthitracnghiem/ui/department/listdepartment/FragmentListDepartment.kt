@@ -1,15 +1,11 @@
 package com.example.appthitracnghiem.ui.department.listdepartment
 
-import android.content.Context
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.base.BaseFragment
@@ -22,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_list_department.*
 class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
     lateinit var listDepartmentAdapter: ListDepartmentAdapter
     lateinit var accessToken: String
-    var user_id: Int = 0
+    var userId: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,9 +48,9 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
 
         accessToken = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.AUTHORIZATION,"").toString()
-        user_id = viewModel.mPreferenceUtil.defaultPref()
+        userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID,0)
-        val requestDepartmentInfo = RequestDepartmentInfo(user_id)
+        val requestDepartmentInfo = RequestDepartmentInfo(userId)
         viewModel.getDataDepartmentDetail(accessToken, requestDepartmentInfo)
     }
 

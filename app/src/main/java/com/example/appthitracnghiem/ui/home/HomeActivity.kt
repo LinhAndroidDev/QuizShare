@@ -2,11 +2,11 @@ package com.example.appthitracnghiem.ui.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.connectivity.CheckConnect
 import com.example.appthitracnghiem.ui.base.BaseActivity
@@ -17,7 +17,6 @@ import com.example.appthitracnghiem.ui.home.history.FragmentHistory
 import com.example.appthitracnghiem.ui.home.home.FragmentHome
 import com.example.appthitracnghiem.ui.home.profile.FragmentProfile
 import kotlinx.android.synthetic.main.activity_home_page.*
-import kotlinx.android.synthetic.main.fragment_home.*
 
 @Suppress("DEPRECATION", "DEPRECATED_IDENTITY_EQUALS")
 class HomeActivity : BaseActivity<HomeViewModel>() {
@@ -30,7 +29,8 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
         if (CheckConnect.haveNetworkConnected(this@HomeActivity)) {
             resetTab()
             functionHome.isSelected = true
-            addFragment(FragmentHome())
+//            addFragment(FragmentHome())
+            attachFragment(R.id.changeIdHome, FragmentHome())
 
             bottomWrap?.setOnTouchListener { _, _ -> true }
 
@@ -45,7 +45,9 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
             val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
             if (fm !is FragmentCategory) {
                 resetTab()
-                addFragment(FragmentCategory())
+//                addFragment(FragmentCategory())
+
+                attachFragment(R.id.changeIdHome, FragmentCategory())
             }
         }
 
@@ -55,8 +57,8 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
                 resetTab()
                 functionHome.isSelected = true
                 val fragmentHome = FragmentHome()
-                val fm = supportFragmentManager.beginTransaction()
-                fm.replace(R.id.changeIdHome, fragmentHome).addToBackStack(null).commit()
+                val fg = supportFragmentManager.beginTransaction()
+                fg.replace(R.id.changeIdHome, fragmentHome).addToBackStack(null).commit()
             }
         }
 
@@ -65,7 +67,8 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
             if (fm !is FragmentCreateTest) {
                 resetTab()
                 functionCreate.isSelected = true
-                addFragment(FragmentCreateTest())
+//                addFragment(FragmentCreateTest())
+                attachFragment(R.id.changeIdHome, FragmentCreateTest())
             }
         }
 
@@ -74,7 +77,8 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
             if (fm !is FragmentHistory) {
                 resetTab()
                 functionLeaderboard.isSelected = true
-                addFragment(FragmentHistory())
+//                addFragment(FragmentHistory())
+                attachFragment(R.id.changeIdHome, FragmentHistory())
             }
         }
 
@@ -83,7 +87,8 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
             if (fm !is FragmentProfile) {
                 resetTab()
                 functionProfile.isSelected = true
-                addFragment(FragmentProfile())
+//                addFragment(FragmentProfile())
+                attachFragment(R.id.changeIdHome, FragmentProfile())
             }
         }
     }
@@ -122,7 +127,7 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
     }
 
     /** Replace Fragment */
-    fun addFragment(fragment: Fragment) {
+    private fun addFragment(fragment: Fragment) {
         val fm = supportFragmentManager.beginTransaction()
         fm.replace(R.id.changeIdHome, fragment).addToBackStack(null).commit()
     }
@@ -131,6 +136,33 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
 //    internal fun hideTabBar(bottomWrapView: NestedScrollView?){
 //        bottomWrapView?.setOnTouchListener(TranslateAnimation(this, bottomWrap))
 //    }
+
+    internal fun loadingVisible(isLoading: Boolean){
+        if(isLoading){
+            loadingHome.visibility = View.VISIBLE
+        }else{
+            loadingHome.visibility = View.GONE
+        }
+    }
+
+    internal fun clickAvatar(){
+        functionHome.isSelected = false
+        functionProfile.isSelected = true
+    }
+
+    private fun attachFragment(
+        fragmentHolderLayoutId: Int,
+        fragment: Fragment,
+        )
+    {
+        val manager: FragmentManager = supportFragmentManager
+        val fg: FragmentTransaction = manager.beginTransaction()
+        if(manager.findFragmentByTag(fragment.tag) == null){
+            fg.add(fragmentHolderLayoutId, fragment, fragment.tag).addToBackStack(fragment.tag).commit()
+        }else{
+            fg.show(manager.findFragmentByTag(fragment.tag)!!).commit()
+        }
+    }
 
     /** Click Back */
     override fun onBackPressed() {
@@ -147,11 +179,15 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
                 backPressTime = System.currentTimeMillis()
             } else {
                 if (fm !is FragmentHome) {
-                    resetTab()
-                    functionHome.isSelected = true
-                    val fragmentHome = FragmentHome()
-                    val fragment = supportFragmentManager.beginTransaction()
-                    fragment.replace(R.id.changeIdHome, fragmentHome).addToBackStack(null).commit()
+                    super.onBackPressed()
+                    setSelectIcon()
+//                    supportFragmentManager.popBackStack()
+//                    setSelectIcon()
+//                    resetTab()
+//                    functionHome.isSelected = true
+//                    val fragmentHome = FragmentHome()
+//                    val fragment = supportFragmentManager.beginTransaction()
+//                    fragment.replace(R.id.changeIdHome, fragmentHome).addToBackStack(null).commit()
                 }
             }
         } else {

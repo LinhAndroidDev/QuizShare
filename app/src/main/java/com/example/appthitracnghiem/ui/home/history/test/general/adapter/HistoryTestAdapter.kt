@@ -1,5 +1,6 @@
-package com.example.appthitracnghiem.ui.home.history.test.adapter
+package com.example.appthitracnghiem.ui.home.history.test.general.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -10,10 +11,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.model.Test
+import com.example.appthitracnghiem.model.HistoryExam
 import com.example.appthitracnghiem.ui.home.history.test.HistoryTopicActivity
+import com.squareup.picasso.Picasso
 
-class HistoryTestAdapter(val context: Context, val listTest: List<Test>) : RecyclerView.Adapter<HistoryTestAdapter.TestViewHolder>() {
+class HistoryTestAdapter(val context: Context, private val listTest: ArrayList<HistoryExam>) : RecyclerView.Adapter<HistoryTestAdapter.TestViewHolder>() {
 
     class TestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.topic)
@@ -24,20 +26,24 @@ class HistoryTestAdapter(val context: Context, val listTest: List<Test>) : Recyc
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): HistoryTestAdapter.TestViewHolder {
+    ): TestViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_general,parent,false)
         return TestViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: HistoryTestAdapter.TestViewHolder, position: Int) {
-        val test: Test = listTest[position]
-        holder.image.setImageResource(test.image)
-        holder.title.text = test.title
-        holder.description.text = test.description
+    @SuppressLint("SetTextI18n")
+    override fun onBindViewHolder(holder: TestViewHolder, position: Int) {
+        val historyExam: HistoryExam = listTest[position]
+        Picasso.get().load(historyExam.image)
+            .placeholder(R.drawable.loadimage)
+            .error(R.drawable.errorimage)
+            .into(holder.image)
+        holder.title.text = historyExam.title
+        holder.description.text = historyExam.score?.toInt().toString() + " điểm"
 
         holder.itemView.setOnClickListener{
             val activity = it.context as AppCompatActivity
-            val intent: Intent = Intent(activity,HistoryTopicActivity::class.java)
+            val intent = Intent(activity,HistoryTopicActivity::class.java)
             context.startActivity(intent)
         }
     }

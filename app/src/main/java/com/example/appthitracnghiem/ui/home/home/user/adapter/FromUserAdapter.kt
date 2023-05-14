@@ -20,7 +20,10 @@ import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.PreferenceUtil
 import com.squareup.picasso.Picasso
 
-class FromUserAdapter(private val listQuiz: List<Department>, val context: Context) : RecyclerView.Adapter<DepartmentAdapter.ViewHolderQuiz>(){
+class FromUserAdapter(
+    private val listQuiz: List<Department>,
+    val context: Context
+    ) : RecyclerView.Adapter<FromUserAdapter.ViewHolderQuiz>(){
 
     class ViewHolderQuiz(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var image: ImageView = itemView.findViewById(R.id.image)
@@ -31,17 +34,17 @@ class FromUserAdapter(private val listQuiz: List<Department>, val context: Conte
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): DepartmentAdapter.ViewHolderQuiz {
+    ): FromUserAdapter.ViewHolderQuiz {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_general, parent, false)
-        return DepartmentAdapter.ViewHolderQuiz(itemView)
+        return ViewHolderQuiz(itemView)
     }
 
     override fun getItemCount(): Int {
         return listQuiz.size
     }
 
-    override fun onBindViewHolder(holder: DepartmentAdapter.ViewHolderQuiz, position: Int) {
+    override fun onBindViewHolder(holder: FromUserAdapter.ViewHolderQuiz, position: Int) {
         val quiz: Department = listQuiz[position]
         Picasso.get().load(quiz.image)
             .placeholder(R.drawable.loadimage)
@@ -52,14 +55,13 @@ class FromUserAdapter(private val listQuiz: List<Department>, val context: Conte
 
         holder.itemView.setOnClickListener { v ->
             val activity = v?.context as AppCompatActivity
-            val fragnment = activity.supportFragmentManager.findFragmentById(R.id.changeIdHome)
-            val mPreferenceUtil: PreferenceUtil = PreferenceUtil(activity)
+            val mPreferenceUtil = PreferenceUtil(activity)
             mPreferenceUtil.defaultPref().edit()
                 .putInt(PreferenceKey.TYPE, 1)
                 .apply()
-            val bundle: Bundle = Bundle()
-            bundle.putString("title", quiz.title)
-            val fragmentListDepartment: FragmentListDepartment = FragmentListDepartment()
+//            val bundle = Bundle()
+//            bundle.putString("title", quiz.title)
+            val fragmentListDepartment = FragmentListDepartment()
             val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
             fm.setCustomAnimations(
                 R.anim.anim_up_enter,
@@ -68,7 +70,7 @@ class FromUserAdapter(private val listQuiz: List<Department>, val context: Conte
                 R.anim.anim_down_enter
             )
             fm.add(R.id.changeIdHome, fragmentListDepartment).addToBackStack(null).commit()
-            fragmentListDepartment.arguments = bundle
+//            fragmentListDepartment.arguments = bundle
         }
         }
 }
