@@ -2,7 +2,6 @@ package com.example.appthitracnghiem.ui.home.home.system
 
 import android.graphics.Typeface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,24 +11,22 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.home.system.adapter.DepartmentAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
-import kotlinx.android.synthetic.main.fragment_from_user.*
 import kotlinx.android.synthetic.main.fragment_system.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentSystem.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FragmentSystem : BaseFragment<SystemViewModel>() {
     private lateinit var adapterFromSystem: DepartmentAdapter
     lateinit var accessToken: String
-    var user_id: Int = 0
+    var userId: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initUi()
+    }
+
+    private fun initUi() {
         val linearLayoutManager =
-            LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+            object : LinearLayoutManager(requireActivity()) { override fun canScrollVertically() = false }
         recycleListLiveQuizzes.layoutManager = linearLayoutManager
 
         setText()
@@ -53,9 +50,9 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
 
         accessToken = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.AUTHORIZATION,"").toString()
-        user_id = viewModel.mPreferenceUtil.defaultPref()
+        userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID,0)
-        val requestGetListDepartment = RequestGetListDepartment(user_id,"")
+        val requestGetListDepartment = RequestGetListDepartment(userId,"")
         viewModel.getDataDepartment(accessToken,requestGetListDepartment)
     }
 

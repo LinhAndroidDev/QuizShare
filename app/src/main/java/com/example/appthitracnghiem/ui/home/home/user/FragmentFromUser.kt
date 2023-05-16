@@ -27,7 +27,7 @@ class FragmentFromUser : BaseFragment<FromUserViewModel>() {
 
     private fun initUi() {
         val linearLayoutManager =
-            LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+            object : LinearLayoutManager(requireActivity()) { override fun canScrollVertically() = false }
         recycleListFromUser.layoutManager = linearLayoutManager
 
         setText()

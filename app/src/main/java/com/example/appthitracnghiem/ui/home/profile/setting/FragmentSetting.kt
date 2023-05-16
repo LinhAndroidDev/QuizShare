@@ -12,7 +12,11 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.home.profile.setting.email.FragmentUpdateEmail
+import com.example.appthitracnghiem.ui.home.profile.setting.info.FragmentUpdateInfor
+import com.example.appthitracnghiem.ui.home.profile.setting.password.FragmentSettingNewPassword
 import com.example.appthitracnghiem.ui.login.LoginActivity
+import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_setting.*
 import kotlinx.android.synthetic.main.layout_logout.*
@@ -28,6 +32,10 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
     }
 
     private fun initUi() {
+
+        emailSetting.text = viewModel.mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.USER_EMAIL,"").toString()
+
         backSetting.setOnClickListener {
             activity?.finish()
         }

@@ -113,6 +113,13 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
         textHome.typeface = semibold
     }
 
+    internal fun scrollTop(){
+        scrollHome.post {
+            scrollHome.fling(0)
+            scrollHome.smoothScrollTo(0, 0)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,

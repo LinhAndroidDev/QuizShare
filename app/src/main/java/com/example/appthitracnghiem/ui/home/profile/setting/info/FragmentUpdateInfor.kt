@@ -1,5 +1,7 @@
-package com.example.appthitracnghiem.ui.home.profile.setting
+package com.example.appthitracnghiem.ui.home.profile.setting.info
 
+import android.app.DatePickerDialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -7,27 +9,62 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.home.profile.setting.changeavatar.ChangeAvatarActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment__register.*
 import kotlinx.android.synthetic.main.fragment_create_test.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_setting.*
 import kotlinx.android.synthetic.main.fragment_setting_new_password.*
 import kotlinx.android.synthetic.main.fragment_update_infor.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Suppress("DEPRECATION")
-class FragmentUpdateInfor : BaseFragment<EmptyViewModel>() {
+class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
     private val GALLERY_RED_CODE: Int = 1000
+    private var formatDate = SimpleDateFormat("yyyy/MM/dd", Locale.UK)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initUi()
+    }
+
+    override fun bindData() {
+        super.bindData()
+
+        val loading = ProgressDialog(requireActivity())
+        loading.setTitle("Thông báo")
+        loading.setMessage("Please wait...")
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
+            if(it){
+                loading.show()
+            }else{
+                loading.dismiss()
+            }
+        }
+
+        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner){
+            if(it){
+                Toast.makeText(requireActivity(),"Bạn đã cập nhật lại thông tin",Toast.LENGTH_SHORT).show()
+                val intent = Intent(requireActivity(), HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun initUi() {
 
         val avt = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.USER_AVATAR,"")
@@ -38,10 +75,6 @@ class FragmentUpdateInfor : BaseFragment<EmptyViewModel>() {
             .error(R.drawable.logo6)
             .into(avatarUpdateInfo)
 
-        initUi()
-    }
-
-    private fun initUi() {
         backUpdateInfo.setOnClickListener {
             activity?.onBackPressed()
         }
@@ -50,6 +83,39 @@ class FragmentUpdateInfor : BaseFragment<EmptyViewModel>() {
             val intent = Intent(Intent.ACTION_PICK)
             intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             startActivityForResult(intent, GALLERY_RED_CODE)
+        }
+
+        selectDateInfo.setOnClickListener {
+
+            val getDate = Calendar.getInstance()
+            val datePicker = DatePickerDialog(requireActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                { _, year, month, dayOfMonth ->
+
+                val selectDate: Calendar = Calendar.getInstance()
+                selectDate.set(Calendar.YEAR, year)
+                selectDate.set(Calendar.MONTH, month)
+                selectDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+                    edtBirthInfo.text = formatDate.format(selectDate.time)
+
+            }, getDate.get(Calendar.YEAR), getDate.get((Calendar.MONTH)), getDate.get(Calendar.DAY_OF_MONTH))
+            datePicker.show()
+        }
+
+        resetInfor.setOnClickListener {
+            val name = edtNameInfo.text.toString()
+            val birth = edtBirthInfo.text.toString()
+
+            if(name.isEmpty() || birth.isEmpty()){
+                Toast.makeText(requireActivity(),"Bạn chưa nhập đủ thông tin",Toast.LENGTH_SHORT).show()
+            }else{
+                val header = viewModel.mPreferenceUtil.defaultPref()
+                    .getString(PreferenceKey.AUTHORIZATION, "").toString()
+                val userId = viewModel.mPreferenceUtil.defaultPref()
+                    .getInt(PreferenceKey.USER_ID, 0)
+                val requestUpdateInfo = RequestUpdateInfo(userId, name, birth)
+                viewModel.updateInfo(header, requestUpdateInfo)
+            }
         }
 
         setText()

@@ -18,12 +18,10 @@ class LinkSheetActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_link_sheet)
 
-        click()
-
-        setText()
+        initUi()
     }
 
-    private fun click() {
+    private fun initUi() {
         backLinkSheet.setOnClickListener {
             onBackPressed()
         }
@@ -47,6 +45,8 @@ class LinkSheetActivity : AppCompatActivity() {
                 layoutSheet.setRenderEffect(null)
             }
         }
+
+        setText()
     }
 
     /** set font*/

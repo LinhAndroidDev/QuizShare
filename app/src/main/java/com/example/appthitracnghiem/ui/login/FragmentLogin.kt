@@ -45,10 +45,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity())
         editor = sharedPreferences.edit()
 
-        checkSaveAccount()
-
         initUi()
-
     }
 
     override fun bindData() {
@@ -71,8 +68,6 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
                 Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
             saveAccount(strEmail, strPassword);
-            val t = viewModel.mPreferenceUtil.defaultPref()
-                .getString(PreferenceKey.USER_NAME,"")
         }
 
         viewModel.validateLiveData.observe(viewLifecycleOwner) { model ->
@@ -97,6 +92,8 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
 
     @SuppressLint("ResourceAsColor")
     private fun initUi() {
+        checkSaveAccount()
+
         hidePasswordLogin.setOnClickListener {
             hidePassword(passwordLogin, hidePasswordLogin)
         }
@@ -146,26 +143,36 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
 
     private fun saveAccount(email: String, password: String) {
         if (checkForgetPassword.isChecked) {
-            editor.putBoolean("checkSave", true)
-            editor.commit()
-            editor.putString("email", email)
-            editor.commit()
-            editor.putString("password", password)
-            editor.commit()
+            viewModel.mPreferenceUtil.defaultPref()
+                .edit().putBoolean(PreferenceKey.SAVE_ACCOUNT, true)
+                .apply()
+            viewModel.mPreferenceUtil.defaultPref()
+                .edit().putString(PreferenceKey.USER_EMAIL,email)
+                .apply()
+            viewModel.mPreferenceUtil.defaultPref()
+                .edit().putString(PreferenceKey.USER_PASSWORD,password)
+                .apply()
         } else {
-            editor.putBoolean("checkSave", false)
-            editor.commit()
-            editor.putString("email", "")
-            editor.commit()
-            editor.putString("password", "")
-            editor.commit()
+            viewModel.mPreferenceUtil.defaultPref()
+                .edit().putBoolean(PreferenceKey.SAVE_ACCOUNT, false)
+                .apply()
+            viewModel.mPreferenceUtil.defaultPref()
+                .edit().putString(PreferenceKey.USER_EMAIL,"")
+                .apply()
+            viewModel.mPreferenceUtil.defaultPref()
+                .edit().putString(PreferenceKey.USER_PASSWORD,"")
+                .apply()
         }
     }
 
     private fun checkSaveAccount() {
-        checkSave = sharedPreferences.getBoolean("checkSave", false)
-        strEmail = sharedPreferences.getString("email", "").toString()
-        strPassword = sharedPreferences.getString("password", "").toString()
+        checkSave = viewModel.mPreferenceUtil.defaultPref()
+            .getBoolean(PreferenceKey.SAVE_ACCOUNT,false)
+        strEmail = viewModel.mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.USER_EMAIL,"").toString()
+        strPassword = viewModel.mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.USER_PASSWORD,"").toString()
+
 
         edtEnterEmailLogin.setText(strEmail)
         passwordLogin.setText(strPassword)

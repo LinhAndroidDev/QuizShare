@@ -1,12 +1,9 @@
 package com.example.appthitracnghiem.ui.department.listdepartment
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.appthitracnghiem.data.remote.ApiClient
 import com.example.appthitracnghiem.data.remote.entity.DepartmentResponse
 import com.example.appthitracnghiem.model.DetailDepartment
-import com.example.appthitracnghiem.model.Subject
 import com.example.appthitracnghiem.ui.base.BaseViewModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,7 +12,6 @@ import retrofit2.Response
 class ListDepartmentViewModel : BaseViewModel() {
     val listDepartmentLiveData = MutableLiveData<MutableList<DetailDepartment>>()
     val loadingDepartmentLiveData = MutableLiveData<Boolean>()
-    val idDepartmentLiveData = MutableLiveData<Int>()
 
     fun getDataDepartmentDetail(header: String, requestDepartmentInfo: RequestDepartmentInfo){
         loadingDepartmentLiveData.value = true

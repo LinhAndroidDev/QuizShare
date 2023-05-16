@@ -24,7 +24,6 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         initUi()
-
     }
 
     override fun bindData() {

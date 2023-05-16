@@ -6,39 +6,20 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.TextUtils
 import android.text.method.PasswordTransformationMethod
 import android.text.style.StyleSpan
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.ViewModelProvider
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.data.remote.ApiClient
-import com.example.appthitracnghiem.data.remote.ApiService
-import com.example.appthitracnghiem.data.remote.entity.RegisterResponse
-import com.example.appthitracnghiem.model.LoginSuccessful
-import com.example.appthitracnghiem.model.ViewModelGeneral
-import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import com.example.appthitracnghiem.ui.login.forgetpassword.FragmentCreatePassword
-import com.example.appthitracnghiem.utils.Email
-import com.skydoves.progressview.progressView
 import kotlinx.android.synthetic.main.fragment__create_password.*
 import kotlinx.android.synthetic.main.fragment__register.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
-import retrofit2.Call
-import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -47,7 +28,7 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
 
     private lateinit var progressDialog: ProgressDialog
 
-    private var formatDate = SimpleDateFormat("yyyy/MM/dd", Locale.UK)
+    private var formatDate = SimpleDateFormat("dd/MM/yyyy", Locale.UK)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

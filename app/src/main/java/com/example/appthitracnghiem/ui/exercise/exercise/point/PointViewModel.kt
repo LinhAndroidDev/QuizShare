@@ -9,7 +9,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PointViewModel : BaseViewModel() {
-    var listExamResultLiveData = MutableLiveData<HashMap<String, Int?>>()
+    var listExamResultLiveData = MutableLiveData<HashMap<String, Int>>()
     var scoreLiveData = MutableLiveData<Float>()
     var numberCorrectLiveData = MutableLiveData<Int>()
     var skipNumberLiveData = MutableLiveData<Int>()

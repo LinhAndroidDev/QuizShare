@@ -1,17 +1,21 @@
 package com.example.appthitracnghiem.data.remote
 
 import com.example.appthitracnghiem.data.remote.entity.*
-import com.example.appthitracnghiem.model.Department
-import com.example.appthitracnghiem.model.RecommandSubject
 import com.example.appthitracnghiem.ui.department.listdepartment.RequestDepartmentInfo
 import com.example.appthitracnghiem.ui.department.listtest.RequestListExam
 import com.example.appthitracnghiem.ui.exercise.exercise.exam.RequestExamQuestion
 import com.example.appthitracnghiem.ui.exercise.exercise.point.RequestPoint
+import com.example.appthitracnghiem.ui.exercise.topic.RequestSaveExam
 import com.example.appthitracnghiem.ui.home.RequestUserInfo
 import com.example.appthitracnghiem.ui.home.category.RequestCategory
+import com.example.appthitracnghiem.ui.home.history.saved.department.RequestSavedDepartment
+import com.example.appthitracnghiem.ui.home.history.saved.subject.RequestSubjectSaved
+import com.example.appthitracnghiem.ui.home.history.saved.test.RequestTestSaved
 import com.example.appthitracnghiem.ui.home.history.test.general.RequestExamHistory
 import com.example.appthitracnghiem.ui.home.home.system.RequestGetListDepartment
-import com.example.appthitracnghiem.ui.home.profile.setting.changeavatar.RequestAvatar
+import com.example.appthitracnghiem.ui.home.profile.setting.email.RequestUpdateEmail
+import com.example.appthitracnghiem.ui.home.profile.setting.info.RequestUpdateInfo
+import com.example.appthitracnghiem.ui.home.profile.setting.password.RequestChangePassword
 import com.example.appthitracnghiem.ui.login.RequestLogin
 import com.example.appthitracnghiem.ui.login.forgetpassword.RequestEmailVerification
 import com.example.appthitracnghiem.ui.register.RequestRegister
@@ -22,18 +26,6 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface ApiService {
-    //https://firebasestorage.googleapis.com/v0/b/realtime-64f58.appspot.com/o/listquiz.json?alt=media&token=1dd6d12d-c075-46fe-8fde-342cc7d0b49b
-    @GET("listquiz.json")
-    fun getListQuiz(
-        @Query("alt") alt: String, @Query("token") token: String
-    ): Call<List<Department>>
-
-    //https://firebasestorage.googleapis.com/v0/b/realtime-64f58.appspot.com/o/listSubject.json?alt=media&token=e6a753c7-ae4d-43f8-88f5-3909fc3e2919
-    @GET("listSubject.json")
-    fun getListSubject(
-        @Query("alt") alt: String, @Query("token") token: String
-    ): Call<List<RecommandSubject>>
-
     @POST("register")
     fun registerUser(@Body requestRegister: RequestRegister)
             : Call<RegisterResponse>
@@ -101,4 +93,46 @@ interface ApiService {
         @Header("Authorization") header: String,
         @Body requestExamHistory: RequestExamHistory
     ): Call<ExamHistoryResponse>
+
+    @POST("changeEmail")
+    fun changeEmail(
+        @Header("Authorization") header: String,
+        @Body requestUpdateEmail: RequestUpdateEmail
+    ): Call<UpdateEmailResponse>
+
+    @POST("updateUserInfo")
+    fun updateUserInfo(
+        @Header("Authorization") header: String,
+        @Body requestUpdateInfo: RequestUpdateInfo
+    ): Call<UpdateInfoResponse>
+
+    @POST("changePassword")
+    fun changePassword(
+        @Header("Authorization") header: String,
+        @Body requestChangePassword: RequestChangePassword
+    ): Call<ChangePasswordResponse>
+
+    @POST("postSaveExam")
+    fun saveExam(
+        @Header("Authorization") header: String,
+        @Body requestSaveExam: RequestSaveExam
+    ): Call<SaveExamResponse>
+
+    @POST("savedDepartment")
+    fun savedDepartment(
+        @Header("Authorization") header: String,
+        @Body requestSavedDepartment: RequestSavedDepartment
+    ): Call<DepartmentSavedResponse>
+
+    @POST("savedSubject")
+    fun savedSubject(
+        @Header("Authorization") header: String,
+        @Body requestSaveSubjectSaved: RequestSubjectSaved
+    ): Call<SaveSubjectResponse>
+
+    @POST("savedExam")
+    fun saveTest(
+        @Header("Authorization") header: String,
+        @Body requestTestSaved: RequestTestSaved
+    ): Call<TestSavedResponse>
 }

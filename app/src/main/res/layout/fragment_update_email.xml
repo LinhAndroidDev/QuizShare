@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.home.profile.setting.FragmentUpdateEmail">
+    tools:context=".ui.home.profile.setting.email.FragmentUpdateEmail">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -45,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
+                    android:id="@+id/edtUpdateEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/boder_setting_new_password"
@@ -55,6 +56,7 @@
                     android:paddingEnd="50dp"
                     android:textColorHint="@color/color_number_position"
                     android:textSize="16sp"
+                    android:imeOptions="actionDone"
                     />
                 <ImageView
                     android:src="@drawable/icon_email_update"
@@ -64,6 +66,7 @@
                     android:layout_marginStart="16dp"/>
             </RelativeLayout>
             <androidx.cardview.widget.CardView
+                android:id="@+id/updateEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="441dp"

@@ -1,6 +1,7 @@
-package com.example.appthitracnghiem.ui.home.history.saved.adapter
+package com.example.appthitracnghiem.ui.home.history.saved.department.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.model.Test
-import com.example.appthitracnghiem.ui.home.history.saved.FragmentHistorySubjectSaved
+import com.example.appthitracnghiem.model.Department
+import com.example.appthitracnghiem.ui.home.history.saved.subject.FragmentHistorySubjectSaved
+import com.squareup.picasso.Picasso
 
-class HistoryDepartmentAdapter(val context: Context, val listTest: List<Test>) :
+class HistoryDepartmentAdapter(val context: Context, private val listTest: List<Department>) :
     RecyclerView.Adapter<HistoryDepartmentAdapter.DepartmentViewHolder>() {
 
     class DepartmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -25,25 +27,32 @@ class HistoryDepartmentAdapter(val context: Context, val listTest: List<Test>) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): HistoryDepartmentAdapter.DepartmentViewHolder {
+    ): DepartmentViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_general,parent,false)
         return DepartmentViewHolder(itemView)
     }
 
     override fun onBindViewHolder(
-        holder: HistoryDepartmentAdapter.DepartmentViewHolder,
+        holder: DepartmentViewHolder,
         position: Int
     ) {
-        val test : Test = listTest[position]
-        holder.title.text = test.title
-        holder.image.setImageResource(test.image)
-        holder.description.text = test.description
+        val department : Department = listTest[position]
+        holder.title.text = department.title
+        Picasso.get().load(department.image)
+            .placeholder(R.drawable.loadimage)
+            .error(R.drawable.errorimage)
+            .into(holder.image)
+        holder.description.text = department.description
 
         holder.itemView.setOnClickListener {
             val activity = context as AppCompatActivity
-            val fragmentHistorySubjectSaved: FragmentHistorySubjectSaved = FragmentHistorySubjectSaved()
+            val fragmentHistorySubjectSaved = FragmentHistorySubjectSaved()
+            val bundle = Bundle()
+            bundle.putInt("department_id_saved", department.id)
+            bundle.putString("department_name_saved", department.title)
             val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
             fm.add(R.id.changeIdHome,fragmentHistorySubjectSaved).addToBackStack(null).commit()
+            fragmentHistorySubjectSaved.arguments = bundle
         }
     }
 

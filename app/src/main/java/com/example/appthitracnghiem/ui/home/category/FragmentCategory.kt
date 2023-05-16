@@ -7,39 +7,63 @@ import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.model.ViewModelGeneral
-import com.example.appthitracnghiem.ui.EmptyViewModel
+import com.example.appthitracnghiem.model.Subject
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.department.listdepartment.ListDepartmentViewModel
+import com.example.appthitracnghiem.ui.department.listdepartment.RequestDepartmentInfo
 import com.example.appthitracnghiem.ui.home.category.adapter.SubjectAdapter
 import com.example.appthitracnghiem.ui.home.category.search.SearchSubject
+import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment_category.*
 
 @Suppress("DEPRECATION")
-class FragmentCategory : BaseFragment<EmptyViewModel>() {
-    lateinit var viewModelGeneral: ViewModelGeneral
+class FragmentCategory : BaseFragment<ListDepartmentViewModel>() {
+    lateinit var listCategory: ArrayList<Subject>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModelGeneral = ViewModelProvider(requireActivity())[ViewModelGeneral::class.java]
-
-        viewModelGeneral.getListSubject()
-
-        val gridLayoutManager = GridLayoutManager(requireActivity(), 2)
-        recycleListSubject.layoutManager = gridLayoutManager
-
-        getData()
-
-        getLoading()
-
         initUi()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun bindData() {
+        super.bindData()
+
+        listCategory = arrayListOf()
+
+        viewModel.loadingDepartmentLiveData.observe(viewLifecycleOwner){
+            if(it){
+                loadingSubject.visibility = View.VISIBLE
+            }else{
+                loadingSubject.visibility = View.GONE
+            }
+        }
+
+        val header = viewModel.mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.AUTHORIZATION, "").toString()
+        val userId = viewModel.mPreferenceUtil.defaultPref()
+            .getInt(PreferenceKey.USER_ID, 0)
+        val requestDepartmentInfo = RequestDepartmentInfo(userId)
+        viewModel.getDataDepartmentDetail(header, requestDepartmentInfo)
+
+        viewModel.listDepartmentLiveData.observe(viewLifecycleOwner){
+            for(i in 0 until  it.size){
+                for (j in 0 until  it[i].subjects.size){
+                    listCategory.add(it[i].subjects[j])
+                }
+            }
+            if (recycleListSubject != null) {
+                val gridLayoutManager = GridLayoutManager(requireActivity(), 2)
+                recycleListSubject.layoutManager = gridLayoutManager
+                val subjectAdapter = SubjectAdapter(listCategory, requireActivity())
+                recycleListSubject.adapter = subjectAdapter
+                subjectAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
     private fun setStatusBar() {
@@ -76,31 +100,6 @@ class FragmentCategory : BaseFragment<EmptyViewModel>() {
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         textSubject.typeface = semibold
-    }
-
-    private fun getLoading() {
-        viewModelGeneral.loadingSubjectLive.observe(
-            requireActivity(),
-            Observer { loadingSubjectLive ->
-                if (loadingSubjectLive != null && loadingSubject != null) {
-                    if (!loadingSubjectLive) {
-                        loadingSubject.visibility = View.INVISIBLE
-                    } else if (loadingSubjectLive && recycleListSubject.adapter == null) {
-                        loadingSubject.visibility = View.VISIBLE
-                    }
-                }
-            })
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private fun getData() {
-        viewModelGeneral.listSubjectLive.observe(requireActivity(), Observer { listSubject ->
-            if (listSubject != null && recycleListSubject != null) {
-                val subjectAdapter: SubjectAdapter = SubjectAdapter(listSubject, requireActivity())
-                recycleListSubject.adapter = subjectAdapter
-                subjectAdapter.notifyDataSetChanged()
-            }
-        })
     }
 
     override fun onCreateView(

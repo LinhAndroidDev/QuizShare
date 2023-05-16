@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.home.profile.setting.FragmentUpdateInfor">
+    tools:context=".ui.home.profile.setting.info.FragmentUpdateInfor">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -64,6 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
+                android:id="@+id/edtNameInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/boder_setting_new_password"
@@ -74,6 +75,7 @@
                 android:paddingEnd="50dp"
                 android:textColorHint="@color/color_number_position"
                 android:textSize="16sp"
+                android:imeOptions="actionDone"
                 />
             <ImageView
                 android:src="@drawable/icon_person_blue"
@@ -95,18 +97,25 @@
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <EditText
+            <TextView
+                android:id="@+id/edtBirthInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/boder_setting_new_password"
                 android:hint="@string/txtEnterAge"
-                android:inputType="textEmailAddress"
                 android:paddingVertical="16dp"
-                android:paddingStart="24dp"
+                android:paddingStart="56dp"
                 android:paddingEnd="50dp"
                 android:textColorHint="@color/color_number_position"
                 android:textSize="16sp"
                 />
+            <ImageView
+                android:id="@+id/selectDateInfo"
+                android:src="@drawable/icon_calendar"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"/>
         </RelativeLayout>
     </LinearLayout>
     <androidx.cardview.widget.CardView

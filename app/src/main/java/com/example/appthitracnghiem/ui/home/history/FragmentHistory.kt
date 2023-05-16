@@ -7,22 +7,16 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.history.question.FragmentHistoryQuestion
-import com.example.appthitracnghiem.ui.home.history.saved.FragmentHistoryDepartmentSaved
+import com.example.appthitracnghiem.ui.home.history.saved.department.FragmentHistoryDepartmentSaved
 import com.example.appthitracnghiem.ui.home.history.test.general.FragmentHistoryTest
 import kotlinx.android.synthetic.main.fragment_create_test.*
 import kotlinx.android.synthetic.main.fragment_history.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentHistory.newInstance] factory method to
- * create an instance of this fragment.
- */
 @Suppress("DEPRECATION")
 class FragmentHistory : BaseFragment<EmptyViewModel>() {
 
@@ -30,8 +24,6 @@ class FragmentHistory : BaseFragment<EmptyViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         initUi()
-
-        setText()
     }
 
     private fun setStatusBar() {
@@ -67,6 +59,8 @@ class FragmentHistory : BaseFragment<EmptyViewModel>() {
             val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
             fm.add(R.id.changeIdHome,fragmentHistorySaved).addToBackStack(null).commit()
         }
+
+        setText()
     }
 
     private fun setText() {

@@ -1,7 +1,10 @@
 package com.example.appthitracnghiem.ui.exercise.topic
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.RenderEffect
+import android.graphics.Shader
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -13,12 +16,13 @@ import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.ExamActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_link_sheet.*
 import kotlinx.android.synthetic.main.fragment_topic.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Suppress("DEPRECATION")
-class FragmentTopic : BaseFragment<EmptyViewModel>() {
+class FragmentTopic : BaseFragment<TopicViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,6 +51,32 @@ class FragmentTopic : BaseFragment<EmptyViewModel>() {
                 .placeholder(R.drawable.loadimage)
                 .error(R.drawable.logo6)
                 .into(avtTopic)
+        }
+
+        val loading = ProgressDialog(requireActivity())
+        loading.setTitle("Thông báo")
+        loading.setMessage("Please wait...")
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
+            if(it){
+                loading.show()
+            }else{
+                loading.dismiss()
+            }
+        }
+
+        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner){ isSuccessful->
+            if(isSuccessful){
+                layoutMemoryTopic.visibility = View.VISIBLE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    layoutTopic.setRenderEffect(
+                        RenderEffect.createBlurEffect(
+                            50f,
+                            50f,
+                            Shader.TileMode.MIRROR
+                        )
+                    )
+                }
+            }
         }
     }
 
@@ -81,6 +111,24 @@ class FragmentTopic : BaseFragment<EmptyViewModel>() {
                 .apply()
             val intent = Intent(requireActivity(), ExamActivity::class.java)
             startActivity(intent)
+        }
+
+        memoryTopic.setOnClickListener {
+            val header = viewModel.mPreferenceUtil.defaultPref()
+                .getString(PreferenceKey.AUTHORIZATION, "").toString()
+            val userId = viewModel.mPreferenceUtil.defaultPref()
+                .getInt(PreferenceKey.USER_ID, 0)
+            val examId = viewModel.mPreferenceUtil.defaultPref()
+                .getInt(PreferenceKey.ID_EXAM, 0)
+            val requestSaveExam = RequestSaveExam(userId, examId)
+            viewModel.saveExam(header, requestSaveExam)
+        }
+
+        backMemoryTopic.setOnClickListener {
+            layoutMemoryTopic.visibility = View.GONE
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                layoutTopic.setRenderEffect(null)
+            }
         }
     }
 

@@ -32,7 +32,7 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
 //            addFragment(FragmentHome())
             attachFragment(R.id.changeIdHome, FragmentHome())
 
-            bottomWrap?.setOnTouchListener { _, _ -> true }
+            bottomBar?.setOnTouchListener { _, _ -> true }
 
             initUi()
         } else {
@@ -52,6 +52,9 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
         }
 
         functionHome.setOnClickListener {
+//            val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
+//            val fragmentHome = fm as FragmentHome
+//            fragmentHome.scrollTop()
             val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
             if (fm !is FragmentHome) {
                 resetTab()

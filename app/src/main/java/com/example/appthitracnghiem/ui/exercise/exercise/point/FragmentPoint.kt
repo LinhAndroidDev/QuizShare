@@ -66,6 +66,8 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
             }
         }
 
+        val t = answerList
+
         val startTime = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.START_DO_TEST,"").toString()
 

@@ -8,10 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.model.RecommandSubject
+import com.example.appthitracnghiem.model.Subject
 import com.squareup.picasso.Picasso
 
-class SubjectAdapter(private val listSubject: List<RecommandSubject>, val context: Context) :
+class SubjectAdapter(private val listSubject: ArrayList<Subject>, val context: Context) :
     RecyclerView.Adapter<SubjectAdapter.SubjectViewHolder>() {
     class SubjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var imageSubject: ImageView = itemView.findViewById(R.id.imageSubject)
@@ -26,13 +26,13 @@ class SubjectAdapter(private val listSubject: List<RecommandSubject>, val contex
     }
 
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
-        val subject: RecommandSubject = listSubject[position]
-        Picasso.get().load(subject.imageSubject)
+        val subject: Subject = listSubject[position]
+        Picasso.get().load(subject.image)
             .placeholder(R.drawable.loadimage)
             .error(R.drawable.errorimage)
             .into(holder.imageSubject)
-        holder.nameSubject.text = subject.nameSubject
-        holder.detailSubject.text = subject.detailSubject
+        holder.nameSubject.text = subject.title
+//        holder.detailSubject.text = subject.description
     }
 
     override fun getItemCount(): Int {

@@ -190,8 +190,8 @@
     <string name="txtResetEmail">Đặt lại Email</string>
 
     <!--    Fragment Update Infor-->
-    <string name="txtDate">Năm sinh</string>
-    <string name="txtEnterAge">Nhập tuổi</string>
+    <string name="txtDate">Sinh nhật</string>
+    <string name="txtEnterAge">Nhập ngày sinh</string>
     <string name="txtResetInfor">Đặt lại thông tin</string>
 
     <!--    Layout logout-->

@@ -64,12 +64,12 @@
                 android:imeOptions="actionDone"/>
             <ImageView
                 android:id="@+id/selectDate"
-                android:src="@drawable/ic_action_date"
+                android:src="@drawable/icon_calendar"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="20dp"
-                android:layout_width="20dp"
-                android:layout_height="20dp"/>
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
         </RelativeLayout>
         <TextView
             android:text="@string/txtEmailRegister"

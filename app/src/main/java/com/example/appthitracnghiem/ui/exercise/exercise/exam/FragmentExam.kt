@@ -77,6 +77,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         initUi()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun bindData() {
         super.bindData()
 
@@ -94,6 +95,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             for (i in 0 until SIZE_LIST_QUESTION) {
                 listAnswer.add(-1)
             }
+            txtPositionQuiz.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
             setTextView(POSITIVE_QUESTION)
         }
@@ -163,6 +165,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initUi() {
 
         setStatusBar()
@@ -174,6 +177,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             } else {
                 showLayoutSubmit()
             }
+            txtPositionQuiz.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
         }
 
@@ -182,6 +186,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                 POSITIVE_QUESTION--
                 setTextView(POSITIVE_QUESTION)
             }
+            txtPositionQuiz.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
         }
 
@@ -248,6 +253,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showMenuQuestion(view: View, popupViewId: Int, x: Int, y: Int, gravity: Int) {
         val popUpView: View = View.inflate(requireActivity(), popupViewId, null)
 
@@ -266,6 +272,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         menuQuestionAdapter = MenuQuestionAdapter(requireActivity(), listQuestion)
         menuQuestionAdapter.onClickItem = { positionItem ->
             POSITIVE_QUESTION = positionItem
+            txtPositionQuiz.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
             setTextView(POSITIVE_QUESTION)
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
         }
