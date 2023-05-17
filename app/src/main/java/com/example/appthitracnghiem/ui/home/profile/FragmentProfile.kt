@@ -13,6 +13,7 @@ import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.profile.setting.SettingActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_category.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 
@@ -85,6 +86,13 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         txtName.typeface = semibold
         txtProfile.typeface = semibold
+    }
+
+    internal fun scrollTop(){
+        scrollProfile.post {
+            scrollProfile.fling(0)
+            scrollProfile.smoothScrollTo(0, 0)
+        }
     }
 
     override fun onCreateView(

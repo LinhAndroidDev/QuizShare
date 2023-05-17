@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.layout_loading.*
 @Suppress("DEPRECATION")
 class FragmentHome : BaseFragment<HomeViewModel>() {
     private lateinit var viewPagerDepartment : ViewPagerDepartment
+    private var scrollPosition = 0.00
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,6 +60,12 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
             fm?.replace(R.id.changeIdHome,fragmentProfile)?.commit()
             (activity as HomeActivity).clickAvatar()
         }
+
+//        scrollHome.viewTreeObserver.addOnScrollChangedListener {
+//            val scrollViewHeight: Double = (scrollHome.getChildAt(0).bottom - scrollHome.height).toDouble()
+//            val getScrollY: Double = scrollHome.scrollY.toDouble()
+//            scrollPosition = getScrollY/scrollViewHeight
+//        }
 
         setText()
     }

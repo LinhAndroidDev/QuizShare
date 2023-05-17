@@ -2,6 +2,7 @@ package com.example.appthitracnghiem.ui.home.createtest
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Rect
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
@@ -20,6 +21,7 @@ import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.activity_create_test.*
 import kotlinx.android.synthetic.main.fragment_create_test.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.layout_bottom_share.*
@@ -167,6 +169,13 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
         txtTimeDoTest.typeface = semibold
         txtNumberQuestion.typeface = semibold
         txtDetail.typeface = semibold
+    }
+
+    internal fun scrollTop(){
+        scrollCreateTest.post {
+            scrollCreateTest.fling(0)
+            scrollCreateTest.smoothScrollTo(0, 0)
+        }
     }
 
     override fun onCreateView(

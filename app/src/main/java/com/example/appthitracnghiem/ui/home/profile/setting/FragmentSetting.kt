@@ -1,6 +1,7 @@
 package com.example.appthitracnghiem.ui.home.profile.setting
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -8,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
@@ -21,14 +24,43 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_setting.*
 import kotlinx.android.synthetic.main.layout_logout.*
 
+@Suppress("DEPRECATION")
 class FragmentSetting : BaseFragment<SettingViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setBottomShare()
-
         initUi()
+    }
+
+    override fun bindData() {
+        super.bindData()
+
+        val loading = ProgressDialog(requireActivity())
+        loading.setTitle("Thông báo")
+        loading.setMessage("Đang vô hiệu hoá tài khoản...")
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
+            if(it){
+                loading.show()
+            }else{
+                loading.dismiss()
+            }
+        }
+
+        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner){
+            if(it){
+                viewModel.confirmLoggedOut()
+                val intent = Intent(requireActivity(), LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+
+                Toast.makeText(
+                    requireActivity(),
+                    "Đã vô hiệu hoá tài khoản",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
     }
 
     private fun initUi() {
@@ -51,6 +83,25 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
         changePassWord.setOnClickListener {
             replaceFragment(FragmentSettingNewPassword())
         }
+
+        deleteAccount.setOnClickListener {
+            val alertDialog = AlertDialog.Builder(requireActivity())
+            alertDialog.setTitle("Cảnh báo!!")
+            alertDialog.setIcon(R.drawable.icon_app_thitn)
+            alertDialog.setMessage("Nếu bạn xoá tài khoản này sẽ bị vô hiệu hoá?")
+            alertDialog.setPositiveButton("Vẫn xoá") { _, _ ->
+                val header = viewModel.mPreferenceUtil.defaultPref()
+                    .getString(PreferenceKey.AUTHORIZATION,"").toString()
+                val userId = viewModel.mPreferenceUtil.defaultPref()
+                    .getInt(PreferenceKey.USER_ID, 0)
+                val requestUnPublishUser = RequestUnPublishUser(userId)
+                viewModel.unPublishUser(header, requestUnPublishUser)
+            }
+            alertDialog.setNegativeButton("Không") { _, _ -> }
+            alertDialog.show()
+        }
+
+        setBottomShare()
 
         setText()
     }

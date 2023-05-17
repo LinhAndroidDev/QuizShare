@@ -1,12 +1,14 @@
 package com.example.appthitracnghiem.ui.home.createtest
 
 import android.content.Intent
+import android.graphics.Rect
 import android.graphics.Typeface
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -21,6 +23,7 @@ class CreateTestActivity : AppCompatActivity() {
     lateinit var listPositiveQuestion: ArrayList<PositiveQuestion>
     lateinit var positiveQuestionAdapter: PositiveQuestionAdapter
     private val GALLERY_RED_CODE: Int = 1000
+    var isKeyboardShowing: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +31,7 @@ class CreateTestActivity : AppCompatActivity() {
 
         val numberQuiz = intent.getStringExtra("numberQuiz")?.toInt()
 
-        val linearLayoutManager: LinearLayoutManager =
+        val linearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recycleListNumber.layoutManager = linearLayoutManager
 
@@ -39,12 +42,10 @@ class CreateTestActivity : AppCompatActivity() {
         positiveQuestionAdapter = PositiveQuestionAdapter(listPositiveQuestion, this)
         recycleListNumber.adapter = positiveQuestionAdapter
 
-        click()
-
-        setText()
+        initUi()
     }
 
-    private fun click() {
+    private fun initUi() {
         backCreateTest.setOnClickListener {
             finish()
         }
@@ -64,6 +65,25 @@ class CreateTestActivity : AppCompatActivity() {
                 Gravity.BOTTOM
             )
         }
+
+        layoutCreateExam.viewTreeObserver
+            .addOnGlobalLayoutListener {
+                val r = Rect()
+                layoutCreateExam.getWindowVisibleDisplayFrame(r)
+                val screenHeight: Int = layoutCreateExam.rootView.height
+
+                // r.bottom is the position above soft keypad or device button.
+                // if keypad is shown, the r.bottom is smaller than that before.
+                val keypadHeight: Int = screenHeight - r.bottom
+
+                if (keypadHeight > screenHeight * 0.15) {
+                    continueCreateTest.visibility = View.GONE
+                }else{
+                    continueCreateTest.visibility = View.VISIBLE
+                }
+            }
+
+        setText()
     }
 
     private fun setText() {

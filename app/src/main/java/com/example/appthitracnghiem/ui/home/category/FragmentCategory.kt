@@ -18,6 +18,7 @@ import com.example.appthitracnghiem.ui.home.category.adapter.SubjectAdapter
 import com.example.appthitracnghiem.ui.home.category.search.SearchSubject
 import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment_category.*
+import kotlinx.android.synthetic.main.fragment_home.*
 
 @Suppress("DEPRECATION")
 class FragmentCategory : BaseFragment<ListDepartmentViewModel>() {
@@ -100,6 +101,13 @@ class FragmentCategory : BaseFragment<ListDepartmentViewModel>() {
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         textSubject.typeface = semibold
+    }
+
+    internal fun scrollTop(){
+        scrollCategory.post {
+            scrollCategory.fling(0)
+            scrollCategory.smoothScrollTo(0, 0)
+        }
     }
 
     override fun onCreateView(

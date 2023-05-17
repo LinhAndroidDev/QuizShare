@@ -35,7 +35,7 @@ class FragmentHistoryTestSaved : BaseFragment<TestSavedViewModel>() {
         super.bindData()
 
         val loading = ProgressDialog(requireActivity())
-        loading.setTitle("Thong bao")
+        loading.setTitle("Thông báo")
         loading.setMessage("Please wait...")
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
             if(it){
@@ -50,7 +50,7 @@ class FragmentHistoryTestSaved : BaseFragment<TestSavedViewModel>() {
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID,0)
         val subjectId = requireArguments().getInt("subject_saved_id")
-        val requestTestSaved = RequestTestSaved(userId, subjectId, 0, 3, "asc")
+        val requestTestSaved = RequestTestSaved(userId, subjectId, 1, 3, "asc")
         viewModel.savedTest(header, requestTestSaved)
 
         viewModel.listTestSavedLiveData.observe(viewLifecycleOwner){

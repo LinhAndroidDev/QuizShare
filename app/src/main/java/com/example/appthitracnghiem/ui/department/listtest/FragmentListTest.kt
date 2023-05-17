@@ -10,12 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.model.Test
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import com.example.appthitracnghiem.ui.department.listdepartment.FragmentListDepartment
 import com.example.appthitracnghiem.ui.department.listtest.adapter.TestAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment_list_test.*
@@ -42,8 +39,6 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
 
         val requestListExam = RequestListExam(user_id, id, type, 1, "asc")
         viewModel.getListExam(accessToken, requestListExam)
-
-        setText()
 
         initUi()
     }
@@ -96,6 +91,8 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
             }
 
         })
+
+        setText()
     }
 
     private fun showMenuCreate(anchor: View, layout: Int, x: Int, y: Int, position: Int) {

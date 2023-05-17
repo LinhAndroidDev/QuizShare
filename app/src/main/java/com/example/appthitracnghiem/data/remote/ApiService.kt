@@ -13,6 +13,7 @@ import com.example.appthitracnghiem.ui.home.history.saved.subject.RequestSubject
 import com.example.appthitracnghiem.ui.home.history.saved.test.RequestTestSaved
 import com.example.appthitracnghiem.ui.home.history.test.general.RequestExamHistory
 import com.example.appthitracnghiem.ui.home.home.system.RequestGetListDepartment
+import com.example.appthitracnghiem.ui.home.profile.setting.RequestUnPublishUser
 import com.example.appthitracnghiem.ui.home.profile.setting.email.RequestUpdateEmail
 import com.example.appthitracnghiem.ui.home.profile.setting.info.RequestUpdateInfo
 import com.example.appthitracnghiem.ui.home.profile.setting.password.RequestChangePassword
@@ -135,4 +136,10 @@ interface ApiService {
         @Header("Authorization") header: String,
         @Body requestTestSaved: RequestTestSaved
     ): Call<TestSavedResponse>
+
+    @POST("unpublicUser")
+    fun unPublishUser(
+        @Header("Authorization") header: String,
+        @Body requestUnPublishUser: RequestUnPublishUser
+    ): Call<UnPublishUserResponse>
 }

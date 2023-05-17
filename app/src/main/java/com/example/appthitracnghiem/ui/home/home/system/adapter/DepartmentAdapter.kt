@@ -1,7 +1,6 @@
 package com.example.appthitracnghiem.ui.home.home.system.adapter
 
 import android.content.Context
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.Department
 import com.example.appthitracnghiem.ui.department.listdepartment.FragmentListDepartment
-import com.example.appthitracnghiem.ui.home.home.system.FragmentSystem
-import com.example.appthitracnghiem.ui.home.home.user.FragmentFromUser
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.PreferenceUtil
 import com.squareup.picasso.Picasso
@@ -51,8 +48,6 @@ class DepartmentAdapter(
             mPreferenceUtil.defaultPref().edit()
                 .putInt(PreferenceKey.TYPE, 0)
                 .apply()
-//            val bundle = Bundle()
-//            bundle.putString("title", quiz.title)
 
             val fragmentListDepartment = FragmentListDepartment()
             val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
@@ -63,7 +58,6 @@ class DepartmentAdapter(
                 R.anim.anim_down_enter
             )
             fm.add(R.id.changeIdHome, fragmentListDepartment).addToBackStack(null).commit()
-//            fragmentListDepartment.arguments = bundle
         }
     }
 

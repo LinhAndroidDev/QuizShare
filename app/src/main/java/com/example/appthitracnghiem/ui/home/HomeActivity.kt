@@ -1,6 +1,7 @@
 package com.example.appthitracnghiem.ui.home
 
 import android.annotation.SuppressLint
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -16,6 +17,7 @@ import com.example.appthitracnghiem.ui.home.createtest.FragmentCreateTest
 import com.example.appthitracnghiem.ui.home.history.FragmentHistory
 import com.example.appthitracnghiem.ui.home.home.FragmentHome
 import com.example.appthitracnghiem.ui.home.profile.FragmentProfile
+import kotlinx.android.synthetic.main.activity_create_test.*
 import kotlinx.android.synthetic.main.activity_home_page.*
 
 @Suppress("DEPRECATION", "DEPRECATED_IDENTITY_EQUALS")
@@ -45,16 +47,13 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
             val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
             if (fm !is FragmentCategory) {
                 resetTab()
-//                addFragment(FragmentCategory())
-
                 attachFragment(R.id.changeIdHome, FragmentCategory())
+            }else{
+                fm.scrollTop()
             }
         }
 
         functionHome.setOnClickListener {
-//            val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
-//            val fragmentHome = fm as FragmentHome
-//            fragmentHome.scrollTop()
             val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
             if (fm !is FragmentHome) {
                 resetTab()
@@ -62,6 +61,8 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
                 val fragmentHome = FragmentHome()
                 val fg = supportFragmentManager.beginTransaction()
                 fg.replace(R.id.changeIdHome, fragmentHome).addToBackStack(null).commit()
+            }else{
+                fm.scrollTop()
             }
         }
 
@@ -70,8 +71,9 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
             if (fm !is FragmentCreateTest) {
                 resetTab()
                 functionCreate.isSelected = true
-//                addFragment(FragmentCreateTest())
                 attachFragment(R.id.changeIdHome, FragmentCreateTest())
+            }else{
+                fm.scrollTop()
             }
         }
 
@@ -80,7 +82,6 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
             if (fm !is FragmentHistory) {
                 resetTab()
                 functionLeaderboard.isSelected = true
-//                addFragment(FragmentHistory())
                 attachFragment(R.id.changeIdHome, FragmentHistory())
             }
         }
@@ -90,10 +91,28 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
             if (fm !is FragmentProfile) {
                 resetTab()
                 functionProfile.isSelected = true
-//                addFragment(FragmentProfile())
                 attachFragment(R.id.changeIdHome, FragmentProfile())
+            }else{
+                fm.scrollTop()
             }
         }
+
+        layoutHomeActivity.viewTreeObserver
+            .addOnGlobalLayoutListener {
+                val r = Rect()
+                layoutHomeActivity.getWindowVisibleDisplayFrame(r)
+                val screenHeight: Int = layoutHomeActivity.rootView.height
+
+                // r.bottom is the position above soft keypad or device button.
+                // if keypad is shown, the r.bottom is smaller than that before.
+                val keypadHeight: Int = screenHeight - r.bottom
+
+                if (keypadHeight > screenHeight * 0.15) {
+                    bottomWrap.visibility = View.GONE
+                }else{
+                    bottomWrap.visibility = View.VISIBLE
+                }
+            }
     }
 
     /** Select Icon */
@@ -127,12 +146,6 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
         functionCreate.isSelected = false
         functionLeaderboard.isSelected = false
         functionProfile.isSelected = false
-    }
-
-    /** Replace Fragment */
-    private fun addFragment(fragment: Fragment) {
-        val fm = supportFragmentManager.beginTransaction()
-        fm.replace(R.id.changeIdHome, fragment).addToBackStack(null).commit()
     }
 
 //    @SuppressLint("ClickableViewAccessibility")

@@ -2,14 +2,19 @@ package com.example.appthitracnghiem.ui.home.history.saved.test.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.ExamSaved
+import com.example.appthitracnghiem.ui.exercise.topic.ExerciseActivity
+import com.example.appthitracnghiem.utils.PreferenceKey
+import com.example.appthitracnghiem.utils.PreferenceUtil
 import com.squareup.picasso.Picasso
 
 class HistoryTestAdapter(val context: Context, private val listTestSaved: ArrayList<ExamSaved>) : RecyclerView.Adapter<HistoryTestAdapter.TestViewHolder>() {
@@ -37,6 +42,16 @@ class HistoryTestAdapter(val context: Context, private val listTestSaved: ArrayL
             .error(R.drawable.errorimage)
             .into(holder.image)
         holder.description.text = "Lượt tạo: " + examSaved.saved_num + "| Người tạo: " + examSaved.author_name
+
+        holder.itemView.setOnClickListener {
+            val activity = context as AppCompatActivity
+            val mPreferenceUtil = PreferenceUtil(activity)
+            mPreferenceUtil.defaultPref().edit()
+                .putInt(PreferenceKey.TYPE, 1)
+                .apply()
+            val intent = Intent(context, ExerciseActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {
