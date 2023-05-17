@@ -10,7 +10,7 @@ class TestSavedResponse(
         val department_id: Int,
         val department_title: String,
         val subject_title: String,
-        val listExamSaved: ArrayList<ExamSaved>?
+        val exam_list: ArrayList<ExamSaved>?
     )
 }
 

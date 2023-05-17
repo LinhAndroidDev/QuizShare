@@ -3,7 +3,6 @@
 package com.example.appthitracnghiem.ui.home.home
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
@@ -18,7 +17,6 @@ import com.example.appthitracnghiem.ui.home.HomeViewModel
 import com.example.appthitracnghiem.ui.home.RequestUserInfo
 import com.example.appthitracnghiem.ui.home.home.adapter.ViewPagerDepartment
 import com.example.appthitracnghiem.ui.home.profile.FragmentProfile
-import com.example.appthitracnghiem.ui.home.profile.setting.changeavatar.ChangeAvatarActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_home_page.*
@@ -62,9 +60,11 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
         }
 
 //        scrollHome.viewTreeObserver.addOnScrollChangedListener {
-//            val scrollViewHeight: Double = (scrollHome.getChildAt(0).bottom - scrollHome.height).toDouble()
+//            val scrollViewHeight = (scrollHome.getChildAt(0).bottom - scrollHome.height).toDouble()
 //            val getScrollY: Double = scrollHome.scrollY.toDouble()
-//            scrollPosition = getScrollY/scrollViewHeight
+//            scrollPosition = 1 - getScrollY/scrollViewHeight
+//
+//            (activity as HomeActivity).visibleTaBar(scrollPosition)
 //        }
 
         setText()

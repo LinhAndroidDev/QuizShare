@@ -61,6 +61,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
     private lateinit var listAnswer: ArrayList<Int>
 
+    var onClickNextQuestion: ((Int) -> Unit)? = null
+
     companion object {
         var arrayTxtQuestion = arrayListOf<TextView>()
     }
@@ -174,6 +176,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             if (POSITIVE_QUESTION < SIZE_LIST_QUESTION - 1) {
                 POSITIVE_QUESTION++
                 setTextView(POSITIVE_QUESTION)
+                onClickNextQuestion?.invoke(POSITIVE_QUESTION)
             } else {
                 showLayoutSubmit()
             }

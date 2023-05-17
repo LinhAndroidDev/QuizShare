@@ -1,41 +1,34 @@
-package com.example.appthitracnghiem.ui.home.history.saved.test
+package com.example.appthitracnghiem.ui.home.category.search
 
 import androidx.lifecycle.MutableLiveData
 import com.example.appthitracnghiem.data.remote.ApiClient
-import com.example.appthitracnghiem.data.remote.entity.TestSavedResponse
-import com.example.appthitracnghiem.model.ExamSaved
+import com.example.appthitracnghiem.data.remote.entity.SearchResponse
 import com.example.appthitracnghiem.ui.base.BaseViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TestSavedViewModel : BaseViewModel() {
-    var isLoadingLiveData = MutableLiveData<Boolean>()
-    var isSuccessfulLiveData = MutableLiveData<Boolean>()
-    var departmentTitleLiveData = MutableLiveData<String>()
-    var testTitleLiveData = MutableLiveData<String>()
-    var listTestSavedLiveData = MutableLiveData<ArrayList<ExamSaved>?>()
+class SearchViewModel : BaseViewModel() {
+    val isLoadingLiveData = MutableLiveData<Boolean>()
+    val listSearchLiveData = MutableLiveData<ArrayList<SearchResponse.Results>>()
 
-    fun savedTest(
+    fun searchSubject(
         header: String,
-        requestTestSaved: RequestTestSaved
+        requestSearch: RequestSearch
     ){
         isLoadingLiveData.value = true
-        ApiClient.shared().saveTest(header, requestTestSaved)
-            .enqueue(object : Callback<TestSavedResponse>{
+        ApiClient.shared().searchSubject(header, requestSearch)
+            .enqueue(object : Callback<SearchResponse>{
                 override fun onResponse(
-                    call: Call<TestSavedResponse>,
-                    response: Response<TestSavedResponse>
+                    call: Call<SearchResponse>,
+                    response: Response<SearchResponse>
                 ) {
                     isLoadingLiveData.value = false
                     if(response.isSuccessful){
                         response.body().let {
                             when(it?.statusCode){
                                 ApiClient.STATUS_CODE_SUCCESS->{
-                                    val t = it
-                                    departmentTitleLiveData.value = it.result?.department_title
-                                    testTitleLiveData.value = it.result?.subject_title
-                                    listTestSavedLiveData.value = it.result?.exam_list
+                                    listSearchLiveData.value = it.result
                                 }
                                 ApiClient.STATUS_USER_EXIST->{
                                     errorApiLiveData.value = it.message
@@ -51,7 +44,7 @@ class TestSavedViewModel : BaseViewModel() {
                     }
                 }
 
-                override fun onFailure(call: Call<TestSavedResponse>, t: Throwable) {
+                override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
                     isLoadingLiveData.value = false
                     errorApiLiveData.value = t.message
                 }

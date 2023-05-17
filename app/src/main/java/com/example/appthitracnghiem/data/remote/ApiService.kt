@@ -8,6 +8,7 @@ import com.example.appthitracnghiem.ui.exercise.exercise.point.RequestPoint
 import com.example.appthitracnghiem.ui.exercise.topic.RequestSaveExam
 import com.example.appthitracnghiem.ui.home.RequestUserInfo
 import com.example.appthitracnghiem.ui.home.category.RequestCategory
+import com.example.appthitracnghiem.ui.home.category.search.RequestSearch
 import com.example.appthitracnghiem.ui.home.history.saved.department.RequestSavedDepartment
 import com.example.appthitracnghiem.ui.home.history.saved.subject.RequestSubjectSaved
 import com.example.appthitracnghiem.ui.home.history.saved.test.RequestTestSaved
@@ -142,4 +143,10 @@ interface ApiService {
         @Header("Authorization") header: String,
         @Body requestUnPublishUser: RequestUnPublishUser
     ): Call<UnPublishUserResponse>
+
+    @POST("searchSubject")
+    fun searchSubject(
+        @Header("Authorization") header: String,
+        @Body requestSearch: RequestSearch
+    ): Call<SearchResponse>
 }

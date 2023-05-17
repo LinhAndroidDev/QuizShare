@@ -17,6 +17,7 @@
             android:paddingHorizontal="18dp"
             android:orientation="vertical">
             <LinearLayout
+                android:id="@+id/flowTime"
                 android:layout_marginTop="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -31,6 +32,7 @@
                     android:textSize="14sp" />
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/flowNumberCreate"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,6 +46,7 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/flowSubject"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

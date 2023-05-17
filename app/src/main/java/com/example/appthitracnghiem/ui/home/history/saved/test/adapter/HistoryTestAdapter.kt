@@ -3,6 +3,7 @@ package com.example.appthitracnghiem.ui.home.history.saved.test.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,8 @@ class HistoryTestAdapter(val context: Context, private val listTestSaved: ArrayL
             .placeholder(R.drawable.loadimage)
             .error(R.drawable.errorimage)
             .into(holder.image)
+        holder.description.maxLines = 1
+        holder.description.ellipsize = TextUtils.TruncateAt.END
         holder.description.text = "Lượt tạo: " + examSaved.saved_num + "| Người tạo: " + examSaved.author_name
 
         holder.itemView.setOnClickListener {

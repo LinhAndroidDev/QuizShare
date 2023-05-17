@@ -8,7 +8,7 @@ data class ExamSaved(
     val number: Int,
     val saved_num: Int,
     val status: Int,
-    val image: String,
+    val image: String?,
     val time: Int,
     val title: String
 )

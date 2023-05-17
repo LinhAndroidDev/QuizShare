@@ -15,8 +15,8 @@ class FragmentAnswer : BaseFragment<EmptyViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        answer1.setBackgroundResource(R.drawable.bg_answer_fail)
-        answer3.setBackgroundResource(R.drawable.select_text_view)
+//        answer1.setBackgroundResource(R.drawable.bg_answer_fail)
+//        answer3.setBackgroundResource(R.drawable.select_text_view)
 
         initUi()
     }

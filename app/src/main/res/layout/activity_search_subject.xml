@@ -35,7 +35,7 @@
         android:layout_marginHorizontal="15dp"
         >
         <EditText
-            android:id="@+id/searchSubject"
+            android:id="@+id/edtSearchSubject"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,8 +48,10 @@
             android:background="@drawable/bg_search"
             android:textSize="18sp"
             android:inputType="text"
+            android:imeOptions="actionDone"
             />
         <ImageView
+            android:id="@+id/search"
             android:src="@drawable/icon_search"
             android:layout_width="24dp"
             android:layout_height="24dp"
@@ -92,7 +94,7 @@
                         android:id="@+id/recycleListSubject"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-                    <ProgressBar
+                    <com.jpardogo.android.googleprogressbar.library.GoogleProgressBar
                         android:id="@+id/loadingSubject"
                         android:layout_marginTop="120dp"
                         android:layout_marginBottom="120dp"

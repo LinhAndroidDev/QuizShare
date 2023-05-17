@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,7 +40,6 @@ class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
         val requestExamHistory = RequestExamHistory(userId,5,0,1,"asc")
-
         viewModel.getExamHistory(header, requestExamHistory)
 
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
@@ -51,10 +51,9 @@ class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
         }
 
         viewModel.listExamHistoryLiveData.observe(viewLifecycleOwner){
-            val linear = LinearLayoutManager(
-                requireActivity(),
-                LinearLayoutManager.VERTICAL, false
-            )
+            val linear = object : LinearLayoutManager(requireActivity()){
+                override fun canScrollVertically() = false
+            }
             testAdapter = HistoryTestAdapter(requireActivity(),it)
             listTestFromSystem.layoutManager = linear
             listTestFromSystem.adapter = testAdapter
@@ -79,6 +78,37 @@ class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
         val width = ViewGroup.LayoutParams.WRAP_CONTENT
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
         val focusable = true
+
+        val date: LinearLayout = popUpView.findViewById(R.id.sortDate)
+        val name: LinearLayout = popUpView.findViewById(R.id.sortName)
+        val point: LinearLayout = popUpView.findViewById(R.id.sortPoint)
+
+        date.setOnClickListener {
+            val header = viewModel.mPreferenceUtil.defaultPref()
+                .getString(PreferenceKey.AUTHORIZATION,"").toString()
+            val userId = viewModel.mPreferenceUtil.defaultPref()
+                .getInt(PreferenceKey.USER_ID, 0)
+            val requestExamHistory = RequestExamHistory(userId,5,0,1,"asc")
+            viewModel.getExamHistory(header, requestExamHistory)
+        }
+
+        name.setOnClickListener {
+            val header = viewModel.mPreferenceUtil.defaultPref()
+                .getString(PreferenceKey.AUTHORIZATION,"").toString()
+            val userId = viewModel.mPreferenceUtil.defaultPref()
+                .getInt(PreferenceKey.USER_ID, 0)
+            val requestExamHistory = RequestExamHistory(userId,5,0,2,"asc")
+            viewModel.getExamHistory(header, requestExamHistory)
+        }
+
+        point.setOnClickListener {
+            val header = viewModel.mPreferenceUtil.defaultPref()
+                .getString(PreferenceKey.AUTHORIZATION,"").toString()
+            val userId = viewModel.mPreferenceUtil.defaultPref()
+                .getInt(PreferenceKey.USER_ID, 0)
+            val requestExamHistory = RequestExamHistory(userId,5,0,3,"asc")
+            viewModel.getExamHistory(header, requestExamHistory)
+        }
 
         val popupWindow = PopupWindow(popUpView, width, height, focusable)
         popupWindow.showAsDropDown(anchor, x, y, position)

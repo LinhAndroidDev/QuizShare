@@ -23,7 +23,6 @@ class CreateTestActivity : AppCompatActivity() {
     lateinit var listPositiveQuestion: ArrayList<PositiveQuestion>
     lateinit var positiveQuestionAdapter: PositiveQuestionAdapter
     private val GALLERY_RED_CODE: Int = 1000
-    var isKeyboardShowing: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

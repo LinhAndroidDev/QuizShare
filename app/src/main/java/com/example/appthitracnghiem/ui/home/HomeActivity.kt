@@ -2,6 +2,7 @@ package com.example.appthitracnghiem.ui.home
 
 import android.annotation.SuppressLint
 import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -17,7 +18,6 @@ import com.example.appthitracnghiem.ui.home.createtest.FragmentCreateTest
 import com.example.appthitracnghiem.ui.home.history.FragmentHistory
 import com.example.appthitracnghiem.ui.home.home.FragmentHome
 import com.example.appthitracnghiem.ui.home.profile.FragmentProfile
-import kotlinx.android.synthetic.main.activity_create_test.*
 import kotlinx.android.synthetic.main.activity_home_page.*
 
 @Suppress("DEPRECATION", "DEPRECATED_IDENTITY_EQUALS")
@@ -43,6 +43,7 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
     }
 
     private fun initUi() {
+
         iconSearch.setOnClickListener {
             val fm = supportFragmentManager.findFragmentById(R.id.changeIdHome)
             if (fm !is FragmentCategory) {
@@ -165,6 +166,10 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
         functionHome.isSelected = false
         functionProfile.isSelected = true
     }
+
+//    internal fun visibleTaBar(blur: Double){
+//        bottomWrap.alpha =  blur.toFloat()
+//    }
 
     private fun attachFragment(
         fragmentHolderLayoutId: Int,

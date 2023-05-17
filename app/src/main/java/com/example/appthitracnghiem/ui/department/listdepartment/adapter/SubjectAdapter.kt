@@ -43,25 +43,22 @@ class SubjectAdapter(val context: Context, private val listSubject: List<Subject
         holder.title.text = subject.title
         holder.description.text = subject.description
 
-        holder.itemView.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                val bundle: Bundle = Bundle()
-                bundle.putInt("ID", subject.id)
-                bundle.putString("title", subject.title)
-                val activity = context as AppCompatActivity
-                val fragmentListTest: FragmentListTest = FragmentListTest()
-                val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                fm.setCustomAnimations(
-                    R.anim.anim_up_enter,
-                    R.anim.anim_ignored_out,
-                    R.anim.anim_ignored_in,
-                    R.anim.anim_down_enter
-                )
-                fm.add(R.id.changeIdHome, fragmentListTest).addToBackStack(null).commit()
-                fragmentListTest.arguments = bundle
-            }
-
-        })
+        holder.itemView.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putInt("ID", subject.id)
+            bundle.putString("title", subject.title)
+            val activity = context as AppCompatActivity
+            val fragmentListTest = FragmentListTest()
+            val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
+            fm.setCustomAnimations(
+                R.anim.anim_up_enter,
+                R.anim.anim_ignored_out,
+                R.anim.anim_ignored_in,
+                R.anim.anim_down_enter
+            )
+            fm.add(R.id.changeIdHome, fragmentListTest).addToBackStack(null).commit()
+            fragmentListTest.arguments = bundle
+        }
     }
 
     override fun getItemCount(): Int {

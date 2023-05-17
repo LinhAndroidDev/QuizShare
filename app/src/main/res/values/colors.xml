@@ -42,4 +42,5 @@
     <color name="color_grey">#DDDDDD</color>
     <color name="grey_dark">#878787</color>
     <color name="bg_chart_line">#6A5AE0</color>
+    <color name="bg_un_sentence">#C4D0FB</color>
 </resources>
