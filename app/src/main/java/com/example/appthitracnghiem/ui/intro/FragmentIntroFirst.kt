@@ -10,11 +10,6 @@ import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
 import kotlinx.android.synthetic.main.fragment_intro_first.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentIntroFirst.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FragmentIntroFirst : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

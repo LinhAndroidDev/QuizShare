@@ -9,7 +9,7 @@ class PointResponse(
         val correct_number: Int?,
         val create_at: String?,
         val exam_id: Int?,
-        val exam_result: HashMap<String,Int>,
+        val exam_result: HashMap<String,Int?>,
         val finish_time: String?,
         val score: Float?,
         val skip_number: Int?,

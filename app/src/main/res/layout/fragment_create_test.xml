@@ -82,9 +82,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <EditText
+                android:id="@+id/edtSelectTitle"
                 android:textSize="16sp"
                 android:layout_marginTop="8dp"
-                android:textColorHint="#858494"
+                android:textColorHint="@color/color_number_position"
                 android:hint="Nhập tiêu đề bài kiểm tra"
                 android:paddingStart="24dp"
                 android:paddingEnd="50dp"
@@ -92,7 +93,8 @@
                 android:background="@drawable/boder_setting_new_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"/>
+                android:inputType="textEmailAddress"
+                android:imeOptions="actionDone"/>
             <TextView
                 android:id="@+id/txtDownTest"
                 android:text="@string/txtDownTest"
@@ -172,7 +174,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText
+                <TextView
+                    android:id="@+id/edtSelectDepartment"
                     android:textSize="16sp"
                     android:textColorHint="@color/color_number_position"
                     android:hint="@string/txtSelectDepartmentOrSubject"
@@ -181,8 +184,7 @@
                     android:paddingVertical="16dp"
                     android:background="@drawable/boder_setting_new_password"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"/>
+                    android:layout_height="wrap_content"/>
                 <ImageView
                     android:id="@+id/selectDepartment"
                     android:src="@drawable/down"
@@ -205,7 +207,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText
+                <TextView
+                    android:id="@+id/edtSelectLevel"
                     android:textSize="16sp"
                     android:textColorHint="@color/color_number_position"
                     android:hint="@string/txtPublicOrPrivate"
@@ -239,6 +242,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
+                    android:id="@+id/edtSelectTime"
                     android:textSize="16sp"
                     android:textColorHint="@color/color_number_position"
                     android:hint="@string/txtEnterTime"
@@ -248,7 +252,8 @@
                     android:background="@drawable/boder_setting_new_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"/>
+                    android:inputType="number"
+                    android:imeOptions="actionDone"/>
                 <ImageView
                     android:src="@drawable/icon_time"
                     android:layout_alignParentEnd="true"
@@ -267,7 +272,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <EditText
-                android:id="@+id/edtNumberQuiz"
+                android:id="@+id/edtSelectNumberQuiz"
                 android:textSize="16sp"
                 android:layout_marginTop="8dp"
                 android:textColorHint="@color/color_number_position"
@@ -278,7 +283,8 @@
                 android:background="@drawable/boder_setting_new_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"/>
+                android:inputType="number"
+                android:imeOptions="actionDone"/>
             <TextView
                 android:id="@+id/txtDetail"
                 android:layout_marginTop="16dp"
@@ -288,12 +294,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <EditText
+                android:id="@+id/edtDescribeQuiz"
                 android:textSize="16sp"
                 android:paddingVertical="16dp"
                 android:paddingStart="24dp"
                 android:paddingEnd="50dp"
                 android:layout_marginTop="8dp"
-                android:textColorHint="#858494"
+                android:textColorHint="@color/color_number_position"
                 android:hint="@string/txtEnterDetail"
                 android:background="@drawable/boder_setting_new_password"
                 android:layout_width="match_parent"

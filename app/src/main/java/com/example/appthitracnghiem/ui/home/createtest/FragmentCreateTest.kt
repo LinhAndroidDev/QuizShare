@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.*
+import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -20,6 +21,7 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.HomeActivity
+import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_create_test.*
 import kotlinx.android.synthetic.main.fragment_create_test.*
@@ -60,15 +62,59 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
         setStatusBar()
 
         menuCreateTest.setOnClickListener {
-            showMenuCreate(menuCreateTest, R.layout.popup_create_test, 0, -30, Gravity.BOTTOM)
+            val popUpView: View = View.inflate(requireActivity(), R.layout.popup_create_test, null)
+            showMenuCreate(popUpView, menuCreateTest, 0, -30, Gravity.BOTTOM)
         }
 
         selectDepartment.setOnClickListener {
-            showMenuCreate(selectDepartment, R.layout.popup_select_partment, 0, -30, Gravity.BOTTOM)
+            val popUpView: View = View.inflate(requireActivity(), R.layout.popup_select_partment, null)
+//            showMenuCreate(popUpView, selectDepartment, 0, -30, Gravity.BOTTOM)
+            val width = ViewGroup.LayoutParams.WRAP_CONTENT
+            val height = ViewGroup.LayoutParams.WRAP_CONTENT
+            val focusable = true
+            val popupWindow = PopupWindow(popUpView, width, height, focusable)
+            popupWindow.showAsDropDown(selectDepartment, 0, -30, Gravity.BOTTOM)
+
+            val natural: LinearLayout = popUpView.findViewById(R.id.selectNatural)
+            val social: LinearLayout = popUpView.findViewById(R.id.selectSocial)
+
+            natural.setOnClickListener {
+                edtSelectDepartment.text = "Tự nhiên"
+                popupWindow.dismiss()
+            }
+            social.setOnClickListener {
+                edtSelectDepartment.text = "Xã hội"
+                popupWindow.dismiss()
+            }
         }
 
         selectMode.setOnClickListener {
-            showMenuCreate(selectMode, R.layout.popup_select_mode, 0, -30, Gravity.BOTTOM)
+            val popUpView: View = View.inflate(requireActivity(), R.layout.popup_select_mode, null)
+//            showMenuCreate(popUpView, selectMode, 0, -30, Gravity.BOTTOM)
+            val width = ViewGroup.LayoutParams.WRAP_CONTENT
+            val height = ViewGroup.LayoutParams.WRAP_CONTENT
+            val focusable = true
+            val popupWindow = PopupWindow(popUpView, width, height, focusable)
+            popupWindow.showAsDropDown(selectMode, 0, -30, Gravity.BOTTOM)
+
+            val public: LinearLayout = popUpView.findViewById(R.id.selectPublic)
+            val private: LinearLayout = popUpView.findViewById(R.id.selectPrivate)
+
+            public.setOnClickListener {
+                edtSelectLevel.text = "Công khai"
+                viewModel.mPreferenceUtil.defaultPref()
+                    .edit().putInt(PreferenceKey.CREATE_STATUS, 1)
+                    .apply()
+                popupWindow.dismiss()
+            }
+
+            private.setOnClickListener {
+                edtSelectLevel.text = "Riêng tư"
+                viewModel.mPreferenceUtil.defaultPref()
+                    .edit().putInt(PreferenceKey.CREATE_STATUS, 2)
+                    .apply()
+                popupWindow.dismiss()
+            }
         }
 
         addCoverImage.setOnClickListener {
@@ -83,15 +129,33 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
         }
 
         createTest.setOnClickListener {
-            val strNumberQuiz: String = edtNumberQuiz.text.toString()
-            if (strNumberQuiz.isEmpty()) {
-                Toast.makeText(requireActivity(), "Bạn chưa nhập câu hỏi số", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                val intent = Intent(requireActivity(), CreateTestActivity::class.java)
-                intent.putExtra("numberQuiz", strNumberQuiz)
-                startActivity(intent)
-            }
+                val title: String = edtSelectTitle.text.toString()
+                val department: String = edtSelectDepartment.text.toString()
+                val time: String = edtSelectTime.text.toString()
+                val numberQuiz: String = edtSelectNumberQuiz.text.toString()
+                val describe: String = edtDescribeQuiz.text.toString()
+
+                if(title.isEmpty() || department.isEmpty() || time.isEmpty() || numberQuiz.isEmpty() || describe.isEmpty()){
+                    Toast.makeText(requireActivity(), "Bạn chưa nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
+                }else{
+                    viewModel.mPreferenceUtil.defaultPref()
+                        .edit().putString(PreferenceKey.CREATE_TITLE,title)
+                        .apply()
+                    viewModel.mPreferenceUtil.defaultPref()
+                        .edit().putString(PreferenceKey.CREATE_DEPARTMENT,department)
+                        .apply()
+                    viewModel.mPreferenceUtil.defaultPref()
+                        .edit().putInt(PreferenceKey.TIME_EXAM,time.toInt())
+                        .apply()
+                    viewModel.mPreferenceUtil.defaultPref()
+                        .edit().putInt(PreferenceKey.CREATE_NUMBER_QUIZ,numberQuiz.toInt())
+                        .apply()
+                    viewModel.mPreferenceUtil.defaultPref()
+                        .edit().putString(PreferenceKey.CREATE_DESCRIBE_QUIZ,describe)
+                        .apply()
+                    val intent = Intent(requireActivity(), CreateTestActivity::class.java)
+                    startActivity(intent)
+                }
         }
 
         shareWithFacebook.setOnClickListener {
@@ -146,14 +210,12 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
     }
 
     /** show menu add test */
-    private fun showMenuCreate(anchor: View, layout: Int, x: Int, y: Int, position: Int) {
-        val popUpView: View = View.inflate(requireActivity(), layout, null)
-
+    private fun showMenuCreate(popView: View,anchor: View, x: Int, y: Int, position: Int) {
         val width = ViewGroup.LayoutParams.WRAP_CONTENT
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
         val focusable = true
 
-        val popupWindow = PopupWindow(popUpView, width, height, focusable)
+        val popupWindow = PopupWindow(popView, width, height, focusable)
         popupWindow.showAsDropDown(anchor, x, y, position)
     }
 

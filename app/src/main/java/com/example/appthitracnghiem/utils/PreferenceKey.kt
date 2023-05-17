@@ -15,4 +15,9 @@ object PreferenceKey {
     var TYPE: String = "TYPE"
     var ARRAY_LIST_ANSWER: String = "ARRAY_LIST_ANSWER"
     var START_DO_TEST: String = "START_DO_TEST"
+    var CREATE_STATUS: String = "STATUS"
+    var CREATE_DEPARTMENT: String = "CREATE_DEPARTMENT"
+    var CREATE_TITLE: String = "CREATE_TITLE"
+    var CREATE_NUMBER_QUIZ: String = "CREATE_NUMBER_QUIZ"
+    var CREATE_DESCRIBE_QUIZ: String = "CREATE_DESCRIBE_QUIZ"
 }

@@ -50,6 +50,7 @@ class MenuQuestionAdapter(val context: Context, private val listQuestion: List<P
         val fm = activity.supportFragmentManager.findFragmentById(R.id.changeIdExam)
         if(fm is FragmentExam){
             fm.onClickNextQuestion = {
+                val t = it
                 val ps: PositiveQuestion = listQuestion[it]
                 holder.txtQuestion.text = ps.number.toString()
                 holder.txtQuestion.setBackgroundResource(R.drawable.selected_sentence)

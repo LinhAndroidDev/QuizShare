@@ -29,7 +29,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-@Suppress("DEPRECATION")
 class FragmentPoint : BaseFragment<PointViewModel>() {
 
     private lateinit var listExamQuestion: ArrayList<ExamQuestion>

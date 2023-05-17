@@ -9,7 +9,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PointViewModel : BaseViewModel() {
-    var listExamResultLiveData = MutableLiveData<HashMap<String, Int>>()
+    var listExamResultLiveData = MutableLiveData<HashMap<String, Int?>>()
     var scoreLiveData = MutableLiveData<Float>()
     var numberCorrectLiveData = MutableLiveData<Int>()
     var skipNumberLiveData = MutableLiveData<Int>()
@@ -28,6 +28,7 @@ class PointViewModel : BaseViewModel() {
                     response.body()?.let {
                         when (it.statusCode) {
                             ApiClient.STATUS_CODE_SUCCESS -> {
+                                val t = it.result?.exam_result
                                 listExamResultLiveData.value = it.result?.exam_result
                                 scoreLiveData.value = it.result?.score
                                 numberCorrectLiveData.value = it.result?.correct_number

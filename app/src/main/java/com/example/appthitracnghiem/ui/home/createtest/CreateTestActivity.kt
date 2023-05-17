@@ -15,11 +15,14 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.PositiveQuestion
+import com.example.appthitracnghiem.ui.EmptyViewModel
+import com.example.appthitracnghiem.ui.base.BaseActivity
 import com.example.appthitracnghiem.ui.home.createtest.adapter.PositiveQuestionAdapter
+import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.activity_create_test.*
 
 @Suppress("DEPRECATION")
-class CreateTestActivity : AppCompatActivity() {
+class CreateTestActivity : BaseActivity<EmptyViewModel>() {
     lateinit var listPositiveQuestion: ArrayList<PositiveQuestion>
     lateinit var positiveQuestionAdapter: PositiveQuestionAdapter
     private val GALLERY_RED_CODE: Int = 1000
@@ -28,14 +31,15 @@ class CreateTestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_test)
 
-        val numberQuiz = intent.getStringExtra("numberQuiz")?.toInt()
+        val numberQuiz = viewModel.mPreferenceUtil.defaultPref()
+            .getInt(PreferenceKey.CREATE_NUMBER_QUIZ, 0)
 
         val linearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recycleListNumber.layoutManager = linearLayoutManager
 
         listPositiveQuestion = arrayListOf()
-        for (i in 0 until numberQuiz!!) {
+        for (i in 0 until numberQuiz) {
             listPositiveQuestion.add(PositiveQuestion(i + 1))
         }
         positiveQuestionAdapter = PositiveQuestionAdapter(listPositiveQuestion, this)
