@@ -15,6 +15,7 @@ class PointViewModel : BaseViewModel() {
     var skipNumberLiveData = MutableLiveData<Int>()
     var wrongNumberLiveData = MutableLiveData<Int>()
     var isLoadingLiveData = MutableLiveData<Boolean>()
+    var examIdHistory = MutableLiveData<Int>()
 
     fun getResult(header: String, requestPoint: RequestPoint){
         isLoadingLiveData.value = true
@@ -28,12 +29,12 @@ class PointViewModel : BaseViewModel() {
                     response.body()?.let {
                         when (it.statusCode) {
                             ApiClient.STATUS_CODE_SUCCESS -> {
-                                val t = it.result?.exam_result
                                 listExamResultLiveData.value = it.result?.exam_result
                                 scoreLiveData.value = it.result?.score
                                 numberCorrectLiveData.value = it.result?.correct_number
                                 skipNumberLiveData.value = it.result?.skip_number
                                 wrongNumberLiveData.value = it.result?.wrong_number
+                                examIdHistory.value = it.result?.exam_history_id
                             }
                             ApiClient.STATUS_USER_EXIST -> {
                                 errorApiLiveData.value  = it.message

@@ -8,6 +8,7 @@ class PointResponse(
     data class Result(
         val correct_number: Int?,
         val create_at: String?,
+        val exam_history_id: Int?,
         val exam_id: Int?,
         val exam_result: HashMap<String,Int?>,
         val finish_time: String?,

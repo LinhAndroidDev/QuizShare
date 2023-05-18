@@ -101,15 +101,6 @@
                     android:text="Khoa tự nhiên"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:text="Xem tất cả"
-                    android:textColor="@color/color_purple"
-                    android:textSize="14sp" />
             </RelativeLayout>
 
             <LinearLayout

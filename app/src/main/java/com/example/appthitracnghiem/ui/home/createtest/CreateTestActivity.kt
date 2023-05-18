@@ -40,7 +40,7 @@ class CreateTestActivity : BaseActivity<EmptyViewModel>() {
 
         listPositiveQuestion = arrayListOf()
         for (i in 0 until numberQuiz) {
-            listPositiveQuestion.add(PositiveQuestion(i + 1))
+            listPositiveQuestion.add(PositiveQuestion(i + 1,null))
         }
         positiveQuestionAdapter = PositiveQuestionAdapter(listPositiveQuestion, this)
         recycleListNumber.adapter = positiveQuestionAdapter

@@ -46,16 +46,12 @@ class MenuQuestionAdapter(val context: Context, private val listQuestion: List<P
             onClickItem?.invoke(position)
         }
 
-        val activity = context as AppCompatActivity
-        val fm = activity.supportFragmentManager.findFragmentById(R.id.changeIdExam)
-        if(fm is FragmentExam){
-            fm.onClickNextQuestion = {
-                val t = it
-                val ps: PositiveQuestion = listQuestion[it]
-                holder.txtQuestion.text = ps.number.toString()
-                holder.txtQuestion.setBackgroundResource(R.drawable.selected_sentence)
-                holder.txtQuestion.setTextColor(Color.WHITE)
-            }
+        if (positiveQuestion.isSelect == true){
+            holder.txtQuestion.setBackgroundResource(R.drawable.selected_sentence)
+            holder.txtQuestion.setTextColor(Color.WHITE)
+        }else if(positiveQuestion.isSelect == false){
+            holder.txtQuestion.setBackgroundResource(R.drawable.un_selected_sentence)
+            holder.txtQuestion.setTextColor(ContextCompat.getColor(context,R.color.backgroundIntro))
         }
 
         if(positionSelect == position){

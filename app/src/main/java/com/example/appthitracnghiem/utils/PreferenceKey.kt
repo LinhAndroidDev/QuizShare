@@ -20,4 +20,5 @@ object PreferenceKey {
     var CREATE_TITLE: String = "CREATE_TITLE"
     var CREATE_NUMBER_QUIZ: String = "CREATE_NUMBER_QUIZ"
     var CREATE_DESCRIBE_QUIZ: String = "CREATE_DESCRIBE_QUIZ"
+    var EXAM_ID_HISTORY: String = "EXAM_ID_HISTORY"
 }

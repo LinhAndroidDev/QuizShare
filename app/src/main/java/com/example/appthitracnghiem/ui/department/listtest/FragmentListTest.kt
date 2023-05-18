@@ -34,10 +34,10 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
 
         val accessToken = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.AUTHORIZATION, "").toString()
-        val user_id = viewModel.mPreferenceUtil.defaultPref()
+        val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
 
-        val requestListExam = RequestListExam(user_id, id, type, 1, "asc")
+        val requestListExam = RequestListExam(userId, id, type, 1, "asc")
         viewModel.getListExam(accessToken, requestListExam)
 
         initUi()

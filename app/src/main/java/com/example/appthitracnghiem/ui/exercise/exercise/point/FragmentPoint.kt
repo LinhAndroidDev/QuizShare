@@ -29,6 +29,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
+@Suppress("DEPRECATION")
 class FragmentPoint : BaseFragment<PointViewModel>() {
 
     private lateinit var listExamQuestion: ArrayList<ExamQuestion>
@@ -59,13 +60,11 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
         for(i in 0 until listAnswer.size){
             val value = listAnswer[i]
             if(value == -1){
-                answerList[(i+1).toString()] = null
+                answerList[(i+1).toString()] = -1
             }else{
                 answerList[(i+1).toString()] = listExamQuestion[i].answer_list[listAnswer[i]].answer_id
             }
         }
-
-        val t = answerList
 
         val startTime = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.START_DO_TEST,"").toString()
@@ -98,6 +97,12 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
 
         viewModel.wrongNumberLiveData.observe(viewLifecycleOwner){
             wrongNumber.text = it.toString()
+        }
+
+        viewModel.examIdHistory.observe(viewLifecycleOwner){
+            viewModel.mPreferenceUtil.defaultPref()
+                .edit().putInt(PreferenceKey.EXAM_ID_HISTORY, it)
+                .apply()
         }
 
         viewModel.listExamResultLiveData.observe(viewLifecycleOwner){

@@ -3,6 +3,7 @@ package com.example.appthitracnghiem.data.remote
 import com.example.appthitracnghiem.data.remote.entity.*
 import com.example.appthitracnghiem.ui.department.listdepartment.RequestDepartmentInfo
 import com.example.appthitracnghiem.ui.department.listtest.RequestListExam
+import com.example.appthitracnghiem.ui.exercise.exercise.answer.RequestAnswer
 import com.example.appthitracnghiem.ui.exercise.exercise.exam.RequestExamQuestion
 import com.example.appthitracnghiem.ui.exercise.exercise.point.RequestPoint
 import com.example.appthitracnghiem.ui.exercise.topic.RequestSaveExam
@@ -149,4 +150,10 @@ interface ApiService {
         @Header("Authorization") header: String,
         @Body requestSearch: RequestSearch
     ): Call<SearchResponse>
+
+    @POST("getExamResult")
+    fun getExamResult(
+        @Header("Authorization") header: String,
+        @Body requestAnswer: RequestAnswer
+    ): Call<AnswerResponse>
 }

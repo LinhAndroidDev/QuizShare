@@ -41,8 +41,6 @@ import java.lang.reflect.Type
 @Suppress("DEPRECATION", "NAME_SHADOWING")
 class FragmentExam : BaseFragment<ExamViewModel>() {
 
-    private lateinit var listQuestion: MutableList<PositiveQuestion>
-
     private lateinit var menuQuestionAdapter: MenuQuestionAdapter
 
     private lateinit var countDownTimer: CountDownTimer
@@ -65,6 +63,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
     companion object {
         var arrayTxtQuestion = arrayListOf<TextView>()
+        var listQuestion: MutableList<PositiveQuestion> = mutableListOf()
     }
 
     @SuppressLint("SetTextI18n", "ResourceAsColor")
@@ -167,7 +166,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
     private fun initUi() {
 
         setStatusBar()
@@ -176,7 +175,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             if (POSITIVE_QUESTION < SIZE_LIST_QUESTION - 1) {
                 POSITIVE_QUESTION++
                 setTextView(POSITIVE_QUESTION)
-                onClickNextQuestion?.invoke(POSITIVE_QUESTION)
+                onClickNextQuestion?.invoke(listAnswer[POSITIVE_QUESTION])
             } else {
                 showLayoutSubmit()
             }
@@ -269,7 +268,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
         listQuestion = mutableListOf()
         for (i in 0 until SIZE_LIST_QUESTION) {
-            listQuestion.add(PositiveQuestion(i + 1))
+            listQuestion.add(PositiveQuestion(i + 1,null))
         }
 
         menuQuestionAdapter = MenuQuestionAdapter(requireActivity(), listQuestion)
