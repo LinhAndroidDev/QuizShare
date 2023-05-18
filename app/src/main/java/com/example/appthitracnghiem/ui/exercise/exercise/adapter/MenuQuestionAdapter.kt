@@ -2,7 +2,9 @@ package com.example.appthitracnghiem.ui.exercise.exercise.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.PositiveQuestion
 import com.example.appthitracnghiem.ui.exercise.exercise.exam.FragmentExam
+import com.example.appthitracnghiem.ui.exercise.exercise.exam.FragmentExam.Companion.listQuestion
+import com.example.appthitracnghiem.utils.PreferenceKey
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.layout_menu_question.view.*
+import java.lang.reflect.Type
 
 @Suppress("DEPRECATION")
 class MenuQuestionAdapter(val context: Context, private val listQuestion: List<PositiveQuestion>)
@@ -21,7 +28,6 @@ class MenuQuestionAdapter(val context: Context, private val listQuestion: List<P
 
     // Todo; callback dua value duoc click ra ben ngoai - popupWindow
     var onClickItem: ((Int) -> Unit)? = null
-    var positionSelect: Int = -1
 
     class ViewHolderQuestion(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtQuestion: TextView = itemView.findViewById(R.id.txtQuestion)
@@ -41,9 +47,15 @@ class MenuQuestionAdapter(val context: Context, private val listQuestion: List<P
         holder.txtQuestion.text = positiveQuestion.number.toString()
 
         holder.itemView.setOnClickListener {
-            positionSelect = position
             notifyDataSetChanged()
             onClickItem?.invoke(position)
+        }
+
+        val arrAnswer: ArrayList<Int> = getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
+        if(arrAnswer[position] == -1){
+            positiveQuestion.isSelect = false
+        }else if(arrAnswer[position] > -1){
+            positiveQuestion.isSelect = true
         }
 
         if (positiveQuestion.isSelect == true){
@@ -53,14 +65,15 @@ class MenuQuestionAdapter(val context: Context, private val listQuestion: List<P
             holder.txtQuestion.setBackgroundResource(R.drawable.un_selected_sentence)
             holder.txtQuestion.setTextColor(ContextCompat.getColor(context,R.color.backgroundIntro))
         }
+    }
 
-        if(positionSelect == position){
-            holder.txtQuestion.setBackgroundResource(R.drawable.selected_sentence)
-            holder.txtQuestion.setTextColor(Color.WHITE)
-        }else{
-            holder.txtQuestion.setBackgroundResource(R.drawable.boder_question)
-            holder.txtQuestion.setTextColor(ContextCompat.getColor(context,R.color.backgroundIntro))
-        }
+    private fun getListAnswer(key: String?): ArrayList<Int> {
+        val activity = context as AppCompatActivity
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+        val gson = Gson()
+        val json: String? = prefs.getString(key, null)
+        val type: Type = object : TypeToken<ArrayList<Int>>() {}.type
+        return gson.fromJson(json, type)
     }
 
     override fun getItemCount(): Int {

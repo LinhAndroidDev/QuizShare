@@ -1,4 +1,4 @@
-package com.example.appthitracnghiem.ui.home.createtest
+package com.example.appthitracnghiem.ui.home.createtest.question
 
 import android.content.Intent
 import android.graphics.Rect
@@ -6,55 +6,84 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Gravity
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.PositiveQuestion
 import com.example.appthitracnghiem.ui.EmptyViewModel
-import com.example.appthitracnghiem.ui.base.BaseActivity
-import com.example.appthitracnghiem.ui.home.createtest.adapter.PositiveQuestionAdapter
+import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.home.createtest.manager.FragmentManageExam
+import com.example.appthitracnghiem.ui.home.createtest.question.adapter.PositiveQuestionAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.activity_create_test.*
+import kotlinx.android.synthetic.main.fragment_create_exam.*
 
-@Suppress("DEPRECATION")
-class CreateTestActivity : BaseActivity<EmptyViewModel>() {
+class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
     lateinit var listPositiveQuestion: ArrayList<PositiveQuestion>
     lateinit var positiveQuestionAdapter: PositiveQuestionAdapter
     private val GALLERY_RED_CODE: Int = 1000
+    private var isComplete: Boolean = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_test)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val numberQuiz = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.CREATE_NUMBER_QUIZ, 0)
 
         val linearLayoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         recycleListNumber.layoutManager = linearLayoutManager
 
         listPositiveQuestion = arrayListOf()
         for (i in 0 until numberQuiz) {
-            listPositiveQuestion.add(PositiveQuestion(i + 1,null))
+            if(i == 0){
+                listPositiveQuestion.add(PositiveQuestion(i + 1,true))
+            }else{
+                listPositiveQuestion.add(PositiveQuestion(i + 1,null))
+            }
         }
-        positiveQuestionAdapter = PositiveQuestionAdapter(listPositiveQuestion, this)
+        positiveQuestionAdapter = PositiveQuestionAdapter(listPositiveQuestion, requireActivity())
+        positiveQuestionAdapter.hasClickItem = {
+            listPositiveQuestion[0].isSelect = false
+        }
+        positiveQuestionAdapter.getPositiveQuestion = {
+            if(it == (listPositiveQuestion.size-1)){
+                txtContinue.text = "Hoàn thành"
+                isComplete = true
+            }else{
+                txtContinue.text = "Tiếp theo"
+                isComplete = false
+            }
+        }
         recycleListNumber.adapter = positiveQuestionAdapter
 
         initUi()
     }
 
     private fun initUi() {
+        continueCreateTest.setOnClickListener {
+            if(isComplete){
+                val fm : FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
+                val fragmentManageExam = FragmentManageExam()
+                fm?.replace(R.id.changeIdCreateExam, fragmentManageExam)?.addToBackStack(null)
+                    ?.commit()
+            }
+        }
+
         backCreateTest.setOnClickListener {
-            finish()
+            activity?.finish()
         }
 
         addCoverImageCreateTest.setOnClickListener {
-            val intent: Intent = Intent(Intent.ACTION_PICK)
+            val intent = Intent(Intent.ACTION_PICK)
             intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             startActivityForResult(intent, GALLERY_RED_CODE)
         }
@@ -90,7 +119,7 @@ class CreateTestActivity : BaseActivity<EmptyViewModel>() {
     }
 
     private fun setText() {
-        val semibold: Typeface? = ResourcesCompat.getFont(this, R.font.svn_gilroy_semibold)
+        val semibold: Typeface? = ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         txtCreateTest.typeface = semibold
         txtSelectImageCt.typeface = semibold
         txtAddQuestion.typeface = semibold
@@ -107,13 +136,25 @@ class CreateTestActivity : BaseActivity<EmptyViewModel>() {
     }
 
     private fun showMenuCreate(anchor: View, layout: Int, x: Int, y: Int, position: Int) {
-        val popUpView: View = View.inflate(this@CreateTestActivity, layout, null)
+        val popUpView: View = View.inflate(requireActivity(), layout, null)
 
         val width = ViewGroup.LayoutParams.WRAP_CONTENT
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
-        val focusable: Boolean = true
+        val focusable = true
 
-        val popupWindow: PopupWindow = PopupWindow(popUpView, width, height, focusable)
+        val popupWindow = PopupWindow(popUpView, width, height, focusable)
         popupWindow.showAsDropDown(anchor, x, y, position)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_create_exam, container, false)
+    }
+
+    override fun onFragmentBack(): Boolean {
+        return true
     }
 }

@@ -183,9 +183,10 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         menuQuestionAdapter.onClickItem = { positionItem ->
             POSITIVE_QUESTION = positionItem
             setTextView(POSITIVE_QUESTION)
-            txtPositionQuiz.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
+            txtPositionQuizAnswer.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
         }
         val recycleQuestion: RecyclerView = popUpView.findViewById(R.id.recycleViewMenuQuestion)
+        recycleQuestion.isEnabled = false
 
         val mLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(requireActivity(), 5)
 

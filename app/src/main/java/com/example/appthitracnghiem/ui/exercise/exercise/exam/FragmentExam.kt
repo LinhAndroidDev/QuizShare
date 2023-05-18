@@ -59,7 +59,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
     private lateinit var listAnswer: ArrayList<Int>
 
-    var onClickNextQuestion: ((Int) -> Unit)? = null
+    var onClickChangeQuestion: ((Boolean) -> Unit)? = null
 
     companion object {
         var arrayTxtQuestion = arrayListOf<TextView>()
@@ -94,7 +94,11 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             listExamQuestion = it
             SIZE_LIST_QUESTION = it.size
             for (i in 0 until SIZE_LIST_QUESTION) {
-                listAnswer.add(-1)
+                if(i == 0){
+                    listAnswer.add(-1)
+                }else{
+                    listAnswer.add(-2)
+                }
             }
             txtPositionQuiz.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
@@ -175,7 +179,6 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             if (POSITIVE_QUESTION < SIZE_LIST_QUESTION - 1) {
                 POSITIVE_QUESTION++
                 setTextView(POSITIVE_QUESTION)
-                onClickNextQuestion?.invoke(listAnswer[POSITIVE_QUESTION])
             } else {
                 showLayoutSubmit()
             }
@@ -310,6 +313,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         val arrAnswer: ArrayList<Int> = getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
         if (arrAnswer[psQuestion] >= 0) {
             arrayTxtQuestion[arrAnswer[psQuestion]].setBackgroundResource(R.drawable.select_text_view)
+        }else if(listAnswer[psQuestion] == -2){
+            listAnswer[psQuestion] = -1
         }
     }
 

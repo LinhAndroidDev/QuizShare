@@ -1,4 +1,4 @@
-package com.example.appthitracnghiem.ui.home.createtest.adapter
+package com.example.appthitracnghiem.ui.home.createtest.question.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -14,6 +14,8 @@ import com.example.appthitracnghiem.model.PositiveQuestion
 class PositiveQuestionAdapter(val listPossitive: List<PositiveQuestion>, val context: Context) :
     RecyclerView.Adapter<PositiveQuestionAdapter.PositiveViewHolder>() {
     var number: Int = -1
+    var hasClickItem: ((Boolean) -> Unit)? = null
+    var getPositiveQuestion: ((Int) -> Unit)? = null
 
     class PositiveViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var txtPositive: TextView = itemView.findViewById(R.id.txtPositive)
@@ -34,6 +36,8 @@ class PositiveQuestionAdapter(val listPossitive: List<PositiveQuestion>, val con
         holder.itemView.setOnClickListener {
             number = position
             notifyDataSetChanged()
+            hasClickItem?.invoke(false)
+            getPositiveQuestion?.invoke(position)
         }
 
         if (number == position) {
@@ -42,6 +46,10 @@ class PositiveQuestionAdapter(val listPossitive: List<PositiveQuestion>, val con
         } else {
             holder.txtPositive.setTextColor(Color.BLACK)
             holder.txtPositive.setBackgroundResource(R.drawable.un_select_positive_quiz)
+            if(positiveQuestion.isSelect == true){
+                holder.txtPositive.setTextColor(Color.WHITE)
+                holder.txtPositive.setBackgroundResource(R.drawable.select_positive_quiz)
+            }
         }
     }
 

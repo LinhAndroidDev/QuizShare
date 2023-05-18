@@ -48,7 +48,7 @@
             android:name=".ui.exercise.topic.ExerciseActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.createtest.CreateTestActivity"
+            android:name=".ui.home.createtest.question.CreateTestActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
