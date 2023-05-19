@@ -45,10 +45,9 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
 
     var onClickNextQuestion: ((Int) -> Unit)? = null
 
-    private val listResults = ArrayList<Int?>()
-
     companion object {
         var arrayTxtQuestion = arrayListOf<TextView>()
+        var listResult: ArrayList<Int> = arrayListOf()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -219,6 +218,11 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         val arrAnswer: ArrayList<Int> = getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
         if (arrAnswer[psQuestion] >= 0) {
             arrayTxtQuestion[arrAnswer[psQuestion]].setBackgroundResource(R.drawable.select_text_view)
+        }
+        listResult = getListAnswer(PreferenceKey.ARRAY_LIST_RESULTS)
+        val t = listResult
+        if(listResult[psQuestion] != arrAnswer[psQuestion]){
+            arrayTxtQuestion[listResult[psQuestion]].setBackgroundResource(R.drawable.bg_answer_fail)
         }
     }
 

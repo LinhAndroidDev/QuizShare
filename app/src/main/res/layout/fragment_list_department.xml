@@ -1,98 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundIntro"
-    android:orientation="vertical"
     tools:context=".ui.department.listdepartment.FragmentListDepartment">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="61dp">
-
-        <ImageView
-            android:id="@+id/backDepartment"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/back" />
-
-        <TextView
-            android:id="@+id/textTitleCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Danh sách môn"
-            android:textColor="@color/white"
-            android:textSize="24sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/searchDepartment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/bg_search"
-            android:hint="Tìm khoa"
-            android:inputType="textEmailAddress"
-            android:paddingVertical="16dp"
-            android:paddingStart="56dp"
-            android:paddingEnd="24dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="18sp"
-            tools:ignore="Deprecated"
-            android:imeOptions="actionDone"/>
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="19dp"
-            android:src="@drawable/icon_search" />
-    </RelativeLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/boder_listquiz"
         android:orientation="vertical">
         <RelativeLayout
-            android:layout_weight="6"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
-            <com.jpardogo.android.googleprogressbar.library.GoogleProgressBar
-                android:id="@+id/loadingDepartmentInfo"
-                android:layout_marginTop="70dp"
-                android:layout_marginBottom="120dp"
-                android:layout_gravity="center"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_centerInParent="true"
-                android:visibility="invisible"
-                app:type="chrome_floating_circles"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycleDetailListDepartment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="10dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="61dp">
+
+            <ImageView
+                android:id="@+id/backDepartment"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:id="@+id/textTitleCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Danh sách môn"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
         </RelativeLayout>
-        <LinearLayout
-            android:layout_weight="1"
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"/>
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/searchDepartment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_search"
+                android:hint="Tìm khoa"
+                android:inputType="textEmailAddress"
+                android:paddingVertical="16dp"
+                android:paddingStart="56dp"
+                android:paddingEnd="24dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="18sp"
+                tools:ignore="Deprecated"
+                android:imeOptions="actionDone"/>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="19dp"
+                android:src="@drawable/icon_search" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/boder_listquiz"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_weight="6"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+                <com.jpardogo.android.googleprogressbar.library.GoogleProgressBar
+                    android:id="@+id/loadingDepartmentInfo"
+                    android:layout_marginTop="70dp"
+                    android:layout_marginBottom="120dp"
+                    android:layout_gravity="center"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible"
+                    app:type="chrome_floating_circles"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycleDetailListDepartment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp" />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"/>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/layoutListDepartmentCover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>

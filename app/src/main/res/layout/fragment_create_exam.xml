@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:id="@+id/layoutCreateExam"
     tools:context=".ui.home.createtest.question.FragmentCreateExam">
 
@@ -64,6 +63,7 @@
                         android:layout_width="15dp"
                         android:layout_height="15dp"/>
                     <TextView
+                        android:id="@+id/txtTime"
                         android:text="@string/txtMinutes"
                         android:textSize="14sp"
                         android:textColor="@color/black"
@@ -72,6 +72,7 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/createResults"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -145,6 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <EditText
+                android:id="@+id/questionCreate"
                 android:textSize="16sp"
                 android:layout_marginTop="8dp"
                 android:textColorHint="@color/color_number_position"
@@ -161,10 +163,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center"
-                android:weightSum="10">
+                android:gravity="center">
                 <EditText
-                    android:layout_weight="9"
+                    android:id="@+id/answerCreate1"
+                    android:layout_weight="19"
                     android:textSize="16sp"
                     android:textColorHint="@color/color_number_position"
                     android:hint="@string/txtEnterAnswer"
@@ -172,25 +174,31 @@
                     android:paddingEnd="50dp"
                     android:paddingVertical="16dp"
                     android:background="@drawable/boder_setting_new_password"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"/>
-                <ImageView
+                <CheckBox
+                    android:id="@+id/isAnswer1"
                     android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    android:src="@drawable/icon_equals"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"/>
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"/>
+<!--                <ImageView-->
+<!--                    android:layout_marginStart="20dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:src="@drawable/icon_equals"-->
+<!--                    android:layout_width="32dp"-->
+<!--                    android:layout_height="32dp"/>-->
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center"
-                android:weightSum="10">
+                android:gravity="center">
                 <EditText
-                    android:layout_weight="9"
+                    android:id="@+id/answerCreate2"
+                    android:layout_weight="19"
                     android:textSize="16sp"
                     android:textColorHint="@color/color_number_position"
                     android:hint="@string/txtEnterAnswer"
@@ -198,25 +206,25 @@
                     android:paddingEnd="50dp"
                     android:paddingVertical="16dp"
                     android:background="@drawable/boder_setting_new_password"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"/>
-                <ImageView
+                <CheckBox
+                    android:id="@+id/isAnswer2"
                     android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    android:src="@drawable/icon_equals"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"/>
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center"
-                android:weightSum="10">
+                android:gravity="center">
                 <EditText
-                    android:layout_weight="9"
+                    android:id="@+id/answerCreate3"
+                    android:layout_weight="19"
                     android:textSize="16sp"
                     android:textColorHint="@color/color_number_position"
                     android:hint="@string/txtEnterAnswer"
@@ -224,15 +232,41 @@
                     android:paddingEnd="50dp"
                     android:paddingVertical="16dp"
                     android:background="@drawable/boder_setting_new_password"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"/>
-                <ImageView
+                <CheckBox
+                    android:id="@+id/isAnswer3"
                     android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    android:src="@drawable/icon_equals"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"/>
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <EditText
+                    android:id="@+id/answerCreate4"
+                    android:layout_weight="19"
+                    android:textSize="16sp"
+                    android:textColorHint="@color/color_number_position"
+                    android:hint="@string/txtEnterAnswer"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="50dp"
+                    android:paddingVertical="16dp"
+                    android:background="@drawable/boder_setting_new_password"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"/>
+                <CheckBox
+                    android:id="@+id/isAnswer4"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

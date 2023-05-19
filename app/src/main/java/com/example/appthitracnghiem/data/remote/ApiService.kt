@@ -10,6 +10,7 @@ import com.example.appthitracnghiem.ui.exercise.topic.RequestSaveExam
 import com.example.appthitracnghiem.ui.home.RequestUserInfo
 import com.example.appthitracnghiem.ui.home.category.RequestCategory
 import com.example.appthitracnghiem.ui.home.category.search.RequestSearch
+import com.example.appthitracnghiem.ui.home.createtest.question.RequestCreateExam
 import com.example.appthitracnghiem.ui.home.history.saved.department.RequestSavedDepartment
 import com.example.appthitracnghiem.ui.home.history.saved.subject.RequestSubjectSaved
 import com.example.appthitracnghiem.ui.home.history.saved.test.RequestTestSaved
@@ -156,4 +157,10 @@ interface ApiService {
         @Header("Authorization") header: String,
         @Body requestAnswer: RequestAnswer
     ): Call<AnswerResponse>
+
+    @POST("createExam")
+    fun createExam(
+        @Header("Authorization") header: String,
+        @Body requestCreateExam: RequestCreateExam
+    ): Call<CreateExamResponse>
 }

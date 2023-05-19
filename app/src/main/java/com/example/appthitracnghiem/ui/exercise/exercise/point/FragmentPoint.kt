@@ -91,10 +91,6 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
             numberCorrect.text = "$it câu hỏi"
         }
 
-        viewModel.skipNumberLiveData.observe(viewLifecycleOwner){
-            skipNumber.text = it.toString()
-        }
-
         viewModel.wrongNumberLiveData.observe(viewLifecycleOwner){
             wrongNumber.text = it.toString()
         }
@@ -103,10 +99,6 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
             viewModel.mPreferenceUtil.defaultPref()
                 .edit().putInt(PreferenceKey.EXAM_ID_HISTORY, it)
                 .apply()
-        }
-
-        viewModel.listExamResultLiveData.observe(viewLifecycleOwner){
-            val t = it
         }
 
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
@@ -138,6 +130,14 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
     }
 
     private fun initUi() {
+        var count = 0
+        val listAnswer = getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
+        for (i in 0 until listAnswer.size){
+            if(listAnswer[i] < 0){
+                count++
+            }
+        }
+        skipNumber.text = count.toString()
 
         setStatusBar()
 

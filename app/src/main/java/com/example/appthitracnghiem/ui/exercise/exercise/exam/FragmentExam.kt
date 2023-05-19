@@ -64,6 +64,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
     companion object {
         var arrayTxtQuestion = arrayListOf<TextView>()
         var listQuestion: MutableList<PositiveQuestion> = mutableListOf()
+        var listResult: ArrayList<Int> = arrayListOf()
     }
 
     @SuppressLint("SetTextI18n", "ResourceAsColor")
@@ -99,7 +100,13 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                 }else{
                     listAnswer.add(-2)
                 }
+                for(j in 0 until listExamQuestion[i].answer_list.size){
+                    if(listExamQuestion[i].answer_list[j].type == 1){
+                        listResult.add(j)
+                    }
+                }
             }
+            saveListAnswer(listResult, PreferenceKey.ARRAY_LIST_RESULTS)
             txtPositionQuiz.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
             setTextView(POSITIVE_QUESTION)

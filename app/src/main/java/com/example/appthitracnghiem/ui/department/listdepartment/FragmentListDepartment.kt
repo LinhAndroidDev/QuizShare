@@ -1,11 +1,15 @@
 package com.example.appthitracnghiem.ui.department.listdepartment
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.base.BaseFragment
@@ -24,6 +28,11 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         initUi()
+    }
+
+    private fun View.hideKeyboard() {
+        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
 
     override fun bindData() {
@@ -53,7 +62,13 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
         viewModel.getDataDepartmentDetail(accessToken, requestDepartmentInfo)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initUi() {
+        layoutListDepartmentCover.setOnTouchListener { view, _ ->
+            view.hideKeyboard()
+            false
+        }
+
         backDepartment.setOnClickListener{
             activity?.onBackPressed()
         }
