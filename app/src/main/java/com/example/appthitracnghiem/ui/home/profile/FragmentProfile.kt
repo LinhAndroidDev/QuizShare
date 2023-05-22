@@ -33,11 +33,15 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
         val avt = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.USER_AVATAR,"")
 
-        Picasso.get()
-            .load(avt)
-            .placeholder(R.drawable.loadimage)
-            .error(R.drawable.logo6)
-            .into(avatarUserProfile)
+        if(avt?.isEmpty() == true){
+            avatarUserProfile.setImageResource(R.drawable.logo6)
+        }else{
+            Picasso.get()
+                .load(avt)
+                .placeholder(R.drawable.loadimage)
+                .error(R.drawable.logo6)
+                .into(avatarUserProfile)
+        }
 
 //        (activity as HomeActivity).hideTabBar(scrollProfile)
 

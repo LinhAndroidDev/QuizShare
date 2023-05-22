@@ -9,24 +9,42 @@ import retrofit2.Response
 import javax.security.auth.callback.Callback
 
 class ForgetPasswordViewModel : BaseViewModel() {
-    val verification = MutableLiveData<Boolean>()
+    var isLoading = MutableLiveData<Boolean>()
+    var isSuccessful = MutableLiveData<Boolean>()
 
-    fun checkEmail(requestEmailVerification: RequestEmailVerification){
+    fun checkEmail(
+        requestEmailVerification: RequestEmailVerification
+    ){
+        isLoading.value = true
         ApiClient.shared().emailVerification(requestEmailVerification)
             .enqueue(object : retrofit2.Callback<EmailVerificationResponse> {
                 override fun onResponse(
                     call: Call<EmailVerificationResponse>,
                     response: Response<EmailVerificationResponse>
                 ) {
-                    if(response.body()?.statusCode == ApiClient.STATUS_CODE_SUCCESS){
-                        verification.value = response.body()?.result
-                    }
-                    if(response.body()?.statusCode == ApiClient.STATUS_USER_EXIST){
-                        errorApiLiveData.value = response.body()?.message
+                    isLoading.value = false
+                    if(response.isSuccessful){
+                        response.body().let {
+                            when(it?.statusCode){
+                                ApiClient.STATUS_CODE_SUCCESS->{
+                                    isSuccessful.value = true
+                                }
+                                ApiClient.STATUS_USER_EXIST->{
+                                    errorApiLiveData.value = it.message
+                                }
+                                ApiClient.STATUS_INVALID_TOKEN->{
+                                    errorApiLiveData.value = it.message
+                                }
+                                ApiClient.STATUS_CODE_SERVER_NOT_RESPONSE->{
+                                    errorApiLiveData.value = it.message
+                                }
+                            }
+                        }
                     }
                 }
 
                 override fun onFailure(call: Call<EmailVerificationResponse>, t: Throwable) {
+                    isLoading.value = false
                     errorApiLiveData.value = t.message
                 }
 

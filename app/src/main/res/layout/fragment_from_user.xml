@@ -35,6 +35,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
             <TextView
+                android:id="@+id/seeAllUser"
                 android:text="@string/txtSeeAll"
                 android:textColor="@color/color_purple"
                 android:textSize="14sp"

@@ -8,7 +8,6 @@ import com.example.appthitracnghiem.ui.exercise.exercise.exam.RequestExamQuestio
 import com.example.appthitracnghiem.ui.exercise.exercise.point.RequestPoint
 import com.example.appthitracnghiem.ui.exercise.topic.RequestSaveExam
 import com.example.appthitracnghiem.ui.home.RequestUserInfo
-import com.example.appthitracnghiem.ui.home.category.RequestCategory
 import com.example.appthitracnghiem.ui.home.category.search.RequestSearch
 import com.example.appthitracnghiem.ui.home.createtest.question.RequestCreateExam
 import com.example.appthitracnghiem.ui.home.history.saved.department.RequestSavedDepartment
@@ -39,14 +38,9 @@ interface ApiService {
             : Call<LoginResponse>
 
     @POST("forgotPassword")
-    fun emailVerification(@Body requestEmailVerification: RequestEmailVerification)
-            : Call<EmailVerificationResponse>
-
-    @POST("searchSubject")
-    fun getCategory(
-        @Header("Authorization") header: String,
-        @Body requestCategory: RequestCategory
-    ): Call<CategoryResponse>
+    fun emailVerification(
+        @Body requestEmailVerification: RequestEmailVerification
+    ): Call<EmailVerificationResponse>
 
     @POST("getDepartmentList")
     fun getDepartmentList(

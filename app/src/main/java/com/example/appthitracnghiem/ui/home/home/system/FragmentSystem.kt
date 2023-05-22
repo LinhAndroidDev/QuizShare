@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.department.listdepartment.FragmentListDepartment
 import com.example.appthitracnghiem.ui.home.home.system.adapter.DepartmentAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment_system.*
@@ -28,6 +30,12 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
         val linearLayoutManager =
             object : LinearLayoutManager(requireActivity()) { override fun canScrollVertically() = false }
         recycleListLiveQuizzes.layoutManager = linearLayoutManager
+
+        seeAllSystem.setOnClickListener {
+            val fragmentListDepartment = FragmentListDepartment()
+            val fm: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+            fm.add(R.id.changeIdHome,fragmentListDepartment).addToBackStack(null).commit()
+        }
 
         setText()
     }

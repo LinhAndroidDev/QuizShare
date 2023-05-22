@@ -47,10 +47,14 @@ class FragmentTopic : BaseFragment<TopicViewModel>() {
             infoTopic.visibility = View.VISIBLE
             memoryTopic.visibility = View.VISIBLE
             nameTopic.text = name
-            Picasso.get().load(avt)
-                .placeholder(R.drawable.loadimage)
-                .error(R.drawable.logo6)
-                .into(avtTopic)
+            if(avt!!.isEmpty()){
+                avtTopic.setImageResource(R.drawable.logo6)
+            }else{
+                Picasso.get().load(avt)
+                    .placeholder(R.drawable.loadimage)
+                    .error(R.drawable.logo6)
+                    .into(avtTopic)
+            }
         }
 
         val loading = ProgressDialog(requireActivity())

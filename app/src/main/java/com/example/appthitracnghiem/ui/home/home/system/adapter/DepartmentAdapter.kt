@@ -1,6 +1,7 @@
 package com.example.appthitracnghiem.ui.home.home.system.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +49,9 @@ class DepartmentAdapter(
             mPreferenceUtil.defaultPref().edit()
                 .putInt(PreferenceKey.TYPE, 0)
                 .apply()
-
+            mPreferenceUtil.defaultPref().edit()
+                .putInt(PreferenceKey.ID_DEPARTMENT,position)
+                .apply()
             val fragmentListDepartment = FragmentListDepartment()
             val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
             fm.setCustomAnimations(

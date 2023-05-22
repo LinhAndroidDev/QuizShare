@@ -69,11 +69,15 @@ class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
         val avt = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.USER_AVATAR,"")
 
-        Picasso.get()
-            .load(avt)
-            .placeholder(R.drawable.loadimage)
-            .error(R.drawable.logo6)
-            .into(avatarUpdateInfo)
+        if(avt?.isEmpty() == true){
+            avatarUpdateInfo.setImageResource(R.drawable.logo6)
+        }else{
+            Picasso.get()
+                .load(avt)
+                .placeholder(R.drawable.loadimage)
+                .error(R.drawable.logo6)
+                .into(avatarUpdateInfo)
+        }
 
         backUpdateInfo.setOnClickListener {
             activity?.onBackPressed()

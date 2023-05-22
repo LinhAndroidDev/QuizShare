@@ -8,18 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.login.FragmentLogin
 import kotlinx.android.synthetic.main.fragment__create_password.*
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentCreatePassword.newInstance] factory method to
- * create an instance of this fragment.
- */
 
 @Suppress("DEPRECATION")
 class FragmentCreatePassword : BaseFragment<EmptyViewModel>() {
@@ -30,6 +25,12 @@ class FragmentCreatePassword : BaseFragment<EmptyViewModel>() {
 
         val bundle: Bundle = requireArguments()
         email = bundle.getString("email").toString()
+
+        val uri = activity?.intent?.data
+        if(uri != null){
+            val path = uri.toString()
+            Toast.makeText(requireActivity(),"Data : $path", Toast.LENGTH_SHORT).show()
+        }
 
         initUi()
     }

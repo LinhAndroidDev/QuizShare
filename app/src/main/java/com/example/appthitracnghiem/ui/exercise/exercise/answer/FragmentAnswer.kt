@@ -220,7 +220,6 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
             arrayTxtQuestion[arrAnswer[psQuestion]].setBackgroundResource(R.drawable.select_text_view)
         }
         listResult = getListAnswer(PreferenceKey.ARRAY_LIST_RESULTS)
-        val t = listResult
         if(listResult[psQuestion] != arrAnswer[psQuestion]){
             arrayTxtQuestion[listResult[psQuestion]].setBackgroundResource(R.drawable.bg_answer_fail)
         }

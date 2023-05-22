@@ -52,10 +52,11 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
     private fun initUi() {
 
         setStatusBar()
+
         avatarUseHome.setOnClickListener {
             val fragmentProfile = FragmentProfile()
             val fm = activity?.supportFragmentManager?.beginTransaction()
-            fm?.replace(R.id.changeIdHome,fragmentProfile)?.commit()
+            fm?.add(R.id.changeIdHome,fragmentProfile)?.addToBackStack(null)?.commit()
             (activity as HomeActivity).clickAvatar()
         }
 
@@ -104,13 +105,17 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
         }
 
         viewModel.avartarUserLiveData.observe(viewLifecycleOwner) {
-            viewModel.mPreferenceUtil.defaultPref()
-                .edit().putString(PreferenceKey.USER_AVATAR,it)
-                .apply()
-            Picasso.get().load(it)
-                .placeholder(R.drawable.loadimage)
-                .error(R.drawable.logo6)
-                .into(avatarUseHome)
+            if(it.isEmpty()){
+                avatarUseHome.setImageResource(R.drawable.logo6)
+            }else{
+                viewModel.mPreferenceUtil.defaultPref()
+                    .edit().putString(PreferenceKey.USER_AVATAR,it)
+                    .apply()
+                Picasso.get().load(it)
+                    .placeholder(R.drawable.loadimage)
+                    .error(R.drawable.logo6)
+                    .into(avatarUseHome)
+            }
         }
     }
 

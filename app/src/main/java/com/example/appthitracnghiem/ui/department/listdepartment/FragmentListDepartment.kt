@@ -47,7 +47,14 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
         }
 
         viewModel.listDepartmentLiveData.observe(viewLifecycleOwner){ listDepartment->
-            listDepartmentAdapter = ListDepartmentAdapter(requireActivity(), listDepartment)
+//            val bundle = requireArguments()
+//            val id: Int = bundle.getInt("id_department")
+//            if(id != null){
+//                listDepartmentAdapter = ListDepartmentAdapter(requireActivity(), listDepartment[id])
+//            }{
+                listDepartmentAdapter = ListDepartmentAdapter(requireActivity(), listDepartment)
+//            }
+
             val linear = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
             listDepartmentAdapter.listDepartment =  listDepartment
             recycleDetailListDepartment.layoutManager = linear
