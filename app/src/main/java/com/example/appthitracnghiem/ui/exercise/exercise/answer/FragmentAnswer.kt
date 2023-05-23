@@ -243,6 +243,7 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         txt.setPadding(32, 24, 32, 24)
         txt.layoutParams = params
         txt.textSize = 16F
+        txt.setLineSpacing(2f,1.4f)
         txt.text = listExamQuestion[position].answer_list[i].content
         txt.setTextColor(Color.BLACK)
         txt.setBackgroundResource(R.drawable.un_select_text_view)

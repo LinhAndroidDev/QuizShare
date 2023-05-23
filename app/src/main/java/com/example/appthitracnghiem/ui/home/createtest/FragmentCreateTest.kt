@@ -146,12 +146,10 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
                         .edit().putInt(PreferenceKey.TIME_EXAM,time.toInt())
                         .apply()
                     viewModel.mPreferenceUtil.defaultPref()
-                        .edit().putInt(PreferenceKey.CREATE_NUMBER_QUIZ,numberQuiz.toInt())
-                        .apply()
-                    viewModel.mPreferenceUtil.defaultPref()
                         .edit().putString(PreferenceKey.CREATE_DESCRIBE_QUIZ,describe)
                         .apply()
                     val intent = Intent(requireActivity(), CreateTestActivity::class.java)
+                    intent.putExtra("number_question",numberQuiz.toInt())
                     startActivity(intent)
                 }
         }

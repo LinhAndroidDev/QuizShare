@@ -32,6 +32,27 @@ class CreateTestActivity : BaseActivity<EmptyViewModel>() {
         setContentView(R.layout.activity_create_test)
 
         replaceFragment(FragmentCreateExam())
+
+        /** Check keyboard show **/
+        changeIdCreateExam.viewTreeObserver
+            .addOnGlobalLayoutListener {
+                val r = Rect()
+                changeIdCreateExam.getWindowVisibleDisplayFrame(r)
+                val screenHeight: Int = changeIdCreateExam.rootView.height
+
+                // r.bottom is the position above soft keypad or device button.
+                // if keypad is shown, the r.bottom is smaller than that before.
+                val keypadHeight: Int = screenHeight - r.bottom
+
+                val fm: Fragment? = supportFragmentManager.findFragmentById(R.id.changeIdCreateExam)
+                if(fm is FragmentCreateExam){
+                    if (keypadHeight > screenHeight * 0.15) {
+                        fm.visibleComplete(true)
+                    }else{
+                        fm.visibleComplete(false)
+                    }
+                }
+            }
     }
 
     private fun replaceFragment(fg: Fragment){

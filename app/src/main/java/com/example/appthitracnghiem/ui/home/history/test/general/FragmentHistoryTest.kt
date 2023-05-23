@@ -12,10 +12,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.HistoryExam
-import com.example.appthitracnghiem.model.Test
-import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import com.example.appthitracnghiem.ui.department.listtest.adapter.TestAdapter
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.home.history.test.general.adapter.HistoryTestAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
@@ -24,7 +21,9 @@ import kotlinx.android.synthetic.main.fragment_list_test.*
 
 @Suppress("DEPRECATION")
 class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
-    lateinit var testAdapter: HistoryTestAdapter
+    private lateinit var testAdapter: HistoryTestAdapter
+    lateinit var testAdapterUser: HistoryTestAdapter
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,9 +53,27 @@ class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
             val linear = object : LinearLayoutManager(requireActivity()){
                 override fun canScrollVertically() = false
             }
-            testAdapter = HistoryTestAdapter(requireActivity(),it)
+            val linearUser = object : LinearLayoutManager(requireActivity()){
+                override fun canScrollVertically() = false
+            }
+            val listSystem: ArrayList<HistoryExam> = arrayListOf()
+            val listUser: ArrayList<HistoryExam> = arrayListOf()
+            for(i in 0 until it.size){
+                if(it[i].user_create == null){
+                    listSystem.add(it[i])
+                }else{
+                    listUser.add(it[i])
+                }
+            }
+            val t = listSystem
+            val m = listUser
+            testAdapter = HistoryTestAdapter(requireActivity(),listSystem)
             listTestFromSystem.layoutManager = linear
             listTestFromSystem.adapter = testAdapter
+
+            testAdapterUser = HistoryTestAdapter(requireActivity(),listUser)
+            listTestFromUser.layoutManager = linearUser
+            listTestFromUser.adapter = testAdapterUser
         }
     }
 

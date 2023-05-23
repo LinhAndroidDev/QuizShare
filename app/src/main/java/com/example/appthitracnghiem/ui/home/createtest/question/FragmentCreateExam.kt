@@ -3,15 +3,18 @@ package com.example.appthitracnghiem.ui.home.createtest.question
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Rect
 import android.graphics.Typeface
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.provider.MediaStore
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
@@ -26,6 +29,7 @@ import com.example.appthitracnghiem.ui.home.createtest.manager.FragmentManageExa
 import com.example.appthitracnghiem.ui.home.createtest.question.adapter.CreateExamViewModel
 import com.example.appthitracnghiem.ui.home.createtest.question.adapter.PositiveQuestionAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_create_test.*
 import kotlinx.android.synthetic.main.fragment_create_exam.*
 
@@ -40,9 +44,11 @@ class FragmentCreateExam : BaseFragment<CreateExamViewModel>() {
     private var type4: Int = -1
     private var sort: Int = 1
 
+    var onClickContinue: ((Boolean) -> Unit)? = null
+
     companion object{
-        var listQuestionCreate: ArrayList<CreateQuestion> = arrayListOf()
-        var listAnswerCreate: ArrayList<CreateAnswer> = arrayListOf()
+        var listQuestionCreate: ArrayList<CreateQuestion?> = arrayListOf()
+        var listAnswerCreate: ArrayList<CreateAnswer?> = arrayListOf()
         var listPositiveQuestion: ArrayList<PositiveQuestion> = arrayListOf()
     }
 
@@ -51,23 +57,20 @@ class FragmentCreateExam : BaseFragment<CreateExamViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         /** Create List RecyclerView question **/
-        val numberQuiz = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.CREATE_NUMBER_QUIZ, 0)
+        val numberQuiz: Int = activity?.intent!!.getIntExtra("number_question",-1)
         val linearLayoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         recycleListNumber.layoutManager = linearLayoutManager
 
+        listPositiveQuestion.clear()
         for (i in 0 until numberQuiz) {
             if(i == 0){
                 listPositiveQuestion.add(PositiveQuestion(i + 1,true))
             }else{
-                listPositiveQuestion.add(PositiveQuestion(i + 1,null))
+                listPositiveQuestion.add(PositiveQuestion(i + 1,false))
             }
         }
         positiveQuestionAdapter = PositiveQuestionAdapter(listPositiveQuestion, requireActivity())
-        positiveQuestionAdapter.hasClickItem = {
-            listPositiveQuestion[0].isSelect = false
-        }
         positiveQuestionAdapter.getPositiveQuestion = {
             if(it == (listPositiveQuestion.size-1)){
                 txtContinue.text = "Hoàn thành"
@@ -82,6 +85,16 @@ class FragmentCreateExam : BaseFragment<CreateExamViewModel>() {
         val time = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.TIME_EXAM, 0)
         txtTime.text = "$time phút"
+
+
+        for(i in 0 until 4){
+            listAnswerCreate.add(null)
+        }
+
+        val number: Int = activity?.intent!!.getIntExtra("number_question",-1)
+        for(i in 0 until number){
+            listQuestionCreate.add(null)
+        }
 
         initUi()
     }
@@ -116,46 +129,54 @@ class FragmentCreateExam : BaseFragment<CreateExamViewModel>() {
 
         /** On Click **/
         continueCreateTest.setOnClickListener {
-            val question: String = questionCreate.text.toString()
-            val answer1: String = answerCreate1.text.toString()
-            val answer2: String = answerCreate2.text.toString()
-            val answer3: String = answerCreate3.text.toString()
-            val answer4: String = answerCreate4.text.toString()
-
-            if(answer1.isNotEmpty()){
-                listAnswerCreate.add(CreateAnswer(question,answer1,1,null,type1))
-            }
-            if(answer2.isNotEmpty()){
-                listAnswerCreate.add(CreateAnswer(question,answer1,2,null,type2))
-            }
-            if(answer3.isNotEmpty()){
-                listAnswerCreate.add(CreateAnswer(question,answer1,3,null,type3))
-            }
-            if(answer4.isNotEmpty()){
-                listAnswerCreate.add(CreateAnswer(question,answer1,4,null,type4))
-            }
-            listQuestionCreate.add(CreateQuestion(listAnswerCreate, null, null, 1, sort, question))
+            listPositiveQuestion[sort].isSelect = true
             sort++
 
-            if(isComplete){
-                val header = viewModel.mPreferenceUtil.defaultPref()
-                    .getString(PreferenceKey.AUTHORIZATION,"").toString()
-                val userId = viewModel.mPreferenceUtil.defaultPref()
-                    .getInt(PreferenceKey.USER_ID, 0)
-                val title = viewModel.mPreferenceUtil.defaultPref()
-                    .getString(PreferenceKey.CREATE_TITLE,"").toString()
-                val time = viewModel.mPreferenceUtil.defaultPref()
-                    .getInt(PreferenceKey.TIME_EXAM, 0)
-                val number = viewModel.mPreferenceUtil.defaultPref()
-                    .getInt(PreferenceKey.CREATE_NUMBER_QUIZ, 0)
-                val status = viewModel.mPreferenceUtil.defaultPref()
-                    .getInt(PreferenceKey.CREATE_STATUS, 0)
-                val requestCreateExam = RequestCreateExam(
-                    listQuestionCreate, userId, 1, title, time, number, status
-                )
-                viewModel.createExam(header, requestCreateExam)
-            }
-            doEmptyText()
+//            val question: String = questionCreate.text.toString()
+//            val answer1: String = answerCreate1.text.toString()
+//            val answer2: String = answerCreate2.text.toString()
+//            val answer3: String = answerCreate3.text.toString()
+//            val answer4: String = answerCreate4.text.toString()
+
+//            if(question.isEmpty() || answer1.isEmpty() && answer2.isEmpty() && answer3.isEmpty() && answer4.isEmpty()){
+//                Toast.makeText(requireActivity(), "Bạn chưa nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
+//            }else{
+//                if(answer1.isNotEmpty()){
+//                    listAnswerCreate[0] = CreateAnswer(answer1,"",1,"",type1)
+//                }
+//                if(answer2.isNotEmpty()){
+//                    listAnswerCreate[1] = CreateAnswer(answer2,"",2,"",type2)
+//                }
+//                if(answer3.isNotEmpty()){
+//                    listAnswerCreate[2] = CreateAnswer(answer3,"",3,"",type3)
+//                }
+//                if(answer4.isNotEmpty()){
+//                    listAnswerCreate[3] = CreateAnswer(answer4,"",4,"",type4)
+//                }
+//
+//                listQuestionCreate[sort-1] = CreateQuestion(listAnswerCreate, "", "", 1, sort, question)
+//                sort++
+//
+//                if(isComplete){
+//                    val header = viewModel.mPreferenceUtil.defaultPref()
+//                        .getString(PreferenceKey.AUTHORIZATION,"").toString()
+//                    val userId = viewModel.mPreferenceUtil.defaultPref()
+//                        .getInt(PreferenceKey.USER_ID, 0)
+//                    val title = viewModel.mPreferenceUtil.defaultPref()
+//                        .getString(PreferenceKey.CREATE_TITLE,"").toString()
+//                    val time = viewModel.mPreferenceUtil.defaultPref()
+//                        .getInt(PreferenceKey.TIME_EXAM, 0)
+//                    val number: Int = activity?.intent!!.getIntExtra("number_question",-1)
+//                    val status = viewModel.mPreferenceUtil.defaultPref()
+//                        .getInt(PreferenceKey.CREATE_STATUS, 0)
+//                    val t = listQuestionCreate
+//                    val requestCreateExam = RequestCreateExam(
+//                        listQuestionCreate, userId, 1, title, time, number, status
+//                    )
+//                    viewModel.createExam(header, requestCreateExam)
+//                }
+//                doEmptyText()
+//            }
         }
 
         backCreateTest.setOnClickListener {
@@ -178,25 +199,15 @@ class FragmentCreateExam : BaseFragment<CreateExamViewModel>() {
             )
         }
 
-        /** Check keyboard show **/
-        layoutCreateExam.viewTreeObserver
-            .addOnGlobalLayoutListener {
-                val r = Rect()
-                layoutCreateExam.getWindowVisibleDisplayFrame(r)
-                val screenHeight: Int = layoutCreateExam.rootView.height
-
-                // r.bottom is the position above soft keypad or device button.
-                // if keypad is shown, the r.bottom is smaller than that before.
-                val keypadHeight: Int = screenHeight - r.bottom
-
-                if (keypadHeight > screenHeight * 0.15) {
-                    continueCreateTest.visibility = View.GONE
-                }else{
-                    continueCreateTest.visibility = View.VISIBLE
-                }
-            }
-
         setText()
+    }
+
+    internal fun visibleComplete(visible: Boolean){
+        if(visible){
+            continueCreateTest.visibility = View.GONE
+        }else{
+            continueCreateTest.visibility = View.VISIBLE
+        }
     }
 
     private fun doEmptyText() {

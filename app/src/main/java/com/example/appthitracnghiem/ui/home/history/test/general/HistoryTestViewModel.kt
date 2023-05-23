@@ -12,6 +12,7 @@ import retrofit2.Response
 class HistoryTestViewModel : BaseViewModel() {
     var isLoadingLiveData = MutableLiveData<Boolean>()
     var listExamHistoryLiveData = MutableLiveData<ArrayList<HistoryExam>>()
+    var idExamHistoryLiveData = MutableLiveData<Int>()
 
     fun getExamHistory(
         header: String,

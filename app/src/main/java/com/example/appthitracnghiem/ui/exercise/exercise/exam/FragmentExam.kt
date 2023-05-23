@@ -341,6 +341,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         txt.layoutParams = params
         txt.textSize = 16F
         txt.text = listExamQuestion[position].answer_list[i].content
+        txt.setLineSpacing(2f,1.4f)
         txt.setTextColor(Color.BLACK)
         txt.setBackgroundResource(R.drawable.un_select_text_view)
     }

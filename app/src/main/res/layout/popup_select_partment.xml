@@ -11,7 +11,7 @@
         android:layout_margin="20dp"
         app:cardElevation="15dp">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="12dp"
             android:paddingHorizontal="18dp"
@@ -19,7 +19,7 @@
             <LinearLayout
                 android:id="@+id/selectNatural"
                 android:layout_marginTop="4dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
@@ -27,13 +27,13 @@
                     android:textSize="14sp"
                     android:textColor="@color/black"
                     android:layout_marginStart="12dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/selectSocial"
                 android:layout_marginTop="16dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
@@ -41,7 +41,7 @@
                     android:textSize="14sp"
                     android:textColor="@color/black"
                     android:layout_marginStart="12dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>

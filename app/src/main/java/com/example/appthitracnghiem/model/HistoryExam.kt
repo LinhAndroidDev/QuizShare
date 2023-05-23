@@ -1,7 +1,7 @@
 package com.example.appthitracnghiem.model
 
 data class HistoryExam(
-    val id: Int?,
+    val exam_history_id: Int?,
     val title: String?,
     val number: Int?,
     val user_create: Int?,

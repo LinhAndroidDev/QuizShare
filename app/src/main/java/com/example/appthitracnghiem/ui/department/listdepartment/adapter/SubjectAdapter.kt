@@ -50,12 +50,6 @@ class SubjectAdapter(val context: Context, private val listSubject: List<Subject
             val activity = context as AppCompatActivity
             val fragmentListTest = FragmentListTest()
             val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-            fm.setCustomAnimations(
-                R.anim.anim_up_enter,
-                R.anim.anim_ignored_out,
-                R.anim.anim_ignored_in,
-                R.anim.anim_down_enter
-            )
             fm.add(R.id.changeIdHome, fragmentListTest).addToBackStack(null).commit()
             fragmentListTest.arguments = bundle
         }

@@ -63,12 +63,6 @@ class FromUserAdapter(
 //            bundle.putString("title", quiz.title)
             val fragmentListDepartment = FragmentListDepartment()
             val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-            fm.setCustomAnimations(
-                R.anim.anim_up_enter,
-                R.anim.anim_ignored_out,
-                R.anim.anim_ignored_in,
-                R.anim.anim_down_enter
-            )
             fm.add(R.id.changeIdHome, fragmentListDepartment).addToBackStack(null).commit()
 //            fragmentListDepartment.arguments = bundle
         }
