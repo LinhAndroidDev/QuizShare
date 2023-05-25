@@ -14,8 +14,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.PositiveQuestion
-import com.example.appthitracnghiem.ui.exercise.exercise.exam.FragmentExam
-import com.example.appthitracnghiem.ui.exercise.exercise.exam.FragmentExam.Companion.listQuestion
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

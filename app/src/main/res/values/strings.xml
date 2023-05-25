@@ -127,7 +127,7 @@
     <string name="txtAddQuiz">Thêm câu hỏi</string>
     <string name="txtEnterQuiz">Nhập câu hỏi</string>
     <string name="txtEnterAnswer">Nhập câu trả lời</string>
-    <string name="txtContinue">Tiếp theo</string>
+    <string name="txtComplete">Hoàn thành</string>
 
     <!--    Fragment History-->
     <string name="txtHistory">Lịch sử</string>

@@ -141,7 +141,7 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
     private fun setBottomShare() {
         val bottomShareBehavior = BottomSheetBehavior.from(layoutLogout)
         bottomShareBehavior.isDraggable = false
-        layoutLogoutCover.setOnTouchListener { v, event -> true }
+        layoutLogoutCover.setOnTouchListener { _, _ -> true }
 
         logout.setOnClickListener {
             if (bottomShareBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
@@ -165,6 +165,9 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
 
         logoutNow.setOnClickListener {
             viewModel.confirmLoggedOut()
+            viewModel.mPreferenceUtil.defaultPref()
+                .edit().putString(PreferenceKey.USER_AVATAR,"")
+                .apply()
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
