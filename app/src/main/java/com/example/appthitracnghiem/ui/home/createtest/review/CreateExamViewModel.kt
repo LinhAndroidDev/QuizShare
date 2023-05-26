@@ -1,10 +1,9 @@
-package com.example.appthitracnghiem.ui.home.createtest.question.adapter
+package com.example.appthitracnghiem.ui.home.createtest.review
 
 import androidx.lifecycle.MutableLiveData
 import com.example.appthitracnghiem.data.remote.ApiClient
 import com.example.appthitracnghiem.data.remote.entity.CreateExamResponse
 import com.example.appthitracnghiem.ui.base.BaseViewModel
-import com.example.appthitracnghiem.ui.home.createtest.question.RequestCreateExam
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

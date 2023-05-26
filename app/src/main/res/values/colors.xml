@@ -43,4 +43,6 @@
     <color name="grey_dark">#878787</color>
     <color name="bg_chart_line">#6A5AE0</color>
     <color name="bg_un_sentence">#C4D0FB</color>
+    <color name="bg_question_number">#7B6DE4</color>
+    <color name="bg_boder_answer_create">#276EF1</color>
 </resources>

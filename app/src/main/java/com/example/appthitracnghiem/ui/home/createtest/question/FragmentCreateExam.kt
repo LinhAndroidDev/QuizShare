@@ -3,14 +3,18 @@ package com.example.appthitracnghiem.ui.home.createtest.question
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Typeface
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.provider.MediaStore
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.PopupWindow
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -19,41 +23,64 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.CreateAnswer
 import com.example.appthitracnghiem.model.CreateQuestion
+import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.createtest.manager.FragmentManageExam
-import com.example.appthitracnghiem.ui.home.createtest.question.adapter.CreateExamViewModel
+import com.example.appthitracnghiem.ui.home.createtest.review.CreateExamViewModel
 import com.example.appthitracnghiem.ui.home.createtest.question.adapter.PositiveQuestionAdapter
+import com.example.appthitracnghiem.ui.home.createtest.review.FragmentReviewCreateExam
+import com.example.appthitracnghiem.ui.home.createtest.review.RequestCreateExam
 import com.example.appthitracnghiem.utils.PreferenceKey
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_create_test.*
 import kotlinx.android.synthetic.main.fragment_create_exam.*
+import kotlinx.android.synthetic.main.fragment_create_exam.backQuestionCreate
+import kotlinx.android.synthetic.main.fragment_create_exam.nextQuestionCreate
+import kotlinx.android.synthetic.main.fragment_review_create_exam.*
+import java.lang.reflect.Type
 
 @Suppress("DEPRECATION")
-class FragmentCreateExam : BaseFragment<CreateExamViewModel>() {
+class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
     lateinit var positiveQuestionAdapter: PositiveQuestionAdapter
     private val GALLERY_RED_CODE: Int = 1000
-    private var isComplete: Boolean = false
     private var type1: Int = -1
     private var type2: Int = -1
     private var type3: Int = -1
     private var type4: Int = -1
     private var numberQuiz: Int = 0
     private var questionIndex = 0
+    private var checkVisibleComplete: Boolean = false
 
     var listQuestionCreate: ArrayList<CreateQuestion?> = arrayListOf()
-//    var listPositiveQuestion: ArrayList<PositiveQuestion> = arrayListOf()
+
+    var listNumberQuestion: ArrayList<Int> = arrayListOf()
+
+    var listTextViewAnswer: ArrayList<CheckBox> = arrayListOf()
 
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         layoutOnClickCreate.setOnTouchListener { _, _ -> true }
-        layoutOnClickComplete.setOnTouchListener { _, _ -> true }
+
+        /** Insert checkbox in array **/
+        listTextViewAnswer.add(isAnswer1)
+        listTextViewAnswer.add(isAnswer2)
+        listTextViewAnswer.add(isAnswer3)
+        listTextViewAnswer.add(isAnswer4)
 
         /** Create List RecyclerView question **/
-        numberQuiz = activity?.intent!!.getIntExtra("number_question",-1)
+        numberQuiz = activity?.intent!!.getIntExtra("number_question", -1)
         val linearLayoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         recycleListNumber.layoutManager = linearLayoutManager
+
+        for(i in 0 until numberQuiz){
+            listNumberQuestion.add(-2)
+            listQuestionCreate.add(null)
+        }
+        saveListPositive(listNumberQuestion,PreferenceKey.LIST_CREATE_NUMBER_QUESTION)
 
         positiveQuestionAdapter = PositiveQuestionAdapter(numberQuiz, requireActivity())
         positiveQuestionAdapter.onClickItem = {
@@ -61,130 +88,60 @@ class FragmentCreateExam : BaseFragment<CreateExamViewModel>() {
         }
         recycleListNumber.adapter = positiveQuestionAdapter
 
-        val time = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.TIME_EXAM, 0)
-        txtTime.text = "$time phút"
-
         initUi()
-    }
-
-    override fun bindData() {
-        super.bindData()
-
-        val loading = ProgressDialog(requireActivity())
-        loading.setTitle("Thông báo")
-        loading.setMessage("Please wait...")
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
-            if(it){
-                loading.show()
-            }else{
-                loading.dismiss()
-            }
-        }
-
-        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner){
-            if(it){
-                val fm: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
-                val fragmentManageExam = FragmentManageExam()
-                fm?.replace(R.id.changeIdCreateExam, fragmentManageExam)?.addToBackStack(null)
-                    ?.commit()
-            }
-        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initUi() {
+        val time = viewModel.mPreferenceUtil.defaultPref()
+            .getInt(PreferenceKey.TIME_EXAM, 0)
+        txtTime.text = "$time phút"
 
         selectAnswer()
 
+        positiveQuestionAdapter.onClickItem = {
+            questionIndex = it
+            saveExam()
+            doEmptyText()
+
+            setTextView()
+        }
+
         /** On Click **/
         nextQuestionCreate.setOnClickListener {
-//            val question: String = questionCreate.text.toString()
-//            val answer1: String = answerCreate1.text.toString()
-//            val answer2: String = answerCreate2.text.toString()
-//            val answer3: String = answerCreate3.text.toString()
-//            val answer4: String = answerCreate4.text.toString()
-//
-//            val answers = mutableListOf<CreateAnswer>()
-//
-//            if (question.isEmpty() || answer1.isEmpty() && answer2.isEmpty() && answer3.isEmpty() && answer4.isEmpty()) {
-//                Toast.makeText(
-//                    requireActivity(),
-//                    "Bạn chưa nhập đầy đủ thông tin",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            } else {
-//                if (answer1.isNotEmpty()) {
-//                    answers.add(CreateAnswer(answer1, "", 1, "", type1))
-//                }
-//                if (answer2.isNotEmpty()) {
-//                    answers.add(CreateAnswer(answer2, "", 2, "", type2))
-//                }
-//                if (answer3.isNotEmpty()) {
-//                    answers.add(CreateAnswer(answer3, "", 3, "", type3))
-//                }
-//                if (answer4.isNotEmpty()) {
-//                    answers.add(CreateAnswer(answer4, "", 4, "", type4))
-//                }
-//
-//                listQuestionCreate.add(
-//                    CreateQuestion(answers, "", "", 1, questionIndex + 1, question)
-//                )
-//
-//                if (isComplete) {
-//                    val header = viewModel.mPreferenceUtil.defaultPref()
-//                        .getString(PreferenceKey.AUTHORIZATION, "").toString()
-//                    val userId = viewModel.mPreferenceUtil.defaultPref()
-//                        .getInt(PreferenceKey.USER_ID, 0)
-//                    val title = viewModel.mPreferenceUtil.defaultPref()
-//                        .getString(PreferenceKey.CREATE_TITLE, "").toString()
-//                    val time = viewModel.mPreferenceUtil.defaultPref()
-//                        .getInt(PreferenceKey.TIME_EXAM, 0)
-//                    val number: Int = activity?.intent!!.getIntExtra("number_question", -1)
-//                    val status = viewModel.mPreferenceUtil.defaultPref()
-//                        .getInt(PreferenceKey.CREATE_STATUS, 0)
-//                    val requestCreateExam = RequestCreateExam(
-//                        listQuestionCreate, userId, 1, title, time, number, status
-//                    )
-//                    viewModel.createExam(header, requestCreateExam)
-//                }
-//                doEmptyText()
+            saveExam()
+            doEmptyText()
 
-                if (questionIndex < numberQuiz - 1) {
-                    isComplete = false
-                    questionIndex++
-                    positiveQuestionAdapter.setSelectedIndex(questionIndex)
+            visibleCompleteExam()
 
-                    if (questionIndex == numberQuiz - 1) {
-                        isComplete = true
-                        completeCreateTest.visibility = View.VISIBLE
-                    }
-                }
-                recycleListNumber.scrollToPosition(questionIndex)
-//            }
+            if (questionIndex < numberQuiz - 1) {
+                questionIndex++
+                positiveQuestionAdapter.setSelectedIndex(questionIndex)
+            }
+            recycleListNumber.scrollToPosition(questionIndex)
+            setTextView()
         }
 
         backQuestionCreate.setOnClickListener {
-            if(questionIndex > 0){
+            saveExam()
+            if (questionIndex > 0) {
                 questionIndex--
+                doEmptyText()
                 positiveQuestionAdapter.setSelectedIndex(questionIndex)
-                completeCreateTest.visibility = View.GONE
             }
             recycleListNumber.scrollToPosition(questionIndex)
+            setTextView()
         }
 
         completeCreateTest.setOnClickListener {
-            completeCreateTest.visibility = View.GONE
-            nextQuestionCreate.visibility = View.GONE
-            backQuestionCreate.visibility = View.GONE
-            layoutOnClickComplete.visibility = View.VISIBLE
-        }
-
-        doneCreateTest.setOnClickListener {
-            completeCreateTest.visibility = View.VISIBLE
-            nextQuestionCreate.visibility = View.VISIBLE
-            backQuestionCreate.visibility = View.VISIBLE
-            layoutOnClickComplete.visibility = View.GONE
+            saveExam()
+            val bundle = Bundle()
+            bundle.putInt("numberQuiz",numberQuiz)
+            val fragmentReviewCreateExam = FragmentReviewCreateExam()
+            val fm: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
+            fm?.add(R.id.changeIdCreateExam, fragmentReviewCreateExam)
+                ?.addToBackStack(null)?.commit()
+            fragmentReviewCreateExam.arguments = bundle
         }
 
         backCreateTest.setOnClickListener {
@@ -210,10 +167,120 @@ class FragmentCreateExam : BaseFragment<CreateExamViewModel>() {
         setText()
     }
 
-    internal fun visibleComplete(visible: Boolean){
-        if(visible){
-            layoutOnClickCreate.visibility = View.GONE
+    private fun setTextView() {
+        val listQuestion = getListQuestion(PreferenceKey.LIST_CREATE_QUESTION_EXAM)
+        if(listQuestion[questionIndex]?.question_title != null){
+            questionCreate.setText(listQuestion[questionIndex]?.question_title)
+            answerCreate1.setText(listQuestion[questionIndex]?.answer_list?.get(0)?.content)
+            answerCreate2.setText(listQuestion[questionIndex]?.answer_list?.get(1)?.content)
+            answerCreate3.setText(listQuestion[questionIndex]?.answer_list?.get(2)?.content)
+            answerCreate4.setText(listQuestion[questionIndex]?.answer_list?.get(3)?.content)
+            val answerList = listQuestion[questionIndex]?.answer_list
+            for(i in 0 until answerList?.size!!){
+                if(answerList[i]?.type == 1){
+                    listTextViewAnswer[i].isSelected = true
+                }
+            }
+        }
+    }
+
+    private fun visibleCompleteExam() {
+        getListPositive(PreferenceKey.LIST_CREATE_NUMBER_QUESTION).let {
+            for (i in 0 until it.size) {
+                if (it[i] != 0) {
+                    checkVisibleComplete = false
+                    break
+                } else {
+                    checkVisibleComplete = true
+                }
+            }
+            if(checkVisibleComplete){
+                completeCreateTest.visibility = View.VISIBLE
+            }else{
+                completeCreateTest.visibility = View.INVISIBLE
+            }
+        }
+    }
+
+    private fun saveExam() {
+        val question: String = questionCreate.text.toString()
+        val answer1: String = answerCreate1.text.toString()
+        val answer2: String = answerCreate2.text.toString()
+        val answer3: String = answerCreate3.text.toString()
+        val answer4: String = answerCreate4.text.toString()
+
+        val answers = mutableListOf<CreateAnswer?>()
+
+        if(question.isEmpty()){
+            listNumberQuestion[questionIndex] = -1
+            saveListPositive(listNumberQuestion,PreferenceKey.LIST_CREATE_NUMBER_QUESTION)
+            positiveQuestionAdapter.notifyDataSetChanged()
         }else{
+            listNumberQuestion[questionIndex] = 0
+            saveListPositive(listNumberQuestion,PreferenceKey.LIST_CREATE_NUMBER_QUESTION)
+            positiveQuestionAdapter.notifyDataSetChanged()
+        }
+
+        answers.add(CreateAnswer(answer1, "", 1, "", type1))
+        answers.add(CreateAnswer(answer2, "", 2, "", type2))
+        answers.add(CreateAnswer(answer3, "", 3, "", type3))
+        answers.add(CreateAnswer(answer4, "", 4, "", type4))
+
+        val listNumber = getListPositive(PreferenceKey.LIST_CREATE_NUMBER_QUESTION)
+        if(listNumber[questionIndex] == 0){
+//            val questions = getListQuestion(PreferenceKey.LIST_CREATE_QUESTION_EXAM)
+//            val size = questions[questionIndex]?.answer_list?.size
+//            for(i in 0 until size!!){
+//                if(questions[questionIndex]?.answer_list?.get(i)?.type == 1){
+//                }
+//            }
+            listQuestionCreate[questionIndex] = CreateQuestion(answers, "", "", 1, questionIndex + 1, question)
+        }else{
+            listQuestionCreate.add(
+                CreateQuestion(answers, "", "", 1, questionIndex + 1, question)
+            )
+        }
+        saveListQuestion(listQuestionCreate, PreferenceKey.LIST_CREATE_QUESTION_EXAM)
+    }
+
+    private fun saveListPositive(list: ArrayList<Int>, key: String?) {
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+        val editor: SharedPreferences.Editor = prefs.edit()
+        val gson = Gson()
+        val json: String = gson.toJson(list)
+        editor.putString(key, json)
+        editor.apply()
+    }
+
+    private fun getListPositive(key: String?): ArrayList<Int> {
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+        val gson = Gson()
+        val json: String? = prefs.getString(key, null)
+        val type: Type = object : TypeToken<ArrayList<Int>>() {}.type
+        return gson.fromJson(json, type)
+    }
+
+    private fun saveListQuestion(list: ArrayList<CreateQuestion?>, key: String?) {
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+        val editor: SharedPreferences.Editor = prefs.edit()
+        val gson = Gson()
+        val json: String = gson.toJson(list)
+        editor.putString(key, json)
+        editor.apply()
+    }
+
+    private fun getListQuestion(key: String?): ArrayList<CreateQuestion?> {
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+        val gson = Gson()
+        val json: String? = prefs.getString(key, null)
+        val type: Type = object : TypeToken<ArrayList<CreateQuestion?>>() {}.type
+        return gson.fromJson(json, type)
+    }
+
+    internal fun visibleComplete(visible: Boolean) {
+        if (visible) {
+            layoutOnClickCreate.visibility = View.GONE
+        } else {
             layoutOnClickCreate.visibility = View.VISIBLE
         }
     }
@@ -227,30 +294,30 @@ class FragmentCreateExam : BaseFragment<CreateExamViewModel>() {
         setUnSelectAnswer()
     }
 
-    private fun selectAnswer(){
+    private fun selectAnswer() {
         isAnswer1.setOnCheckedChangeListener { _, b ->
-            if(b){
+            if (b) {
                 setUnSelectAnswer()
                 isAnswer1.isChecked = true
                 type1 = 1
             }
         }
         isAnswer2.setOnCheckedChangeListener { _, b ->
-            if(b){
+            if (b) {
                 setUnSelectAnswer()
                 isAnswer2.isChecked = true
                 type2 = 1
             }
         }
         isAnswer3.setOnCheckedChangeListener { _, b ->
-            if(b){
+            if (b) {
                 setUnSelectAnswer()
                 isAnswer3.isChecked = true
                 type3 = 1
             }
         }
         isAnswer4.setOnCheckedChangeListener { _, b ->
-            if(b){
+            if (b) {
                 setUnSelectAnswer()
                 isAnswer4.isChecked = true
                 type4 = 1
@@ -258,7 +325,7 @@ class FragmentCreateExam : BaseFragment<CreateExamViewModel>() {
         }
     }
 
-    private fun setUnSelectAnswer(){
+    private fun setUnSelectAnswer() {
         isAnswer1.isChecked = false
         type1 = 0
         isAnswer2.isChecked = false
@@ -270,7 +337,8 @@ class FragmentCreateExam : BaseFragment<CreateExamViewModel>() {
     }
 
     private fun setText() {
-        val semibold: Typeface? = ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
+        val semibold: Typeface? =
+            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
         txtCreateTest.typeface = semibold
         txtSelectImageCt.typeface = semibold
         txtAddQuestion.typeface = semibold
