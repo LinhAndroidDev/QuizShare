@@ -17,7 +17,8 @@ class ChangeAvatarViewModel : BaseViewModel() {
     fun requestAvt(
         header: String,
         requestBodyId: RequestBody,
-        requestBodyAvt: MultipartBody.Part)
+        requestBodyAvt: MultipartBody.Part
+    )
     {
         isLoadingLiveData.value = true
         ApiClient.shared().postImage(header, requestBodyId, requestBodyAvt)

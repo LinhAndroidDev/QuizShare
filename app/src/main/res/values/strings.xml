@@ -104,7 +104,9 @@
     <string name="txtExcel">Excel</string>
     <string name="txtHandmade">Thủ công</string>
     <string name="txtSelectDepartment">Chọn Khoa</string>
-    <string name="txtSelectDepartmentOrSubject">Chọn khoa,môn,...</string>
+    <string name="txtSelectDepartmentOrSubject">Chọn khoa,...</string>
+    <string name="txtSelectSubject">Chọn Môn</string>
+    <string name="edtSelectSubject">Chọn môn,...</string>
     <string name="txtSelectMode">Chọn chế độ</string>
     <string name="txtPublicOrPrivate">Công khai hoặc riêng tư</string>
     <string name="txtTimeDoTest">Thời gian làm bài</string>

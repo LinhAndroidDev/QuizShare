@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.history.test.HistoryTopicActivity"
+    tools:context=".ui.home.history.test.topic.HistoryTopicActivity"
     android:orientation="vertical"
     android:id="@+id/changeIdTopicHistory">
 

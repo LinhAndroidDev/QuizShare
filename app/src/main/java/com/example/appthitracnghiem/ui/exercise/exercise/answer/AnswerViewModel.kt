@@ -28,6 +28,7 @@ class AnswerViewModel : BaseViewModel() {
                     loadingLiveData.value = false
                     response.body()?.let { body->
                         if(body.statusCode == ApiClient.STATUS_CODE_SUCCESS){
+                            val t = body
                             listExamQuestionLiveData.value = body.result.exam_question_list
                         }
                         if(body.statusCode == ApiClient.STATUS_INVALID_TOKEN){

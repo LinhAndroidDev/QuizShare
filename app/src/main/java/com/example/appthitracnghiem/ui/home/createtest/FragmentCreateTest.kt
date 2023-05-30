@@ -1,6 +1,7 @@
 package com.example.appthitracnghiem.ui.home.createtest
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
@@ -8,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.Toast
@@ -15,20 +17,30 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.department.listdepartment.ListDepartmentViewModel
+import com.example.appthitracnghiem.ui.department.listdepartment.RequestDepartmentInfo
+import com.example.appthitracnghiem.ui.home.createtest.adapter.CreateDepartmentAdapter
 import com.example.appthitracnghiem.ui.home.createtest.question.CreateTestActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_create_test.*
+import kotlinx.android.synthetic.main.fragment_create_exam.*
 import kotlinx.android.synthetic.main.fragment_create_test.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_list_department.*
 import kotlinx.android.synthetic.main.layout_bottom_share.*
 
 @Suppress("DEPRECATION")
-class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
+class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
     private val GALLERY_RED_CODE: Int = 1000
+    private var DEPARTMENT_ID: Int = -1
+    private var SUBJECT_ID: Int = -1
+    private var uriImage = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,6 +56,17 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
         setText()
     }
 
+    override fun bindData() {
+        super.bindData()
+
+        val header = viewModel.mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.AUTHORIZATION, "").toString()
+        val userId = viewModel.mPreferenceUtil.defaultPref()
+            .getInt(PreferenceKey.USER_ID, 0)
+        val requestDepartmentInfo = RequestDepartmentInfo(userId)
+        viewModel.getDataDepartmentDetail(header, requestDepartmentInfo)
+    }
+
     @RequiresApi(Build.VERSION_CODES.M)
     private fun setStatusBar() {
         val window: Window? = activity?.window
@@ -54,10 +77,22 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
         window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;//  set status text dark
     }
 
+    private fun View.hideKeyboard() {
+        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(Build.VERSION_CODES.M)
     private fun initUi() {
 
         setStatusBar()
+
+        layoutCreateTestCover.setOnTouchListener { view, _ ->
+            view.hideKeyboard()
+            clearFocusTextView()
+            false
+        }
 
         menuCreateTest.setOnClickListener {
             val popUpView: View = View.inflate(requireActivity(), R.layout.popup_create_test, null)
@@ -66,29 +101,73 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
 
         selectDepartment.setOnClickListener {
             val popUpView: View = View.inflate(requireActivity(), R.layout.popup_select_partment, null)
-//            showMenuCreate(popUpView, selectDepartment, 0, -30, Gravity.BOTTOM)
             val width = ViewGroup.LayoutParams.WRAP_CONTENT
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
             val focusable = true
             val popupWindow = PopupWindow(popUpView, width, height, focusable)
             popupWindow.showAsDropDown(selectDepartment, 0, -30, Gravity.BOTTOM)
 
-            val natural: LinearLayout = popUpView.findViewById(R.id.selectNatural)
-            val social: LinearLayout = popUpView.findViewById(R.id.selectSocial)
+            val listDepartment: ArrayList<String> = arrayListOf()
+            listDepartment.add("Khoa tự nhiên")
+            listDepartment.add("Khoa nhạc")
+            listDepartment.add("Khoa thể chất")
+            listDepartment.add("Khoa truyền thông")
 
-            natural.setOnClickListener {
-                edtSelectDepartment.text = "Tự nhiên"
+            val createDepartmentAdapter = CreateDepartmentAdapter(listDepartment, requireActivity())
+            createDepartmentAdapter.onClickItem = {
+                DEPARTMENT_ID = it
                 popupWindow.dismiss()
+                txtSelectSubject.visibility = View.VISIBLE
+                layoutSelectSubject.visibility = View.VISIBLE
             }
-            social.setOnClickListener {
-                edtSelectDepartment.text = "Xã hội"
-                popupWindow.dismiss()
+            createDepartmentAdapter.getStringItem = {
+                edtSelectDepartment.text = it
             }
+            val linear = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+            val recyclerView: RecyclerView = popUpView.findViewById(R.id.recycleListTopic)
+            recyclerView.layoutManager = linear
+            recyclerView.adapter = createDepartmentAdapter
+        }
+
+        selectSubject.setOnClickListener {
+            val popUpView: View = View.inflate(requireActivity(), R.layout.popup_select_partment, null)
+            val width = ViewGroup.LayoutParams.WRAP_CONTENT
+            val height = ViewGroup.LayoutParams.WRAP_CONTENT
+            val focusable = true
+
+            viewModel.listDepartmentLiveData.observe(viewLifecycleOwner){
+                if(DEPARTMENT_ID >= it.size){
+                    Toast.makeText(requireActivity(),"Khoa chưa có môn",Toast.LENGTH_SHORT).show()
+                }else{
+                    val popupWindow = PopupWindow(popUpView, width, height, focusable)
+                    popupWindow.showAsDropDown(selectSubject, 0, -30, Gravity.BOTTOM)
+
+                    val listDepartment: ArrayList<String> = arrayListOf()
+                    for(i in 0 until it[DEPARTMENT_ID].subjects.size){
+                        listDepartment.add(it[DEPARTMENT_ID].subjects[i].title)
+                    }
+                    val createDepartmentAdapter = CreateDepartmentAdapter(listDepartment, requireActivity())
+                    createDepartmentAdapter.onClickItem = {
+                        SUBJECT_ID = it
+                        popupWindow.dismiss()
+                        viewModel.mPreferenceUtil.defaultPref().edit()
+                            .putInt(PreferenceKey.CREATE_SUBJECT_ID, it+1)
+                            .apply()
+                    }
+                    createDepartmentAdapter.getStringItem = {
+                        edtSelectSubject.text = it
+                    }
+                    val linear = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+                    val recyclerView: RecyclerView = popUpView.findViewById(R.id.recycleListTopic)
+                    recyclerView.layoutManager = linear
+                    recyclerView.adapter = createDepartmentAdapter
+                }
+                }
+
         }
 
         selectMode.setOnClickListener {
             val popUpView: View = View.inflate(requireActivity(), R.layout.popup_select_mode, null)
-//            showMenuCreate(popUpView, selectMode, 0, -30, Gravity.BOTTOM)
             val width = ViewGroup.LayoutParams.WRAP_CONTENT
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
             val focusable = true
@@ -128,7 +207,7 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
 
         createTest.setOnClickListener {
                 val title: String = edtSelectTitle.text.toString()
-                val department: String = edtSelectDepartment.text.toString()
+                val department: String = edtSelectSubject.text.toString()
                 val time: String = edtSelectTime.text.toString()
                 val numberQuiz: String = edtSelectNumberQuiz.text.toString()
                 val describe: String = edtDescribeQuiz.text.toString()
@@ -148,6 +227,15 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
                     viewModel.mPreferenceUtil.defaultPref()
                         .edit().putString(PreferenceKey.CREATE_DESCRIBE_QUIZ,describe)
                         .apply()
+                    if(uriImage.isEmpty()){
+                        viewModel.mPreferenceUtil.defaultPref()
+                            .edit().putString(PreferenceKey.CREATE_URI_IMAGE_SUBJECT,"")
+                            .apply()
+                    }else{
+                        viewModel.mPreferenceUtil.defaultPref()
+                            .edit().putString(PreferenceKey.CREATE_URI_IMAGE_SUBJECT,uriImage)
+                            .apply()
+                    }
                     val intent = Intent(requireActivity(), CreateTestActivity::class.java)
                     intent.putExtra("number_question",numberQuiz.toInt())
                     startActivity(intent)
@@ -201,6 +289,7 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
         if (resultCode == AppCompatActivity.RESULT_OK) {
             if (requestCode == GALLERY_RED_CODE) {
                 imageCover.setImageURI(data?.data)
+                uriImage = data?.data.toString()
             }
         }
     }
@@ -227,6 +316,7 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
         txtTimeDoTest.typeface = semibold
         txtNumberQuestion.typeface = semibold
         txtDetail.typeface = semibold
+        txtSelectSubject.typeface = semibold
     }
 
     internal fun scrollTop(){
@@ -246,5 +336,12 @@ class FragmentCreateTest : BaseFragment<EmptyViewModel>() {
 
     override fun onFragmentBack(): Boolean {
         return false
+    }
+
+    private fun clearFocusTextView() {
+        edtSelectTitle.clearFocus()
+        edtSelectTime.clearFocus()
+        edtSelectNumberQuiz.clearFocus()
+        edtDescribeQuiz.clearFocus()
     }
 }

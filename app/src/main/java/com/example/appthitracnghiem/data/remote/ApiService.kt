@@ -157,4 +157,21 @@ interface ApiService {
         @Header("Authorization") header: String,
         @Body requestCreateExam: RequestCreateExam
     ): Call<CreateExamResponse>
+
+    @GET("getExamHistoryDetail")
+    fun getExamHistoryDetail(
+        @Header("Authorization") header: String,
+        @Query("user_id") user_id: Int,
+        @Query("exam_history_id") exam_history_id: Int
+    ): Call<HistoryTopicResponse>
+
+    @Multipart
+    @POST("postUploadFile")
+    fun postUploadFile(
+        @Header("Authorization") header: String,
+        @Part(Const.user_id) user_id: RequestBody,
+        @Part file: MultipartBody.Part,
+        @Part(Const.folder_name) folder_name: RequestBody,
+        @Part(Const.file_name) file_name: RequestBody
+    ): Call<UploadImageResponse>
 }

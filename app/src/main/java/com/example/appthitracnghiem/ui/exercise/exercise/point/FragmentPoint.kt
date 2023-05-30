@@ -46,7 +46,6 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
 
         val header = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.AUTHORIZATION,"").toString()
-
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
         val examId = viewModel.mPreferenceUtil.defaultPref()
@@ -175,8 +174,11 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
 
         seeAnswer.setOnClickListener {
             val fragmentAnswer = FragmentAnswer()
+            val bundle = Bundle()
+            bundle.putString("title","Câu trả lời")
             val fm: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
             fm.replace(R.id.changeIdExam,fragmentAnswer).addToBackStack(null).commit()
+            fragmentAnswer.arguments = bundle
         }
     }
 

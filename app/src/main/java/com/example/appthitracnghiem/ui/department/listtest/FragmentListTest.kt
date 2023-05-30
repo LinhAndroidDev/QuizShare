@@ -1,5 +1,7 @@
 package com.example.appthitracnghiem.ui.department.listtest
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
@@ -8,6 +10,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.PopupWindow
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +18,7 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.department.listtest.adapter.TestAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
+import kotlinx.android.synthetic.main.fragment_list_department.*
 import kotlinx.android.synthetic.main.fragment_list_test.*
 
 @Suppress("DEPRECATION")
@@ -43,6 +47,11 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
         initUi()
     }
 
+    private fun View.hideKeyboard() {
+        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, 0)
+    }
+
     private fun setText() {
         val semibold: Typeface? = ResourcesCompat.getFont(requireActivity(),R.font.svn_gilroy_semibold)
         textNatural.typeface = semibold
@@ -68,7 +77,13 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initUi() {
+        layoutListTestCover.setOnTouchListener { view, _ ->
+            view.hideKeyboard()
+            false
+        }
+
         backTest.setOnClickListener {
             activity?.onBackPressed()
         }

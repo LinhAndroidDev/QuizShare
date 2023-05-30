@@ -196,6 +196,42 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/txtSelectSubject"
+                android:layout_marginTop="16dp"
+                android:text="@string/txtSelectSubject"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+            <RelativeLayout
+                android:id="@+id/layoutSelectSubject"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+                <TextView
+                    android:id="@+id/edtSelectSubject"
+                    android:textSize="16sp"
+                    android:textColorHint="@color/color_number_position"
+                    android:hint="@string/edtSelectSubject"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="50dp"
+                    android:paddingVertical="16dp"
+                    android:background="@drawable/boder_setting_new_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/selectSubject"
+                    android:src="@drawable/down"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_width="25dp"
+                    android:layout_height="20dp"/>
+            </RelativeLayout>
+
+            <TextView
                 android:id="@+id/txtSelectMode"
                 android:layout_marginTop="16dp"
                 android:text="@string/txtSelectMode"
@@ -349,5 +385,9 @@
     </androidx.core.widget.NestedScrollView>
 
     <include layout="@layout/layout_bottom_share"/>
-
+    <LinearLayout
+        android:id="@+id/layoutCreateTestCover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

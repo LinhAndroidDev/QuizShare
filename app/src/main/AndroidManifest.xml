@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission
         android:name="com.google.android.gms.permission.AD_ID"
         tools:node="remove" />
@@ -42,7 +44,7 @@
             android:name=".ui.exercise.exercise.ExamActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.history.test.HistoryTopicActivity"
+            android:name=".ui.home.history.test.topic.HistoryTopicActivity"
             android:exported="false" />
         <activity
             android:name=".ui.exercise.topic.ExerciseActivity"
@@ -132,6 +134,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.appthitracnghiem.ui.home.history.test
+package com.example.appthitracnghiem.ui.home.history.test.topic
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.home.history.test.topic.FragmentHistoryTopic
 
 class HistoryTopicActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

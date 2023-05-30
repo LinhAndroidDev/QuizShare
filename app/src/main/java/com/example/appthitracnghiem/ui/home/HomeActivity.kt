@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -18,6 +20,7 @@ import com.example.appthitracnghiem.ui.home.createtest.FragmentCreateTest
 import com.example.appthitracnghiem.ui.home.history.FragmentHistory
 import com.example.appthitracnghiem.ui.home.home.FragmentHome
 import com.example.appthitracnghiem.ui.home.profile.FragmentProfile
+import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.activity_home_page.*
 
 @Suppress("DEPRECATION", "DEPRECATED_IDENTITY_EQUALS")
@@ -31,7 +34,6 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
         if (CheckConnect.haveNetworkConnected(this@HomeActivity)) {
             resetTab()
             functionHome.isSelected = true
-//            addFragment(FragmentHome())
             attachFragment(R.id.changeIdHome, FragmentHome())
 
             bottomBar?.setOnTouchListener { _, _ -> true }
@@ -173,16 +175,12 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
 
     private fun attachFragment(
         fragmentHolderLayoutId: Int,
-        fragment: Fragment,
+        fragment: Fragment
         )
     {
         val manager: FragmentManager = supportFragmentManager
         val fg: FragmentTransaction = manager.beginTransaction()
-        if(manager.findFragmentByTag(fragment.tag) == null){
-            fg.add(fragmentHolderLayoutId, fragment, fragment.tag).addToBackStack(fragment.tag).commit()
-        }else{
-            fg.show(manager.findFragmentByTag(fragment.tag)!!).commit()
-        }
+            fg.add(fragmentHolderLayoutId, fragment).addToBackStack(null).commit()
     }
 
     /** Click Back */
@@ -198,17 +196,18 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
                     Toast.makeText(this, "Nhấn lần nữa để thoát", Toast.LENGTH_SHORT).show()
                 }
                 backPressTime = System.currentTimeMillis()
-            } else {
-                if (fm !is FragmentHome) {
+            } else if (fm !is FragmentHome) {
+                if(fm is FragmentCreateTest || fm is FragmentHistory || fm is FragmentProfile || fm is FragmentCategory){
+                    val fragmentHome = FragmentHome()
+                    val fragment: FragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragment.replace(R.id.changeIdHome, fragmentHome)
+                        .addToBackStack(null)
+                        .commit()
+                    resetTab()
+                    functionHome.isSelected = true
+                }else{
                     super.onBackPressed()
                     setSelectIcon()
-//                    supportFragmentManager.popBackStack()
-//                    setSelectIcon()
-//                    resetTab()
-//                    functionHome.isSelected = true
-//                    val fragmentHome = FragmentHome()
-//                    val fragment = supportFragmentManager.beginTransaction()
-//                    fragment.replace(R.id.changeIdHome, fragmentHome).addToBackStack(null).commit()
                 }
             }
         } else {
@@ -216,10 +215,4 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
             setSelectIcon()
         }
     }
-
-//    fun hideSoftKeyboard() {
-//        val inputMethodManager: InputMethodManager =
-//            getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-//        inputMethodManager.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
-//    }
 }

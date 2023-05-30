@@ -1,23 +1,53 @@
-package com.example.appthitracnghiem.ui.home.history.test
+package com.example.appthitracnghiem.ui.home.history.test.topic
 
+import android.app.ProgressDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.exercise.exercise.answer.FragmentAnswer
+import com.example.appthitracnghiem.ui.home.history.test.FragmentHistoryExam
+import com.example.appthitracnghiem.utils.PreferenceKey
 import kotlinx.android.synthetic.main.fragment_history_topic.*
 
 @Suppress("DEPRECATION")
-class FragmentHistoryTopic : BaseFragment<EmptyViewModel>() {
+class FragmentHistoryTopic : BaseFragment<HistoryTopicViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initUi()
+    }
+
+    override fun bindData() {
+        super.bindData()
+
+        val loading = ProgressDialog(requireActivity())
+        loading.setTitle("Thông báo")
+        loading.setMessage("Please wait...")
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
+            if(it){
+                loading.show()
+            }else{
+                loading.dismiss()
+            }
+        }
+
+        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner){
+            if(it){
+                val fragmentAnswer = FragmentAnswer()
+                val bundle = Bundle()
+                bundle.putString("title", "Lịch sử thi")
+                val fm: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+                fm.add(R.id.changeIdTopicHistory, fragmentAnswer)
+                    .addToBackStack(null).commit()
+                fragmentAnswer.arguments = bundle
+            }
+        }
     }
 
     private fun setStatusBar() {
@@ -43,9 +73,13 @@ class FragmentHistoryTopic : BaseFragment<EmptyViewModel>() {
         }
 
         seeAgainHistory.setOnClickListener {
-            val fragmentHistoryExam = FragmentHistoryExam()
-            val fm: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-            fm.replace(R.id.changeIdTopicHistory, fragmentHistoryExam).addToBackStack(null).commit()
+            val header = viewModel.mPreferenceUtil.defaultPref()
+                .getString(PreferenceKey.AUTHORIZATION, "").toString()
+            val userId = viewModel.mPreferenceUtil.defaultPref()
+                .getInt(PreferenceKey.USER_ID, 0)
+            val examHistoryId = viewModel.mPreferenceUtil.defaultPref()
+                .getInt(PreferenceKey.EXAM_ID_HISTORY, -1)
+            viewModel.getIdExam(header, userId, examHistoryId)
         }
     }
 

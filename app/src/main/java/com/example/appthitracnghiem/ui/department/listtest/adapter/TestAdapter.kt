@@ -54,7 +54,7 @@ class TestAdapter(
         holder.description.text = exam.number.toString() + " Câu trắc nghiệm"
 
         holder.itemView.setOnClickListener {
-            val intent: Intent = Intent(context, ExerciseActivity::class.java)
+            val intent = Intent(context, ExerciseActivity::class.java)
             context.startActivity(intent)
             saveKey(exam.id,exam.time)
         }
@@ -64,8 +64,8 @@ class TestAdapter(
         return listTest.size
     }
 
-    fun saveKey(id: Int, time: Int){
-        val mPreferenceUtil: PreferenceUtil = PreferenceUtil(context)
+    private fun saveKey(id: Int, time: Int){
+        val mPreferenceUtil = PreferenceUtil(context)
         mPreferenceUtil.defaultPref().edit()
             .putInt(PreferenceKey.ID_EXAM,id)
             .apply()

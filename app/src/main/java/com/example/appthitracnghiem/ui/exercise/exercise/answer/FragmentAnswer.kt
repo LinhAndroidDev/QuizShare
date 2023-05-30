@@ -24,6 +24,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_answer.*
 import kotlinx.android.synthetic.main.fragment_exam.*
+import kotlinx.android.synthetic.main.layout_history_question.*
 import kotlinx.android.synthetic.main.layout_loading.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -41,7 +42,7 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
 
     private lateinit var listExamQuestion: ArrayList<ExamQuestion>
 
-    private lateinit var listAnswer: ArrayList<Int>
+    var listAnswer: ArrayList<Int> = arrayListOf()
 
     var onClickNextQuestion: ((Int) -> Unit)? = null
 
@@ -55,8 +56,6 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
 
 //        answer1.setBackgroundResource(R.drawable.bg_answer_fail)
 //        answer3.setBackgroundResource(R.drawable.select_text_view)
-
-        listAnswer = arrayListOf()
 
         initUi()
     }
@@ -101,6 +100,7 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         viewModel.listAnswerLiveData.observe(viewLifecycleOwner) {
             val json = JSONObject(it)
             val hashMap: HashMap<String,Int> = toValue(json) as HashMap<String, Int>
+            val t = hashMap
         }
     }
 
@@ -133,6 +133,9 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
 
     @SuppressLint("SetTextI18n")
     private fun initUi() {
+
+        val titleAnswer: String = requireArguments().getString("title").toString()
+        txtTiltleAnswer.text = titleAnswer
 
         setStatusBar()
 

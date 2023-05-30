@@ -1,13 +1,20 @@
 package com.example.appthitracnghiem.ui.home.profile.setting.changeavatar
 
+import android.Manifest
 import android.app.ProgressDialog
+import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Point
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.Display
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
 import com.example.appthitracnghiem.R
@@ -16,6 +23,7 @@ import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.utils.Const
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.UriConvertFile
+import com.soundcloud.android.crop.Crop
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_change_avatar.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -29,36 +37,34 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
     var screenWitch: Int = 0
     var screenHeight: Int = 0
 
+    companion object {
+        private const val REQUEST_CODE_PERMISSIONS = 101
+        private const val REQUEST_CODE_PICK_IMAGE = 102
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_avatar)
 
-        setSizeScreen()
+        val permissions = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
 
-        val strImage: String = intent.getStringExtra("Uri").toString()
-        val uriImage: Uri = Uri.parse(strImage)
-        Picasso.get().load(uriImage)
-            .placeholder(R.drawable.loadimage)
-            .error(R.drawable.icon_error)
-            .centerCrop()
-            .fit()
-            .into(avatarEdit)
-
-        val strPath: String = UriConvertFile.getFileFromUri(this,uriImage).toString()
-        val file = File(strPath)
-        val requestBodyAvatar: RequestBody =RequestBody.create("multipart/form-data".toMediaTypeOrNull(),file)
-        val multipartBodyAvt: MultipartBody.Part = MultipartBody.Part.createFormData(Const.file,file.name,requestBodyAvatar)
-
-        val header = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.AUTHORIZATION,"").toString()
-
-        val userId = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.USER_ID,0).toString()
-        val requestBodyId: RequestBody =
-            userId.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-
-        done.setOnClickListener {
-            viewModel.requestAvt(header, requestBodyId, multipartBodyAvt)
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                permissions,
+                REQUEST_CODE_PERMISSIONS
+            )
         }
 
         initUi()
@@ -102,6 +108,40 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
     }
 
     private fun initUi() {
+        setSizeScreen()
+
+        val strImage: String = intent.getStringExtra("Uri").toString()
+        val uriImage: Uri = Uri.parse(strImage)
+        Picasso.get().load(uriImage)
+            .placeholder(R.drawable.loadimage)
+            .error(R.drawable.icon_error)
+            .centerCrop()
+            .fit()
+            .into(avatarEdit)
+
+        val strPath: String = UriConvertFile.getFileFromUri(this,uriImage).toString()
+        val file = File(strPath)
+        val requestBodyAvatar: RequestBody =RequestBody.create("multipart/form-data".toMediaTypeOrNull(),file)
+        val multipartBodyAvt: MultipartBody.Part = MultipartBody.Part.createFormData(Const.file,file.name,requestBodyAvatar)
+
+        val header = viewModel.mPreferenceUtil.defaultPref()
+            .getString(PreferenceKey.AUTHORIZATION,"").toString()
+
+        val userId = viewModel.mPreferenceUtil.defaultPref()
+            .getInt(PreferenceKey.USER_ID,0).toString()
+        val requestBodyId: RequestBody =
+            userId.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+
+        done.setOnClickListener {
+            viewModel.requestAvt(header, requestBodyId, multipartBodyAvt)
+        }
+
+        avatarEdit.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE)
+        }
+
 //        avatarEdit.setImageURI(uriImage)
 
         backChangeAvatar.setOnClickListener {
@@ -109,6 +149,64 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
         }
 
         setText()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_PERMISSIONS) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                grantResults[1] == PackageManager.PERMISSION_GRANTED
+            ) {
+                Toast.makeText(this, "Permissions granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Permissions not granted", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+//                && resultCode == RESULT_OK
+        if (requestCode == REQUEST_CODE_PICK_IMAGE && data != null) {
+            val uri = data.data
+            if (uri != null) {
+                Crop.of(uri, Uri.fromFile(File(cacheDir, "cropped")))
+                    .asSquare()
+                    .start(this)
+            }
+        } else
+            if (requestCode == Crop.REQUEST_CROP) {
+            val croppedUri = Crop.getOutput(data)
+            if ( croppedUri != null) {
+                val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, croppedUri)
+                avatarEdit.setImageBitmap(bitmap)
+//                saveImageToGallery(bitmap)
+            }
+        }
+    }
+
+    private fun saveImageToGallery(bitmap: Bitmap) {
+        val contentValues = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, "Image_${System.currentTimeMillis()}.jpg")
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/MyApp")
+        }
+        val contentResolver = contentResolver
+        val uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+        if (uri != null) {
+            contentResolver.openOutputStream(uri).use { outputStream ->
+                if (outputStream != null) {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
+                    Toast.makeText(this, "Image saved to gallery", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Failed to save image to gallery", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun setText() {
