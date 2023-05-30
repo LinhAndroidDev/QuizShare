@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +18,7 @@ import java.lang.String;
 
 public final class FragmentHistoryBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final ScrollView rootView;
 
   @NonNull
   public final LinearLayout historyQuiz;
@@ -40,7 +41,7 @@ public final class FragmentHistoryBinding implements ViewBinding {
   @NonNull
   public final TextView txtLichSuThi;
 
-  private FragmentHistoryBinding(@NonNull LinearLayout rootView, @NonNull LinearLayout historyQuiz,
+  private FragmentHistoryBinding(@NonNull ScrollView rootView, @NonNull LinearLayout historyQuiz,
       @NonNull LinearLayout historyTest, @NonNull LinearLayout saved, @NonNull TextView txtDaLuu,
       @NonNull TextView txtLichSu, @NonNull TextView txtLichSuCauHoi,
       @NonNull TextView txtLichSuThi) {
@@ -56,7 +57,7 @@ public final class FragmentHistoryBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public ScrollView getRoot() {
     return rootView;
   }
 
@@ -123,7 +124,7 @@ public final class FragmentHistoryBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentHistoryBinding((LinearLayout) rootView, historyQuiz, historyTest, saved,
+      return new FragmentHistoryBinding((ScrollView) rootView, historyQuiz, historyTest, saved,
           txtDaLuu, txtLichSu, txtLichSuCauHoi, txtLichSuThi);
     }
     String missingId = rootView.getResources().getResourceName(id);

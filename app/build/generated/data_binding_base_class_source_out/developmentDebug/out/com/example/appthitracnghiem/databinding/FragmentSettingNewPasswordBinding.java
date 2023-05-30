@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.example.appthitracnghiem.R;
@@ -25,10 +26,13 @@ public final class FragmentSettingNewPasswordBinding implements ViewBinding {
   public final ImageView backUpdateNewPassWord;
 
   @NonNull
-  public final EditText passwordUpdate;
+  public final EditText edtPasswordUpdate;
 
   @NonNull
-  public final EditText repeatPasswordUpdate;
+  public final EditText edtRepeatPasswordUpdate;
+
+  @NonNull
+  public final CardView resetPasswordSetting;
 
   @NonNull
   public final ImageView showRepeatUpdatePassWord;
@@ -40,13 +44,15 @@ public final class FragmentSettingNewPasswordBinding implements ViewBinding {
   public final TextView txtMatKhauMoi;
 
   private FragmentSettingNewPasswordBinding(@NonNull LinearLayout rootView,
-      @NonNull ImageView backUpdateNewPassWord, @NonNull EditText passwordUpdate,
-      @NonNull EditText repeatPasswordUpdate, @NonNull ImageView showRepeatUpdatePassWord,
-      @NonNull ImageView showUpdatePassWord, @NonNull TextView txtMatKhauMoi) {
+      @NonNull ImageView backUpdateNewPassWord, @NonNull EditText edtPasswordUpdate,
+      @NonNull EditText edtRepeatPasswordUpdate, @NonNull CardView resetPasswordSetting,
+      @NonNull ImageView showRepeatUpdatePassWord, @NonNull ImageView showUpdatePassWord,
+      @NonNull TextView txtMatKhauMoi) {
     this.rootView = rootView;
     this.backUpdateNewPassWord = backUpdateNewPassWord;
-    this.passwordUpdate = passwordUpdate;
-    this.repeatPasswordUpdate = repeatPasswordUpdate;
+    this.edtPasswordUpdate = edtPasswordUpdate;
+    this.edtRepeatPasswordUpdate = edtRepeatPasswordUpdate;
+    this.resetPasswordSetting = resetPasswordSetting;
     this.showRepeatUpdatePassWord = showRepeatUpdatePassWord;
     this.showUpdatePassWord = showUpdatePassWord;
     this.txtMatKhauMoi = txtMatKhauMoi;
@@ -85,15 +91,21 @@ public final class FragmentSettingNewPasswordBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.passwordUpdate;
-      EditText passwordUpdate = ViewBindings.findChildViewById(rootView, id);
-      if (passwordUpdate == null) {
+      id = R.id.edtPasswordUpdate;
+      EditText edtPasswordUpdate = ViewBindings.findChildViewById(rootView, id);
+      if (edtPasswordUpdate == null) {
         break missingId;
       }
 
-      id = R.id.repeatPasswordUpdate;
-      EditText repeatPasswordUpdate = ViewBindings.findChildViewById(rootView, id);
-      if (repeatPasswordUpdate == null) {
+      id = R.id.edtRepeatPasswordUpdate;
+      EditText edtRepeatPasswordUpdate = ViewBindings.findChildViewById(rootView, id);
+      if (edtRepeatPasswordUpdate == null) {
+        break missingId;
+      }
+
+      id = R.id.resetPasswordSetting;
+      CardView resetPasswordSetting = ViewBindings.findChildViewById(rootView, id);
+      if (resetPasswordSetting == null) {
         break missingId;
       }
 
@@ -116,8 +128,8 @@ public final class FragmentSettingNewPasswordBinding implements ViewBinding {
       }
 
       return new FragmentSettingNewPasswordBinding((LinearLayout) rootView, backUpdateNewPassWord,
-          passwordUpdate, repeatPasswordUpdate, showRepeatUpdatePassWord, showUpdatePassWord,
-          txtMatKhauMoi);
+          edtPasswordUpdate, edtRepeatPasswordUpdate, resetPasswordSetting,
+          showRepeatUpdatePassWord, showUpdatePassWord, txtMatKhauMoi);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

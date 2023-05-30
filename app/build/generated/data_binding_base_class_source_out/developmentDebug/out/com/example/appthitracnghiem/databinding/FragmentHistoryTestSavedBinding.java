@@ -5,10 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
@@ -19,7 +19,7 @@ import java.lang.String;
 
 public final class FragmentHistoryTestSavedBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final NestedScrollView rootView;
 
   @NonNull
   public final ImageView backHistoryTestSaved;
@@ -33,19 +33,24 @@ public final class FragmentHistoryTestSavedBinding implements ViewBinding {
   @NonNull
   public final TextView txtHistoryTest;
 
-  private FragmentHistoryTestSavedBinding(@NonNull LinearLayout rootView,
+  @NonNull
+  public final TextView txtTestSaved;
+
+  private FragmentHistoryTestSavedBinding(@NonNull NestedScrollView rootView,
       @NonNull ImageView backHistoryTestSaved, @NonNull ImageView menuHistoryTestSaved,
-      @NonNull RecyclerView rcvTestHistorySaved, @NonNull TextView txtHistoryTest) {
+      @NonNull RecyclerView rcvTestHistorySaved, @NonNull TextView txtHistoryTest,
+      @NonNull TextView txtTestSaved) {
     this.rootView = rootView;
     this.backHistoryTestSaved = backHistoryTestSaved;
     this.menuHistoryTestSaved = menuHistoryTestSaved;
     this.rcvTestHistorySaved = rcvTestHistorySaved;
     this.txtHistoryTest = txtHistoryTest;
+    this.txtTestSaved = txtTestSaved;
   }
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public NestedScrollView getRoot() {
     return rootView;
   }
 
@@ -94,8 +99,14 @@ public final class FragmentHistoryTestSavedBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentHistoryTestSavedBinding((LinearLayout) rootView, backHistoryTestSaved,
-          menuHistoryTestSaved, rcvTestHistorySaved, txtHistoryTest);
+      id = R.id.txtTestSaved;
+      TextView txtTestSaved = ViewBindings.findChildViewById(rootView, id);
+      if (txtTestSaved == null) {
+        break missingId;
+      }
+
+      return new FragmentHistoryTestSavedBinding((NestedScrollView) rootView, backHistoryTestSaved,
+          menuHistoryTestSaved, rcvTestHistorySaved, txtHistoryTest, txtTestSaved);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

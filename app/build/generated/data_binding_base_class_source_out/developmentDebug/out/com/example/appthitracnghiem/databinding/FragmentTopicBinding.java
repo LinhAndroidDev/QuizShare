@@ -5,20 +5,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.core.widget.NestedScrollView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.example.appthitracnghiem.R;
+import de.hdodenhof.circleimageview.CircleImageView;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
 
 public final class FragmentTopicBinding implements ViewBinding {
   @NonNull
-  private final NestedScrollView rootView;
+  private final RelativeLayout rootView;
+
+  @NonNull
+  public final CircleImageView avtTopic;
+
+  @NonNull
+  public final CardView backMemoryTopic;
 
   @NonNull
   public final ImageView backTopic;
@@ -26,16 +35,41 @@ public final class FragmentTopicBinding implements ViewBinding {
   @NonNull
   public final CardView doTestNow;
 
-  private FragmentTopicBinding(@NonNull NestedScrollView rootView, @NonNull ImageView backTopic,
-      @NonNull CardView doTestNow) {
+  @NonNull
+  public final LinearLayout infoTopic;
+
+  @NonNull
+  public final RelativeLayout layoutMemoryTopic;
+
+  @NonNull
+  public final LinearLayout layoutTopic;
+
+  @NonNull
+  public final TextView memoryTopic;
+
+  @NonNull
+  public final TextView nameTopic;
+
+  private FragmentTopicBinding(@NonNull RelativeLayout rootView, @NonNull CircleImageView avtTopic,
+      @NonNull CardView backMemoryTopic, @NonNull ImageView backTopic, @NonNull CardView doTestNow,
+      @NonNull LinearLayout infoTopic, @NonNull RelativeLayout layoutMemoryTopic,
+      @NonNull LinearLayout layoutTopic, @NonNull TextView memoryTopic,
+      @NonNull TextView nameTopic) {
     this.rootView = rootView;
+    this.avtTopic = avtTopic;
+    this.backMemoryTopic = backMemoryTopic;
     this.backTopic = backTopic;
     this.doTestNow = doTestNow;
+    this.infoTopic = infoTopic;
+    this.layoutMemoryTopic = layoutMemoryTopic;
+    this.layoutTopic = layoutTopic;
+    this.memoryTopic = memoryTopic;
+    this.nameTopic = nameTopic;
   }
 
   @Override
   @NonNull
-  public NestedScrollView getRoot() {
+  public RelativeLayout getRoot() {
     return rootView;
   }
 
@@ -60,6 +94,18 @@ public final class FragmentTopicBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.avtTopic;
+      CircleImageView avtTopic = ViewBindings.findChildViewById(rootView, id);
+      if (avtTopic == null) {
+        break missingId;
+      }
+
+      id = R.id.backMemoryTopic;
+      CardView backMemoryTopic = ViewBindings.findChildViewById(rootView, id);
+      if (backMemoryTopic == null) {
+        break missingId;
+      }
+
       id = R.id.backTopic;
       ImageView backTopic = ViewBindings.findChildViewById(rootView, id);
       if (backTopic == null) {
@@ -72,7 +118,38 @@ public final class FragmentTopicBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentTopicBinding((NestedScrollView) rootView, backTopic, doTestNow);
+      id = R.id.infoTopic;
+      LinearLayout infoTopic = ViewBindings.findChildViewById(rootView, id);
+      if (infoTopic == null) {
+        break missingId;
+      }
+
+      id = R.id.layoutMemoryTopic;
+      RelativeLayout layoutMemoryTopic = ViewBindings.findChildViewById(rootView, id);
+      if (layoutMemoryTopic == null) {
+        break missingId;
+      }
+
+      id = R.id.layoutTopic;
+      LinearLayout layoutTopic = ViewBindings.findChildViewById(rootView, id);
+      if (layoutTopic == null) {
+        break missingId;
+      }
+
+      id = R.id.memoryTopic;
+      TextView memoryTopic = ViewBindings.findChildViewById(rootView, id);
+      if (memoryTopic == null) {
+        break missingId;
+      }
+
+      id = R.id.nameTopic;
+      TextView nameTopic = ViewBindings.findChildViewById(rootView, id);
+      if (nameTopic == null) {
+        break missingId;
+      }
+
+      return new FragmentTopicBinding((RelativeLayout) rootView, avtTopic, backMemoryTopic,
+          backTopic, doTestNow, infoTopic, layoutMemoryTopic, layoutTopic, memoryTopic, nameTopic);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

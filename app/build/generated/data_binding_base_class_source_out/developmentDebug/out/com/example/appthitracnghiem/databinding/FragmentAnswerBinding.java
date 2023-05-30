@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
+import androidx.cardview.widget.CardView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.example.appthitracnghiem.R;
@@ -19,41 +19,60 @@ import java.lang.String;
 
 public final class FragmentAnswerBinding implements ViewBinding {
   @NonNull
-  private final NestedScrollView rootView;
-
-  @NonNull
-  public final TextView answer1;
-
-  @NonNull
-  public final TextView answer2;
-
-  @NonNull
-  public final TextView answer3;
-
-  @NonNull
-  public final TextView answer4;
+  private final LinearLayout rootView;
 
   @NonNull
   public final ImageView backAnswer;
 
   @NonNull
-  public final LinearLayout layoutExercise;
+  public final CardView backQuestionAnswer;
 
-  private FragmentAnswerBinding(@NonNull NestedScrollView rootView, @NonNull TextView answer1,
-      @NonNull TextView answer2, @NonNull TextView answer3, @NonNull TextView answer4,
-      @NonNull ImageView backAnswer, @NonNull LinearLayout layoutExercise) {
+  @NonNull
+  public final CardView imageAnswer;
+
+  @NonNull
+  public final LinearLayout layoutExerciseAnswer;
+
+  @NonNull
+  public final LinearLayout llContainerOptions;
+
+  @NonNull
+  public final LinearLayout menuQuestionAnswer;
+
+  @NonNull
+  public final CardView nextQuestionAnswer;
+
+  @NonNull
+  public final TextView titleAnswer;
+
+  @NonNull
+  public final TextView txtPositionQuizAnswer;
+
+  @NonNull
+  public final TextView txtTiltleAnswer;
+
+  private FragmentAnswerBinding(@NonNull LinearLayout rootView, @NonNull ImageView backAnswer,
+      @NonNull CardView backQuestionAnswer, @NonNull CardView imageAnswer,
+      @NonNull LinearLayout layoutExerciseAnswer, @NonNull LinearLayout llContainerOptions,
+      @NonNull LinearLayout menuQuestionAnswer, @NonNull CardView nextQuestionAnswer,
+      @NonNull TextView titleAnswer, @NonNull TextView txtPositionQuizAnswer,
+      @NonNull TextView txtTiltleAnswer) {
     this.rootView = rootView;
-    this.answer1 = answer1;
-    this.answer2 = answer2;
-    this.answer3 = answer3;
-    this.answer4 = answer4;
     this.backAnswer = backAnswer;
-    this.layoutExercise = layoutExercise;
+    this.backQuestionAnswer = backQuestionAnswer;
+    this.imageAnswer = imageAnswer;
+    this.layoutExerciseAnswer = layoutExerciseAnswer;
+    this.llContainerOptions = llContainerOptions;
+    this.menuQuestionAnswer = menuQuestionAnswer;
+    this.nextQuestionAnswer = nextQuestionAnswer;
+    this.titleAnswer = titleAnswer;
+    this.txtPositionQuizAnswer = txtPositionQuizAnswer;
+    this.txtTiltleAnswer = txtTiltleAnswer;
   }
 
   @Override
   @NonNull
-  public NestedScrollView getRoot() {
+  public LinearLayout getRoot() {
     return rootView;
   }
 
@@ -78,44 +97,69 @@ public final class FragmentAnswerBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.answer1;
-      TextView answer1 = ViewBindings.findChildViewById(rootView, id);
-      if (answer1 == null) {
-        break missingId;
-      }
-
-      id = R.id.answer2;
-      TextView answer2 = ViewBindings.findChildViewById(rootView, id);
-      if (answer2 == null) {
-        break missingId;
-      }
-
-      id = R.id.answer3;
-      TextView answer3 = ViewBindings.findChildViewById(rootView, id);
-      if (answer3 == null) {
-        break missingId;
-      }
-
-      id = R.id.answer4;
-      TextView answer4 = ViewBindings.findChildViewById(rootView, id);
-      if (answer4 == null) {
-        break missingId;
-      }
-
       id = R.id.backAnswer;
       ImageView backAnswer = ViewBindings.findChildViewById(rootView, id);
       if (backAnswer == null) {
         break missingId;
       }
 
-      id = R.id.layoutExercise;
-      LinearLayout layoutExercise = ViewBindings.findChildViewById(rootView, id);
-      if (layoutExercise == null) {
+      id = R.id.backQuestionAnswer;
+      CardView backQuestionAnswer = ViewBindings.findChildViewById(rootView, id);
+      if (backQuestionAnswer == null) {
         break missingId;
       }
 
-      return new FragmentAnswerBinding((NestedScrollView) rootView, answer1, answer2, answer3,
-          answer4, backAnswer, layoutExercise);
+      id = R.id.imageAnswer;
+      CardView imageAnswer = ViewBindings.findChildViewById(rootView, id);
+      if (imageAnswer == null) {
+        break missingId;
+      }
+
+      id = R.id.layoutExerciseAnswer;
+      LinearLayout layoutExerciseAnswer = ViewBindings.findChildViewById(rootView, id);
+      if (layoutExerciseAnswer == null) {
+        break missingId;
+      }
+
+      id = R.id.llContainerOptions;
+      LinearLayout llContainerOptions = ViewBindings.findChildViewById(rootView, id);
+      if (llContainerOptions == null) {
+        break missingId;
+      }
+
+      id = R.id.menuQuestionAnswer;
+      LinearLayout menuQuestionAnswer = ViewBindings.findChildViewById(rootView, id);
+      if (menuQuestionAnswer == null) {
+        break missingId;
+      }
+
+      id = R.id.nextQuestionAnswer;
+      CardView nextQuestionAnswer = ViewBindings.findChildViewById(rootView, id);
+      if (nextQuestionAnswer == null) {
+        break missingId;
+      }
+
+      id = R.id.titleAnswer;
+      TextView titleAnswer = ViewBindings.findChildViewById(rootView, id);
+      if (titleAnswer == null) {
+        break missingId;
+      }
+
+      id = R.id.txtPositionQuizAnswer;
+      TextView txtPositionQuizAnswer = ViewBindings.findChildViewById(rootView, id);
+      if (txtPositionQuizAnswer == null) {
+        break missingId;
+      }
+
+      id = R.id.txtTiltleAnswer;
+      TextView txtTiltleAnswer = ViewBindings.findChildViewById(rootView, id);
+      if (txtTiltleAnswer == null) {
+        break missingId;
+      }
+
+      return new FragmentAnswerBinding((LinearLayout) rootView, backAnswer, backQuestionAnswer,
+          imageAnswer, layoutExerciseAnswer, llContainerOptions, menuQuestionAnswer,
+          nextQuestionAnswer, titleAnswer, txtPositionQuizAnswer, txtTiltleAnswer);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,10 +21,13 @@ import java.lang.String;
 
 public final class FragmentListDepartmentBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final RelativeLayout rootView;
 
   @NonNull
   public final ImageView backDepartment;
+
+  @NonNull
+  public final RelativeLayout layoutListDepartmentCover;
 
   @NonNull
   public final GoogleProgressBar loadingDepartmentInfo;
@@ -38,12 +41,14 @@ public final class FragmentListDepartmentBinding implements ViewBinding {
   @NonNull
   public final TextView textTitleCategory;
 
-  private FragmentListDepartmentBinding(@NonNull LinearLayout rootView,
-      @NonNull ImageView backDepartment, @NonNull GoogleProgressBar loadingDepartmentInfo,
+  private FragmentListDepartmentBinding(@NonNull RelativeLayout rootView,
+      @NonNull ImageView backDepartment, @NonNull RelativeLayout layoutListDepartmentCover,
+      @NonNull GoogleProgressBar loadingDepartmentInfo,
       @NonNull RecyclerView recycleDetailListDepartment, @NonNull EditText searchDepartment,
       @NonNull TextView textTitleCategory) {
     this.rootView = rootView;
     this.backDepartment = backDepartment;
+    this.layoutListDepartmentCover = layoutListDepartmentCover;
     this.loadingDepartmentInfo = loadingDepartmentInfo;
     this.recycleDetailListDepartment = recycleDetailListDepartment;
     this.searchDepartment = searchDepartment;
@@ -52,7 +57,7 @@ public final class FragmentListDepartmentBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public RelativeLayout getRoot() {
     return rootView;
   }
 
@@ -83,6 +88,12 @@ public final class FragmentListDepartmentBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.layoutListDepartmentCover;
+      RelativeLayout layoutListDepartmentCover = ViewBindings.findChildViewById(rootView, id);
+      if (layoutListDepartmentCover == null) {
+        break missingId;
+      }
+
       id = R.id.loadingDepartmentInfo;
       GoogleProgressBar loadingDepartmentInfo = ViewBindings.findChildViewById(rootView, id);
       if (loadingDepartmentInfo == null) {
@@ -107,8 +118,9 @@ public final class FragmentListDepartmentBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentListDepartmentBinding((LinearLayout) rootView, backDepartment,
-          loadingDepartmentInfo, recycleDetailListDepartment, searchDepartment, textTitleCategory);
+      return new FragmentListDepartmentBinding((RelativeLayout) rootView, backDepartment,
+          layoutListDepartmentCover, loadingDepartmentInfo, recycleDetailListDepartment,
+          searchDepartment, textTitleCategory);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

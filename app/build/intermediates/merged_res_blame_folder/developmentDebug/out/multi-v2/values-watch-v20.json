@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-44:/values-watch-v20/values-watch-v20.xml",
+            "outputFile": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-46:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
-                    "source": "/Users/apple/.gradle/caches/transforms-3/58dd3f4812eb78824b955d86d3508d52/transformed/appcompat-1.6.1/res/values-watch-v20/values-watch-v20.xml",
+                    "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-3\\58dd3f4812eb78824b955d86d3508d52\\transformed\\appcompat-1.6.1\\res\\values-watch-v20\\values-watch-v20.xml",
                     "from": {
                         "startLines": "2,5,8",
                         "startColumns": "4,4,4",

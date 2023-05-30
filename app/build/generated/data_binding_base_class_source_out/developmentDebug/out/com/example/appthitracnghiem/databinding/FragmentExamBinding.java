@@ -39,6 +39,9 @@ public final class FragmentExamBinding implements ViewBinding {
   public final ImageView finishQuiz;
 
   @NonNull
+  public final CardView imageExam;
+
+  @NonNull
   public final LinearLayout layoutExercise;
 
   @NonNull
@@ -67,16 +70,18 @@ public final class FragmentExamBinding implements ViewBinding {
 
   private FragmentExamBinding(@NonNull RelativeLayout rootView, @NonNull ImageView backExercise,
       @NonNull CardView backQuestion, @NonNull CardView backSubmit, @NonNull ProgressView countTime,
-      @NonNull ImageView finishQuiz, @NonNull LinearLayout layoutExercise,
-      @NonNull RelativeLayout layoutSubmit, @NonNull LinearLayout llContainerAnswerOptions,
-      @NonNull LinearLayout menuQuestion, @NonNull CardView nextQuestion, @NonNull CardView submit,
-      @NonNull TextView titleExam, @NonNull TextView txtPositionQuiz, @NonNull TextView txtTime) {
+      @NonNull ImageView finishQuiz, @NonNull CardView imageExam,
+      @NonNull LinearLayout layoutExercise, @NonNull RelativeLayout layoutSubmit,
+      @NonNull LinearLayout llContainerAnswerOptions, @NonNull LinearLayout menuQuestion,
+      @NonNull CardView nextQuestion, @NonNull CardView submit, @NonNull TextView titleExam,
+      @NonNull TextView txtPositionQuiz, @NonNull TextView txtTime) {
     this.rootView = rootView;
     this.backExercise = backExercise;
     this.backQuestion = backQuestion;
     this.backSubmit = backSubmit;
     this.countTime = countTime;
     this.finishQuiz = finishQuiz;
+    this.imageExam = imageExam;
     this.layoutExercise = layoutExercise;
     this.layoutSubmit = layoutSubmit;
     this.llContainerAnswerOptions = llContainerAnswerOptions;
@@ -145,6 +150,12 @@ public final class FragmentExamBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.imageExam;
+      CardView imageExam = ViewBindings.findChildViewById(rootView, id);
+      if (imageExam == null) {
+        break missingId;
+      }
+
       id = R.id.layoutExercise;
       LinearLayout layoutExercise = ViewBindings.findChildViewById(rootView, id);
       if (layoutExercise == null) {
@@ -200,8 +211,9 @@ public final class FragmentExamBinding implements ViewBinding {
       }
 
       return new FragmentExamBinding((RelativeLayout) rootView, backExercise, backQuestion,
-          backSubmit, countTime, finishQuiz, layoutExercise, layoutSubmit, llContainerAnswerOptions,
-          menuQuestion, nextQuestion, submit, titleExam, txtPositionQuiz, txtTime);
+          backSubmit, countTime, finishQuiz, imageExam, layoutExercise, layoutSubmit,
+          llContainerAnswerOptions, menuQuestion, nextQuestion, submit, titleExam, txtPositionQuiz,
+          txtTime);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -44,11 +44,18 @@ public final class ActivityHomePageBinding implements ViewBinding {
   @NonNull
   public final CircleImageView iconSearch;
 
+  @NonNull
+  public final RelativeLayout layoutHomeActivity;
+
+  @NonNull
+  public final LayoutLoadingBinding loadingHome;
+
   private ActivityHomePageBinding(@NonNull RelativeLayout rootView, @NonNull ImageView bottomBar,
       @NonNull RelativeLayout bottomWrap, @NonNull RelativeLayout changeIdHome,
       @NonNull ImageView functionCreate, @NonNull ImageView functionHome,
       @NonNull ImageView functionLeaderboard, @NonNull ImageView functionProfile,
-      @NonNull CircleImageView iconSearch) {
+      @NonNull CircleImageView iconSearch, @NonNull RelativeLayout layoutHomeActivity,
+      @NonNull LayoutLoadingBinding loadingHome) {
     this.rootView = rootView;
     this.bottomBar = bottomBar;
     this.bottomWrap = bottomWrap;
@@ -58,6 +65,8 @@ public final class ActivityHomePageBinding implements ViewBinding {
     this.functionLeaderboard = functionLeaderboard;
     this.functionProfile = functionProfile;
     this.iconSearch = iconSearch;
+    this.layoutHomeActivity = layoutHomeActivity;
+    this.loadingHome = loadingHome;
   }
 
   @Override
@@ -135,9 +144,18 @@ public final class ActivityHomePageBinding implements ViewBinding {
         break missingId;
       }
 
+      RelativeLayout layoutHomeActivity = (RelativeLayout) rootView;
+
+      id = R.id.loadingHome;
+      View loadingHome = ViewBindings.findChildViewById(rootView, id);
+      if (loadingHome == null) {
+        break missingId;
+      }
+      LayoutLoadingBinding binding_loadingHome = LayoutLoadingBinding.bind(loadingHome);
+
       return new ActivityHomePageBinding((RelativeLayout) rootView, bottomBar, bottomWrap,
           changeIdHome, functionCreate, functionHome, functionLeaderboard, functionProfile,
-          iconSearch);
+          iconSearch, layoutHomeActivity, binding_loadingHome);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

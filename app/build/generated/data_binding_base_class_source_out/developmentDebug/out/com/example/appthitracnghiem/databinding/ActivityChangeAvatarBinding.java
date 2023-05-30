@@ -13,7 +13,6 @@ import androidx.cardview.widget.CardView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.example.appthitracnghiem.R;
-import com.jsibbold.zoomage.ZoomageView;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -23,7 +22,7 @@ public final class ActivityChangeAvatarBinding implements ViewBinding {
   private final RelativeLayout rootView;
 
   @NonNull
-  public final ZoomageView avatarEdit;
+  public final ImageView avatarEdit;
 
   @NonNull
   public final ImageView backChangeAvatar;
@@ -41,7 +40,7 @@ public final class ActivityChangeAvatarBinding implements ViewBinding {
   public final TextView txtChangeAvatar;
 
   private ActivityChangeAvatarBinding(@NonNull RelativeLayout rootView,
-      @NonNull ZoomageView avatarEdit, @NonNull ImageView backChangeAvatar, @NonNull CardView done,
+      @NonNull ImageView avatarEdit, @NonNull ImageView backChangeAvatar, @NonNull CardView done,
       @NonNull RelativeLayout layoutAvatarEdit, @NonNull ImageView strokeAvatar,
       @NonNull TextView txtChangeAvatar) {
     this.rootView = rootView;
@@ -81,7 +80,7 @@ public final class ActivityChangeAvatarBinding implements ViewBinding {
     int id;
     missingId: {
       id = R.id.avatarEdit;
-      ZoomageView avatarEdit = ViewBindings.findChildViewById(rootView, id);
+      ImageView avatarEdit = ViewBindings.findChildViewById(rootView, id);
       if (avatarEdit == null) {
         break missingId;
       }

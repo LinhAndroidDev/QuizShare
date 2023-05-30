@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +19,7 @@ import java.lang.String;
 
 public final class FragmentHistorySubjectSavedBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final ScrollView rootView;
 
   @NonNull
   public final ImageView backHistorySubjectSaved;
@@ -28,20 +28,24 @@ public final class FragmentHistorySubjectSavedBinding implements ViewBinding {
   public final RecyclerView rcvSubjectHistory;
 
   @NonNull
+  public final TextView txtDepartmentSaved;
+
+  @NonNull
   public final TextView txtHistoryTest;
 
-  private FragmentHistorySubjectSavedBinding(@NonNull LinearLayout rootView,
+  private FragmentHistorySubjectSavedBinding(@NonNull ScrollView rootView,
       @NonNull ImageView backHistorySubjectSaved, @NonNull RecyclerView rcvSubjectHistory,
-      @NonNull TextView txtHistoryTest) {
+      @NonNull TextView txtDepartmentSaved, @NonNull TextView txtHistoryTest) {
     this.rootView = rootView;
     this.backHistorySubjectSaved = backHistorySubjectSaved;
     this.rcvSubjectHistory = rcvSubjectHistory;
+    this.txtDepartmentSaved = txtDepartmentSaved;
     this.txtHistoryTest = txtHistoryTest;
   }
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public ScrollView getRoot() {
     return rootView;
   }
 
@@ -78,14 +82,20 @@ public final class FragmentHistorySubjectSavedBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.txtDepartmentSaved;
+      TextView txtDepartmentSaved = ViewBindings.findChildViewById(rootView, id);
+      if (txtDepartmentSaved == null) {
+        break missingId;
+      }
+
       id = R.id.txtHistoryTest;
       TextView txtHistoryTest = ViewBindings.findChildViewById(rootView, id);
       if (txtHistoryTest == null) {
         break missingId;
       }
 
-      return new FragmentHistorySubjectSavedBinding((LinearLayout) rootView,
-          backHistorySubjectSaved, rcvSubjectHistory, txtHistoryTest);
+      return new FragmentHistorySubjectSavedBinding((ScrollView) rootView, backHistorySubjectSaved,
+          rcvSubjectHistory, txtDepartmentSaved, txtHistoryTest);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

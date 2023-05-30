@@ -1,16 +1,16 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-44:/values-xxhdpi-v4/values-xxhdpi-v4.xml",
+            "outputFile": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-46:/values-xxhdpi-v4/values-xxhdpi-v4.xml",
             "map": [
                 {
-                    "source": "/Users/apple/AndroidStudioProjects/tracnghiem-zyyx/app/src/main/res/values-xxhdpi/dimens.xml",
+                    "source": "C:\\Users\\Admin\\AndroidStudioProjects\\quiz-android\\app\\src\\main\\res\\values-xxhdpi\\dimens.xml",
                     "from": {
                         "startLines": "3,4,5",
                         "startColumns": "4,4,4",
-                        "startOffsets": "127,185,241",
+                        "startOffsets": "130,189,246",
                         "endColumns": "57,55,43",
-                        "endOffsets": "180,236,280"
+                        "endOffsets": "183,240,285"
                     },
                     "to": {
                         "startLines": "2,3,4",

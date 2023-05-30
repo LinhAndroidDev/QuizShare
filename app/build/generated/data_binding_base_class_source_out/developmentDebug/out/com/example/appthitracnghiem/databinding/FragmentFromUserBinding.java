@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
@@ -20,7 +19,7 @@ import java.lang.String;
 
 public final class FragmentFromUserBinding implements ViewBinding {
   @NonNull
-  private final NestedScrollView rootView;
+  private final LinearLayout rootView;
 
   @NonNull
   public final LinearLayout linearTitle;
@@ -32,21 +31,25 @@ public final class FragmentFromUserBinding implements ViewBinding {
   public final RecyclerView recycleListFromUser;
 
   @NonNull
+  public final TextView seeAllUser;
+
+  @NonNull
   public final TextView textQuizHomeFromUser;
 
-  private FragmentFromUserBinding(@NonNull NestedScrollView rootView,
-      @NonNull LinearLayout linearTitle, @NonNull GoogleProgressBar loadingQuizFromUser,
-      @NonNull RecyclerView recycleListFromUser, @NonNull TextView textQuizHomeFromUser) {
+  private FragmentFromUserBinding(@NonNull LinearLayout rootView, @NonNull LinearLayout linearTitle,
+      @NonNull GoogleProgressBar loadingQuizFromUser, @NonNull RecyclerView recycleListFromUser,
+      @NonNull TextView seeAllUser, @NonNull TextView textQuizHomeFromUser) {
     this.rootView = rootView;
     this.linearTitle = linearTitle;
     this.loadingQuizFromUser = loadingQuizFromUser;
     this.recycleListFromUser = recycleListFromUser;
+    this.seeAllUser = seeAllUser;
     this.textQuizHomeFromUser = textQuizHomeFromUser;
   }
 
   @Override
   @NonNull
-  public NestedScrollView getRoot() {
+  public LinearLayout getRoot() {
     return rootView;
   }
 
@@ -89,14 +92,20 @@ public final class FragmentFromUserBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.seeAllUser;
+      TextView seeAllUser = ViewBindings.findChildViewById(rootView, id);
+      if (seeAllUser == null) {
+        break missingId;
+      }
+
       id = R.id.textQuizHomeFromUser;
       TextView textQuizHomeFromUser = ViewBindings.findChildViewById(rootView, id);
       if (textQuizHomeFromUser == null) {
         break missingId;
       }
 
-      return new FragmentFromUserBinding((NestedScrollView) rootView, linearTitle,
-          loadingQuizFromUser, recycleListFromUser, textQuizHomeFromUser);
+      return new FragmentFromUserBinding((LinearLayout) rootView, linearTitle, loadingQuizFromUser,
+          recycleListFromUser, seeAllUser, textQuizHomeFromUser);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

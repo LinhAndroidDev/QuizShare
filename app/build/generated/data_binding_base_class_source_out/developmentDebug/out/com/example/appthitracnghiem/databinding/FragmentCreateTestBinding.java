@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,13 +32,40 @@ public final class FragmentCreateTestBinding implements ViewBinding {
   public final CardView createTest;
 
   @NonNull
-  public final EditText edtNumberQuiz;
+  public final EditText edtDescribeQuiz;
+
+  @NonNull
+  public final TextView edtSelectDepartment;
+
+  @NonNull
+  public final TextView edtSelectLevel;
+
+  @NonNull
+  public final EditText edtSelectNumberQuiz;
+
+  @NonNull
+  public final TextView edtSelectSubject;
+
+  @NonNull
+  public final EditText edtSelectTime;
+
+  @NonNull
+  public final EditText edtSelectTitle;
 
   @NonNull
   public final LinearLayout googleSheet;
 
   @NonNull
   public final ImageView imageCover;
+
+  @NonNull
+  public final LinearLayout layoutCreateTest;
+
+  @NonNull
+  public final LinearLayout layoutCreateTestCover;
+
+  @NonNull
+  public final RelativeLayout layoutSelectSubject;
 
   @NonNull
   public final ImageView menuCreateTest;
@@ -50,6 +78,9 @@ public final class FragmentCreateTestBinding implements ViewBinding {
 
   @NonNull
   public final ImageView selectMode;
+
+  @NonNull
+  public final ImageView selectSubject;
 
   @NonNull
   public final ImageView shareTest;
@@ -73,6 +104,9 @@ public final class FragmentCreateTestBinding implements ViewBinding {
   public final TextView txtSelectMode;
 
   @NonNull
+  public final TextView txtSelectSubject;
+
+  @NonNull
   public final TextView txtTiltle;
 
   @NonNull
@@ -80,24 +114,39 @@ public final class FragmentCreateTestBinding implements ViewBinding {
 
   private FragmentCreateTestBinding(@NonNull CoordinatorLayout rootView,
       @NonNull ImageView addCoverImage, @NonNull CardView createTest,
-      @NonNull EditText edtNumberQuiz, @NonNull LinearLayout googleSheet,
-      @NonNull ImageView imageCover, @NonNull ImageView menuCreateTest,
-      @NonNull NestedScrollView scrollCreateTest, @NonNull ImageView selectDepartment,
-      @NonNull ImageView selectMode, @NonNull ImageView shareTest, @NonNull TextView txtAddTest,
+      @NonNull EditText edtDescribeQuiz, @NonNull TextView edtSelectDepartment,
+      @NonNull TextView edtSelectLevel, @NonNull EditText edtSelectNumberQuiz,
+      @NonNull TextView edtSelectSubject, @NonNull EditText edtSelectTime,
+      @NonNull EditText edtSelectTitle, @NonNull LinearLayout googleSheet,
+      @NonNull ImageView imageCover, @NonNull LinearLayout layoutCreateTest,
+      @NonNull LinearLayout layoutCreateTestCover, @NonNull RelativeLayout layoutSelectSubject,
+      @NonNull ImageView menuCreateTest, @NonNull NestedScrollView scrollCreateTest,
+      @NonNull ImageView selectDepartment, @NonNull ImageView selectMode,
+      @NonNull ImageView selectSubject, @NonNull ImageView shareTest, @NonNull TextView txtAddTest,
       @NonNull TextView txtDetail, @NonNull TextView txtDownTest,
       @NonNull TextView txtNumberQuestion, @NonNull TextView txtSelectDepartment,
-      @NonNull TextView txtSelectMode, @NonNull TextView txtTiltle,
-      @NonNull TextView txtTimeDoTest) {
+      @NonNull TextView txtSelectMode, @NonNull TextView txtSelectSubject,
+      @NonNull TextView txtTiltle, @NonNull TextView txtTimeDoTest) {
     this.rootView = rootView;
     this.addCoverImage = addCoverImage;
     this.createTest = createTest;
-    this.edtNumberQuiz = edtNumberQuiz;
+    this.edtDescribeQuiz = edtDescribeQuiz;
+    this.edtSelectDepartment = edtSelectDepartment;
+    this.edtSelectLevel = edtSelectLevel;
+    this.edtSelectNumberQuiz = edtSelectNumberQuiz;
+    this.edtSelectSubject = edtSelectSubject;
+    this.edtSelectTime = edtSelectTime;
+    this.edtSelectTitle = edtSelectTitle;
     this.googleSheet = googleSheet;
     this.imageCover = imageCover;
+    this.layoutCreateTest = layoutCreateTest;
+    this.layoutCreateTestCover = layoutCreateTestCover;
+    this.layoutSelectSubject = layoutSelectSubject;
     this.menuCreateTest = menuCreateTest;
     this.scrollCreateTest = scrollCreateTest;
     this.selectDepartment = selectDepartment;
     this.selectMode = selectMode;
+    this.selectSubject = selectSubject;
     this.shareTest = shareTest;
     this.txtAddTest = txtAddTest;
     this.txtDetail = txtDetail;
@@ -105,6 +154,7 @@ public final class FragmentCreateTestBinding implements ViewBinding {
     this.txtNumberQuestion = txtNumberQuestion;
     this.txtSelectDepartment = txtSelectDepartment;
     this.txtSelectMode = txtSelectMode;
+    this.txtSelectSubject = txtSelectSubject;
     this.txtTiltle = txtTiltle;
     this.txtTimeDoTest = txtTimeDoTest;
   }
@@ -148,9 +198,45 @@ public final class FragmentCreateTestBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.edtNumberQuiz;
-      EditText edtNumberQuiz = ViewBindings.findChildViewById(rootView, id);
-      if (edtNumberQuiz == null) {
+      id = R.id.edtDescribeQuiz;
+      EditText edtDescribeQuiz = ViewBindings.findChildViewById(rootView, id);
+      if (edtDescribeQuiz == null) {
+        break missingId;
+      }
+
+      id = R.id.edtSelectDepartment;
+      TextView edtSelectDepartment = ViewBindings.findChildViewById(rootView, id);
+      if (edtSelectDepartment == null) {
+        break missingId;
+      }
+
+      id = R.id.edtSelectLevel;
+      TextView edtSelectLevel = ViewBindings.findChildViewById(rootView, id);
+      if (edtSelectLevel == null) {
+        break missingId;
+      }
+
+      id = R.id.edtSelectNumberQuiz;
+      EditText edtSelectNumberQuiz = ViewBindings.findChildViewById(rootView, id);
+      if (edtSelectNumberQuiz == null) {
+        break missingId;
+      }
+
+      id = R.id.edtSelectSubject;
+      TextView edtSelectSubject = ViewBindings.findChildViewById(rootView, id);
+      if (edtSelectSubject == null) {
+        break missingId;
+      }
+
+      id = R.id.edtSelectTime;
+      EditText edtSelectTime = ViewBindings.findChildViewById(rootView, id);
+      if (edtSelectTime == null) {
+        break missingId;
+      }
+
+      id = R.id.edtSelectTitle;
+      EditText edtSelectTitle = ViewBindings.findChildViewById(rootView, id);
+      if (edtSelectTitle == null) {
         break missingId;
       }
 
@@ -163,6 +249,24 @@ public final class FragmentCreateTestBinding implements ViewBinding {
       id = R.id.imageCover;
       ImageView imageCover = ViewBindings.findChildViewById(rootView, id);
       if (imageCover == null) {
+        break missingId;
+      }
+
+      id = R.id.layoutCreateTest;
+      LinearLayout layoutCreateTest = ViewBindings.findChildViewById(rootView, id);
+      if (layoutCreateTest == null) {
+        break missingId;
+      }
+
+      id = R.id.layoutCreateTestCover;
+      LinearLayout layoutCreateTestCover = ViewBindings.findChildViewById(rootView, id);
+      if (layoutCreateTestCover == null) {
+        break missingId;
+      }
+
+      id = R.id.layoutSelectSubject;
+      RelativeLayout layoutSelectSubject = ViewBindings.findChildViewById(rootView, id);
+      if (layoutSelectSubject == null) {
         break missingId;
       }
 
@@ -187,6 +291,12 @@ public final class FragmentCreateTestBinding implements ViewBinding {
       id = R.id.selectMode;
       ImageView selectMode = ViewBindings.findChildViewById(rootView, id);
       if (selectMode == null) {
+        break missingId;
+      }
+
+      id = R.id.selectSubject;
+      ImageView selectSubject = ViewBindings.findChildViewById(rootView, id);
+      if (selectSubject == null) {
         break missingId;
       }
 
@@ -232,6 +342,12 @@ public final class FragmentCreateTestBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.txtSelectSubject;
+      TextView txtSelectSubject = ViewBindings.findChildViewById(rootView, id);
+      if (txtSelectSubject == null) {
+        break missingId;
+      }
+
       id = R.id.txtTiltle;
       TextView txtTiltle = ViewBindings.findChildViewById(rootView, id);
       if (txtTiltle == null) {
@@ -245,9 +361,12 @@ public final class FragmentCreateTestBinding implements ViewBinding {
       }
 
       return new FragmentCreateTestBinding((CoordinatorLayout) rootView, addCoverImage, createTest,
-          edtNumberQuiz, googleSheet, imageCover, menuCreateTest, scrollCreateTest,
-          selectDepartment, selectMode, shareTest, txtAddTest, txtDetail, txtDownTest,
-          txtNumberQuestion, txtSelectDepartment, txtSelectMode, txtTiltle, txtTimeDoTest);
+          edtDescribeQuiz, edtSelectDepartment, edtSelectLevel, edtSelectNumberQuiz,
+          edtSelectSubject, edtSelectTime, edtSelectTitle, googleSheet, imageCover,
+          layoutCreateTest, layoutCreateTestCover, layoutSelectSubject, menuCreateTest,
+          scrollCreateTest, selectDepartment, selectMode, selectSubject, shareTest, txtAddTest,
+          txtDetail, txtDownTest, txtNumberQuestion, txtSelectDepartment, txtSelectMode,
+          txtSelectSubject, txtTiltle, txtTimeDoTest);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

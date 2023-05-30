@@ -6,8 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
@@ -19,7 +18,7 @@ import java.lang.String;
 
 public final class ActivityIntroLoginBinding implements ViewBinding {
   @NonNull
-  private final RelativeLayout rootView;
+  private final LinearLayout rootView;
 
   @NonNull
   public final Button loginIntro;
@@ -30,21 +29,17 @@ public final class ActivityIntroLoginBinding implements ViewBinding {
   @NonNull
   public final Button registerIntro;
 
-  @NonNull
-  public final TextView toDoLate;
-
-  private ActivityIntroLoginBinding(@NonNull RelativeLayout rootView, @NonNull Button loginIntro,
-      @NonNull ImageView logo5, @NonNull Button registerIntro, @NonNull TextView toDoLate) {
+  private ActivityIntroLoginBinding(@NonNull LinearLayout rootView, @NonNull Button loginIntro,
+      @NonNull ImageView logo5, @NonNull Button registerIntro) {
     this.rootView = rootView;
     this.loginIntro = loginIntro;
     this.logo5 = logo5;
     this.registerIntro = registerIntro;
-    this.toDoLate = toDoLate;
   }
 
   @Override
   @NonNull
-  public RelativeLayout getRoot() {
+  public LinearLayout getRoot() {
     return rootView;
   }
 
@@ -87,14 +82,8 @@ public final class ActivityIntroLoginBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.toDoLate;
-      TextView toDoLate = ViewBindings.findChildViewById(rootView, id);
-      if (toDoLate == null) {
-        break missingId;
-      }
-
-      return new ActivityIntroLoginBinding((RelativeLayout) rootView, loginIntro, logo5,
-          registerIntro, toDoLate);
+      return new ActivityIntroLoginBinding((LinearLayout) rootView, loginIntro, logo5,
+          registerIntro);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,10 +22,13 @@ import java.lang.String;
 
 public final class FragmentListTestBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final RelativeLayout rootView;
 
   @NonNull
   public final ImageView backTest;
+
+  @NonNull
+  public final LinearLayout layoutListTestCover;
 
   @NonNull
   public final GoogleProgressBar loadingTest;
@@ -44,12 +48,14 @@ public final class FragmentListTestBinding implements ViewBinding {
   @NonNull
   public final TextView textTitleCategory;
 
-  private FragmentListTestBinding(@NonNull LinearLayout rootView, @NonNull ImageView backTest,
-      @NonNull GoogleProgressBar loadingTest, @NonNull ImageView menuListTest,
-      @NonNull RecyclerView recycleListTest, @NonNull EditText searchTest,
-      @NonNull TextView textNatural, @NonNull TextView textTitleCategory) {
+  private FragmentListTestBinding(@NonNull RelativeLayout rootView, @NonNull ImageView backTest,
+      @NonNull LinearLayout layoutListTestCover, @NonNull GoogleProgressBar loadingTest,
+      @NonNull ImageView menuListTest, @NonNull RecyclerView recycleListTest,
+      @NonNull EditText searchTest, @NonNull TextView textNatural,
+      @NonNull TextView textTitleCategory) {
     this.rootView = rootView;
     this.backTest = backTest;
+    this.layoutListTestCover = layoutListTestCover;
     this.loadingTest = loadingTest;
     this.menuListTest = menuListTest;
     this.recycleListTest = recycleListTest;
@@ -60,7 +66,7 @@ public final class FragmentListTestBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public RelativeLayout getRoot() {
     return rootView;
   }
 
@@ -88,6 +94,12 @@ public final class FragmentListTestBinding implements ViewBinding {
       id = R.id.backTest;
       ImageView backTest = ViewBindings.findChildViewById(rootView, id);
       if (backTest == null) {
+        break missingId;
+      }
+
+      id = R.id.layoutListTestCover;
+      LinearLayout layoutListTestCover = ViewBindings.findChildViewById(rootView, id);
+      if (layoutListTestCover == null) {
         break missingId;
       }
 
@@ -127,8 +139,8 @@ public final class FragmentListTestBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentListTestBinding((LinearLayout) rootView, backTest, loadingTest,
-          menuListTest, recycleListTest, searchTest, textNatural, textTitleCategory);
+      return new FragmentListTestBinding((RelativeLayout) rootView, backTest, layoutListTestCover,
+          loadingTest, menuListTest, recycleListTest, searchTest, textNatural, textTitleCategory);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

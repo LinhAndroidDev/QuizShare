@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.example.appthitracnghiem.R;
+import com.jpardogo.android.googleprogressbar.library.GoogleProgressBar;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -27,13 +27,16 @@ public final class ActivitySearchSubjectBinding implements ViewBinding {
   public final ImageView backSearchSubject;
 
   @NonNull
-  public final ProgressBar loadingSubject;
+  public final EditText edtSearchSubject;
+
+  @NonNull
+  public final GoogleProgressBar loadingSubject;
 
   @NonNull
   public final RecyclerView recycleListSubject;
 
   @NonNull
-  public final EditText searchSubject;
+  public final ImageView search;
 
   @NonNull
   public final TextView textSubject;
@@ -42,14 +45,16 @@ public final class ActivitySearchSubjectBinding implements ViewBinding {
   public final TextView textTitleCategory;
 
   private ActivitySearchSubjectBinding(@NonNull LinearLayout rootView,
-      @NonNull ImageView backSearchSubject, @NonNull ProgressBar loadingSubject,
-      @NonNull RecyclerView recycleListSubject, @NonNull EditText searchSubject,
-      @NonNull TextView textSubject, @NonNull TextView textTitleCategory) {
+      @NonNull ImageView backSearchSubject, @NonNull EditText edtSearchSubject,
+      @NonNull GoogleProgressBar loadingSubject, @NonNull RecyclerView recycleListSubject,
+      @NonNull ImageView search, @NonNull TextView textSubject,
+      @NonNull TextView textTitleCategory) {
     this.rootView = rootView;
     this.backSearchSubject = backSearchSubject;
+    this.edtSearchSubject = edtSearchSubject;
     this.loadingSubject = loadingSubject;
     this.recycleListSubject = recycleListSubject;
-    this.searchSubject = searchSubject;
+    this.search = search;
     this.textSubject = textSubject;
     this.textTitleCategory = textTitleCategory;
   }
@@ -87,8 +92,14 @@ public final class ActivitySearchSubjectBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.edtSearchSubject;
+      EditText edtSearchSubject = ViewBindings.findChildViewById(rootView, id);
+      if (edtSearchSubject == null) {
+        break missingId;
+      }
+
       id = R.id.loadingSubject;
-      ProgressBar loadingSubject = ViewBindings.findChildViewById(rootView, id);
+      GoogleProgressBar loadingSubject = ViewBindings.findChildViewById(rootView, id);
       if (loadingSubject == null) {
         break missingId;
       }
@@ -99,9 +110,9 @@ public final class ActivitySearchSubjectBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.searchSubject;
-      EditText searchSubject = ViewBindings.findChildViewById(rootView, id);
-      if (searchSubject == null) {
+      id = R.id.search;
+      ImageView search = ViewBindings.findChildViewById(rootView, id);
+      if (search == null) {
         break missingId;
       }
 
@@ -118,7 +129,8 @@ public final class ActivitySearchSubjectBinding implements ViewBinding {
       }
 
       return new ActivitySearchSubjectBinding((LinearLayout) rootView, backSearchSubject,
-          loadingSubject, recycleListSubject, searchSubject, textSubject, textTitleCategory);
+          edtSearchSubject, loadingSubject, recycleListSubject, search, textSubject,
+          textTitleCategory);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

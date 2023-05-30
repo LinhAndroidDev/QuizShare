@@ -4,6 +4,7 @@ package com.example.appthitracnghiem.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,20 +33,33 @@ public final class FragmentUpdateInforBinding implements ViewBinding {
   public final CircleImageView changeAvatar;
 
   @NonNull
+  public final TextView edtBirthInfo;
+
+  @NonNull
+  public final EditText edtNameInfo;
+
+  @NonNull
   public final CardView resetInfor;
+
+  @NonNull
+  public final ImageView selectDateInfo;
 
   @NonNull
   public final TextView txtCapNhatThongTin;
 
   private FragmentUpdateInforBinding(@NonNull RelativeLayout rootView,
       @NonNull CircleImageView avatarUpdateInfo, @NonNull ImageView backUpdateInfo,
-      @NonNull CircleImageView changeAvatar, @NonNull CardView resetInfor,
-      @NonNull TextView txtCapNhatThongTin) {
+      @NonNull CircleImageView changeAvatar, @NonNull TextView edtBirthInfo,
+      @NonNull EditText edtNameInfo, @NonNull CardView resetInfor,
+      @NonNull ImageView selectDateInfo, @NonNull TextView txtCapNhatThongTin) {
     this.rootView = rootView;
     this.avatarUpdateInfo = avatarUpdateInfo;
     this.backUpdateInfo = backUpdateInfo;
     this.changeAvatar = changeAvatar;
+    this.edtBirthInfo = edtBirthInfo;
+    this.edtNameInfo = edtNameInfo;
     this.resetInfor = resetInfor;
+    this.selectDateInfo = selectDateInfo;
     this.txtCapNhatThongTin = txtCapNhatThongTin;
   }
 
@@ -94,9 +108,27 @@ public final class FragmentUpdateInforBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.edtBirthInfo;
+      TextView edtBirthInfo = ViewBindings.findChildViewById(rootView, id);
+      if (edtBirthInfo == null) {
+        break missingId;
+      }
+
+      id = R.id.edtNameInfo;
+      EditText edtNameInfo = ViewBindings.findChildViewById(rootView, id);
+      if (edtNameInfo == null) {
+        break missingId;
+      }
+
       id = R.id.resetInfor;
       CardView resetInfor = ViewBindings.findChildViewById(rootView, id);
       if (resetInfor == null) {
+        break missingId;
+      }
+
+      id = R.id.selectDateInfo;
+      ImageView selectDateInfo = ViewBindings.findChildViewById(rootView, id);
+      if (selectDateInfo == null) {
         break missingId;
       }
 
@@ -107,7 +139,8 @@ public final class FragmentUpdateInforBinding implements ViewBinding {
       }
 
       return new FragmentUpdateInforBinding((RelativeLayout) rootView, avatarUpdateInfo,
-          backUpdateInfo, changeAvatar, resetInfor, txtCapNhatThongTin);
+          backUpdateInfo, changeAvatar, edtBirthInfo, edtNameInfo, resetInfor, selectDateInfo,
+          txtCapNhatThongTin);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

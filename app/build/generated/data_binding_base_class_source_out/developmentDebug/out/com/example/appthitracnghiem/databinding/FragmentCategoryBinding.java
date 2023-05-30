@@ -32,6 +32,9 @@ public final class FragmentCategoryBinding implements ViewBinding {
   public final RecyclerView recycleListSubject;
 
   @NonNull
+  public final NestedScrollView scrollCategory;
+
+  @NonNull
   public final TextView searchCategory;
 
   @NonNull
@@ -42,12 +45,14 @@ public final class FragmentCategoryBinding implements ViewBinding {
 
   private FragmentCategoryBinding(@NonNull NestedScrollView rootView,
       @NonNull ImageView backCategory, @NonNull GoogleProgressBar loadingSubject,
-      @NonNull RecyclerView recycleListSubject, @NonNull TextView searchCategory,
-      @NonNull TextView textSubject, @NonNull TextView textTitleCategory) {
+      @NonNull RecyclerView recycleListSubject, @NonNull NestedScrollView scrollCategory,
+      @NonNull TextView searchCategory, @NonNull TextView textSubject,
+      @NonNull TextView textTitleCategory) {
     this.rootView = rootView;
     this.backCategory = backCategory;
     this.loadingSubject = loadingSubject;
     this.recycleListSubject = recycleListSubject;
+    this.scrollCategory = scrollCategory;
     this.searchCategory = searchCategory;
     this.textSubject = textSubject;
     this.textTitleCategory = textTitleCategory;
@@ -98,6 +103,8 @@ public final class FragmentCategoryBinding implements ViewBinding {
         break missingId;
       }
 
+      NestedScrollView scrollCategory = (NestedScrollView) rootView;
+
       id = R.id.searchCategory;
       TextView searchCategory = ViewBindings.findChildViewById(rootView, id);
       if (searchCategory == null) {
@@ -117,7 +124,7 @@ public final class FragmentCategoryBinding implements ViewBinding {
       }
 
       return new FragmentCategoryBinding((NestedScrollView) rootView, backCategory, loadingSubject,
-          recycleListSubject, searchCategory, textSubject, textTitleCategory);
+          recycleListSubject, scrollCategory, searchCategory, textSubject, textTitleCategory);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

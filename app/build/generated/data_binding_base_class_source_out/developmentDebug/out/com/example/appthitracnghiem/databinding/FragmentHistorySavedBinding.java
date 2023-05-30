@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +19,7 @@ import java.lang.String;
 
 public final class FragmentHistorySavedBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final ScrollView rootView;
 
   @NonNull
   public final ImageView backHistorySaved;
@@ -30,7 +30,7 @@ public final class FragmentHistorySavedBinding implements ViewBinding {
   @NonNull
   public final TextView txtHistoryTest;
 
-  private FragmentHistorySavedBinding(@NonNull LinearLayout rootView,
+  private FragmentHistorySavedBinding(@NonNull ScrollView rootView,
       @NonNull ImageView backHistorySaved, @NonNull RecyclerView rcvDepartmentHistory,
       @NonNull TextView txtHistoryTest) {
     this.rootView = rootView;
@@ -41,7 +41,7 @@ public final class FragmentHistorySavedBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public ScrollView getRoot() {
     return rootView;
   }
 
@@ -84,7 +84,7 @@ public final class FragmentHistorySavedBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentHistorySavedBinding((LinearLayout) rootView, backHistorySaved,
+      return new FragmentHistorySavedBinding((ScrollView) rootView, backHistorySaved,
           rcvDepartmentHistory, txtHistoryTest);
     }
     String missingId = rootView.getResources().getResourceName(id);

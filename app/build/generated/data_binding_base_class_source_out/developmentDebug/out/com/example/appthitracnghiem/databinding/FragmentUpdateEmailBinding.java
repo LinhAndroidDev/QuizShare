@@ -4,11 +4,13 @@ package com.example.appthitracnghiem.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.example.appthitracnghiem.R;
@@ -24,13 +26,22 @@ public final class FragmentUpdateEmailBinding implements ViewBinding {
   public final ImageView backUpdateEmail;
 
   @NonNull
+  public final EditText edtUpdateEmail;
+
+  @NonNull
   public final TextView txtCapNhatEmail;
 
+  @NonNull
+  public final CardView updateEmail;
+
   private FragmentUpdateEmailBinding(@NonNull LinearLayout rootView,
-      @NonNull ImageView backUpdateEmail, @NonNull TextView txtCapNhatEmail) {
+      @NonNull ImageView backUpdateEmail, @NonNull EditText edtUpdateEmail,
+      @NonNull TextView txtCapNhatEmail, @NonNull CardView updateEmail) {
     this.rootView = rootView;
     this.backUpdateEmail = backUpdateEmail;
+    this.edtUpdateEmail = edtUpdateEmail;
     this.txtCapNhatEmail = txtCapNhatEmail;
+    this.updateEmail = updateEmail;
   }
 
   @Override
@@ -66,14 +77,26 @@ public final class FragmentUpdateEmailBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.edtUpdateEmail;
+      EditText edtUpdateEmail = ViewBindings.findChildViewById(rootView, id);
+      if (edtUpdateEmail == null) {
+        break missingId;
+      }
+
       id = R.id.txtCapNhatEmail;
       TextView txtCapNhatEmail = ViewBindings.findChildViewById(rootView, id);
       if (txtCapNhatEmail == null) {
         break missingId;
       }
 
+      id = R.id.updateEmail;
+      CardView updateEmail = ViewBindings.findChildViewById(rootView, id);
+      if (updateEmail == null) {
+        break missingId;
+      }
+
       return new FragmentUpdateEmailBinding((LinearLayout) rootView, backUpdateEmail,
-          txtCapNhatEmail);
+          edtUpdateEmail, txtCapNhatEmail, updateEmail);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

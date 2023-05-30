@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -26,6 +27,9 @@ public final class FragmentPointBinding implements ViewBinding {
   public final ImageView backPoint;
 
   @NonNull
+  public final TextView completePercent;
+
+  @NonNull
   public final CardView doAgainTest;
 
   @NonNull
@@ -35,21 +39,45 @@ public final class FragmentPointBinding implements ViewBinding {
   public final GraphView graphView;
 
   @NonNull
+  public final TextView notifiPoint;
+
+  @NonNull
+  public final TextView numberCorrect;
+
+  @NonNull
   public final CircularProgressBar progressPoint;
 
   @NonNull
   public final CardView seeAnswer;
 
+  @NonNull
+  public final TextView skipNumber;
+
+  @NonNull
+  public final TextView txtPoint;
+
+  @NonNull
+  public final TextView wrongNumber;
+
   private FragmentPointBinding(@NonNull NestedScrollView rootView, @NonNull ImageView backPoint,
-      @NonNull CardView doAgainTest, @NonNull CardView finishAndSaved, @NonNull GraphView graphView,
-      @NonNull CircularProgressBar progressPoint, @NonNull CardView seeAnswer) {
+      @NonNull TextView completePercent, @NonNull CardView doAgainTest,
+      @NonNull CardView finishAndSaved, @NonNull GraphView graphView, @NonNull TextView notifiPoint,
+      @NonNull TextView numberCorrect, @NonNull CircularProgressBar progressPoint,
+      @NonNull CardView seeAnswer, @NonNull TextView skipNumber, @NonNull TextView txtPoint,
+      @NonNull TextView wrongNumber) {
     this.rootView = rootView;
     this.backPoint = backPoint;
+    this.completePercent = completePercent;
     this.doAgainTest = doAgainTest;
     this.finishAndSaved = finishAndSaved;
     this.graphView = graphView;
+    this.notifiPoint = notifiPoint;
+    this.numberCorrect = numberCorrect;
     this.progressPoint = progressPoint;
     this.seeAnswer = seeAnswer;
+    this.skipNumber = skipNumber;
+    this.txtPoint = txtPoint;
+    this.wrongNumber = wrongNumber;
   }
 
   @Override
@@ -85,6 +113,12 @@ public final class FragmentPointBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.completePercent;
+      TextView completePercent = ViewBindings.findChildViewById(rootView, id);
+      if (completePercent == null) {
+        break missingId;
+      }
+
       id = R.id.doAgainTest;
       CardView doAgainTest = ViewBindings.findChildViewById(rootView, id);
       if (doAgainTest == null) {
@@ -103,6 +137,18 @@ public final class FragmentPointBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.notifiPoint;
+      TextView notifiPoint = ViewBindings.findChildViewById(rootView, id);
+      if (notifiPoint == null) {
+        break missingId;
+      }
+
+      id = R.id.numberCorrect;
+      TextView numberCorrect = ViewBindings.findChildViewById(rootView, id);
+      if (numberCorrect == null) {
+        break missingId;
+      }
+
       id = R.id.progressPoint;
       CircularProgressBar progressPoint = ViewBindings.findChildViewById(rootView, id);
       if (progressPoint == null) {
@@ -115,8 +161,27 @@ public final class FragmentPointBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentPointBinding((NestedScrollView) rootView, backPoint, doAgainTest,
-          finishAndSaved, graphView, progressPoint, seeAnswer);
+      id = R.id.skipNumber;
+      TextView skipNumber = ViewBindings.findChildViewById(rootView, id);
+      if (skipNumber == null) {
+        break missingId;
+      }
+
+      id = R.id.txtPoint;
+      TextView txtPoint = ViewBindings.findChildViewById(rootView, id);
+      if (txtPoint == null) {
+        break missingId;
+      }
+
+      id = R.id.wrongNumber;
+      TextView wrongNumber = ViewBindings.findChildViewById(rootView, id);
+      if (wrongNumber == null) {
+        break missingId;
+      }
+
+      return new FragmentPointBinding((NestedScrollView) rootView, backPoint, completePercent,
+          doAgainTest, finishAndSaved, graphView, notifiPoint, numberCorrect, progressPoint,
+          seeAnswer, skipNumber, txtPoint, wrongNumber);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

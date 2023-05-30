@@ -4,10 +4,10 @@ package com.example.appthitracnghiem.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
@@ -19,7 +19,7 @@ import java.lang.String;
 
 public final class FragmentSystemBinding implements ViewBinding {
   @NonNull
-  private final NestedScrollView rootView;
+  private final LinearLayout rootView;
 
   @NonNull
   public final GoogleProgressBar loadingDepartment;
@@ -28,20 +28,24 @@ public final class FragmentSystemBinding implements ViewBinding {
   public final RecyclerView recycleListLiveQuizzes;
 
   @NonNull
+  public final TextView seeAllSystem;
+
+  @NonNull
   public final TextView textQuizHome;
 
-  private FragmentSystemBinding(@NonNull NestedScrollView rootView,
+  private FragmentSystemBinding(@NonNull LinearLayout rootView,
       @NonNull GoogleProgressBar loadingDepartment, @NonNull RecyclerView recycleListLiveQuizzes,
-      @NonNull TextView textQuizHome) {
+      @NonNull TextView seeAllSystem, @NonNull TextView textQuizHome) {
     this.rootView = rootView;
     this.loadingDepartment = loadingDepartment;
     this.recycleListLiveQuizzes = recycleListLiveQuizzes;
+    this.seeAllSystem = seeAllSystem;
     this.textQuizHome = textQuizHome;
   }
 
   @Override
   @NonNull
-  public NestedScrollView getRoot() {
+  public LinearLayout getRoot() {
     return rootView;
   }
 
@@ -78,14 +82,20 @@ public final class FragmentSystemBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.seeAllSystem;
+      TextView seeAllSystem = ViewBindings.findChildViewById(rootView, id);
+      if (seeAllSystem == null) {
+        break missingId;
+      }
+
       id = R.id.textQuizHome;
       TextView textQuizHome = ViewBindings.findChildViewById(rootView, id);
       if (textQuizHome == null) {
         break missingId;
       }
 
-      return new FragmentSystemBinding((NestedScrollView) rootView, loadingDepartment,
-          recycleListLiveQuizzes, textQuizHome);
+      return new FragmentSystemBinding((LinearLayout) rootView, loadingDepartment,
+          recycleListLiveQuizzes, seeAllSystem, textQuizHome);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

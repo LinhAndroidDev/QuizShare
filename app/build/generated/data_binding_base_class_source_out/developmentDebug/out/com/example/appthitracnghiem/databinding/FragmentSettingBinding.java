@@ -35,6 +35,9 @@ public final class FragmentSettingBinding implements ViewBinding {
   public final CardView deleteAccount;
 
   @NonNull
+  public final TextView emailSetting;
+
+  @NonNull
   public final CoordinatorLayout fragmentSetting;
 
   @NonNull
@@ -58,14 +61,16 @@ public final class FragmentSettingBinding implements ViewBinding {
   private FragmentSettingBinding(@NonNull CoordinatorLayout rootView,
       @NonNull ImageView backSetting, @NonNull CardView changeEmail,
       @NonNull CardView changePassWord, @NonNull CardView deleteAccount,
-      @NonNull CoordinatorLayout fragmentSetting, @NonNull CardView frequentQuestion,
-      @NonNull RelativeLayout layoutLogoutCover, @NonNull TextView logout,
-      @NonNull CardView priorityMode, @NonNull TextView txtSetting, @NonNull CardView updateInfo) {
+      @NonNull TextView emailSetting, @NonNull CoordinatorLayout fragmentSetting,
+      @NonNull CardView frequentQuestion, @NonNull RelativeLayout layoutLogoutCover,
+      @NonNull TextView logout, @NonNull CardView priorityMode, @NonNull TextView txtSetting,
+      @NonNull CardView updateInfo) {
     this.rootView = rootView;
     this.backSetting = backSetting;
     this.changeEmail = changeEmail;
     this.changePassWord = changePassWord;
     this.deleteAccount = deleteAccount;
+    this.emailSetting = emailSetting;
     this.fragmentSetting = fragmentSetting;
     this.frequentQuestion = frequentQuestion;
     this.layoutLogoutCover = layoutLogoutCover;
@@ -126,6 +131,12 @@ public final class FragmentSettingBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.emailSetting;
+      TextView emailSetting = ViewBindings.findChildViewById(rootView, id);
+      if (emailSetting == null) {
+        break missingId;
+      }
+
       CoordinatorLayout fragmentSetting = (CoordinatorLayout) rootView;
 
       id = R.id.frequentQuestion;
@@ -165,8 +176,8 @@ public final class FragmentSettingBinding implements ViewBinding {
       }
 
       return new FragmentSettingBinding((CoordinatorLayout) rootView, backSetting, changeEmail,
-          changePassWord, deleteAccount, fragmentSetting, frequentQuestion, layoutLogoutCover,
-          logout, priorityMode, txtSetting, updateInfo);
+          changePassWord, deleteAccount, emailSetting, fragmentSetting, frequentQuestion,
+          layoutLogoutCover, logout, priorityMode, txtSetting, updateInfo);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

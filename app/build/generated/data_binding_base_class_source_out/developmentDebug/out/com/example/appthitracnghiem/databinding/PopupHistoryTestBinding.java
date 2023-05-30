@@ -8,16 +8,31 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
+import androidx.viewbinding.ViewBindings;
 import com.example.appthitracnghiem.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
+import java.lang.String;
 
 public final class PopupHistoryTestBinding implements ViewBinding {
   @NonNull
   private final LinearLayout rootView;
 
-  private PopupHistoryTestBinding(@NonNull LinearLayout rootView) {
+  @NonNull
+  public final LinearLayout sortDate;
+
+  @NonNull
+  public final LinearLayout sortName;
+
+  @NonNull
+  public final LinearLayout sortPoint;
+
+  private PopupHistoryTestBinding(@NonNull LinearLayout rootView, @NonNull LinearLayout sortDate,
+      @NonNull LinearLayout sortName, @NonNull LinearLayout sortPoint) {
     this.rootView = rootView;
+    this.sortDate = sortDate;
+    this.sortName = sortName;
+    this.sortPoint = sortPoint;
   }
 
   @Override
@@ -43,10 +58,31 @@ public final class PopupHistoryTestBinding implements ViewBinding {
 
   @NonNull
   public static PopupHistoryTestBinding bind(@NonNull View rootView) {
-    if (rootView == null) {
-      throw new NullPointerException("rootView");
-    }
+    // The body of this method is generated in a way you would not otherwise write.
+    // This is done to optimize the compiled bytecode for size and performance.
+    int id;
+    missingId: {
+      id = R.id.sortDate;
+      LinearLayout sortDate = ViewBindings.findChildViewById(rootView, id);
+      if (sortDate == null) {
+        break missingId;
+      }
 
-    return new PopupHistoryTestBinding((LinearLayout) rootView);
+      id = R.id.sortName;
+      LinearLayout sortName = ViewBindings.findChildViewById(rootView, id);
+      if (sortName == null) {
+        break missingId;
+      }
+
+      id = R.id.sortPoint;
+      LinearLayout sortPoint = ViewBindings.findChildViewById(rootView, id);
+      if (sortPoint == null) {
+        break missingId;
+      }
+
+      return new PopupHistoryTestBinding((LinearLayout) rootView, sortDate, sortName, sortPoint);
+    }
+    String missingId = rootView.getResources().getResourceName(id);
+    throw new NullPointerException("Missing required view with ID: ".concat(missingId));
   }
 }

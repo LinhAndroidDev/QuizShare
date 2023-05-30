@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +18,7 @@ import java.lang.String;
 
 public final class LayoutGeneralBinding implements ViewBinding {
   @NonNull
-  private final RelativeLayout rootView;
+  private final LinearLayout rootView;
 
   @NonNull
   public final TextView detail;
@@ -29,7 +29,7 @@ public final class LayoutGeneralBinding implements ViewBinding {
   @NonNull
   public final TextView topic;
 
-  private LayoutGeneralBinding(@NonNull RelativeLayout rootView, @NonNull TextView detail,
+  private LayoutGeneralBinding(@NonNull LinearLayout rootView, @NonNull TextView detail,
       @NonNull ImageView image, @NonNull TextView topic) {
     this.rootView = rootView;
     this.detail = detail;
@@ -39,7 +39,7 @@ public final class LayoutGeneralBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public RelativeLayout getRoot() {
+  public LinearLayout getRoot() {
     return rootView;
   }
 
@@ -82,7 +82,7 @@ public final class LayoutGeneralBinding implements ViewBinding {
         break missingId;
       }
 
-      return new LayoutGeneralBinding((RelativeLayout) rootView, detail, image, topic);
+      return new LayoutGeneralBinding((LinearLayout) rootView, detail, image, topic);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
