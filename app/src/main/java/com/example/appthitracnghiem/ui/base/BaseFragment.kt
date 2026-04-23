@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.example.appthitracnghiem.utils.PreferenceUtil
 import java.lang.reflect.ParameterizedType
 
@@ -13,7 +13,7 @@ abstract class BaseFragment<V : BaseViewModel> : Fragment(), IOnFragmentBackList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel =
-            ViewModelProviders.of(this)[(this::class.java.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<V>]
+            ViewModelProvider(this)[(this::class.java.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<V>]
         activity?.let { viewModel.mPreferenceUtil = PreferenceUtil(it) }
         bindData()
     }

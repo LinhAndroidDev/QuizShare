@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-46:/values-watch-v21/values-watch-v21.xml",
+            "outputFile": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-3:/values-watch-v21/values-watch-v21.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-3\\58dd3f4812eb78824b955d86d3508d52\\transformed\\appcompat-1.6.1\\res\\values-watch-v21\\values-watch-v21.xml",
+                    "source": "/private/var/folders/01/wpz_025x5t303r2gbjkk0j140000gn/T/cursor-sandbox-cache/7fea7137152d65433079299d00baa29f/gradle/caches/transforms-3/090809791e9a6b4c0f6920d4681d49a9/transformed/appcompat-1.6.1/res/values-watch-v21/values-watch-v21.xml",
                     "from": {
                         "startLines": "2,6,10",
                         "startColumns": "4,4,4",

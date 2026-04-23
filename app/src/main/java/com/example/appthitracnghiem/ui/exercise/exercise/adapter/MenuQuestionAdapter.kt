@@ -17,7 +17,6 @@ import com.example.appthitracnghiem.model.PositiveQuestion
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.layout_menu_question.view.*
 import java.lang.reflect.Type
 
 @Suppress("DEPRECATION")

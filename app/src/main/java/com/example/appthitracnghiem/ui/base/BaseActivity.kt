@@ -5,8 +5,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.lifecycle.ViewModelProvider
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.utils.PreferenceUtil
 import java.lang.reflect.ParameterizedType
@@ -19,7 +18,7 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         viewModel =
-            ViewModelProviders.of(this)[(this::class.java.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<V>]
+            ViewModelProvider(this)[(this::class.java.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<V>]
         viewModel.mPreferenceUtil = PreferenceUtil(this)
         overridePendingTransition(
             R.anim.anim_translate_enter_right,

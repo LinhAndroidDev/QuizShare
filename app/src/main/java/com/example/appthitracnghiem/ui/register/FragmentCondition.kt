@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentConditionBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment__condition.*
 
 /**
  * A simple [Fragment] subclass.
@@ -16,6 +16,8 @@ import kotlinx.android.synthetic.main.fragment__condition.*
  * create an instance of this fragment.
  */
 class FragmentCondition : BaseFragment<EmptyViewModel>() {
+    private var _binding: FragmentConditionBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,7 +26,7 @@ class FragmentCondition : BaseFragment<EmptyViewModel>() {
     }
 
     private fun click() {
-        backLogin.setOnClickListener {
+        binding.backLogin.setOnClickListener {
             activity?.finish()
         }
     }
@@ -32,9 +34,14 @@ class FragmentCondition : BaseFragment<EmptyViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__condition, container, false)
+    ): View {
+        _binding = FragmentConditionBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onFragmentBack(): Boolean {

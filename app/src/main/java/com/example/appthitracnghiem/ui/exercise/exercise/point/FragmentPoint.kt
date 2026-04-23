@@ -10,6 +10,7 @@ import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentPointBinding
 import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.ExamActivity
@@ -20,9 +21,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
-import kotlinx.android.synthetic.main.fragment_point.*
-import kotlinx.android.synthetic.main.fragment_point.view.*
-import kotlinx.android.synthetic.main.fragment_profile.*
 import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,6 +29,8 @@ import kotlin.collections.HashMap
 
 @Suppress("DEPRECATION")
 class FragmentPoint : BaseFragment<PointViewModel>() {
+    private var _binding: FragmentPointBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var listExamQuestion: ArrayList<ExamQuestion>
 
@@ -76,22 +76,22 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
         viewModel.getResult(header,requestPoint)
 
         viewModel.scoreLiveData.observe(viewLifecycleOwner){
-            progressPoint.apply {
+            binding.progressPoint.apply {
                 progressMax = 100f
                 setProgressWithAnimation(it,3000)
             }
 
-            txtPoint.text = it.toInt().toString()
-            notifiPoint.text = "Bạn nhận được +${it.toInt()} điểm kiểm tra"
-            completePercent.text = "${it.toInt()}%"
+            binding.txtPoint.text = it.toInt().toString()
+            binding.notifiPoint.text = "Bạn nhận được +${it.toInt()} điểm kiểm tra"
+            binding.completePercent.text = "${it.toInt()}%"
         }
 
         viewModel.numberCorrectLiveData.observe(viewLifecycleOwner){
-            numberCorrect.text = "$it câu hỏi"
+            binding.numberCorrect.text = "$it câu hỏi"
         }
 
         viewModel.wrongNumberLiveData.observe(viewLifecycleOwner){
-            wrongNumber.text = it.toString()
+            binding.wrongNumber.text = it.toString()
         }
 
         viewModel.examIdHistory.observe(viewLifecycleOwner){
@@ -136,7 +136,7 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
                 count++
             }
         }
-        skipNumber.text = count.toString()
+        binding.skipNumber.text = count.toString()
 
         setStatusBar()
 
@@ -156,23 +156,23 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
                 DataPoint(10.0, 0.7)
             )
         )
-        graphView.addSeries(lineSeries)
+        binding.graphView.addSeries(lineSeries)
 
-        backPoint.setOnClickListener {
+        binding.backPoint.setOnClickListener {
             activity?.finish()
         }
 
-        doAgainTest.setOnClickListener {
+        binding.doAgainTest.setOnClickListener {
             activity?.finish()
         }
 
-        finishAndSaved.setOnClickListener {
+        binding.finishAndSaved.setOnClickListener {
             val intent = Intent(requireActivity(),HomeActivity::class.java)
             startActivity(intent)
             activity?.finish()
         }
 
-        seeAnswer.setOnClickListener {
+        binding.seeAnswer.setOnClickListener {
             val fragmentAnswer = FragmentAnswer()
             val bundle = Bundle()
             bundle.putString("title","Câu trả lời")
@@ -189,8 +189,13 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_point, container, false)
+    ): View {
+        _binding = FragmentPointBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

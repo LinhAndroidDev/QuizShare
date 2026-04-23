@@ -8,33 +8,33 @@ public final class RequestTestSaved {
     private final int subject_id = 0;
     private final int type = 0;
     private final int sort_field = 0;
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     private final java.lang.String sort_by = null;
     
-    @org.jetbrains.annotations.NotNull()
-    public final com.example.appthitracnghiem.ui.home.history.saved.test.RequestTestSaved copy(int user_id, int subject_id, int type, int sort_field, @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
+    public final com.example.appthitracnghiem.ui.home.history.saved.test.RequestTestSaved copy(int user_id, int subject_id, int type, int sort_field, @org.jetbrains.annotations.NotNull
     java.lang.String sort_by) {
         return null;
     }
     
-    @java.lang.Override()
-    public boolean equals(@org.jetbrains.annotations.Nullable()
+    @java.lang.Override
+    public boolean equals(@org.jetbrains.annotations.Nullable
     java.lang.Object other) {
         return false;
     }
     
-    @java.lang.Override()
+    @java.lang.Override
     public int hashCode() {
         return 0;
     }
     
-    @org.jetbrains.annotations.NotNull()
-    @java.lang.Override()
+    @org.jetbrains.annotations.NotNull
+    @java.lang.Override
     public java.lang.String toString() {
         return null;
     }
     
-    public RequestTestSaved(int user_id, int subject_id, int type, int sort_field, @org.jetbrains.annotations.NotNull()
+    public RequestTestSaved(int user_id, int subject_id, int type, int sort_field, @org.jetbrains.annotations.NotNull
     java.lang.String sort_by) {
         super();
     }
@@ -71,12 +71,12 @@ public final class RequestTestSaved {
         return 0;
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String component5() {
         return null;
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String getSort_by() {
         return null;
     }

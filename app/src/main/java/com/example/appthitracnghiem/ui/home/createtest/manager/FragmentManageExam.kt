@@ -8,13 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentManageExamBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_history_test.*
-import kotlinx.android.synthetic.main.fragment_manage_exam.*
 
 @Suppress("DEPRECATION")
 class FragmentManageExam : BaseFragment<EmptyViewModel>() {
+    private var _binding: FragmentManageExamBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,7 +24,7 @@ class FragmentManageExam : BaseFragment<EmptyViewModel>() {
     }
 
     private fun initUi() {
-        backManageExam.setOnClickListener {
+        binding.backManageExam.setOnClickListener {
             activity?.onBackPressed()
         }
 
@@ -33,8 +34,8 @@ class FragmentManageExam : BaseFragment<EmptyViewModel>() {
     private fun setText() {
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        txtTitleManage.typeface = semibold
-        txtTitleTopic.typeface = semibold
+        binding.txtTitleManage.typeface = semibold
+        binding.txtTitleTopic.typeface = semibold
     }
 
     override fun onFragmentBack(): Boolean {
@@ -44,8 +45,13 @@ class FragmentManageExam : BaseFragment<EmptyViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_manage_exam, container, false)
+    ): View {
+        _binding = FragmentManageExamBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

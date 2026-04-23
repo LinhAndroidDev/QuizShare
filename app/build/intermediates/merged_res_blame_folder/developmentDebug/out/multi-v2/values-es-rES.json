@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-46:/values-es-rES/values-es-rES.xml",
+            "outputFile": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-3:/values-es-rES/values-es-rES.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-3\\092a81fbd6e931884e08c8d70a1d3b3d\\transformed\\jetified-facebook-login-16.0.1\\res\\values-es-rES\\values-es-rES.xml",
+                    "source": "/private/var/folders/01/wpz_025x5t303r2gbjkk0j140000gn/T/cursor-sandbox-cache/7fea7137152d65433079299d00baa29f/gradle/caches/transforms-3/7ba883a21433ffa1b13b6ca3de95d29c/transformed/jetified-facebook-login-18.2.3/res/values-es-rES/values-es-rES.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

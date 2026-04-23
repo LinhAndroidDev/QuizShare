@@ -21,6 +21,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentCreateExamBinding
 import com.example.appthitracnghiem.model.CreateAnswer
 import com.example.appthitracnghiem.model.CreateQuestion
 import com.example.appthitracnghiem.ui.EmptyViewModel
@@ -30,14 +31,39 @@ import com.example.appthitracnghiem.ui.home.createtest.review.FragmentReviewCrea
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_create_test.*
-import kotlinx.android.synthetic.main.fragment_create_exam.*
-import kotlinx.android.synthetic.main.fragment_create_test.*
-import kotlinx.android.synthetic.main.fragment_review_create_exam.*
 import java.lang.reflect.Type
 
 @Suppress("DEPRECATION")
 class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
+    private var _binding: FragmentCreateExamBinding? = null
+    private val binding get() = _binding!!
+
+    private val layoutOnClickCreate get() = binding.layoutOnClickCreate
+    private val isAnswer1 get() = binding.isAnswer1
+    private val isAnswer2 get() = binding.isAnswer2
+    private val isAnswer3 get() = binding.isAnswer3
+    private val isAnswer4 get() = binding.isAnswer4
+    private val recycleListNumber get() = binding.recycleListNumber
+    private val txtTime get() = binding.txtTime
+    private val txtLevel get() = binding.txtLevel
+    private val nextQuestionCreate get() = binding.nextQuestionCreate
+    private val backQuestionCreate get() = binding.backQuestionCreate
+    private val completeCreateTest get() = binding.completeCreateTest
+    private val backCreateTest get() = binding.backCreateTest
+    private val addCoverImageCreateTest get() = binding.addCoverImageCreateTest
+    private val menuCreateTestAct get() = binding.menuCreateTestAct
+    private val createLevel get() = binding.createLevel
+    private val questionCreate get() = binding.questionCreate
+    private val answerCreate1 get() = binding.answerCreate1
+    private val answerCreate2 get() = binding.answerCreate2
+    private val answerCreate3 get() = binding.answerCreate3
+    private val answerCreate4 get() = binding.answerCreate4
+    private val scrollCreateExam get() = binding.scrollCreateExam
+    private val txtCreateTest get() = binding.txtCreateTest
+    private val txtSelectImageCt get() = binding.txtSelectImageCt
+    private val txtAddQuestion get() = binding.txtAddQuestion
+    private val imageCoverCreateTest get() = binding.imageCoverCreateTest
+
     lateinit var positiveQuestionAdapter: PositiveQuestionAdapter
     private val GALLERY_RED_CODE: Int = 1000
 //    private var type1: Int = -1
@@ -440,9 +466,14 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_exam, container, false)
+    ): View {
+        _binding = FragmentCreateExamBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onFragmentBack(): Boolean {

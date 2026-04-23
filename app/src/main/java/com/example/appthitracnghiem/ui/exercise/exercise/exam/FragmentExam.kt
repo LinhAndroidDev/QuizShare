@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentExamBinding
 import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.model.PositiveQuestion
 import com.example.appthitracnghiem.ui.base.BaseFragment
@@ -29,17 +30,29 @@ import com.example.appthitracnghiem.ui.exercise.exercise.adapter.MenuQuestionAda
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.fragment_exam.*
-import kotlinx.android.synthetic.main.fragment_list_test.*
-import kotlinx.android.synthetic.main.layout_loading.*
-import kotlinx.android.synthetic.main.layout_logout.*
-import kotlinx.android.synthetic.main.layout_menu_question.*
-import kotlinx.android.synthetic.main.popup_list_question.*
-import kotlinx.android.synthetic.main.popup_list_question.view.*
 import java.lang.reflect.Type
 
 @Suppress("DEPRECATION", "NAME_SHADOWING")
 class FragmentExam : BaseFragment<ExamViewModel>() {
+    private var _binding: FragmentExamBinding? = null
+    private val binding get() = _binding!!
+
+    private val layoutExercise get() = binding.layoutExercise
+    private val backExercise get() = binding.backExercise
+    private val txtTime get() = binding.txtTime
+    private val countTime get() = binding.countTime
+    private val finishQuiz get() = binding.finishQuiz
+    private val menuQuestion get() = binding.menuQuestion
+    private val txtPositionQuiz get() = binding.txtPositionQuiz
+    private val titleExam get() = binding.titleExam
+    private val llContainerAnswerOptions get() = binding.llContainerAnswerOptions
+    private val backQuestion get() = binding.backQuestion
+    private val nextQuestion get() = binding.nextQuestion
+    private val layoutSubmit get() = binding.layoutSubmit
+    private val backSubmit get() = binding.backSubmit
+    private val submit get() = binding.submit
+    private val layoutLoading get() = binding.root.findViewById<View>(R.id.layoutLoading)
+
 
     private lateinit var menuQuestionAdapter: MenuQuestionAdapter
 
@@ -144,16 +157,14 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                     )
                     fm?.replace(R.id.changeIdExam, fragmentPoint)?.addToBackStack(null)?.commit()
                 }
-                if (countTime != null && txtTime != null) {
-                    if (SECONDS < 10) {
-                        txtTime.text = "Còn lại $MINUTES:0$SECONDS phút"
-                    } else if (MINUTES < 1) {
-                        txtTime.text = "Còn lại $MINUTES:$SECONDS giây"
-                    } else {
-                        txtTime.text = "Còn lại $MINUTES:$SECONDS phút"
-                    }
-                    countTime.progress = (TIME_TOTAL * 100 / (time * 60)).toFloat()
+                if (SECONDS < 10) {
+                    txtTime.text = "Còn lại $MINUTES:0$SECONDS phút"
+                } else if (MINUTES < 1) {
+                    txtTime.text = "Còn lại $MINUTES:$SECONDS giây"
+                } else {
+                    txtTime.text = "Còn lại $MINUTES:$SECONDS phút"
                 }
+                countTime.progress = (TIME_TOTAL * 100 / (time * 60)).toFloat()
             }
 
             override fun onFinish() {
@@ -245,7 +256,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                     listAnswer.add(-1)
                 }
                 saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
-                activity?.onBackPressed()
+                activity?.onBackPressedDispatcher?.onBackPressed()
             }
             alertDialog.setNegativeButton("Không") { _, _ -> }
             alertDialog.show()
@@ -370,8 +381,13 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_exam, container, false)
+    ): View {
+        _binding = FragmentExamBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

@@ -9,11 +9,15 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.cardview.widget.CardView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentSettingBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.profile.setting.email.FragmentUpdateEmail
 import com.example.appthitracnghiem.ui.home.profile.setting.info.FragmentUpdateInfor
@@ -21,11 +25,11 @@ import com.example.appthitracnghiem.ui.home.profile.setting.password.FragmentSet
 import com.example.appthitracnghiem.ui.login.LoginActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.fragment_setting.*
-import kotlinx.android.synthetic.main.layout_logout.*
 
 @Suppress("DEPRECATION")
 class FragmentSetting : BaseFragment<SettingViewModel>() {
+    private var _binding: FragmentSettingBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,26 +69,26 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
 
     private fun initUi() {
 
-        emailSetting.text = viewModel.mPreferenceUtil.defaultPref()
+        binding.emailSetting.text = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.USER_EMAIL,"").toString()
 
-        backSetting.setOnClickListener {
+        binding.backSetting.setOnClickListener {
             activity?.finish()
         }
 
-        updateInfo.setOnClickListener {
+        binding.updateInfo.setOnClickListener {
             replaceFragment(FragmentUpdateInfor())
         }
 
-        changeEmail.setOnClickListener {
+        binding.changeEmail.setOnClickListener {
             replaceFragment(FragmentUpdateEmail())
         }
 
-        changePassWord.setOnClickListener {
+        binding.changePassWord.setOnClickListener {
             replaceFragment(FragmentSettingNewPassword())
         }
 
-        deleteAccount.setOnClickListener {
+        binding.deleteAccount.setOnClickListener {
             val alertDialog = AlertDialog.Builder(requireActivity())
             alertDialog.setTitle("Cảnh báo!!")
             alertDialog.setIcon(R.drawable.icon_app_thitn)
@@ -121,9 +125,14 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+    ): View {
+        _binding = FragmentSettingBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onFragmentBack(): Boolean {
@@ -134,29 +143,32 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
     private fun setText() {
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        txtSetting.typeface = semibold
+        binding.txtSetting.typeface = semibold
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setBottomShare() {
+        val layoutLogout = binding.root.findViewById<RelativeLayout>(R.id.layoutLogout)
+        val logoutNow = binding.root.findViewById<TextView>(R.id.logoutNow)
+        val cancel = binding.root.findViewById<CardView>(R.id.cancel)
         val bottomShareBehavior = BottomSheetBehavior.from(layoutLogout)
         bottomShareBehavior.isDraggable = false
-        layoutLogoutCover.setOnTouchListener { _, _ -> true }
+        binding.layoutLogoutCover.setOnTouchListener { _, _ -> true }
 
-        logout.setOnClickListener {
+        binding.logout.setOnClickListener {
             if (bottomShareBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
                 bottomShareBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-                layoutLogoutCover.visibility = View.VISIBLE
+                binding.layoutLogoutCover.visibility = View.VISIBLE
             } else {
                 bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                layoutLogoutCover.visibility = View.GONE
+                binding.layoutLogoutCover.visibility = View.GONE
             }
         }
 
-        layoutLogoutCover.setOnTouchListener { v, event ->
+        binding.layoutLogoutCover.setOnTouchListener { _, event ->
             when(event.actionMasked){
                 MotionEvent.ACTION_UP->{
-                    layoutLogoutCover.visibility = View.GONE
+                    binding.layoutLogoutCover.visibility = View.GONE
                     bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
             }
@@ -175,7 +187,7 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
 
         cancel.setOnClickListener {
             bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            layoutLogoutCover.visibility = View.GONE
+            binding.layoutLogoutCover.visibility = View.GONE
         }
     }
 }

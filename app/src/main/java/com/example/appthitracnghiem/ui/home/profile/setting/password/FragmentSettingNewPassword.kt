@@ -12,13 +12,15 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentSettingNewPasswordBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.utils.PreferenceKey
-import kotlinx.android.synthetic.main.fragment_setting_new_password.*
 
 @Suppress("DEPRECATION")
 class FragmentSettingNewPassword : BaseFragment<ChangePasswordViewModel>() {
+    private var _binding: FragmentSettingNewPasswordBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,21 +51,21 @@ class FragmentSettingNewPassword : BaseFragment<ChangePasswordViewModel>() {
     }
 
     private fun initUi() {
-        backUpdateNewPassWord.setOnClickListener {
+        binding.backUpdateNewPassWord.setOnClickListener {
             activity?.onBackPressed()
         }
 
-        showUpdatePassWord.setOnClickListener {
-            hidePassword(edtPasswordUpdate,showUpdatePassWord)
+        binding.showUpdatePassWord.setOnClickListener {
+            hidePassword(binding.edtPasswordUpdate, binding.showUpdatePassWord)
         }
 
-        showRepeatUpdatePassWord.setOnClickListener {
-            hidePassword(edtRepeatPasswordUpdate,showRepeatUpdatePassWord)
+        binding.showRepeatUpdatePassWord.setOnClickListener {
+            hidePassword(binding.edtRepeatPasswordUpdate, binding.showRepeatUpdatePassWord)
         }
 
-        resetPasswordSetting.setOnClickListener {
-            val strPassword = edtPasswordUpdate.text.toString()
-            val strPasswordRepeat = edtRepeatPasswordUpdate.text.toString()
+        binding.resetPasswordSetting.setOnClickListener {
+            val strPassword = binding.edtPasswordUpdate.text.toString()
+            val strPasswordRepeat = binding.edtRepeatPasswordUpdate.text.toString()
 
             if(strPassword.isEmpty() || strPasswordRepeat.isEmpty()){
                 Toast.makeText(requireActivity(),"Bạn chưa nhập đầy đử thông tin",Toast.LENGTH_SHORT).show()
@@ -89,7 +91,7 @@ class FragmentSettingNewPassword : BaseFragment<ChangePasswordViewModel>() {
     private fun setText() {
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        txtMatKhauMoi.typeface = semibold
+        binding.txtMatKhauMoi.typeface = semibold
     }
 
     private fun hidePassword(password: EditText, hide: ImageView) {
@@ -105,9 +107,14 @@ class FragmentSettingNewPassword : BaseFragment<ChangePasswordViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting_new_password, container, false)
+    ): View {
+        _binding = FragmentSettingNewPasswordBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onFragmentBack(): Boolean {

@@ -7,13 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentHistorySavedBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.history.saved.department.adapter.HistoryDepartmentAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
-import kotlinx.android.synthetic.main.fragment_history_saved.*
 
 @Suppress("DEPRECATION")
 class FragmentHistoryDepartmentSaved : BaseFragment<HistoryDepartmentSavedViewModel>() {
+    private var _binding: FragmentHistorySavedBinding? = null
+    private val binding get() = _binding!!
     lateinit var historyDepartmentAdapter: HistoryDepartmentAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,14 +47,14 @@ class FragmentHistoryDepartmentSaved : BaseFragment<HistoryDepartmentSavedViewMo
 
         viewModel.listDepartmentSaved.observe(viewLifecycleOwner){
             val linear = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
-            rcvDepartmentHistory.layoutManager = linear
+            binding.rcvDepartmentHistory.layoutManager = linear
             historyDepartmentAdapter = HistoryDepartmentAdapter(requireActivity(),it)
-            rcvDepartmentHistory.adapter = historyDepartmentAdapter
+            binding.rcvDepartmentHistory.adapter = historyDepartmentAdapter
         }
     }
 
     private fun initUi() {
-        backHistorySaved.setOnClickListener {
+        binding.backHistorySaved.setOnClickListener {
             activity?.onBackPressed()
         }
     }
@@ -64,8 +66,13 @@ class FragmentHistoryDepartmentSaved : BaseFragment<HistoryDepartmentSavedViewMo
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history_saved, container, false)
+    ): View {
+        _binding = FragmentHistorySavedBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

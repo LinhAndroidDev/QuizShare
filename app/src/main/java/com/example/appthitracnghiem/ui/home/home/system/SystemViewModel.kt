@@ -1,33 +1,45 @@
 package com.example.appthitracnghiem.ui.home.home.system
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.appthitracnghiem.data.remote.ApiClient
-import com.example.appthitracnghiem.data.remote.entity.FromSystemResponse
+import com.example.appthitracnghiem.data.repository.impl.HomeRepositoryImpl
+import com.example.appthitracnghiem.core.ResultState
+import com.example.appthitracnghiem.core.UiState
+import com.example.appthitracnghiem.domain.usecase.GetDepartmentsUseCase
 import com.example.appthitracnghiem.model.Department
 import com.example.appthitracnghiem.ui.base.BaseViewModel
-import retrofit2.Call
-import retrofit2.Response
+import kotlinx.coroutines.launch
 
 class SystemViewModel : BaseViewModel() {
     var loadingData = MutableLiveData<Boolean>()
     var listDepartmentLiveData = MutableLiveData<MutableList<Department>>()
+    val uiState = MutableLiveData<UiState<List<Department>>>(UiState.Idle)
+    private val getDepartmentsUseCase = GetDepartmentsUseCase(HomeRepositoryImpl(ApiClient.shared()))
 
     fun getDataDepartment(accessToken: String,requestGetListDepartment: RequestGetListDepartment){
         loadingData.value = true
-        ApiClient.shared().getDepartmentList(accessToken,requestGetListDepartment).enqueue(object : retrofit2.Callback<FromSystemResponse> {
-            override fun onResponse(
-                call: Call<FromSystemResponse>,
-                response: Response<FromSystemResponse>,
+        uiState.value = UiState.Loading
+        viewModelScope.launch {
+            when (
+                val result = getDepartmentsUseCase.getSystem(
+                    accessToken = accessToken,
+                    userId = requestGetListDepartment.user_id,
+                    keyword = requestGetListDepartment.keyword,
+                )
             ) {
-                loadingData.value = false
-                listDepartmentLiveData.value = response.body()?.result as MutableList<Department>
-            }
+                is ResultState.Error -> {
+                    loadingData.value = false
+                    uiState.value = UiState.Error(result.message)
+                    errorApiLiveData.value = result.message
+                }
 
-            override fun onFailure(call: Call<FromSystemResponse>, t: Throwable) {
-                loadingData.value = false
-                errorApiLiveData.value = t.message
+                is ResultState.Success -> {
+                    loadingData.value = false
+                    listDepartmentLiveData.value = result.data.toMutableList()
+                    uiState.value = UiState.Success(result.data)
+                }
             }
-
-        })
+        }
     }
 }

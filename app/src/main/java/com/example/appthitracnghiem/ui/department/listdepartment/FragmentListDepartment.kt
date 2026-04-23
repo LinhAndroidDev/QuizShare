@@ -11,14 +11,16 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentListDepartmentBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.department.listdepartment.adapter.ListDepartmentAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
-import kotlinx.android.synthetic.main.fragment_list_department.*
 
 
 @Suppress("DEPRECATION")
 class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
+    private var _binding: FragmentListDepartmentBinding? = null
+    private val binding get() = _binding!!
     lateinit var listDepartmentAdapter: ListDepartmentAdapter
     lateinit var accessToken: String
     var userId: Int = 0
@@ -38,10 +40,10 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
         super.bindData()
 
         viewModel.loadingDepartmentLiveData.observe(viewLifecycleOwner){ isLoading->
-            if(isLoading && recycleDetailListDepartment.adapter == null){
-                loadingDepartmentInfo.visibility = View.VISIBLE
+            if(isLoading && binding.recycleDetailListDepartment.adapter == null){
+                binding.loadingDepartmentInfo.visibility = View.VISIBLE
             }else{
-                loadingDepartmentInfo.visibility = View.INVISIBLE
+                binding.loadingDepartmentInfo.visibility = View.INVISIBLE
             }
         }
 
@@ -56,8 +58,8 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
 
             val linear = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
             listDepartmentAdapter.listDepartment =  listDepartment
-            recycleDetailListDepartment.layoutManager = linear
-            recycleDetailListDepartment.adapter = listDepartmentAdapter
+            binding.recycleDetailListDepartment.layoutManager = linear
+            binding.recycleDetailListDepartment.adapter = listDepartmentAdapter
         }
 
         accessToken = viewModel.mPreferenceUtil.defaultPref()
@@ -70,16 +72,16 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initUi() {
-        layoutListDepartmentCover.setOnTouchListener { view, _ ->
+        binding.layoutListDepartmentCover.setOnTouchListener { view, _ ->
             view.hideKeyboard()
             false
         }
 
-        backDepartment.setOnClickListener{
+        binding.backDepartment.setOnClickListener{
             activity?.onBackPressed()
         }
 
-        searchDepartment.addTextChangedListener(object : TextWatcher{
+        binding.searchDepartment.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
@@ -98,9 +100,14 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list_department, container, false)
+    ): View {
+        _binding = FragmentListDepartmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onFragmentBack(): Boolean {

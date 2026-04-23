@@ -9,15 +9,16 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentFromUserBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.department.listdepartment.FragmentListDepartment
 import com.example.appthitracnghiem.ui.home.home.system.RequestGetListDepartment
 import com.example.appthitracnghiem.ui.home.home.user.adapter.FromUserAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
-import kotlinx.android.synthetic.main.fragment_from_user.*
-import kotlinx.android.synthetic.main.fragment_system.*
 
 class FragmentFromUser : BaseFragment<FromUserViewModel>() {
+    private var _binding: FragmentFromUserBinding? = null
+    private val binding get() = _binding!!
     private lateinit var adapterFromUser: FromUserAdapter
     lateinit var accessToken: String
     var userId: Int = 0
@@ -31,9 +32,9 @@ class FragmentFromUser : BaseFragment<FromUserViewModel>() {
     private fun initUi() {
         val linearLayoutManager =
             object : LinearLayoutManager(requireActivity()) { override fun canScrollVertically() = false }
-        recycleListFromUser.layoutManager = linearLayoutManager
+        binding.recycleListFromUser.layoutManager = linearLayoutManager
 
-        seeAllUser.setOnClickListener {
+        binding.seeAllUser.setOnClickListener {
             val fragmentListDepartment = FragmentListDepartment()
             val fm: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
             fm.add(R.id.changeIdHome,fragmentListDepartment).addToBackStack(null).commit()
@@ -47,15 +48,15 @@ class FragmentFromUser : BaseFragment<FromUserViewModel>() {
 
         viewModel.loadingFromUserData.observe(viewLifecycleOwner){ isLoading->
             if(isLoading){
-                loadingQuizFromUser.visibility = View.VISIBLE
+                binding.loadingQuizFromUser.visibility = View.VISIBLE
             }else{
-                loadingQuizFromUser.visibility = View.INVISIBLE
+                binding.loadingQuizFromUser.visibility = View.INVISIBLE
             }
         }
 
         viewModel.listDepartmentFromUserLiveData.observe(viewLifecycleOwner){
             adapterFromUser = FromUserAdapter(it,requireActivity())
-            recycleListFromUser.adapter = adapterFromUser
+            binding.recycleListFromUser.adapter = adapterFromUser
         }
 
         accessToken = viewModel.mPreferenceUtil.defaultPref()
@@ -69,14 +70,19 @@ class FragmentFromUser : BaseFragment<FromUserViewModel>() {
     private fun setText() {
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        textQuizHomeFromUser.typeface = semibold
+        binding.textQuizHomeFromUser.typeface = semibold
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_from_user, container, false)
+    ): View {
+        _binding = FragmentFromUserBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.appthitracnghiem.ui.home.profile.setting.changeavatar
 
 import android.Manifest
@@ -18,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.ActivityChangeAvatarBinding
 import com.example.appthitracnghiem.ui.base.BaseActivity
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.utils.Const
@@ -25,15 +28,16 @@ import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.UriConvertFile
 import com.soundcloud.android.crop.Crop
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_change_avatar.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
 @Suppress("DEPRECATION")
 class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
+    private lateinit var binding: ActivityChangeAvatarBinding
     var screenWitch: Int = 0
     var screenHeight: Int = 0
 
@@ -44,7 +48,8 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_change_avatar)
+        binding = ActivityChangeAvatarBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val permissions = arrayOf(
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -77,10 +82,10 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
         screenWitch = size.x
         screenHeight = size.y
 
-        avatarEdit.maxWidth = screenWitch
-        avatarEdit.maxHeight = screenWitch
-        strokeAvatar.maxWidth = screenWitch
-        strokeAvatar.maxHeight = screenWitch
+        binding.avatarEdit.maxWidth = screenWitch
+        binding.avatarEdit.maxHeight = screenWitch
+        binding.strokeAvatar.maxWidth = screenWitch
+        binding.strokeAvatar.maxHeight = screenWitch
     }
 
     override fun bindData() {
@@ -117,11 +122,12 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
             .error(R.drawable.icon_error)
             .centerCrop()
             .fit()
-            .into(avatarEdit)
+            .into(binding.avatarEdit)
 
         val strPath: String = UriConvertFile.getFileFromUri(this,uriImage).toString()
         val file = File(strPath)
-        val requestBodyAvatar: RequestBody =RequestBody.create("multipart/form-data".toMediaTypeOrNull(),file)
+        val requestBodyAvatar: RequestBody =
+            file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
         val multipartBodyAvt: MultipartBody.Part = MultipartBody.Part.createFormData(Const.file,file.name,requestBodyAvatar)
 
         val header = viewModel.mPreferenceUtil.defaultPref()
@@ -132,11 +138,11 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
         val requestBodyId: RequestBody =
             userId.toRequestBody("multipart/form-data".toMediaTypeOrNull())
 
-        done.setOnClickListener {
+        binding.done.setOnClickListener {
             viewModel.requestAvt(header, requestBodyId, multipartBodyAvt)
         }
 
-        avatarEdit.setOnClickListener {
+        binding.avatarEdit.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE)
@@ -144,8 +150,8 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
 
 //        avatarEdit.setImageURI(uriImage)
 
-        backChangeAvatar.setOnClickListener {
-            this.onBackPressed()
+        binding.backChangeAvatar.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
 
         setText()
@@ -183,7 +189,7 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
             val croppedUri = Crop.getOutput(data)
             if ( croppedUri != null) {
                 val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, croppedUri)
-                avatarEdit.setImageBitmap(bitmap)
+                binding.avatarEdit.setImageBitmap(bitmap)
 //                saveImageToGallery(bitmap)
             }
         }
@@ -211,6 +217,6 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
 
     private fun setText() {
         val semibold: Typeface? = ResourcesCompat.getFont(this,R.font.svn_gilroy_semibold)
-        txtChangeAvatar.typeface = semibold
+        binding.txtChangeAvatar.typeface = semibold
     }
 }

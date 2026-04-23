@@ -7,15 +7,17 @@ import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentHistoryTopicBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.answer.FragmentAnswer
 import com.example.appthitracnghiem.ui.home.history.test.FragmentHistoryExam
 import com.example.appthitracnghiem.utils.PreferenceKey
-import kotlinx.android.synthetic.main.fragment_history_topic.*
 
 @Suppress("DEPRECATION")
 class FragmentHistoryTopic : BaseFragment<HistoryTopicViewModel>() {
+    private var _binding: FragmentHistoryTopicBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -68,11 +70,11 @@ class FragmentHistoryTopic : BaseFragment<HistoryTopicViewModel>() {
 
         setStatusBar()
 
-        backTopicHistory.setOnClickListener {
+        binding.backTopicHistory.setOnClickListener {
             activity?.onBackPressed()
         }
 
-        seeAgainHistory.setOnClickListener {
+        binding.seeAgainHistory.setOnClickListener {
             val header = viewModel.mPreferenceUtil.defaultPref()
                 .getString(PreferenceKey.AUTHORIZATION, "").toString()
             val userId = viewModel.mPreferenceUtil.defaultPref()
@@ -90,8 +92,13 @@ class FragmentHistoryTopic : BaseFragment<HistoryTopicViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history_topic, container, false)
+    ): View {
+        _binding = FragmentHistoryTopicBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

@@ -1,50 +1,40 @@
 package com.example.appthitracnghiem.ui.home
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.appthitracnghiem.data.remote.ApiClient
-import com.example.appthitracnghiem.data.remote.entity.UserResponse
+import com.example.appthitracnghiem.data.repository.impl.HomeRepositoryImpl
+import com.example.appthitracnghiem.core.ResultState
+import com.example.appthitracnghiem.core.UiState
+import com.example.appthitracnghiem.domain.usecase.GetUserProfileUseCase
 import com.example.appthitracnghiem.ui.base.BaseViewModel
-import com.example.appthitracnghiem.utils.PreferenceKey
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.launch
 
 class HomeViewModel : BaseViewModel() {
     var nameUserLiveData = MutableLiveData<String>()
     var avartarUserLiveData = MutableLiveData<String>()
     var isLoadingLiveData = MutableLiveData<Boolean>()
+    val userUiState = MutableLiveData<UiState<Pair<String, String>>>(UiState.Idle)
+    private val getUserProfileUseCase = GetUserProfileUseCase(HomeRepositoryImpl(ApiClient.shared()))
 
     fun getDataUserInfo(header: String, requestUserInfo: RequestUserInfo){
         isLoadingLiveData.value = true
-        ApiClient.shared().getUserInfo(header, requestUserInfo)
-            .enqueue(object : Callback<UserResponse> {
-                override fun onResponse(
-                    call: Call<UserResponse>,
-                    response: Response<UserResponse>
-                ) {
+        userUiState.value = UiState.Loading
+        viewModelScope.launch {
+            when (val result = getUserProfileUseCase(header, requestUserInfo.user_id)) {
+                is ResultState.Error -> {
                     isLoadingLiveData.value = false
-                    response.body()?.let {
-                        if(it.statusCode == ApiClient.STATUS_CODE_SUCCESS){
-                            nameUserLiveData.value = it.result?.name
-                            avartarUserLiveData.value = it.result?.avatar
-                        }
-                        if(it.statusCode == ApiClient.STATUS_INVALID_TOKEN){
-                            errorApiLiveData.value = it.message
-                        }
-                        if (it.statusCode == ApiClient.STATUS_USER_EXIST){
-                            errorApiLiveData.value = it.message
-                        }
-                        if (it.statusCode == ApiClient.STATUS_CODE_SERVER_NOT_RESPONSE){
-                            errorApiLiveData.value = it.message
-                        }
-                    }
+                    userUiState.value = UiState.Error(result.message)
+                    errorApiLiveData.value = result.message
                 }
 
-                override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                is ResultState.Success -> {
                     isLoadingLiveData.value = false
-                    errorApiLiveData.value = t.message
+                    nameUserLiveData.value = result.data.name
+                    avartarUserLiveData.value = result.data.avatar
+                    userUiState.value = UiState.Success(result.data.name to result.data.avatar)
                 }
-
-            })
+            }
+        }
     }
 }

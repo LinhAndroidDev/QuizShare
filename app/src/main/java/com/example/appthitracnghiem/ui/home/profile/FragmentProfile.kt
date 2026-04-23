@@ -8,24 +8,24 @@ import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentProfileBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.profile.setting.SettingActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_category.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 @Suppress("DEPRECATION")
 class FragmentProfile : BaseFragment<EmptyViewModel>() {
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         percentColum(30, 80, 60)
 
-        progressNumberDay.apply {
+        binding.progressNumberDay.apply {
             progressMax = 100f
             setProgressWithAnimation(80f, 2000)
         }
@@ -34,13 +34,13 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
             .getString(PreferenceKey.USER_AVATAR,"")
 
         if(avt?.isEmpty() == true){
-            avatarUserProfile.setImageResource(R.drawable.logo6)
+            binding.avatarUserProfile.setImageResource(R.drawable.logo6)
         }else{
             Picasso.get()
                 .load(avt)
                 .placeholder(R.drawable.loadimage)
                 .error(R.drawable.logo6)
-                .into(avatarUserProfile)
+                .into(binding.avatarUserProfile)
         }
 
 //        (activity as HomeActivity).hideTabBar(scrollProfile)
@@ -64,11 +64,11 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
 
         setStatusBar()
 
-        backProfile.setOnClickListener {
+        binding.backProfile.setOnClickListener {
             activity?.onBackPressed()
         }
 
-        setting.setOnClickListener {
+        binding.setting.setOnClickListener {
             val intent: Intent = Intent(requireActivity(), SettingActivity::class.java)
             startActivity(intent)
         }
@@ -77,34 +77,39 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
     }
 
     private fun percentColum(math: Int, science: Int, painting: Int) {
-        progressMath.progress = math.toFloat()
-        progressScience.progress = science.toFloat()
-        progressPainting.progress = painting.toFloat()
+        binding.progressMath.progress = math.toFloat()
+        binding.progressScience.progress = science.toFloat()
+        binding.progressPainting.progress = painting.toFloat()
     }
 
     private fun setText() {
-        txtName.text = viewModel.mPreferenceUtil.defaultPref()
+        binding.txtName.text = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.USER_NAME, "")
 
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        txtName.typeface = semibold
-        txtProfile.typeface = semibold
+        binding.txtName.typeface = semibold
+        binding.txtProfile.typeface = semibold
     }
 
     internal fun scrollTop(){
-        scrollProfile.post {
-            scrollProfile.fling(0)
-            scrollProfile.smoothScrollTo(0, 0)
+        binding.scrollProfile.post {
+            binding.scrollProfile.fling(0)
+            binding.scrollProfile.smoothScrollTo(0, 0)
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+    ): View {
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onFragmentBack(): Boolean {

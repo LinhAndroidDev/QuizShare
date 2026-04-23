@@ -6,41 +6,41 @@ import java.lang.System;
 public final class RequestPoint {
     private final int user_id = 0;
     private final int exam_id = 0;
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     private final java.util.HashMap<java.lang.String, java.lang.Integer> answer_list = null;
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     private final java.lang.String start_time = null;
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     private final java.lang.String finish_time = null;
     
-    @org.jetbrains.annotations.NotNull()
-    public final com.example.appthitracnghiem.ui.exercise.exercise.point.RequestPoint copy(int user_id, int exam_id, @org.jetbrains.annotations.NotNull()
-    java.util.HashMap<java.lang.String, java.lang.Integer> answer_list, @org.jetbrains.annotations.NotNull()
-    java.lang.String start_time, @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
+    public final com.example.appthitracnghiem.ui.exercise.exercise.point.RequestPoint copy(int user_id, int exam_id, @org.jetbrains.annotations.NotNull
+    java.util.HashMap<java.lang.String, java.lang.Integer> answer_list, @org.jetbrains.annotations.NotNull
+    java.lang.String start_time, @org.jetbrains.annotations.NotNull
     java.lang.String finish_time) {
         return null;
     }
     
-    @java.lang.Override()
-    public boolean equals(@org.jetbrains.annotations.Nullable()
+    @java.lang.Override
+    public boolean equals(@org.jetbrains.annotations.Nullable
     java.lang.Object other) {
         return false;
     }
     
-    @java.lang.Override()
+    @java.lang.Override
     public int hashCode() {
         return 0;
     }
     
-    @org.jetbrains.annotations.NotNull()
-    @java.lang.Override()
+    @org.jetbrains.annotations.NotNull
+    @java.lang.Override
     public java.lang.String toString() {
         return null;
     }
     
-    public RequestPoint(int user_id, int exam_id, @org.jetbrains.annotations.NotNull()
-    java.util.HashMap<java.lang.String, java.lang.Integer> answer_list, @org.jetbrains.annotations.NotNull()
-    java.lang.String start_time, @org.jetbrains.annotations.NotNull()
+    public RequestPoint(int user_id, int exam_id, @org.jetbrains.annotations.NotNull
+    java.util.HashMap<java.lang.String, java.lang.Integer> answer_list, @org.jetbrains.annotations.NotNull
+    java.lang.String start_time, @org.jetbrains.annotations.NotNull
     java.lang.String finish_time) {
         super();
     }
@@ -61,32 +61,32 @@ public final class RequestPoint {
         return 0;
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.util.HashMap<java.lang.String, java.lang.Integer> component3() {
         return null;
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.util.HashMap<java.lang.String, java.lang.Integer> getAnswer_list() {
         return null;
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String component4() {
         return null;
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String getStart_time() {
         return null;
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String component5() {
         return null;
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String getFinish_time() {
         return null;
     }

@@ -1,27 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-46:/values-large-v4/values-large-v4.xml",
+            "outputFile": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-3:/values-large-v4/values-large-v4.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-3\\8d1e72511235680d4e09576e04897ebc\\transformed\\jetified-android-crop-1.0.1\\res\\values-large\\values-large.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "4",
-                        "startOffsets": "172",
-                        "endColumns": "47",
-                        "endOffsets": "215"
-                    },
-                    "to": {
-                        "startLines": "9",
-                        "startColumns": "4",
-                        "startOffsets": "532",
-                        "endColumns": "47",
-                        "endOffsets": "575"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-3\\58dd3f4812eb78824b955d86d3508d52\\transformed\\appcompat-1.6.1\\res\\values-large-v4\\values-large-v4.xml",
+                    "source": "/private/var/folders/01/wpz_025x5t303r2gbjkk0j140000gn/T/cursor-sandbox-cache/7fea7137152d65433079299d00baa29f/gradle/caches/transforms-3/090809791e9a6b4c0f6920d4681d49a9/transformed/appcompat-1.6.1/res/values-large-v4/values-large-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
@@ -38,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-3\\0d291c9371dfbedda11ea76171717f69\\transformed\\material-1.8.0\\res\\values-large-v4\\values-large-v4.xml",
+                    "source": "/private/var/folders/01/wpz_025x5t303r2gbjkk0j140000gn/T/cursor-sandbox-cache/7fea7137152d65433079299d00baa29f/gradle/caches/transforms-3/0d05c1a06d7217e5538b06f1be1d01f5/transformed/material-1.8.0/res/values-large-v4/values-large-v4.xml",
                     "from": {
                         "startLines": "2,3,4,10",
                         "startColumns": "4,4,4,4",
@@ -54,6 +37,23 @@
                         "endLines": "12,13,19,25",
                         "endColumns": "121,133,10,10",
                         "endOffsets": "917,1051,1492,1935"
+                    }
+                },
+                {
+                    "source": "/private/var/folders/01/wpz_025x5t303r2gbjkk0j140000gn/T/cursor-sandbox-cache/7fea7137152d65433079299d00baa29f/gradle/caches/transforms-3/dd3c40c98595399158cd9890d7dbd66f/transformed/jetified-android-crop-1.0.1/res/values-large/values-large.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "4",
+                        "startOffsets": "172",
+                        "endColumns": "47",
+                        "endOffsets": "215"
+                    },
+                    "to": {
+                        "startLines": "9",
+                        "startColumns": "4",
+                        "startOffsets": "532",
+                        "endColumns": "47",
+                        "endOffsets": "575"
                     }
                 }
             ]

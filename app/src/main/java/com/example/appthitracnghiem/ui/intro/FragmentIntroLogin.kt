@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentIntroLoginBinding
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.login.LoginActivity
 import com.example.appthitracnghiem.ui.register.RegisterActivity
-import kotlinx.android.synthetic.main.fragment_intro_login.*
 
 /**
  * A simple [Fragment] subclass.
@@ -18,6 +18,8 @@ import kotlinx.android.synthetic.main.fragment_intro_login.*
  * create an instance of this fragment.
  */
 class FragmentIntroLogin : Fragment() {
+    private var _binding: FragmentIntroLoginBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,12 +28,12 @@ class FragmentIntroLogin : Fragment() {
     }
 
     private fun click() {
-        loginIntro.setOnClickListener {
+        binding.loginIntro.setOnClickListener {
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             startActivity(intent)
         }
 
-        registerIntro.setOnClickListener {
+        binding.registerIntro.setOnClickListener {
             val intent = Intent(requireActivity(), RegisterActivity::class.java)
             startActivity(intent)
         }
@@ -40,8 +42,13 @@ class FragmentIntroLogin : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_intro_login, container, false)
+    ): View {
+        _binding = FragmentIntroLoginBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

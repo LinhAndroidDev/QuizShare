@@ -32,7 +32,6 @@ class TestSavedViewModel : BaseViewModel() {
                         response.body().let {
                             when(it?.statusCode){
                                 ApiClient.STATUS_CODE_SUCCESS->{
-                                    val t = it
                                     departmentTitleLiveData.value = it.result?.department_title
                                     testTitleLiveData.value = it.result?.subject_title
                                     listTestSavedLiveData.value = it.result?.exam_list

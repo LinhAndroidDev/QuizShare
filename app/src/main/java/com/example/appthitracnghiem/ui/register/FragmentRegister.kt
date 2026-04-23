@@ -17,14 +17,15 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentRegisterBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment__create_password.*
-import kotlinx.android.synthetic.main.fragment__register.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Suppress("DEPRECATION")
 class FragmentRegister : BaseFragment<RegisterViewModel>() {
+    private var _binding: FragmentRegisterBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var progressDialog: ProgressDialog
 
@@ -66,7 +67,7 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
 
         viewModel.validateLiveData.observe(viewLifecycleOwner) { model ->
             if (model.isValidate) {
-                warningRegister.visibility = View.GONE
+                binding.warningRegister.visibility = View.GONE
             } else {
                 setNote(model.resMsgError, model.resColorError)
             }
@@ -74,21 +75,21 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
     }
 
     private fun initUi() {
-        hidePasswordRegister.setOnClickListener {
-            hidePassword(passwordRegister, hidePasswordRegister)
+        binding.hidePasswordRegister.setOnClickListener {
+            hidePassword(binding.passwordRegister, binding.hidePasswordRegister)
         }
 
-        hidePasswordRegisterRepeat.setOnClickListener {
-            hidePassword(passwordRegisterRepeat, hidePasswordRegisterRepeat)
+        binding.hidePasswordRegisterRepeat.setOnClickListener {
+            hidePassword(binding.passwordRegisterRepeat, binding.hidePasswordRegisterRepeat)
         }
 
-        registerAccount.setOnClickListener {
-            val strName = edtEnterNameRegister.text.toString().trim()
-            val strYearOfBirth = edtEnterYearOfBirthRegister.text.toString().trim()
-            val strEmail = edtEnterEmailRegister.text.toString().trim()
-            val strPhone = edtPhoneRegister.text.toString().trim()
-            val strPassword = passwordRegister.text.toString().trim()
-            val strPasswordRepeat = passwordRegisterRepeat.text.toString().trim()
+        binding.registerAccount.setOnClickListener {
+            val strName = binding.edtEnterNameRegister.text.toString().trim()
+            val strYearOfBirth = binding.edtEnterYearOfBirthRegister.text.toString().trim()
+            val strEmail = binding.edtEnterEmailRegister.text.toString().trim()
+            val strPhone = binding.edtPhoneRegister.text.toString().trim()
+            val strPassword = binding.passwordRegister.text.toString().trim()
+            val strPasswordRepeat = binding.passwordRegisterRepeat.text.toString().trim()
 
             viewModel.register(
                 strEmail,
@@ -100,11 +101,11 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
             )
         }
 
-        loginNow.setOnClickListener {
+        binding.loginNow.setOnClickListener {
             activity?.finish()
         }
 
-        selectDate.setOnClickListener {
+        binding.selectDate.setOnClickListener {
 
             val getDate = Calendar.getInstance()
             val datePicker = DatePickerDialog(requireActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth,DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
@@ -114,7 +115,7 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
                 selectDate.set(Calendar.MONTH, month)
                 selectDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                edtEnterYearOfBirthRegister.setText(formatDate.format(selectDate.time))
+                binding.edtEnterYearOfBirthRegister.setText(formatDate.format(selectDate.time))
 
             }, getDate.get(Calendar.YEAR), getDate.get((Calendar.MONTH)), getDate.get(Calendar.DAY_OF_MONTH))
             datePicker.show()
@@ -132,15 +133,15 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
         text.setSpan(boldStart, 43, 53, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         text.setSpan(boldEnd, 57, 74, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        textString.text = text
+        binding.textString.text = text
     }
 
     fun setNote(string: Int, color: Int) {
         val circle: Animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.anim_shake)
-        warningRegister.text = getString(string)
-        warningRegister.setTextColor(resources.getColor(color))
-        warningRegister.visibility = View.VISIBLE
-        warningRegister.startAnimation(circle)
+        binding.warningRegister.text = getString(string)
+        binding.warningRegister.setTextColor(resources.getColor(color))
+        binding.warningRegister.visibility = View.VISIBLE
+        binding.warningRegister.startAnimation(circle)
     }
 
     private fun hidePassword(password: EditText, hide: ImageView) {
@@ -156,9 +157,14 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__register, container, false)
+    ): View {
+        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onFragmentBack(): Boolean {

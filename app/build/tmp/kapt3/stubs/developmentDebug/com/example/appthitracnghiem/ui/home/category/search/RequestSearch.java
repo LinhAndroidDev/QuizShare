@@ -6,33 +6,33 @@ import java.lang.System;
 public final class RequestSearch {
     private final int user_id = 0;
     private final int department_id = 0;
-    @org.jetbrains.annotations.Nullable()
+    @org.jetbrains.annotations.Nullable
     private final java.lang.String keyword = null;
     
-    @org.jetbrains.annotations.NotNull()
-    public final com.example.appthitracnghiem.ui.home.category.search.RequestSearch copy(int user_id, int department_id, @org.jetbrains.annotations.Nullable()
+    @org.jetbrains.annotations.NotNull
+    public final com.example.appthitracnghiem.ui.home.category.search.RequestSearch copy(int user_id, int department_id, @org.jetbrains.annotations.Nullable
     java.lang.String keyword) {
         return null;
     }
     
-    @java.lang.Override()
-    public boolean equals(@org.jetbrains.annotations.Nullable()
+    @java.lang.Override
+    public boolean equals(@org.jetbrains.annotations.Nullable
     java.lang.Object other) {
         return false;
     }
     
-    @java.lang.Override()
+    @java.lang.Override
     public int hashCode() {
         return 0;
     }
     
-    @org.jetbrains.annotations.NotNull()
-    @java.lang.Override()
+    @org.jetbrains.annotations.NotNull
+    @java.lang.Override
     public java.lang.String toString() {
         return null;
     }
     
-    public RequestSearch(int user_id, int department_id, @org.jetbrains.annotations.Nullable()
+    public RequestSearch(int user_id, int department_id, @org.jetbrains.annotations.Nullable
     java.lang.String keyword) {
         super();
     }
@@ -53,12 +53,12 @@ public final class RequestSearch {
         return 0;
     }
     
-    @org.jetbrains.annotations.Nullable()
+    @org.jetbrains.annotations.Nullable
     public final java.lang.String component3() {
         return null;
     }
     
-    @org.jetbrains.annotations.Nullable()
+    @org.jetbrains.annotations.Nullable
     public final java.lang.String getKeyword() {
         return null;
     }

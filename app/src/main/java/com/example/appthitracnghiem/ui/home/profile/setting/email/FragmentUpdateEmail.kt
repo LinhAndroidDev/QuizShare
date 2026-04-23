@@ -11,15 +11,15 @@ import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentUpdateEmailBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.utils.PreferenceKey
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_setting_new_password.*
-import kotlinx.android.synthetic.main.fragment_update_email.*
 
 @Suppress("DEPRECATION")
 class FragmentUpdateEmail : BaseFragment<UpdateEmailViewModel>() {
+    private var _binding: FragmentUpdateEmailBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,12 +50,12 @@ class FragmentUpdateEmail : BaseFragment<UpdateEmailViewModel>() {
     }
 
     private fun initUi() {
-        backUpdateEmail.setOnClickListener {
+        binding.backUpdateEmail.setOnClickListener {
             activity?.onBackPressed()
         }
 
-        updateEmail.setOnClickListener {
-            val strEmail = edtUpdateEmail.text.toString()
+        binding.updateEmail.setOnClickListener {
+            val strEmail = binding.edtUpdateEmail.text.toString()
             if(strEmail.isEmpty()){
                 Toast.makeText(requireActivity(),"Bạn chưa nhập Email",Toast.LENGTH_SHORT).show()
             }else if(!Patterns.EMAIL_ADDRESS.matcher(strEmail)
@@ -78,15 +78,20 @@ class FragmentUpdateEmail : BaseFragment<UpdateEmailViewModel>() {
     private fun setText() {
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        txtCapNhatEmail.typeface = semibold
+        binding.txtCapNhatEmail.typeface = semibold
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_update_email, container, false)
+    ): View {
+        _binding = FragmentUpdateEmailBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onFragmentBack(): Boolean {

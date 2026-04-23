@@ -9,27 +9,29 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.example.appthitracnghiem.R
-import kotlinx.android.synthetic.main.activity_link_sheet.*
-import kotlinx.android.synthetic.main.fragment_exam.*
+import com.example.appthitracnghiem.databinding.ActivityLinkSheetBinding
 
 @Suppress("DEPRECATION")
 class LinkSheetActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityLinkSheetBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_link_sheet)
+        binding = ActivityLinkSheetBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initUi()
     }
 
     private fun initUi() {
-        backLinkSheet.setOnClickListener {
+        binding.backLinkSheet.setOnClickListener {
             onBackPressed()
         }
 
-        checkSheet.setOnClickListener {
-            layoutCheckSheet.visibility = View.VISIBLE
+        binding.checkSheet.setOnClickListener {
+            binding.layoutCheckSheet.visibility = View.VISIBLE
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                layoutSheet.setRenderEffect(
+                binding.layoutSheet.setRenderEffect(
                     RenderEffect.createBlurEffect(
                         50f,
                         50f,
@@ -39,10 +41,10 @@ class LinkSheetActivity : AppCompatActivity() {
             }
         }
 
-        backCheckSheet.setOnClickListener {
-            layoutCheckSheet.visibility = View.GONE
+        binding.backCheckSheet.setOnClickListener {
+            binding.layoutCheckSheet.visibility = View.GONE
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                layoutSheet.setRenderEffect(null)
+                binding.layoutSheet.setRenderEffect(null)
             }
         }
 
@@ -52,6 +54,6 @@ class LinkSheetActivity : AppCompatActivity() {
     /** set font*/
     private fun setText() {
         val semibold: Typeface? = ResourcesCompat.getFont(this, R.font.svn_gilroy_semibold)
-        txtGoogleSheet.typeface = semibold
+        binding.txtGoogleSheet.typeface = semibold
     }
 }

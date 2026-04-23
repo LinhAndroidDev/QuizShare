@@ -1,28 +1,25 @@
 package com.example.appthitracnghiem.ui.login
 
 import android.annotation.SuppressLint
-import android.util.JsonToken
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.data.remote.ApiClient
-import com.example.appthitracnghiem.data.remote.entity.LoginResponse
-import com.example.appthitracnghiem.data.remote.entity.UserResponse
+import com.example.appthitracnghiem.data.repository.impl.AuthRepositoryImpl
+import com.example.appthitracnghiem.domain.usecase.LoginUseCase
+import com.example.appthitracnghiem.core.ResultState
+import com.example.appthitracnghiem.core.UiState
 import com.example.appthitracnghiem.ui.base.BaseViewModel
-import com.example.appthitracnghiem.ui.home.RequestUserInfo
 import com.example.appthitracnghiem.utils.Email
 import com.example.appthitracnghiem.utils.PreferenceKey
-import com.google.gson.Gson
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.launch
 
 class LoginViewModel : BaseViewModel() {
     val loadingLiveData = MutableLiveData<Boolean>()
     val successLoginLiveData = MutableLiveData<Boolean>()
     val validateLiveData = MutableLiveData<ValidateModel>()
+    val loginUiState = MutableLiveData<UiState<Boolean>>(UiState.Idle)
+    private val loginUseCase = LoginUseCase(AuthRepositoryImpl(ApiClient.shared()))
 
     fun confirmLoggedIn(){
         mPreferenceUtil.defaultPref().edit()
@@ -65,46 +62,23 @@ class LoginViewModel : BaseViewModel() {
 
     private fun requestLogin(strEmail: String, strPassword: String) {
         loadingLiveData.value = true
-        val requestLogin = RequestLogin(strEmail,strPassword)
-        ApiClient.shared()
-            .loginUser(requestLogin)
-            .enqueue(object : Callback<LoginResponse> {
-                override fun onResponse(
-                    call: Call<LoginResponse>,
-                    response: Response<LoginResponse>
-                ) {
+        loginUiState.value = UiState.Loading
+        viewModelScope.launch {
+            when (val result = loginUseCase(strEmail, strPassword)) {
+                is ResultState.Error -> {
                     loadingLiveData.value = false
-                    if (response.isSuccessful) {
-                        response.body()?.let { body ->
-                            if (body.statusCode == ApiClient.STATUS_CODE_SUCCESS) {
-                                body.result?.let { result ->
-                                    successLoginLiveData.value = true
-                                    if (result.user_id != null) {
-                                        savedAuthentication(result.access_token.toString(),result.user_id)
-                                        confirmLoggedIn()
-                                    } else {
-                                        errorApiLiveData.value = "User id null"
-                                    }
-
-                                }
-                            } else {
-                                errorApiLiveData.value = response.body()?.message
-                            }
-
-                        }
-
-                    } else {
-                        errorApiLiveData.value = response.body()?.message
-                    }
+                    loginUiState.value = UiState.Error(result.message)
+                    errorApiLiveData.value = result.message
                 }
 
-                override fun onFailure(
-                    call: Call<LoginResponse>,
-                    t: Throwable
-                ) {
+                is ResultState.Success -> {
                     loadingLiveData.value = false
-                    errorApiLiveData.value = t.message
+                    savedAuthentication(result.data.accessToken, result.data.userId)
+                    confirmLoggedIn()
+                    successLoginLiveData.value = true
+                    loginUiState.value = UiState.Success(true)
                 }
-            })
+            }
+        }
     }
 }

@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
-import kotlinx.android.synthetic.main.fragment_intro_second.*
+import com.example.appthitracnghiem.databinding.FragmentIntroSecondBinding
 
 class FragmentIntroSecond : Fragment() {
+    private var _binding: FragmentIntroSecondBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -21,14 +23,19 @@ class FragmentIntroSecond : Fragment() {
     private fun initUi() {
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        textIntroSecond.typeface = semibold
+        binding.textIntroSecond.typeface = semibold
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_intro_second, container, false)
+    ): View {
+        _binding = FragmentIntroSecondBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

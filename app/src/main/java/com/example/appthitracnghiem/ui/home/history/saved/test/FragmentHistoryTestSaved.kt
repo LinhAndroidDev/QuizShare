@@ -12,16 +12,17 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentHistoryTestSavedBinding
 import com.example.appthitracnghiem.model.Test
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.history.saved.test.adapter.HistoryTestAdapter
 import com.example.appthitracnghiem.ui.home.history.test.general.RequestExamHistory
 import com.example.appthitracnghiem.utils.PreferenceKey
-import kotlinx.android.synthetic.main.fragment_history_subject_saved.*
-import kotlinx.android.synthetic.main.fragment_history_test_saved.*
 
 @Suppress("DEPRECATION")
 class FragmentHistoryTestSaved : BaseFragment<TestSavedViewModel>() {
+    private var _binding: FragmentHistoryTestSavedBinding? = null
+    private val binding get() = _binding!!
     lateinit var historyTestAdapter: HistoryTestAdapter
     companion object{
         var department: String = ""
@@ -60,10 +61,10 @@ class FragmentHistoryTestSaved : BaseFragment<TestSavedViewModel>() {
         viewModel.listTestSavedLiveData.observe(viewLifecycleOwner){
             val linear = LinearLayoutManager(requireActivity(),
                 LinearLayoutManager.VERTICAL,false)
-            rcvTestHistorySaved.layoutManager = linear
+            binding.rcvTestHistorySaved.layoutManager = linear
             if(it != null){
                 historyTestAdapter = HistoryTestAdapter(requireActivity(),it)
-                rcvTestHistorySaved.adapter = historyTestAdapter
+                binding.rcvTestHistorySaved.adapter = historyTestAdapter
             }
         }
     }
@@ -72,19 +73,19 @@ class FragmentHistoryTestSaved : BaseFragment<TestSavedViewModel>() {
     private fun initUi() {
         viewModel.departmentTitleLiveData.observe(viewLifecycleOwner){
             department = it
-            txtTestSaved.text = "$subject | $department"
+            binding.txtTestSaved.text = "$subject | $department"
         }
         viewModel.testTitleLiveData.observe(viewLifecycleOwner){
             subject = it
-            txtTestSaved.text = "$subject | $department"
+            binding.txtTestSaved.text = "$subject | $department"
         }
 
-        backHistoryTestSaved.setOnClickListener {
+        binding.backHistoryTestSaved.setOnClickListener {
             activity?.onBackPressed()
         }
 
-        menuHistoryTestSaved.setOnClickListener {
-            showPopupMenu(menuHistoryTestSaved,R.layout.popup_list_test,0, 0, Gravity.BOTTOM)
+        binding.menuHistoryTestSaved.setOnClickListener {
+            showPopupMenu(binding.menuHistoryTestSaved,R.layout.popup_list_test,0, 0, Gravity.BOTTOM)
         }
     }
 
@@ -136,8 +137,13 @@ class FragmentHistoryTestSaved : BaseFragment<TestSavedViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history_test_saved, container, false)
+    ): View {
+        _binding = FragmentHistoryTestSavedBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

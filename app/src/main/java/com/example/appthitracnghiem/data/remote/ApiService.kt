@@ -1,27 +1,6 @@
 package com.example.appthitracnghiem.data.remote
 
 import com.example.appthitracnghiem.data.remote.entity.*
-import com.example.appthitracnghiem.ui.department.listdepartment.RequestDepartmentInfo
-import com.example.appthitracnghiem.ui.department.listtest.RequestListExam
-import com.example.appthitracnghiem.ui.exercise.exercise.answer.RequestAnswer
-import com.example.appthitracnghiem.ui.exercise.exercise.exam.RequestExamQuestion
-import com.example.appthitracnghiem.ui.exercise.exercise.point.RequestPoint
-import com.example.appthitracnghiem.ui.exercise.topic.RequestSaveExam
-import com.example.appthitracnghiem.ui.home.RequestUserInfo
-import com.example.appthitracnghiem.ui.home.category.search.RequestSearch
-import com.example.appthitracnghiem.ui.home.createtest.review.RequestCreateExam
-import com.example.appthitracnghiem.ui.home.history.saved.department.RequestSavedDepartment
-import com.example.appthitracnghiem.ui.home.history.saved.subject.RequestSubjectSaved
-import com.example.appthitracnghiem.ui.home.history.saved.test.RequestTestSaved
-import com.example.appthitracnghiem.ui.home.history.test.general.RequestExamHistory
-import com.example.appthitracnghiem.ui.home.home.system.RequestGetListDepartment
-import com.example.appthitracnghiem.ui.home.profile.setting.RequestUnPublishUser
-import com.example.appthitracnghiem.ui.home.profile.setting.email.RequestUpdateEmail
-import com.example.appthitracnghiem.ui.home.profile.setting.info.RequestUpdateInfo
-import com.example.appthitracnghiem.ui.home.profile.setting.password.RequestChangePassword
-import com.example.appthitracnghiem.ui.login.RequestLogin
-import com.example.appthitracnghiem.ui.login.forgetpassword.RequestEmailVerification
-import com.example.appthitracnghiem.ui.register.RequestRegister
 import com.example.appthitracnghiem.utils.Const
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -30,52 +9,52 @@ import retrofit2.http.*
 
 interface ApiService {
     @POST("register")
-    fun registerUser(@Body requestRegister: RequestRegister)
+    fun registerUser(@Body requestRegister: Any)
             : Call<RegisterResponse>
 
     @POST("login")
-    fun loginUser(@Body requestLogin: RequestLogin)
+    fun loginUser(@Body requestLogin: Any)
             : Call<LoginResponse>
 
     @POST("forgotPassword")
     fun emailVerification(
-        @Body requestEmailVerification: RequestEmailVerification
+        @Body requestEmailVerification: Any
     ): Call<EmailVerificationResponse>
 
     @POST("getDepartmentList")
     fun getDepartmentList(
         @Header("Authorization") header: String,
-        @Body requestGetListDepartment: RequestGetListDepartment
+        @Body requestGetListDepartment: Any
     ): Call<FromSystemResponse>
 
     @POST("listDepartmentInfo")
     fun getListDepartmentInfo(
         @Header("Authorization") header: String,
-        @Body requestDepartmentInfo: RequestDepartmentInfo
+        @Body requestDepartmentInfo: Any
     ): Call<DepartmentResponse>
 
     @POST("listExam")
     fun getListExam(
         @Header("Authorization") header: String,
-        @Body requestListExam: RequestListExam
+        @Body requestListExam: Any
     ): Call<ListExamResponse>
 
     @POST("examListQuestion")
     fun getExamListQuestion(
         @Header("Authorization") header: String,
-        @Body requestExamQuestion: RequestExamQuestion
+        @Body requestExamQuestion: Any
     ): Call<ExamQuestionResponse>
 
     @POST("submitExam")
     fun submitExam(
         @Header("Authorization") header: String,
-        @Body requestPoint: RequestPoint
+        @Body requestPoint: Any
     ): Call<PointResponse>
 
     @POST("getUserInfo")
     fun getUserInfo(
         @Header("Authorization") header: String,
-        @Body requestUserInfo: RequestUserInfo
+        @Body requestUserInfo: Any
     ): Call<UserResponse>
 
     @Multipart
@@ -89,73 +68,73 @@ interface ApiService {
     @POST("getExamHistoryList")
     fun getExamHistory(
         @Header("Authorization") header: String,
-        @Body requestExamHistory: RequestExamHistory
+        @Body requestExamHistory: Any
     ): Call<ExamHistoryResponse>
 
     @POST("changeEmail")
     fun changeEmail(
         @Header("Authorization") header: String,
-        @Body requestUpdateEmail: RequestUpdateEmail
+        @Body requestUpdateEmail: Any
     ): Call<UpdateEmailResponse>
 
     @POST("updateUserInfo")
     fun updateUserInfo(
         @Header("Authorization") header: String,
-        @Body requestUpdateInfo: RequestUpdateInfo
+        @Body requestUpdateInfo: Any
     ): Call<UpdateInfoResponse>
 
     @POST("changePassword")
     fun changePassword(
         @Header("Authorization") header: String,
-        @Body requestChangePassword: RequestChangePassword
+        @Body requestChangePassword: Any
     ): Call<ChangePasswordResponse>
 
     @POST("postSaveExam")
     fun saveExam(
         @Header("Authorization") header: String,
-        @Body requestSaveExam: RequestSaveExam
+        @Body requestSaveExam: Any
     ): Call<SaveExamResponse>
 
     @POST("savedDepartment")
     fun savedDepartment(
         @Header("Authorization") header: String,
-        @Body requestSavedDepartment: RequestSavedDepartment
+        @Body requestSavedDepartment: Any
     ): Call<DepartmentSavedResponse>
 
     @POST("savedSubject")
     fun savedSubject(
         @Header("Authorization") header: String,
-        @Body requestSaveSubjectSaved: RequestSubjectSaved
+        @Body requestSaveSubjectSaved: Any
     ): Call<SaveSubjectResponse>
 
     @POST("savedExam")
     fun saveTest(
         @Header("Authorization") header: String,
-        @Body requestTestSaved: RequestTestSaved
+        @Body requestTestSaved: Any
     ): Call<TestSavedResponse>
 
     @POST("unpublicUser")
     fun unPublishUser(
         @Header("Authorization") header: String,
-        @Body requestUnPublishUser: RequestUnPublishUser
+        @Body requestUnPublishUser: Any
     ): Call<UnPublishUserResponse>
 
     @POST("searchSubject")
     fun searchSubject(
         @Header("Authorization") header: String,
-        @Body requestSearch: RequestSearch
+        @Body requestSearch: Any
     ): Call<SearchResponse>
 
     @POST("getExamResult")
     fun getExamResult(
         @Header("Authorization") header: String,
-        @Body requestAnswer: RequestAnswer
+        @Body requestAnswer: Any
     ): Call<AnswerResponse>
 
     @POST("createExam")
     fun createExam(
         @Header("Authorization") header: String,
-        @Body requestCreateExam: RequestCreateExam
+        @Body requestCreateExam: Any
     ): Call<CreateExamResponse>
 
     @GET("getExamHistoryDetail")

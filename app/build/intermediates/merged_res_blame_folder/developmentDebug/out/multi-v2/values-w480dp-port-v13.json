@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-46:/values-w480dp-port-v13/values-w480dp-port-v13.xml",
+            "outputFile": "com.example.appthitracnghiem.app-mergeDevelopmentDebugResources-3:/values-w480dp-port-v13/values-w480dp-port-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-3\\0d291c9371dfbedda11ea76171717f69\\transformed\\material-1.8.0\\res\\values-w480dp-port-v13\\values-w480dp-port-v13.xml",
+                    "source": "/private/var/folders/01/wpz_025x5t303r2gbjkk0j140000gn/T/cursor-sandbox-cache/7fea7137152d65433079299d00baa29f/gradle/caches/transforms-3/0d05c1a06d7217e5538b06f1be1d01f5/transformed/material-1.8.0/res/values-w480dp-port-v13/values-w480dp-port-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

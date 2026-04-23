@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.appthitracnghiem.presentation.main.SplashFragment"
+        android:label="Splash">
+        <action
+            android:id="@+id/action_splash_to_intro"
+            app:destination="@id/introActivityDestination" />
+        <action
+            android:id="@+id/action_splash_to_login"
+            app:destination="@id/loginActivityDestination" />
+        <action
+            android:id="@+id/action_splash_to_home"
+            app:destination="@id/homeActivityDestination" />
+    </fragment>
+
+    <activity
+        android:id="@+id/introActivityDestination"
+        android:name="com.example.appthitracnghiem.ui.intro.IntroActivity"
+        android:label="IntroActivity" />
+
+    <activity
+        android:id="@+id/loginActivityDestination"
+        android:name="com.example.appthitracnghiem.ui.login.LoginActivity"
+        android:label="LoginActivity" />
+
+    <activity
+        android:id="@+id/homeActivityDestination"
+        android:name="com.example.appthitracnghiem.ui.home.HomeActivity"
+        android:label="HomeActivity" />
+
+    <activity
+        android:id="@+id/settingActivityDestination"
+        android:name="com.example.appthitracnghiem.ui.home.profile.setting.SettingActivity"
+        android:label="SettingActivity" />
+
+    <activity
+        android:id="@+id/changeAvatarActivityDestination"
+        android:name="com.example.appthitracnghiem.ui.home.profile.setting.changeavatar.ChangeAvatarActivity"
+        android:label="ChangeAvatarActivity" />
+
+    <activity
+        android:id="@+id/searchSubjectActivityDestination"
+        android:name="com.example.appthitracnghiem.ui.home.category.search.SearchSubject"
+        android:label="SearchSubject" />
+
+    <activity
+        android:id="@+id/createTestActivityDestination"
+        android:name="com.example.appthitracnghiem.ui.home.createtest.question.CreateTestActivity"
+        android:label="CreateTestActivity" />
+
+    <activity
+        android:id="@+id/linkSheetActivityDestination"
+        android:name="com.example.appthitracnghiem.ui.home.createtest.LinkSheetActivity"
+        android:label="LinkSheetActivity" />
+
+    <activity
+        android:id="@+id/exerciseActivityDestination"
+        android:name="com.example.appthitracnghiem.ui.exercise.topic.ExerciseActivity"
+        android:label="ExerciseActivity" />
+
+    <activity
+        android:id="@+id/examActivityDestination"
+        android:name="com.example.appthitracnghiem.ui.exercise.exercise.ExamActivity"
+        android:label="ExamActivity" />
+
+    <activity
+        android:id="@+id/historyTopicActivityDestination"
+        android:name="com.example.appthitracnghiem.ui.home.history.test.topic.HistoryTopicActivity"
+        android:label="HistoryTopicActivity" />
+</navigation>

@@ -11,13 +11,15 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentCreatePasswordBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.login.FragmentLogin
-import kotlinx.android.synthetic.main.fragment__create_password.*
 
 @Suppress("DEPRECATION")
 class FragmentCreatePassword : BaseFragment<EmptyViewModel>() {
+    private var _binding: FragmentCreatePasswordBinding? = null
+    private val binding get() = _binding!!
     lateinit var email: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,8 +38,8 @@ class FragmentCreatePassword : BaseFragment<EmptyViewModel>() {
     }
 
     private fun initUi() {
-        resetPassword.setOnClickListener {
-            val password: String = newPasswordCreate.text.toString()
+        binding.resetPassword.setOnClickListener {
+            val password: String = binding.newPasswordCreate.text.toString()
             val progressDialog = ProgressDialog(requireActivity())
             progressDialog.setMessage("Đang cập nhật mật khẩu")
 
@@ -53,12 +55,12 @@ class FragmentCreatePassword : BaseFragment<EmptyViewModel>() {
             fm.replace(R.id.loginContainerID, fragmentLogin).commit()
         }
 
-        hidePasswordCreate.setOnClickListener {
-            hidePassword(newPasswordCreate, hidePasswordCreate)
+        binding.hidePasswordCreate.setOnClickListener {
+            hidePassword(binding.newPasswordCreate, binding.hidePasswordCreate)
         }
 
-        hidePasswordRepeat.setOnClickListener {
-            hidePassword(newPasswordRepeat, hidePasswordRepeat)
+        binding.hidePasswordRepeat.setOnClickListener {
+            hidePassword(binding.newPasswordRepeat, binding.hidePasswordRepeat)
         }
     }
 
@@ -75,9 +77,14 @@ class FragmentCreatePassword : BaseFragment<EmptyViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__create_password, container, false)
+    ): View {
+        _binding = FragmentCreatePasswordBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onFragmentBack(): Boolean {

@@ -10,17 +10,19 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.ActivitySearchSubjectBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
-import kotlinx.android.synthetic.main.activity_search_subject.*
 
 @Suppress("DEPRECATION")
 class SearchSubject : BaseActivity<SearchViewModel>() {
+    private lateinit var binding: ActivitySearchSubjectBinding
     lateinit var searchAdapter: SearchAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search_subject)
+        binding = ActivitySearchSubjectBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initUi()
     }
@@ -30,17 +32,17 @@ class SearchSubject : BaseActivity<SearchViewModel>() {
 
         viewModel.isLoadingLiveData.observe(this, Observer {
             if(it){
-                loadingSubject.visibility = View.VISIBLE
+                binding.loadingSubject.visibility = View.VISIBLE
             }else{
-                loadingSubject.visibility = View.GONE
+                binding.loadingSubject.visibility = View.GONE
             }
         })
 
         viewModel.listSearchLiveData.observe(this, Observer {
             val linear = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
-            recycleListSubject.layoutManager = linear
+            binding.recycleListSubject.layoutManager = linear
             searchAdapter = SearchAdapter(this, it)
-            recycleListSubject.adapter = searchAdapter
+            binding.recycleListSubject.adapter = searchAdapter
         })
     }
 
@@ -66,12 +68,12 @@ class SearchSubject : BaseActivity<SearchViewModel>() {
 
         setStatusBar()
 
-        backSearchSubject.setOnClickListener {
+        binding.backSearchSubject.setOnClickListener {
             onBackPressed()
         }
 
-        search.setOnClickListener {
-            var strSearch = edtSearchSubject.text.toString()
+        binding.search.setOnClickListener {
+            var strSearch = binding.edtSearchSubject.text.toString()
             if(strSearch.isEmpty()){
                 strSearch = ""
             }

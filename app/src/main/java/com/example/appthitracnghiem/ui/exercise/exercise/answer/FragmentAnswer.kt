@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.appthitracnghiem.ui.exercise.exercise.answer
 
 import android.annotation.SuppressLint
@@ -14,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentAnswerBinding
 import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.model.PositiveQuestion
 import com.example.appthitracnghiem.ui.base.BaseFragment
@@ -22,16 +25,24 @@ import com.example.appthitracnghiem.ui.exercise.exercise.exam.RequestExamQuestio
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.fragment_answer.*
-import kotlinx.android.synthetic.main.fragment_exam.*
-import kotlinx.android.synthetic.main.layout_history_question.*
-import kotlinx.android.synthetic.main.layout_loading.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.reflect.Type
 
 @Suppress("DEPRECATION", "CAST_NEVER_SUCCEEDS")
 class FragmentAnswer : BaseFragment<AnswerViewModel>() {
+    private var _binding: FragmentAnswerBinding? = null
+    private val binding get() = _binding!!
+
+    private val txtTiltleAnswer get() = binding.txtTiltleAnswer
+    private val backAnswer get() = binding.backAnswer
+    private val menuQuestionAnswer get() = binding.menuQuestionAnswer
+    private val txtPositionQuizAnswer get() = binding.txtPositionQuizAnswer
+    private val titleAnswer get() = binding.titleAnswer
+    private val llContainerOptions get() = binding.llContainerOptions
+    private val backQuestionAnswer get() = binding.backQuestionAnswer
+    private val nextQuestionAnswer get() = binding.nextQuestionAnswer
+    private val layoutLoading get() = binding.root.findViewById<View>(R.id.layoutLoading)
     private lateinit var listQuestion: MutableList<PositiveQuestion>
 
     private lateinit var menuQuestionAdapter: MenuQuestionAdapter
@@ -97,10 +108,8 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         val requestAnswer = RequestAnswer(userId, idHistoryExam)
         viewModel.getExamResult(accessToken, requestAnswer)
 
-        viewModel.listAnswerLiveData.observe(viewLifecycleOwner) {
-            val json = JSONObject(it)
-            val hashMap: HashMap<String,Int> = toValue(json) as HashMap<String, Int>
-            val t = hashMap
+        viewModel.listAnswerLiveData.observe(viewLifecycleOwner) { examResult ->
+            JSONObject(examResult).toMap()
         }
     }
 
@@ -161,7 +170,7 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         }
 
         backAnswer.setOnClickListener {
-            activity?.onBackPressed()
+            activity?.onBackPressedDispatcher?.onBackPressed()
         }
     }
 
@@ -267,8 +276,13 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_answer, container, false)
+    ): View {
+        _binding = FragmentAnswerBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

@@ -11,16 +11,17 @@ import android.widget.PopupWindow
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentHistoryTestBinding
 import com.example.appthitracnghiem.model.HistoryExam
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.home.history.test.general.adapter.HistoryTestAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
-import kotlinx.android.synthetic.main.fragment_history_test.*
-import kotlinx.android.synthetic.main.fragment_list_test.*
 
 @Suppress("DEPRECATION")
 class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
+    private var _binding: FragmentHistoryTestBinding? = null
+    private val binding get() = _binding!!
     private lateinit var testAdapter: HistoryTestAdapter
     lateinit var testAdapterUser: HistoryTestAdapter
 
@@ -65,25 +66,23 @@ class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
                     listUser.add(it[i])
                 }
             }
-            val t = listSystem
-            val m = listUser
             testAdapter = HistoryTestAdapter(requireActivity(),listSystem)
-            listTestFromSystem.layoutManager = linear
-            listTestFromSystem.adapter = testAdapter
+            binding.listTestFromSystem.layoutManager = linear
+            binding.listTestFromSystem.adapter = testAdapter
 
             testAdapterUser = HistoryTestAdapter(requireActivity(),listUser)
-            listTestFromUser.layoutManager = linearUser
-            listTestFromUser.adapter = testAdapterUser
+            binding.listTestFromUser.layoutManager = linearUser
+            binding.listTestFromUser.adapter = testAdapterUser
         }
     }
 
     private fun initUi() {
-        backHistoryTest.setOnClickListener {
+        binding.backHistoryTest.setOnClickListener {
             activity?.onBackPressed()
         }
 
-        menuHistoryTest.setOnClickListener {
-            showPopupMenu(menuHistoryTest, R.layout.popup_history_test, 0, 0, Gravity.BOTTOM)
+        binding.menuHistoryTest.setOnClickListener {
+            showPopupMenu(binding.menuHistoryTest, R.layout.popup_history_test, 0, 0, Gravity.BOTTOM)
         }
 
         setText()
@@ -134,9 +133,9 @@ class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
     private fun setText() {
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        txtTitleHistory.typeface = semibold
-        txtFromSystem.typeface = semibold
-        txtFromUser.typeface = semibold
+        binding.txtTitleHistory.typeface = semibold
+        binding.txtFromSystem.typeface = semibold
+        binding.txtFromUser.typeface = semibold
     }
 
     override fun onFragmentBack(): Boolean {
@@ -146,8 +145,13 @@ class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history_test, container, false)
+    ): View {
+        _binding = FragmentHistoryTestBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

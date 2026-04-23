@@ -9,16 +9,17 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentHistoryBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.history.question.FragmentHistoryQuestion
 import com.example.appthitracnghiem.ui.home.history.saved.department.FragmentHistoryDepartmentSaved
 import com.example.appthitracnghiem.ui.home.history.test.general.FragmentHistoryTest
-import kotlinx.android.synthetic.main.fragment_create_test.*
-import kotlinx.android.synthetic.main.fragment_history.*
 
 @Suppress("DEPRECATION")
 class FragmentHistory : BaseFragment<EmptyViewModel>() {
+    private var _binding: FragmentHistoryBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,19 +43,19 @@ class FragmentHistory : BaseFragment<EmptyViewModel>() {
 
         setStatusBar()
 
-        historyTest.setOnClickListener{
+        binding.historyTest.setOnClickListener{
             val fragmentHistoryTest = FragmentHistoryTest()
             val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
             fm.add(R.id.changeIdHome,fragmentHistoryTest).addToBackStack(null).commit()
         }
 
-        historyQuiz.setOnClickListener {
+        binding.historyQuiz.setOnClickListener {
             val fragmentHistoryQuestion = FragmentHistoryQuestion()
             val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
             fm.add(R.id.changeIdHome,fragmentHistoryQuestion).addToBackStack(null).commit()
         }
 
-        saved.setOnClickListener {
+        binding.saved.setOnClickListener {
             val fragmentHistorySaved = FragmentHistoryDepartmentSaved()
             val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
             fm.add(R.id.changeIdHome,fragmentHistorySaved).addToBackStack(null).commit()
@@ -66,18 +67,23 @@ class FragmentHistory : BaseFragment<EmptyViewModel>() {
     private fun setText() {
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        txtLichSu.typeface = semibold
-        txtLichSuThi.typeface = semibold
-        txtDaLuu.typeface = semibold
-        txtLichSuCauHoi.typeface = semibold
+        binding.txtLichSu.typeface = semibold
+        binding.txtLichSuThi.typeface = semibold
+        binding.txtDaLuu.typeface = semibold
+        binding.txtLichSuCauHoi.typeface = semibold
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false)
+    ): View {
+        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onFragmentBack(): Boolean {

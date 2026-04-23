@@ -11,18 +11,19 @@ import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentTopicBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.ExamActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_link_sheet.*
-import kotlinx.android.synthetic.main.fragment_topic.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Suppress("DEPRECATION")
 class FragmentTopic : BaseFragment<TopicViewModel>() {
+    private var _binding: FragmentTopicBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,19 +42,19 @@ class FragmentTopic : BaseFragment<TopicViewModel>() {
         val type = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.TYPE,-1)
         if(type == 0){
-            infoTopic.visibility = View.GONE
-            memoryTopic.visibility = View.GONE
+            binding.infoTopic.visibility = View.GONE
+            binding.memoryTopic.visibility = View.GONE
         }else if(type == 1){
-            infoTopic.visibility = View.VISIBLE
-            memoryTopic.visibility = View.VISIBLE
-            nameTopic.text = name
+            binding.infoTopic.visibility = View.VISIBLE
+            binding.memoryTopic.visibility = View.VISIBLE
+            binding.nameTopic.text = name
             if(avt!!.isEmpty()){
-                avtTopic.setImageResource(R.drawable.logo6)
+                binding.avtTopic.setImageResource(R.drawable.logo6)
             }else{
                 Picasso.get().load(avt)
                     .placeholder(R.drawable.loadimage)
                     .error(R.drawable.logo6)
-                    .into(avtTopic)
+                    .into(binding.avtTopic)
             }
         }
 
@@ -70,9 +71,9 @@ class FragmentTopic : BaseFragment<TopicViewModel>() {
 
         viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner){ isSuccessful->
             if(isSuccessful){
-                layoutMemoryTopic.visibility = View.VISIBLE
+                binding.layoutMemoryTopic.visibility = View.VISIBLE
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    layoutTopic.setRenderEffect(
+                    binding.layoutTopic.setRenderEffect(
                         RenderEffect.createBlurEffect(
                             50f,
                             50f,
@@ -103,11 +104,11 @@ class FragmentTopic : BaseFragment<TopicViewModel>() {
 
         setStatusBar()
 
-        backTopic.setOnClickListener {
+        binding.backTopic.setOnClickListener {
             activity?.onBackPressed()
         }
 
-        doTestNow.setOnClickListener {
+        binding.doTestNow.setOnClickListener {
             val sdf = SimpleDateFormat("yyyy/MM/dd hh:mm:ss")
             val currentDate = sdf.format(Date()).toString()
             viewModel.mPreferenceUtil.defaultPref()
@@ -117,7 +118,7 @@ class FragmentTopic : BaseFragment<TopicViewModel>() {
             startActivity(intent)
         }
 
-        memoryTopic.setOnClickListener {
+        binding.memoryTopic.setOnClickListener {
             val header = viewModel.mPreferenceUtil.defaultPref()
                 .getString(PreferenceKey.AUTHORIZATION, "").toString()
             val userId = viewModel.mPreferenceUtil.defaultPref()
@@ -128,10 +129,10 @@ class FragmentTopic : BaseFragment<TopicViewModel>() {
             viewModel.saveExam(header, requestSaveExam)
         }
 
-        backMemoryTopic.setOnClickListener {
-            layoutMemoryTopic.visibility = View.GONE
+        binding.backMemoryTopic.setOnClickListener {
+            binding.layoutMemoryTopic.visibility = View.GONE
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                layoutTopic.setRenderEffect(null)
+                binding.layoutTopic.setRenderEffect(null)
             }
         }
     }
@@ -143,8 +144,13 @@ class FragmentTopic : BaseFragment<TopicViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_topic, container, false)
+    ): View {
+        _binding = FragmentTopicBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

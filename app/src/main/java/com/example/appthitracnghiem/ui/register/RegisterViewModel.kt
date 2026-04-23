@@ -1,26 +1,26 @@
 package com.example.appthitracnghiem.ui.register
 
-import android.app.ProgressDialog
 import android.util.Patterns
-import android.widget.Toast
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.data.remote.ApiClient
-import com.example.appthitracnghiem.data.remote.ApiService
-import com.example.appthitracnghiem.data.remote.entity.RegisterResponse
+import com.example.appthitracnghiem.data.repository.impl.AuthRepositoryImpl
+import com.example.appthitracnghiem.core.ResultState
+import com.example.appthitracnghiem.core.UiState
+import com.example.appthitracnghiem.domain.usecase.RegisterUseCase
 import com.example.appthitracnghiem.ui.base.BaseViewModel
 import com.example.appthitracnghiem.ui.login.ValidateModel
 import com.example.appthitracnghiem.utils.Email
-import kotlinx.android.synthetic.main.fragment__register.*
-import retrofit2.Call
-import retrofit2.Response
+import kotlinx.coroutines.launch
 
 @Suppress("UNREACHABLE_CODE")
 class RegisterViewModel : BaseViewModel() {
     val loadingLiveData = MutableLiveData<Boolean>()
     val successRegisterLiveData = MutableLiveData<Boolean>()
     val validateLiveData = MutableLiveData<ValidateModel>()
+    val registerUiState = MutableLiveData<UiState<Boolean>>(UiState.Idle)
+    private val registerUseCase = RegisterUseCase(AuthRepositoryImpl(ApiClient.shared()))
 
     private fun validateRegister(
         strEmail: String,
@@ -86,40 +86,29 @@ class RegisterViewModel : BaseViewModel() {
         strPassword: String,
     ) {
         loadingLiveData.value = true
-
-        val requestRegister =
-            RequestRegister(strEmail, strName, strPhone, strYearOfBirth, strPassword)
-
-        ApiClient.shared()
-            .registerUser(requestRegister)
-            .enqueue(object : retrofit2.Callback<RegisterResponse> {
-                override fun onResponse(
-                    call: Call<RegisterResponse>,
-                    response: Response<RegisterResponse>,
-                ) {
+        registerUiState.value = UiState.Loading
+        viewModelScope.launch {
+            when (
+                val result = registerUseCase(
+                    email = strEmail,
+                    name = strName,
+                    phoneNumber = strPhone,
+                    birthday = strYearOfBirth,
+                    password = strPassword,
+                )
+            ) {
+                is ResultState.Error -> {
                     loadingLiveData.value = false
-                    if (response.isSuccessful) {
-                        when (response.body()?.statusCode) {
-                            ApiClient.STATUS_CODE_SUCCESS -> {
-                                successRegisterLiveData.value = true
-                            }
-                            ApiClient.STATUS_USER_EXIST -> {
-                                errorApiLiveData.value = response.body()?.message
-                            }
-                            ApiClient.STATUS_CODE_SERVER_NOT_RESPONSE -> {
-                                errorApiLiveData.value = response.body()?.message
-                            }
-                        }
-                    }
+                    registerUiState.value = UiState.Error(result.message)
+                    errorApiLiveData.value = result.message
                 }
 
-                override fun onFailure(
-                    call: Call<RegisterResponse>,
-                    t: Throwable,
-                ) {
+                is ResultState.Success -> {
                     loadingLiveData.value = false
-                    errorApiLiveData.value = t.message
+                    successRegisterLiveData.value = true
+                    registerUiState.value = UiState.Success(true)
                 }
-            })
+            }
+        }
     }
 }

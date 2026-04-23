@@ -15,14 +15,15 @@ import android.widget.PopupWindow
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentListTestBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.department.listtest.adapter.TestAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
-import kotlinx.android.synthetic.main.fragment_list_department.*
-import kotlinx.android.synthetic.main.fragment_list_test.*
 
 @Suppress("DEPRECATION")
 class FragmentListTest : BaseFragment<ListTestViewModel>() {
+    private var _binding: FragmentListTestBinding? = null
+    private val binding get() = _binding!!
     lateinit var testAdapter: TestAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,7 +32,7 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
         val bundle: Bundle = requireArguments()
         val id: Int = bundle.getInt("ID")
         val title: String = bundle.getString("title").toString()
-        textNatural.text = title
+        binding.textNatural.text = title
 
         val type = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.TYPE, 5)
@@ -54,17 +55,17 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
 
     private fun setText() {
         val semibold: Typeface? = ResourcesCompat.getFont(requireActivity(),R.font.svn_gilroy_semibold)
-        textNatural.typeface = semibold
+        binding.textNatural.typeface = semibold
     }
 
     override fun bindData() {
         super.bindData()
 
         viewModel.loadingTestLiveData.observe(viewLifecycleOwner) { isLoading ->
-            if (isLoading && recycleListTest.adapter == null) {
-                loadingTest.visibility = View.VISIBLE
+            if (isLoading && binding.recycleListTest.adapter == null) {
+                binding.loadingTest.visibility = View.VISIBLE
             } else {
-                loadingTest.visibility = View.INVISIBLE
+                binding.loadingTest.visibility = View.INVISIBLE
             }
         }
 
@@ -72,27 +73,27 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
             testAdapter = TestAdapter(requireActivity(), it)
             val linear =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-            recycleListTest.layoutManager = linear
-            recycleListTest.adapter = testAdapter
+            binding.recycleListTest.layoutManager = linear
+            binding.recycleListTest.adapter = testAdapter
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initUi() {
-        layoutListTestCover.setOnTouchListener { view, _ ->
+        binding.layoutListTestCover.setOnTouchListener { view, _ ->
             view.hideKeyboard()
             false
         }
 
-        backTest.setOnClickListener {
+        binding.backTest.setOnClickListener {
             activity?.onBackPressed()
         }
 
-        menuListTest.setOnClickListener {
-            showMenuCreate(menuListTest,R.layout.popup_list_test,0,0,Gravity.BOTTOM)
+        binding.menuListTest.setOnClickListener {
+            showMenuCreate(binding.menuListTest,R.layout.popup_list_test,0,0,Gravity.BOTTOM)
         }
 
-        searchTest.addTextChangedListener(object : TextWatcher {
+        binding.searchTest.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
@@ -128,8 +129,13 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list_test, container, false)
+    ): View {
+        _binding = FragmentListTestBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

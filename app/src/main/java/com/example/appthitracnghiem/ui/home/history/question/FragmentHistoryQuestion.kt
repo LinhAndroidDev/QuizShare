@@ -9,14 +9,16 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentHistoryQuestionBinding
 import com.example.appthitracnghiem.model.Test
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.history.question.adapter.HistoryQuestionAdapter
-import kotlinx.android.synthetic.main.fragment_history_question.*
 
 @Suppress("DEPRECATION")
 class FragmentHistoryQuestion : BaseFragment<EmptyViewModel>() {
+    private var _binding: FragmentHistoryQuestionBinding? = null
+    private val binding get() = _binding!!
     lateinit var listQuestionHistory: MutableList<Test>
     lateinit var historyQuestionAdapter: HistoryQuestionAdapter
 
@@ -35,8 +37,8 @@ class FragmentHistoryQuestion : BaseFragment<EmptyViewModel>() {
         historyQuestionAdapter = HistoryQuestionAdapter(requireActivity(),listQuestionHistory)
 
         val linear: LinearLayoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
-        rcvListHistoryQuestion.layoutManager = linear
-        rcvListHistoryQuestion.adapter = historyQuestionAdapter
+        binding.rcvListHistoryQuestion.layoutManager = linear
+        binding.rcvListHistoryQuestion.adapter = historyQuestionAdapter
 
         setText()
 
@@ -45,11 +47,11 @@ class FragmentHistoryQuestion : BaseFragment<EmptyViewModel>() {
 
     private fun setText() {
         val semibold: Typeface? = ResourcesCompat.getFont(requireActivity(),R.font.svn_gilroy_semibold)
-        txtHistoryTest.typeface = semibold
+        binding.txtHistoryTest.typeface = semibold
     }
 
     private fun click() {
-        backHistoryQuestion.setOnClickListener {
+        binding.backHistoryQuestion.setOnClickListener {
             activity?.onBackPressed()
         }
     }
@@ -61,8 +63,13 @@ class FragmentHistoryQuestion : BaseFragment<EmptyViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history_question, container, false)
+    ): View {
+        _binding = FragmentHistoryQuestionBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

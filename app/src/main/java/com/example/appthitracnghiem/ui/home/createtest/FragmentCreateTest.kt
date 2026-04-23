@@ -20,6 +20,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentCreateTestBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.department.listdepartment.ListDepartmentViewModel
@@ -28,15 +29,44 @@ import com.example.appthitracnghiem.ui.home.createtest.adapter.CreateDepartmentA
 import com.example.appthitracnghiem.ui.home.createtest.question.CreateTestActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.activity_create_test.*
-import kotlinx.android.synthetic.main.fragment_create_exam.*
-import kotlinx.android.synthetic.main.fragment_create_test.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_list_department.*
-import kotlinx.android.synthetic.main.layout_bottom_share.*
 
 @Suppress("DEPRECATION")
 class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
+    private var _binding: FragmentCreateTestBinding? = null
+    private val binding get() = _binding!!
+
+    private val scrollCreateTest get() = binding.scrollCreateTest
+    private val layoutCreateTest get() = binding.layoutCreateTest
+    private val layoutCreateTestCover get() = binding.layoutCreateTestCover
+    private val menuCreateTest get() = binding.menuCreateTest
+    private val selectDepartment get() = binding.selectDepartment
+    private val txtSelectSubject get() = binding.txtSelectSubject
+    private val layoutSelectSubject get() = binding.layoutSelectSubject
+    private val selectSubject get() = binding.selectSubject
+    private val selectMode get() = binding.selectMode
+    private val addCoverImage get() = binding.addCoverImage
+    private val googleSheet get() = binding.googleSheet
+    private val createTest get() = binding.createTest
+    private val shareWithFacebook get() = binding.root.findViewById<LinearLayout>(R.id.shareWithFacebook)
+    private val shareWithMail get() = binding.root.findViewById<LinearLayout>(R.id.shareWithMail)
+    private val shareTest get() = binding.shareTest
+    private val edtSelectDepartment get() = binding.edtSelectDepartment
+    private val edtSelectSubject get() = binding.edtSelectSubject
+    private val edtSelectLevel get() = binding.edtSelectLevel
+    private val edtSelectTitle get() = binding.edtSelectTitle
+    private val edtSelectTime get() = binding.edtSelectTime
+    private val edtSelectNumberQuiz get() = binding.edtSelectNumberQuiz
+    private val edtDescribeQuiz get() = binding.edtDescribeQuiz
+    private val imageCover get() = binding.imageCover
+    private val txtAddTest get() = binding.txtAddTest
+    private val txtTiltle get() = binding.txtTiltle
+    private val txtDownTest get() = binding.txtDownTest
+    private val txtSelectDepartment get() = binding.txtSelectDepartment
+    private val txtSelectMode get() = binding.txtSelectMode
+    private val txtTimeDoTest get() = binding.txtTimeDoTest
+    private val txtNumberQuestion get() = binding.txtNumberQuestion
+    private val txtDetail get() = binding.txtDetail
+
     private val GALLERY_RED_CODE: Int = 1000
     private var DEPARTMENT_ID: Int = -1
     private var SUBJECT_ID: Int = -1
@@ -261,6 +291,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
     /** Share Test*/
     @SuppressLint("ClickableViewAccessibility")
     private fun setBottomShare() {
+        val layoutBottomShare = binding.root.findViewById<View>(R.id.layoutBottomShare)
         layoutBottomShare.setOnTouchListener { _, _ -> true }
         val bottomShareBehavior = BottomSheetBehavior.from(layoutBottomShare)
         shareTest.setOnClickListener {
@@ -329,9 +360,14 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_test, container, false)
+    ): View {
+        _binding = FragmentCreateTestBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onFragmentBack(): Boolean {

@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentCategoryBinding
 import com.example.appthitracnghiem.model.Subject
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.department.listdepartment.ListDepartmentViewModel
@@ -17,11 +18,11 @@ import com.example.appthitracnghiem.ui.department.listdepartment.RequestDepartme
 import com.example.appthitracnghiem.ui.home.category.adapter.SubjectAdapter
 import com.example.appthitracnghiem.ui.home.category.search.SearchSubject
 import com.example.appthitracnghiem.utils.PreferenceKey
-import kotlinx.android.synthetic.main.fragment_category.*
-import kotlinx.android.synthetic.main.fragment_home.*
 
 @Suppress("DEPRECATION")
 class FragmentCategory : BaseFragment<ListDepartmentViewModel>() {
+    private var _binding: FragmentCategoryBinding? = null
+    private val binding get() = _binding!!
     lateinit var listCategory: ArrayList<Subject>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,9 +39,9 @@ class FragmentCategory : BaseFragment<ListDepartmentViewModel>() {
 
         viewModel.loadingDepartmentLiveData.observe(viewLifecycleOwner){
             if(it){
-                loadingSubject.visibility = View.VISIBLE
+                binding.loadingSubject.visibility = View.VISIBLE
             }else{
-                loadingSubject.visibility = View.GONE
+                binding.loadingSubject.visibility = View.GONE
             }
         }
 
@@ -57,11 +58,11 @@ class FragmentCategory : BaseFragment<ListDepartmentViewModel>() {
                     listCategory.add(it[i].subjects[j])
                 }
             }
-            if (recycleListSubject != null) {
+            if (_binding != null) {
                 val gridLayoutManager = GridLayoutManager(requireActivity(), 2)
-                recycleListSubject.layoutManager = gridLayoutManager
+                binding.recycleListSubject.layoutManager = gridLayoutManager
                 val subjectAdapter = SubjectAdapter(listCategory, requireActivity())
-                recycleListSubject.adapter = subjectAdapter
+                binding.recycleListSubject.adapter = subjectAdapter
                 subjectAdapter.notifyDataSetChanged()
             }
         }
@@ -85,11 +86,11 @@ class FragmentCategory : BaseFragment<ListDepartmentViewModel>() {
 
         setStatusBar()
 
-        backCategory.setOnClickListener {
+        binding.backCategory.setOnClickListener {
             requireActivity().onBackPressed()
         }
 
-        searchCategory.setOnClickListener {
+        binding.searchCategory.setOnClickListener {
             val intent = Intent(requireActivity(), SearchSubject::class.java)
             startActivity(intent)
         }
@@ -100,22 +101,27 @@ class FragmentCategory : BaseFragment<ListDepartmentViewModel>() {
     private fun setText() {
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        textSubject.typeface = semibold
+        binding.textSubject.typeface = semibold
     }
 
     internal fun scrollTop(){
-        scrollCategory.post {
-            scrollCategory.fling(0)
-            scrollCategory.smoothScrollTo(0, 0)
+        binding.scrollCategory.post {
+            binding.scrollCategory.fling(0)
+            binding.scrollCategory.smoothScrollTo(0, 0)
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_category, container, false)
+    ): View {
+        _binding = FragmentCategoryBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onFragmentBack(): Boolean {

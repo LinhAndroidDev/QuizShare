@@ -20,16 +20,17 @@ import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentLoginBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.login.forgetpassword.FragmentForgetPassword
 import com.example.appthitracnghiem.ui.register.RegisterActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
-import kotlinx.android.synthetic.main.fragment__create_password.*
-import kotlinx.android.synthetic.main.fragment__login.*
 
 @Suppress("DEPRECATION")
 class FragmentLogin : BaseFragment<LoginViewModel>() {
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
     var checkSave: Boolean = false
@@ -72,7 +73,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
 
         viewModel.validateLiveData.observe(viewLifecycleOwner) { model ->
             if (model.isValidate) {
-                warningLogin.visibility = View.GONE
+                binding.warningLogin.visibility = View.GONE
             } else {
                 setNote(model.resMsgError, model.resColorError)
             }
@@ -81,24 +82,24 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
 
     /** set font*/
     private fun setText() {
-        forgetPassword.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        binding.forgetPassword.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        textGoogle.typeface = semibold
-        textFacebook.typeface = semibold
-        textApple.typeface = semibold
+        binding.textGoogle.typeface = semibold
+        binding.textFacebook.typeface = semibold
+        binding.textApple.typeface = semibold
     }
 
     @SuppressLint("ResourceAsColor")
     private fun initUi() {
         checkSaveAccount()
 
-        hidePasswordLogin.setOnClickListener {
-            hidePassword(passwordLogin, hidePasswordLogin)
+        binding.hidePasswordLogin.setOnClickListener {
+            hidePassword(binding.passwordLogin, binding.hidePasswordLogin)
         }
 
-        forgetPassword.setOnClickListener {
+        binding.forgetPassword.setOnClickListener {
             val fragmentForgetpassword: FragmentForgetPassword = FragmentForgetPassword()
             val fm: FragmentTransaction =
                 requireActivity().supportFragmentManager.beginTransaction()
@@ -112,18 +113,18 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
             fm.replace(R.id.loginContainerID, fragmentForgetpassword).commit()
         }
 
-        registerNow.setOnClickListener {
+        binding.registerNow.setOnClickListener {
             val intent = Intent(activity, RegisterActivity::class.java)
             startActivity(intent)
         }
 
-        login.setOnClickListener {
-            strEmail = edtEnterEmailLogin.text.toString().trim()
-            strPassword = passwordLogin.text.toString().trim()
+        binding.login.setOnClickListener {
+            strEmail = binding.edtEnterEmailLogin.text.toString().trim()
+            strPassword = binding.passwordLogin.text.toString().trim()
             viewModel.login(strEmail, strPassword)
         }
 
-        google.setOnClickListener {
+        binding.google.setOnClickListener {
             val intent = Intent()
             intent.action = Intent.ACTION_VIEW
             intent.data =
@@ -131,7 +132,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
             startActivity(intent)
         }
 
-        facebook.setOnClickListener {
+        binding.facebook.setOnClickListener {
             val intent = Intent()
             intent.action = Intent.ACTION_VIEW
             intent.data = Uri.parse("https://www.facebook.com")
@@ -142,7 +143,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
     }
 
     private fun saveAccount(email: String, password: String) {
-        if (checkForgetPassword.isChecked) {
+        if (binding.checkForgetPassword.isChecked) {
             viewModel.mPreferenceUtil.defaultPref()
                 .edit().putBoolean(PreferenceKey.SAVE_ACCOUNT, true)
                 .apply()
@@ -174,9 +175,9 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
             .getString(PreferenceKey.USER_PASSWORD,"").toString()
 
 
-        edtEnterEmailLogin.setText(strEmail)
-        passwordLogin.setText(strPassword)
-        checkForgetPassword.isChecked = true
+        binding.edtEnterEmailLogin.setText(strEmail)
+        binding.passwordLogin.setText(strPassword)
+        binding.checkForgetPassword.isChecked = true
     }
 
     private fun hidePassword(password: EditText, hide: ImageView) {
@@ -191,18 +192,23 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
 
     private fun setNote(string: Int, color: Int) {
         val circle: Animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.anim_shake)
-        warningLogin.text = getString(string)
-        warningLogin.setTextColor(resources.getColor(color))
-        warningLogin.visibility = View.VISIBLE
-        warningLogin.startAnimation(circle)
+        binding.warningLogin.text = getString(string)
+        binding.warningLogin.setTextColor(resources.getColor(color))
+        binding.warningLogin.visibility = View.VISIBLE
+        binding.warningLogin.startAnimation(circle)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__login, container, false)
+    ): View {
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onFragmentBack(): Boolean {

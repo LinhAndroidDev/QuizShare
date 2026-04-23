@@ -6,15 +6,18 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.ActivityExamBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.exam.FragmentExam
-import kotlinx.android.synthetic.main.activity_exam.*
 
 @Suppress("DEPRECATION")
 class ExamActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityExamBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_exam)
+        binding = ActivityExamBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         replaceFragment(FragmentExam())
     }
@@ -26,9 +29,9 @@ class ExamActivity : AppCompatActivity() {
 
     internal fun loadingVisible(isLoading: Boolean){
         if(isLoading){
-            loadingExam.visibility = View.VISIBLE
+            binding.loadingExam.root.visibility = View.VISIBLE
         }else{
-            loadingExam.visibility = View.GONE
+            binding.loadingExam.root.visibility = View.GONE
         }
     }
 

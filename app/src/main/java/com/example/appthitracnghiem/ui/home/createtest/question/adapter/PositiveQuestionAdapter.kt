@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.appthitracnghiem.ui.home.createtest.question.adapter
 
 import android.annotation.SuppressLint
@@ -16,7 +18,6 @@ import com.example.appthitracnghiem.model.CreateQuestion
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.fragment_create_exam.*
 import java.lang.reflect.Type
 
 class PositiveQuestionAdapter(private val max: Int, val context: Context) :
@@ -48,15 +49,13 @@ class PositiveQuestionAdapter(private val max: Int, val context: Context) :
             holder.txtPositive.setTextColor(Color.WHITE)
             holder.txtPositive.setBackgroundResource(R.drawable.select_positive_quiz)
         } else {
-            val t = getListPositive(PreferenceKey.LIST_CREATE_NUMBER_QUESTION)
-            getListPositive(PreferenceKey.LIST_CREATE_NUMBER_QUESTION).let {
-                if(it[position] == -2){
-                    holder.txtPositive.setTextColor(Color.BLACK)
-                }else if(it[position] == -1){
-                    holder.txtPositive.setTextColor(ContextCompat.getColor(context,R.color.pink_red))
-                }else{
-                    holder.txtPositive.setTextColor(ContextCompat.getColor(context,R.color.backgroundIntro))
-                }
+            val listPositive = getListPositive(PreferenceKey.LIST_CREATE_NUMBER_QUESTION)
+            if(listPositive[position] == -2){
+                holder.txtPositive.setTextColor(Color.BLACK)
+            }else if(listPositive[position] == -1){
+                holder.txtPositive.setTextColor(ContextCompat.getColor(context,R.color.pink_red))
+            }else{
+                holder.txtPositive.setTextColor(ContextCompat.getColor(context,R.color.backgroundIntro))
             }
             holder.txtPositive.setBackgroundResource(R.drawable.un_select_positive_quiz)
         }

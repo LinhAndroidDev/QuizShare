@@ -15,30 +15,31 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.ActivityCreateTestBinding
 import com.example.appthitracnghiem.model.PositiveQuestion
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseActivity
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.createtest.question.adapter.PositiveQuestionAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
-import kotlinx.android.synthetic.main.activity_create_test.*
-import kotlinx.android.synthetic.main.fragment_create_exam.*
 
 @Suppress("DEPRECATION")
 class CreateTestActivity : BaseActivity<EmptyViewModel>() {
+    private lateinit var binding: ActivityCreateTestBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_test)
+        binding = ActivityCreateTestBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         replaceFragment(FragmentCreateExam())
 
         /** Check keyboard show **/
-        changeIdCreateExam.viewTreeObserver
+        binding.changeIdCreateExam.viewTreeObserver
             .addOnGlobalLayoutListener {
                 val r = Rect()
-                changeIdCreateExam.getWindowVisibleDisplayFrame(r)
-                val screenHeight: Int = changeIdCreateExam.rootView.height
+                binding.changeIdCreateExam.getWindowVisibleDisplayFrame(r)
+                val screenHeight: Int = binding.changeIdCreateExam.rootView.height
 
                 // r.bottom is the position above soft keypad or device button.
                 // if keypad is shown, the r.bottom is smaller than that before.

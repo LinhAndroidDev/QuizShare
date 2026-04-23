@@ -1,49 +1,63 @@
 package com.example.appthitracnghiem.ui.home;
 
-import java.lang.System;
+import androidx.lifecycle.MutableLiveData;
+import com.example.appthitracnghiem.data.remote.ApiClient;
+import com.example.appthitracnghiem.data.repository.impl.HomeRepositoryImpl;
+import com.example.appthitracnghiem.core.ResultState;
+import com.example.appthitracnghiem.core.UiState;
+import com.example.appthitracnghiem.domain.usecase.GetUserProfileUseCase;
+import com.example.appthitracnghiem.ui.base.BaseViewModel;
 
-@kotlin.Metadata(mv = {1, 7, 1}, k = 1, d1 = {"\u0000.\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u000e\n\u0002\b\u0005\n\u0002\u0010\u000b\n\u0002\b\u0005\n\u0002\u0010\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0000\u0018\u00002\u00020\u0001B\u0005\u00a2\u0006\u0002\u0010\u0002J\u0016\u0010\u0010\u001a\u00020\u00112\u0006\u0010\u0012\u001a\u00020\u00052\u0006\u0010\u0013\u001a\u00020\u0014R \u0010\u0003\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\u0006\u0010\u0007\"\u0004\b\b\u0010\tR \u0010\n\u001a\b\u0012\u0004\u0012\u00020\u000b0\u0004X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\n\u0010\u0007\"\u0004\b\f\u0010\tR \u0010\r\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\u000e\u0010\u0007\"\u0004\b\u000f\u0010\t\u00a8\u0006\u0015"}, d2 = {"Lcom/example/appthitracnghiem/ui/home/HomeViewModel;", "Lcom/example/appthitracnghiem/ui/base/BaseViewModel;", "()V", "avartarUserLiveData", "Landroidx/lifecycle/MutableLiveData;", "", "getAvartarUserLiveData", "()Landroidx/lifecycle/MutableLiveData;", "setAvartarUserLiveData", "(Landroidx/lifecycle/MutableLiveData;)V", "isLoadingLiveData", "", "setLoadingLiveData", "nameUserLiveData", "getNameUserLiveData", "setNameUserLiveData", "getDataUserInfo", "", "header", "requestUserInfo", "Lcom/example/appthitracnghiem/ui/home/RequestUserInfo;", "app_developmentDebug"})
+@kotlin.Metadata(mv = {1, 7, 1}, k = 1, d1 = {"\u0000@\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u000e\n\u0002\b\u0005\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u000b\n\u0002\b\u0005\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0000\u0018\u00002\u00020\u0001B\u0005\u00a2\u0006\u0002\u0010\u0002J\u0016\u0010\u0016\u001a\u00020\u00172\u0006\u0010\u0018\u001a\u00020\u00052\u0006\u0010\u0019\u001a\u00020\u001aR \u0010\u0003\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\u0006\u0010\u0007\"\u0004\b\b\u0010\tR\u000e\u0010\n\u001a\u00020\u000bX\u0082\u0004\u00a2\u0006\u0002\n\u0000R \u0010\f\u001a\b\u0012\u0004\u0012\u00020\r0\u0004X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\f\u0010\u0007\"\u0004\b\u000e\u0010\tR \u0010\u000f\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\u0010\u0010\u0007\"\u0004\b\u0011\u0010\tR)\u0010\u0012\u001a\u001a\u0012\u0016\u0012\u0014\u0012\u0010\u0012\u000e\u0012\u0004\u0012\u00020\u0005\u0012\u0004\u0012\u00020\u00050\u00140\u00130\u0004\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0015\u0010\u0007\u00a8\u0006\u001b"}, d2 = {"Lcom/example/appthitracnghiem/ui/home/HomeViewModel;", "Lcom/example/appthitracnghiem/ui/base/BaseViewModel;", "()V", "avartarUserLiveData", "Landroidx/lifecycle/MutableLiveData;", "", "getAvartarUserLiveData", "()Landroidx/lifecycle/MutableLiveData;", "setAvartarUserLiveData", "(Landroidx/lifecycle/MutableLiveData;)V", "getUserProfileUseCase", "Lcom/example/appthitracnghiem/domain/usecase/GetUserProfileUseCase;", "isLoadingLiveData", "", "setLoadingLiveData", "nameUserLiveData", "getNameUserLiveData", "setNameUserLiveData", "userUiState", "Lcom/example/appthitracnghiem/core/UiState;", "Lkotlin/Pair;", "getUserUiState", "getDataUserInfo", "", "header", "requestUserInfo", "Lcom/example/appthitracnghiem/ui/home/RequestUserInfo;", "app_developmentDebug"})
 public final class HomeViewModel extends com.example.appthitracnghiem.ui.base.BaseViewModel {
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     private androidx.lifecycle.MutableLiveData<java.lang.String> nameUserLiveData;
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     private androidx.lifecycle.MutableLiveData<java.lang.String> avartarUserLiveData;
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     private androidx.lifecycle.MutableLiveData<java.lang.Boolean> isLoadingLiveData;
+    @org.jetbrains.annotations.NotNull
+    private final androidx.lifecycle.MutableLiveData<com.example.appthitracnghiem.core.UiState<kotlin.Pair<java.lang.String, java.lang.String>>> userUiState = null;
+    private final com.example.appthitracnghiem.domain.usecase.GetUserProfileUseCase getUserProfileUseCase = null;
     
     public HomeViewModel() {
         super();
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final androidx.lifecycle.MutableLiveData<java.lang.String> getNameUserLiveData() {
         return null;
     }
     
-    public final void setNameUserLiveData(@org.jetbrains.annotations.NotNull()
+    public final void setNameUserLiveData(@org.jetbrains.annotations.NotNull
     androidx.lifecycle.MutableLiveData<java.lang.String> p0) {
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final androidx.lifecycle.MutableLiveData<java.lang.String> getAvartarUserLiveData() {
         return null;
     }
     
-    public final void setAvartarUserLiveData(@org.jetbrains.annotations.NotNull()
+    public final void setAvartarUserLiveData(@org.jetbrains.annotations.NotNull
     androidx.lifecycle.MutableLiveData<java.lang.String> p0) {
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final androidx.lifecycle.MutableLiveData<java.lang.Boolean> isLoadingLiveData() {
         return null;
     }
     
-    public final void setLoadingLiveData(@org.jetbrains.annotations.NotNull()
+    public final void setLoadingLiveData(@org.jetbrains.annotations.NotNull
     androidx.lifecycle.MutableLiveData<java.lang.Boolean> p0) {
     }
     
-    public final void getDataUserInfo(@org.jetbrains.annotations.NotNull()
-    java.lang.String header, @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
+    public final androidx.lifecycle.MutableLiveData<com.example.appthitracnghiem.core.UiState<kotlin.Pair<java.lang.String, java.lang.String>>> getUserUiState() {
+        return null;
+    }
+    
+    public final void getDataUserInfo(@org.jetbrains.annotations.NotNull
+    java.lang.String header, @org.jetbrains.annotations.NotNull
     com.example.appthitracnghiem.ui.home.RequestUserInfo requestUserInfo) {
     }
 }

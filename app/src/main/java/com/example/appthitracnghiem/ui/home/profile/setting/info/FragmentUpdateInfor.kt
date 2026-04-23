@@ -13,24 +13,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.FragmentUpdateInforBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.home.profile.setting.changeavatar.ChangeAvatarActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment__register.*
-import kotlinx.android.synthetic.main.fragment_create_test.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.android.synthetic.main.fragment_setting.*
-import kotlinx.android.synthetic.main.fragment_setting_new_password.*
-import kotlinx.android.synthetic.main.fragment_update_infor.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Suppress("DEPRECATION")
 class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
+    private var _binding: FragmentUpdateInforBinding? = null
+    private val binding get() = _binding!!
     private val GALLERY_RED_CODE: Int = 1000
     private var formatDate = SimpleDateFormat("yyyy/MM/dd", Locale.UK)
 
@@ -70,26 +66,26 @@ class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
             .getString(PreferenceKey.USER_AVATAR,"")
 
         if(avt?.isEmpty() == true){
-            avatarUpdateInfo.setImageResource(R.drawable.logo6)
+            binding.avatarUpdateInfo.setImageResource(R.drawable.logo6)
         }else{
             Picasso.get()
                 .load(avt)
                 .placeholder(R.drawable.loadimage)
                 .error(R.drawable.logo6)
-                .into(avatarUpdateInfo)
+                .into(binding.avatarUpdateInfo)
         }
 
-        backUpdateInfo.setOnClickListener {
+        binding.backUpdateInfo.setOnClickListener {
             activity?.onBackPressed()
         }
 
-        changeAvatar.setOnClickListener {
+        binding.changeAvatar.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             startActivityForResult(intent, GALLERY_RED_CODE)
         }
 
-        selectDateInfo.setOnClickListener {
+        binding.selectDateInfo.setOnClickListener {
 
             val getDate = Calendar.getInstance()
             val datePicker = DatePickerDialog(requireActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth,
@@ -100,15 +96,15 @@ class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
                 selectDate.set(Calendar.MONTH, month)
                 selectDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                    edtBirthInfo.text = formatDate.format(selectDate.time)
+                    binding.edtBirthInfo.text = formatDate.format(selectDate.time)
 
             }, getDate.get(Calendar.YEAR), getDate.get((Calendar.MONTH)), getDate.get(Calendar.DAY_OF_MONTH))
             datePicker.show()
         }
 
-        resetInfor.setOnClickListener {
-            val name = edtNameInfo.text.toString()
-            val birth = edtBirthInfo.text.toString()
+        binding.resetInfor.setOnClickListener {
+            val name = binding.edtNameInfo.text.toString()
+            val birth = binding.edtBirthInfo.text.toString()
 
             if(name.isEmpty() || birth.isEmpty()){
                 Toast.makeText(requireActivity(),"Bạn chưa nhập đủ thông tin",Toast.LENGTH_SHORT).show()
@@ -129,7 +125,7 @@ class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
     private fun setText() {
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        txtCapNhatThongTin.typeface = semibold
+        binding.txtCapNhatThongTin.typeface = semibold
     }
 
     /** Get Image from Storage*/
@@ -149,9 +145,14 @@ class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_update_infor, container, false)
+    ): View {
+        _binding = FragmentUpdateInforBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onFragmentBack(): Boolean {
