@@ -1,141 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.home.createtest.FragmentCreateTest"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".ui.home.createtest.FragmentCreateTest">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollCreateTest"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
+            android:id="@+id/layoutCreateTest"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="60dp"
-            android:id="@+id/layoutCreateTest"
             android:orientation="vertical">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:id="@+id/txtAddTest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:text="@string/txtAddTest"
                     android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="24sp" />
+
                 <ImageView
                     android:id="@+id/menuCreateTest"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/icon_menu"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"/>
+                    android:src="@drawable/icon_menu" />
             </RelativeLayout>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                app:cardCornerRadius="25dp"
                 android:layout_marginTop="40dp"
                 app:cardBackgroundColor="@color/bg_card_setting"
+                app:cardCornerRadius="25dp"
                 app:cardElevation="0dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <ImageView
                         android:id="@+id/imageCover"
-                        android:importantForAccessibility="no"
-                        android:scaleType="centerCrop"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent"
+                        android:importantForAccessibility="no"
+                        android:scaleType="centerCrop" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
                         android:gravity="center"
+                        android:orientation="vertical"
                         tools:ignore="UseCompoundDrawables">
+
                         <ImageView
                             android:id="@+id/addCoverImage"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/icon_image"
                             android:layout_width="64dp"
-                            android:layout_height="64dp"/>
+                            android:layout_height="64dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/icon_image" />
+
                         <TextView
-                            android:text="@string/txtAddImageCover"
-                            android:textSize="16sp"
-                            android:layout_marginTop="8dp"
-                            android:textColor="@color/backgroundIntro"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/txtAddImageCover"
+                            android:textColor="@color/backgroundIntro"
+                            android:textSize="16sp" />
                     </LinearLayout>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
+
             <TextView
                 android:id="@+id/txtTiltle"
-                android:text="@string/txtTitleCreateTest"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="16dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/txtTitleCreateTest"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/edtSelectTitle"
-                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textColorHint="@color/color_number_position"
+                android:background="@drawable/boder_setting_new_password"
                 android:hint="Nhập tiêu đề bài kiểm tra"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:paddingVertical="16dp"
                 android:paddingStart="24dp"
                 android:paddingEnd="50dp"
-                android:paddingVertical="16dp"
-                android:background="@drawable/boder_setting_new_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:imeOptions="actionDone"/>
+                android:textColorHint="@color/color_number_position"
+                android:textSize="16sp" />
+
             <TextView
                 android:id="@+id/txtDownTest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text="@string/txtDownTest"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_marginTop="16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textSize="16sp" />
+
             <LinearLayout
-                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
+
                 <LinearLayout
                     android:id="@+id/googleSheet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/boder_quiz"
                     android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:background="@drawable/boder_quiz">
+                    android:padding="16dp">
+
                     <ImageView
-                        android:src="@drawable/icon_sheet"
                         android:layout_width="16.67dp"
                         android:layout_height="20dp"
-                        android:layout_marginEnd="7dp"/>
+                        android:layout_marginEnd="7dp"
+                        android:src="@drawable/icon_sheet" />
+
                     <TextView
-                        android:text="Sheet"
-                        android:textSize="16sp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:text="Sheet"
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:background="@drawable/boder_quiz"
                     android:orientation="horizontal"
-                    android:layout_marginStart="8dp"
                     android:padding="16dp">
 
                     <ImageView
@@ -150,247 +166,272 @@
                         android:text="Excel"
                         android:textSize="16sp" />
                 </LinearLayout>
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="20dp"
                     android:layout_marginStart="8dp"
-                    app:cardBackgroundColor="@color/backgroundIntro">
+                    app:cardBackgroundColor="@color/backgroundIntro"
+                    app:cardCornerRadius="20dp">
+
                     <TextView
-                        android:text="@string/txtHandmade"
-                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:paddingHorizontal="20dp"
                         android:paddingVertical="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:text="@string/txtHandmade"
+                        android:textColor="@color/white" />
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
+
             <TextView
                 android:id="@+id/txtSelectDepartment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/txtSelectDepartment"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textSize="16sp" />
+
             <RelativeLayout
-                android:id="@+id/selectDepartment"
-                android:layout_marginTop="8dp"
+                android:id="@+id/layoutSelectDepartment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
                 <TextView
                     android:id="@+id/edtSelectDepartment"
-                    android:textSize="16sp"
-                    android:textColorHint="@color/color_number_position"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/boder_setting_new_password"
                     android:hint="@string/txtSelectDepartmentOrSubject"
+                    android:paddingVertical="16dp"
                     android:paddingStart="24dp"
                     android:paddingEnd="50dp"
-                    android:paddingVertical="16dp"
-                    android:background="@drawable/boder_setting_new_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:textColorHint="@color/color_number_position"
+                    android:textSize="16sp" />
+
                 <ImageView
-                    android:src="@drawable/down"
+                    android:id="@+id/selectDepartment"
+                    android:layout_width="25dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
-                    android:layout_width="25dp"
-                    android:layout_height="20dp"/>
+                    android:src="@drawable/down" />
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/txtSelectSubject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/txtSelectSubject"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
+                android:visibility="gone" />
+
             <RelativeLayout
-                android:id="@+id/selectSubject"
-                android:layout_marginTop="8dp"
+                android:id="@+id/layoutSelectSubject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:visibility="gone">
+
                 <TextView
                     android:id="@+id/edtSelectSubject"
-                    android:textSize="16sp"
-                    android:textColorHint="@color/color_number_position"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/boder_setting_new_password"
                     android:hint="@string/edtSelectSubject"
+                    android:paddingVertical="16dp"
                     android:paddingStart="24dp"
                     android:paddingEnd="50dp"
-                    android:paddingVertical="16dp"
-                    android:background="@drawable/boder_setting_new_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:textColorHint="@color/color_number_position"
+                    android:textSize="16sp" />
+
                 <ImageView
-                    android:src="@drawable/down"
+                    android:id="@+id/selectSubject"
+                    android:layout_width="25dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
-                    android:layout_width="25dp"
-                    android:layout_height="20dp"/>
+                    android:src="@drawable/down" />
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/txtSelectMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/txtSelectMode"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textSize="16sp" />
+
             <RelativeLayout
-                android:id="@+id/selectMode"
-                android:layout_marginTop="8dp"
+                android:id="@+id/layoutSelectMode"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
                 <TextView
                     android:id="@+id/edtSelectLevel"
-                    android:textSize="16sp"
-                    android:textColorHint="@color/color_number_position"
-                    android:hint="@string/txtPublicOrPrivate"
-                    android:paddingStart="24dp"
-                    android:paddingEnd="50dp"
-                    android:paddingVertical="16dp"
-                    android:background="@drawable/boder_setting_new_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    tools:ignore="TextViewEdits" />
+                    android:background="@drawable/boder_setting_new_password"
+                    android:hint="@string/txtPublicOrPrivate"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="50dp"
+                    android:textColorHint="@color/color_number_position"
+                    android:textSize="16sp" />
+
                 <ImageView
-                    android:src="@drawable/down"
+                    android:id="@+id/selectMode"
+                    android:layout_width="25dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
-                    android:layout_width="25dp"
-                    android:layout_height="20dp"/>
+                    android:src="@drawable/down" />
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/txtTimeDoTest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/txtTimeDoTest"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textSize="16sp" />
+
             <RelativeLayout
-                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
                 <EditText
                     android:id="@+id/edtSelectTime"
-                    android:textSize="16sp"
-                    android:textColorHint="@color/color_number_position"
-                    android:hint="@string/txtEnterTime"
-                    android:paddingStart="24dp"
-                    android:paddingEnd="50dp"
-                    android:paddingVertical="16dp"
-                    android:background="@drawable/boder_setting_new_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/boder_setting_new_password"
+                    android:hint="@string/txtEnterTime"
+                    android:imeOptions="actionDone"
                     android:inputType="number"
-                    android:imeOptions="actionDone"/>
+                    android:paddingVertical="16dp"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="50dp"
+                    android:textColorHint="@color/color_number_position"
+                    android:textSize="16sp" />
+
                 <ImageView
-                    android:src="@drawable/icon_time"
+                    android:layout_width="25dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
-                    android:layout_width="25dp"
-                    android:layout_height="20dp"/>
+                    android:src="@drawable/icon_time" />
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/txtNumberQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/txtNumberQuiz"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/edtSelectNumberQuiz"
-                android:textSize="16sp"
-                android:layout_marginTop="8dp"
-                android:textColorHint="@color/color_number_position"
-                android:hint="@string/txtEnterNumberQuiz"
-                android:paddingStart="24dp"
-                android:paddingEnd="50dp"
-                android:paddingVertical="16dp"
-                android:background="@drawable/boder_setting_new_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/boder_setting_new_password"
+                android:hint="@string/txtEnterNumberQuiz"
+                android:imeOptions="actionDone"
                 android:inputType="number"
-                android:imeOptions="actionDone"/>
+                android:paddingVertical="16dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="50dp"
+                android:textColorHint="@color/color_number_position"
+                android:textSize="16sp" />
+
             <TextView
                 android:id="@+id/txtDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/txtDetail"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/edtDescribeQuiz"
-                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="88dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/boder_setting_new_password"
+                android:gravity="left|top"
+                android:hint="@string/txtEnterDetail"
+                android:inputType="textMultiLine"
                 android:paddingVertical="16dp"
                 android:paddingStart="24dp"
                 android:paddingEnd="50dp"
-                android:layout_marginTop="8dp"
                 android:textColorHint="@color/color_number_position"
-                android:hint="@string/txtEnterDetail"
-                android:background="@drawable/boder_setting_new_password"
-                android:layout_width="match_parent"
-                android:layout_height="88dp"
-                android:inputType="textMultiLine"
-                android:gravity="left|top"
-                />
+                android:textSize="16sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:background="@drawable/boder_quiz">
+                    android:background="@drawable/boder_quiz"
+                    android:padding="16dp">
+
                     <ImageView
                         android:id="@+id/shareTest"
-                        android:src="@drawable/icon_share"
                         android:layout_width="24dp"
-                        android:layout_height="24dp"/>
+                        android:layout_height="24dp"
+                        android:src="@drawable/icon_share" />
                 </LinearLayout>
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/createTest"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="20dp"
                     android:layout_marginStart="8dp"
-                    app:cardBackgroundColor="@color/backgroundIntro">
+                    app:cardBackgroundColor="@color/backgroundIntro"
+                    app:cardCornerRadius="20dp">
+
                     <TextView
-                        android:text="@string/txtCreateTest"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:paddingHorizontal="20dp"
                         android:paddingVertical="16dp"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:text="@string/txtCreateTest"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"/>
+                android:layout_height="120dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <include layout="@layout/layout_bottom_share"/>
+    <include layout="@layout/layout_bottom_share" />
+
     <LinearLayout
         android:id="@+id/layoutCreateTestCover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"/>
+        android:orientation="vertical" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

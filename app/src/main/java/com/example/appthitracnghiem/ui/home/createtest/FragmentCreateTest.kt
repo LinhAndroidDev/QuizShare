@@ -96,7 +96,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
             showMenuCreate(popUpView, binding.menuCreateTest, 0, -30, Gravity.BOTTOM)
         }
 
-        binding.selectDepartment.setOnClickListener {
+        binding.layoutSelectDepartment.setOnClickListener {
             val popUpView: View = View.inflate(requireActivity(), R.layout.popup_select_partment, null)
             val width = ViewGroup.LayoutParams.WRAP_CONTENT
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -115,7 +115,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
                 DEPARTMENT_ID = it
                 popupWindow.dismiss()
                 binding.txtSelectSubject.visibility = View.VISIBLE
-                binding.selectSubject.visibility = View.VISIBLE
+                binding.layoutSelectSubject.visibility = View.VISIBLE
             }
             createDepartmentAdapter.getStringItem = {
                 binding.edtSelectDepartment.text = it
@@ -126,7 +126,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
             recyclerView.adapter = createDepartmentAdapter
         }
 
-        binding.selectSubject.setOnClickListener {
+        binding.layoutSelectSubject.setOnClickListener {
             val popUpView: View = View.inflate(requireActivity(), R.layout.popup_select_partment, null)
             val width = ViewGroup.LayoutParams.WRAP_CONTENT
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -140,7 +140,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
                     popupWindow.showAsDropDown(binding.selectSubject, 0, -30, Gravity.BOTTOM)
 
                     val listDepartment: ArrayList<String> = arrayListOf()
-                    for(i in 0 until it[DEPARTMENT_ID].subjects.size){
+                    for (i in 0 until it[DEPARTMENT_ID].subjects.size) {
                         listDepartment.add(it[DEPARTMENT_ID].subjects[i].title)
                     }
                     val createDepartmentAdapter = CreateDepartmentAdapter(listDepartment, requireActivity())
@@ -163,7 +163,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
 
         }
 
-        binding.selectMode.setOnClickListener {
+        binding.layoutSelectMode.setOnClickListener {
             val popUpView: View = View.inflate(requireActivity(), R.layout.popup_select_mode, null)
             val width = ViewGroup.LayoutParams.WRAP_CONTENT
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
