@@ -15,8 +15,10 @@ import com.example.appthitracnghiem.databinding.FragmentCreatePasswordBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.login.FragmentLogin
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentCreatePassword : BaseFragment<EmptyViewModel>() {
     private var _binding: FragmentCreatePasswordBinding? = null
     private val binding get() = _binding!!

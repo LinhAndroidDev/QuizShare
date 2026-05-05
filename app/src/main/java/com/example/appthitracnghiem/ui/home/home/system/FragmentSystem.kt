@@ -14,12 +14,13 @@ import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.department.listdepartment.FragmentListDepartment
 import com.example.appthitracnghiem.ui.home.home.system.adapter.DepartmentAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FragmentSystem : BaseFragment<SystemViewModel>() {
     private var _binding: FragmentSystemBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapterFromSystem: DepartmentAdapter
-    lateinit var accessToken: String
     var userId: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,12 +59,9 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
             binding.recycleListLiveQuizzes.adapter = adapterFromSystem
         }
 
-        accessToken = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.AUTHORIZATION,"").toString()
         userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID,0)
-        val requestGetListDepartment = RequestGetListDepartment(userId,"")
-        viewModel.getDataDepartment(accessToken,requestGetListDepartment)
+        viewModel.getDataDepartment(userId, "")
     }
 
     private fun setText() {

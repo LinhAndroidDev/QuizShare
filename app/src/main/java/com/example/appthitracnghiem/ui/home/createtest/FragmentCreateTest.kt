@@ -29,8 +29,10 @@ import com.example.appthitracnghiem.ui.home.createtest.adapter.CreateDepartmentA
 import com.example.appthitracnghiem.ui.home.createtest.question.CreateTestActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
     private var _binding: FragmentCreateTestBinding? = null
     private val binding get() = _binding!!
@@ -89,12 +91,9 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
     override fun bindData() {
         super.bindData()
 
-        val header = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.AUTHORIZATION, "").toString()
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
-        val requestDepartmentInfo = RequestDepartmentInfo(userId)
-        viewModel.getDataDepartmentDetail(header, requestDepartmentInfo)
+        viewModel.getDataDepartmentDetail(RequestDepartmentInfo(userId))
     }
 
     @RequiresApi(Build.VERSION_CODES.M)

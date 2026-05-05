@@ -14,7 +14,7 @@ class UserResponse(
         val name: String?,
         val phone_number: String?,
         val birthday: String?,
-        val role : Int?,
-        val status : Int?
+        val role: String?,
+        val status: String?
     )
 }

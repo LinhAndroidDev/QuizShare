@@ -22,8 +22,10 @@ import com.example.appthitracnghiem.utils.PreferenceKey
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.*
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
     private var _binding: FragmentUpdateInforBinding? = null
     private val binding get() = _binding!!
@@ -109,12 +111,9 @@ class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
             if(name.isEmpty() || birth.isEmpty()){
                 Toast.makeText(requireActivity(),"Bạn chưa nhập đủ thông tin",Toast.LENGTH_SHORT).show()
             }else{
-                val header = viewModel.mPreferenceUtil.defaultPref()
-                    .getString(PreferenceKey.AUTHORIZATION, "").toString()
                 val userId = viewModel.mPreferenceUtil.defaultPref()
                     .getInt(PreferenceKey.USER_ID, 0)
-                val requestUpdateInfo = RequestUpdateInfo(userId, name, birth)
-                viewModel.updateInfo(header, requestUpdateInfo)
+                viewModel.updateInfo(RequestUpdateInfo(userId, name, birth))
             }
         }
 

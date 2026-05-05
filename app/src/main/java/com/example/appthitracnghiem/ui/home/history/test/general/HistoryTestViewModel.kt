@@ -1,56 +1,31 @@
 package com.example.appthitracnghiem.ui.home.history.test.general
 
 import androidx.lifecycle.MutableLiveData
-import com.example.appthitracnghiem.data.remote.ApiClient
-import com.example.appthitracnghiem.data.remote.entity.ExamHistoryResponse
+import androidx.lifecycle.viewModelScope
+import com.example.appthitracnghiem.core.ResultState
+import com.example.appthitracnghiem.data.remote.ApiService
+import com.example.appthitracnghiem.data.remote.safeApiCall
 import com.example.appthitracnghiem.model.HistoryExam
 import com.example.appthitracnghiem.ui.base.BaseViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HistoryTestViewModel : BaseViewModel() {
+@HiltViewModel
+class HistoryTestViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
     var isLoadingLiveData = MutableLiveData<Boolean>()
     var listExamHistoryLiveData = MutableLiveData<ArrayList<HistoryExam>>()
     var idExamHistoryLiveData = MutableLiveData<Int>()
 
-    fun getExamHistory(
-        header: String,
-        requestExamHistory: RequestExamHistory
-    ){
+    fun getExamHistory(requestExamHistory: RequestExamHistory) {
         isLoadingLiveData.value = true
-        ApiClient.shared().getExamHistory(header, requestExamHistory)
-            .enqueue(object : Callback<ExamHistoryResponse>{
-                override fun onResponse(
-                    call: Call<ExamHistoryResponse>,
-                    response: Response<ExamHistoryResponse>,
-                ) {
-                    isLoadingLiveData.value = false
-                    if(response.isSuccessful){
-                        response.body().let {
-                            when(it?.statusCode){
-                                ApiClient.STATUS_CODE_SUCCESS->{
-                                    listExamHistoryLiveData.value = it.result
-                                }
-                                ApiClient.STATUS_USER_EXIST->{
-                                    errorApiLiveData.value = it.message
-                                }
-                                ApiClient.STATUS_INVALID_TOKEN->{
-                                    errorApiLiveData.value = it.message
-                                }
-                                ApiClient.STATUS_CODE_SERVER_NOT_RESPONSE->{
-                                    errorApiLiveData.value = it.message
-                                }
-                            }
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<ExamHistoryResponse>, t: Throwable) {
-                    isLoadingLiveData.value = false
-                    errorApiLiveData.value = t.message
-                }
-
-            })
+        viewModelScope.launch {
+            val result = safeApiCall { apiService.getExamHistory(requestExamHistory) }
+            isLoadingLiveData.value = false
+            when (result) {
+                is ResultState.Success -> listExamHistoryLiveData.value = result.data.result
+                is ResultState.Error -> errorApiLiveData.value = result.message
+            }
+        }
     }
 }

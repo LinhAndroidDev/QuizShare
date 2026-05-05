@@ -13,8 +13,10 @@ import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.answer.FragmentAnswer
 import com.example.appthitracnghiem.ui.home.history.test.FragmentHistoryExam
 import com.example.appthitracnghiem.utils.PreferenceKey
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentHistoryTopic : BaseFragment<HistoryTopicViewModel>() {
     private var _binding: FragmentHistoryTopicBinding? = null
     private val binding get() = _binding!!
@@ -75,13 +77,11 @@ class FragmentHistoryTopic : BaseFragment<HistoryTopicViewModel>() {
         }
 
         binding.seeAgainHistory.setOnClickListener {
-            val header = viewModel.mPreferenceUtil.defaultPref()
-                .getString(PreferenceKey.AUTHORIZATION, "").toString()
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID, 0)
             val examHistoryId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.EXAM_ID_HISTORY, -1)
-            viewModel.getIdExam(header, userId, examHistoryId)
+            viewModel.getIdExam(userId, examHistoryId)
         }
     }
 

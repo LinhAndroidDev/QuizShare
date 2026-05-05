@@ -14,8 +14,10 @@ import com.example.appthitracnghiem.databinding.ActivitySearchSubjectBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class SearchSubject : BaseActivity<SearchViewModel>() {
     private lateinit var binding: ActivitySearchSubjectBinding
     lateinit var searchAdapter: SearchAdapter
@@ -77,12 +79,9 @@ class SearchSubject : BaseActivity<SearchViewModel>() {
             if(strSearch.isEmpty()){
                 strSearch = ""
             }
-            val header = viewModel.mPreferenceUtil.defaultPref()
-                .getString(PreferenceKey.AUTHORIZATION,"").toString()
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID,0)
-            val requestSearch = RequestSearch(userId, 1, strSearch)
-            viewModel.searchSubject(header, requestSearch)
+            viewModel.searchSubject(RequestSearch(userId, 1, strSearch))
         }
     }
 }

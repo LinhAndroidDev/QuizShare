@@ -34,8 +34,10 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
     private lateinit var binding: ActivityChangeAvatarBinding
     var screenWitch: Int = 0
@@ -130,16 +132,13 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
             file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
         val multipartBodyAvt: MultipartBody.Part = MultipartBody.Part.createFormData(Const.file,file.name,requestBodyAvatar)
 
-        val header = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.AUTHORIZATION,"").toString()
-
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID,0).toString()
         val requestBodyId: RequestBody =
             userId.toRequestBody("multipart/form-data".toMediaTypeOrNull())
 
         binding.done.setOnClickListener {
-            viewModel.requestAvt(header, requestBodyId, multipartBodyAvt)
+            viewModel.requestAvt(requestBodyId, multipartBodyAvt)
         }
 
         binding.avatarEdit.setOnClickListener {

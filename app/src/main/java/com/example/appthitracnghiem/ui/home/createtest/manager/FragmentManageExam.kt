@@ -11,8 +11,10 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentManageExamBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentManageExam : BaseFragment<EmptyViewModel>() {
     private var _binding: FragmentManageExamBinding? = null
     private val binding get() = _binding!!

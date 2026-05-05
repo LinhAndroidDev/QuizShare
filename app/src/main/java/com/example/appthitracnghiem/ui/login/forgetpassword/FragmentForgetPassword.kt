@@ -13,8 +13,10 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentForgetPasswordBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.utils.Email
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentForgetPassword : BaseFragment<ForgetPasswordViewModel>() {
     private var _binding: FragmentForgetPasswordBinding? = null
     private val binding get() = _binding!!

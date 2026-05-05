@@ -11,8 +11,10 @@ import com.example.appthitracnghiem.databinding.FragmentHistorySubjectSavedBindi
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.history.saved.subject.adapter.HistorySubjectAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentHistorySubjectSaved : BaseFragment<HistorySubjectSavedViewModel>() {
     private var _binding: FragmentHistorySubjectSavedBinding? = null
     private val binding get() = _binding!!
@@ -38,13 +40,10 @@ class FragmentHistorySubjectSaved : BaseFragment<HistorySubjectSavedViewModel>()
             }
         }
 
-        val header = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.AUTHORIZATION, "").toString()
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID,0)
         val departmentId: Int = requireArguments().getInt("department_id_saved")
-        val requestSubjectSaved = RequestSubjectSaved(userId, departmentId)
-        viewModel.saveSubject(header, requestSubjectSaved)
+        viewModel.saveSubject(RequestSubjectSaved(userId, departmentId))
 
         viewModel.listSubjectSaved.observe(viewLifecycleOwner){
             val linear = LinearLayoutManager(requireActivity(),

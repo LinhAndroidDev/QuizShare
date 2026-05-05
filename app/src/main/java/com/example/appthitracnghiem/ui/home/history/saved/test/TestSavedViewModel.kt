@@ -1,60 +1,37 @@
 package com.example.appthitracnghiem.ui.home.history.saved.test
 
 import androidx.lifecycle.MutableLiveData
-import com.example.appthitracnghiem.data.remote.ApiClient
-import com.example.appthitracnghiem.data.remote.entity.TestSavedResponse
+import androidx.lifecycle.viewModelScope
+import com.example.appthitracnghiem.core.ResultState
+import com.example.appthitracnghiem.data.remote.ApiService
+import com.example.appthitracnghiem.data.remote.safeApiCall
 import com.example.appthitracnghiem.model.ExamSaved
 import com.example.appthitracnghiem.ui.base.BaseViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TestSavedViewModel : BaseViewModel() {
+@HiltViewModel
+class TestSavedViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
     var isLoadingLiveData = MutableLiveData<Boolean>()
     var isSuccessfulLiveData = MutableLiveData<Boolean>()
     var departmentTitleLiveData = MutableLiveData<String>()
     var testTitleLiveData = MutableLiveData<String>()
     var listTestSavedLiveData = MutableLiveData<ArrayList<ExamSaved>?>()
 
-    fun savedTest(
-        header: String,
-        requestTestSaved: RequestTestSaved
-    ){
+    fun savedTest(requestTestSaved: RequestTestSaved) {
         isLoadingLiveData.value = true
-        ApiClient.shared().saveTest(header, requestTestSaved)
-            .enqueue(object : Callback<TestSavedResponse>{
-                override fun onResponse(
-                    call: Call<TestSavedResponse>,
-                    response: Response<TestSavedResponse>
-                ) {
-                    isLoadingLiveData.value = false
-                    if(response.isSuccessful){
-                        response.body().let {
-                            when(it?.statusCode){
-                                ApiClient.STATUS_CODE_SUCCESS->{
-                                    departmentTitleLiveData.value = it.result?.department_title
-                                    testTitleLiveData.value = it.result?.subject_title
-                                    listTestSavedLiveData.value = it.result?.exam_list
-                                }
-                                ApiClient.STATUS_USER_EXIST->{
-                                    errorApiLiveData.value = it.message
-                                }
-                                ApiClient.STATUS_INVALID_TOKEN->{
-                                    errorApiLiveData.value = it.message
-                                }
-                                ApiClient.STATUS_CODE_SERVER_NOT_RESPONSE->{
-                                    errorApiLiveData.value = it.message
-                                }
-                            }
-                        }
-                    }
+        viewModelScope.launch {
+            val result = safeApiCall { apiService.saveTest(requestTestSaved) }
+            isLoadingLiveData.value = false
+            when (result) {
+                is ResultState.Success -> {
+                    departmentTitleLiveData.value = result.data.result?.department_title
+                    testTitleLiveData.value = result.data.result?.subject_title
+                    listTestSavedLiveData.value = result.data.result?.exam_list
                 }
-
-                override fun onFailure(call: Call<TestSavedResponse>, t: Throwable) {
-                    isLoadingLiveData.value = false
-                    errorApiLiveData.value = t.message
-                }
-
-            })
+                is ResultState.Error -> errorApiLiveData.value = result.message
+            }
+        }
     }
 }

@@ -6,7 +6,7 @@ import com.example.appthitracnghiem.data.remote.entity.ExamQuestionResponse
 import com.example.appthitracnghiem.data.remote.entity.PointResponse
 
 interface ExamRepository {
-    suspend fun getExamQuestions(accessToken: String, request: Any): ResultState<ExamQuestionResponse>
-    suspend fun submitExam(accessToken: String, request: Any): ResultState<PointResponse>
-    suspend fun getExamResult(accessToken: String, request: Any): ResultState<AnswerResponse>
+    suspend fun getExamQuestions(request: Any): ResultState<ExamQuestionResponse>
+    suspend fun submitExam(request: Any): ResultState<PointResponse>
+    suspend fun getExamResult(request: Any): ResultState<AnswerResponse>
 }

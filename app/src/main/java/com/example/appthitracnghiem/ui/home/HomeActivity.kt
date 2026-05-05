@@ -21,7 +21,9 @@ import com.example.appthitracnghiem.ui.home.createtest.FragmentCreateTest
 import com.example.appthitracnghiem.ui.home.history.FragmentHistory
 import com.example.appthitracnghiem.ui.home.home.FragmentHome
 import com.example.appthitracnghiem.ui.home.profile.FragmentProfile
+import dagger.hilt.android.AndroidEntryPoint
 @Suppress("DEPRECATION", "DEPRECATED_IDENTITY_EQUALS")
+@AndroidEntryPoint
 class HomeActivity : BaseActivity<HomeViewModel>() {
     private lateinit var binding: ActivityHomePageBinding
     private var backPressTime: Long = 0

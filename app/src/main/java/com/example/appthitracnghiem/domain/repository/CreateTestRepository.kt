@@ -7,9 +7,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 interface CreateTestRepository {
-    suspend fun createExam(accessToken: String, request: Any): ResultState<CreateExamResponse>
+    suspend fun createExam(request: Any): ResultState<CreateExamResponse>
     suspend fun uploadFile(
-        accessToken: String,
         userId: RequestBody,
         file: MultipartBody.Part,
         folderName: RequestBody,

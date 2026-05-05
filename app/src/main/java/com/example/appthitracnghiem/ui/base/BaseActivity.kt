@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.utils.PreferenceUtil
 import java.lang.reflect.ParameterizedType
-
 @Suppress("DEPRECATION")
 abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity() {
     lateinit var viewModel: V

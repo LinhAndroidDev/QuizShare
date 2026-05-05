@@ -21,8 +21,10 @@ import com.example.appthitracnghiem.databinding.FragmentRegisterBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import java.text.SimpleDateFormat
 import java.util.*
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentRegister : BaseFragment<RegisterViewModel>() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!

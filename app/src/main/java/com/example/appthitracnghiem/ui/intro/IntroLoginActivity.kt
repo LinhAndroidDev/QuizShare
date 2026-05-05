@@ -12,8 +12,10 @@ import com.example.appthitracnghiem.databinding.ActivityIntroLoginBinding
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.login.LoginActivity
 import com.example.appthitracnghiem.ui.register.RegisterActivity
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class IntroLoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIntroLoginBinding
 

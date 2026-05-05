@@ -15,8 +15,10 @@ import com.example.appthitracnghiem.databinding.FragmentUpdateEmailBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.utils.PreferenceKey
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentUpdateEmail : BaseFragment<UpdateEmailViewModel>() {
     private var _binding: FragmentUpdateEmailBinding? = null
     private val binding get() = _binding!!
@@ -64,10 +66,7 @@ class FragmentUpdateEmail : BaseFragment<UpdateEmailViewModel>() {
             } else{
                 val useId = viewModel.mPreferenceUtil.defaultPref()
                     .getInt(PreferenceKey.USER_ID, 0)
-                val header = viewModel.mPreferenceUtil.defaultPref()
-                    .getString(PreferenceKey.AUTHORIZATION,"").toString()
-                val requestUpdateEmail = RequestUpdateEmail(useId, strEmail)
-                viewModel.updateEmail(header, requestUpdateEmail)
+                viewModel.updateEmail(RequestUpdateEmail(useId, strEmail))
             }
         }
 

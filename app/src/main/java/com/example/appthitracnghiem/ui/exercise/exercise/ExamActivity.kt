@@ -9,8 +9,10 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.ActivityExamBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.exam.FragmentExam
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class ExamActivity : AppCompatActivity() {
     private lateinit var binding: ActivityExamBinding
 

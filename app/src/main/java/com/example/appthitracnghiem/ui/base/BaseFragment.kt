@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.appthitracnghiem.utils.PreferenceUtil
 import java.lang.reflect.ParameterizedType
-
 abstract class BaseFragment<V : BaseViewModel> : Fragment(), IOnFragmentBackListener {
     lateinit var viewModel: V
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

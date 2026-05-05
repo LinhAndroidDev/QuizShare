@@ -1,61 +1,37 @@
 package com.example.appthitracnghiem.ui.home.history.test.topic
 
 import androidx.lifecycle.MutableLiveData
-import com.example.appthitracnghiem.data.remote.ApiClient
-import com.example.appthitracnghiem.data.remote.entity.HistoryTopicResponse
+import androidx.lifecycle.viewModelScope
+import com.example.appthitracnghiem.core.ResultState
+import com.example.appthitracnghiem.data.remote.ApiService
+import com.example.appthitracnghiem.data.remote.safeApiCall
 import com.example.appthitracnghiem.ui.base.BaseViewModel
 import com.example.appthitracnghiem.utils.PreferenceKey
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HistoryTopicViewModel : BaseViewModel() {
+@HiltViewModel
+class HistoryTopicViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
     val isLoadingLiveData = MutableLiveData<Boolean>()
     val isSuccessfulLiveData = MutableLiveData<Boolean>()
 
-    fun getIdExam(
-        header: String,
-        userId: Int,
-        examHistoryId: Int
-    ){
+    fun getIdExam(userId: Int, examHistoryId: Int) {
         isLoadingLiveData.value = true
-        ApiClient.shared().getExamHistoryDetail(header, userId, examHistoryId)
-            .enqueue(object : Callback<HistoryTopicResponse>{
-                override fun onResponse(
-                    call: Call<HistoryTopicResponse>,
-                    response: Response<HistoryTopicResponse>,
-                ) {
-                    isLoadingLiveData.value = false
-                    if(response.isSuccessful){
-                        response.body().let {
-                            when(it?.statusCode){
-                                ApiClient.STATUS_CODE_SUCCESS->{
-                                    it.result.id?.let { it1 ->
-                                        mPreferenceUtil.defaultPref().edit()
-                                            .putInt(PreferenceKey.ID_EXAM, it1)
-                                            .apply()
-                                    }
-                                    isSuccessfulLiveData.value = true
-                                }
-                                ApiClient.STATUS_USER_EXIST->{
-                                    errorApiLiveData.value = it.message
-                                }
-                                ApiClient.STATUS_INVALID_TOKEN->{
-                                    errorApiLiveData.value = it.message
-                                }
-                                ApiClient.STATUS_CODE_SERVER_NOT_RESPONSE->{
-                                    errorApiLiveData.value = it.message
-                                }
-                            }
-                        }
+        viewModelScope.launch {
+            val result = safeApiCall { apiService.getExamHistoryDetail(userId, examHistoryId) }
+            isLoadingLiveData.value = false
+            when (result) {
+                is ResultState.Success -> {
+                    result.data.result.id?.let { id ->
+                        mPreferenceUtil.defaultPref().edit()
+                            .putInt(PreferenceKey.ID_EXAM, id)
+                            .apply()
                     }
+                    isSuccessfulLiveData.value = true
                 }
-
-                override fun onFailure(call: Call<HistoryTopicResponse>, t: Throwable) {
-                    isLoadingLiveData.value = false
-                    errorApiLiveData.value = t.message
-                }
-
-            })
+                is ResultState.Error -> errorApiLiveData.value = result.message
+            }
+        }
     }
 }

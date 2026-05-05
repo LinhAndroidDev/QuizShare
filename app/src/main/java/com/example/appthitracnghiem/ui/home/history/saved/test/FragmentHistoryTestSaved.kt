@@ -18,8 +18,10 @@ import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.history.saved.test.adapter.HistoryTestAdapter
 import com.example.appthitracnghiem.ui.home.history.test.general.RequestExamHistory
 import com.example.appthitracnghiem.utils.PreferenceKey
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentHistoryTestSaved : BaseFragment<TestSavedViewModel>() {
     private var _binding: FragmentHistoryTestSavedBinding? = null
     private val binding get() = _binding!!
@@ -50,13 +52,10 @@ class FragmentHistoryTestSaved : BaseFragment<TestSavedViewModel>() {
             }
         }
 
-        val header = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.AUTHORIZATION,"").toString()
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID,0)
         val subjectId = requireArguments().getInt("subject_saved_id")
-        val requestTestSaved = RequestTestSaved(userId, subjectId, 1, 3, "asc")
-        viewModel.savedTest(header, requestTestSaved)
+        viewModel.savedTest(RequestTestSaved(userId, subjectId, 1, 3, "asc"))
 
         viewModel.listTestSavedLiveData.observe(viewLifecycleOwner){
             val linear = LinearLayoutManager(requireActivity(),
@@ -101,33 +100,24 @@ class FragmentHistoryTestSaved : BaseFragment<TestSavedViewModel>() {
         val subject: LinearLayout = popUpView.findViewById(R.id.flowSubject)
 
         time.setOnClickListener {
-            val header = viewModel.mPreferenceUtil.defaultPref()
-                .getString(PreferenceKey.AUTHORIZATION,"").toString()
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID,0)
             val subjectId = requireArguments().getInt("subject_saved_id")
-            val requestTestSaved = RequestTestSaved(userId, subjectId, 1, 1, "asc")
-            viewModel.savedTest(header, requestTestSaved)
+            viewModel.savedTest(RequestTestSaved(userId, subjectId, 1, 1, "asc"))
         }
 
         numberCreate.setOnClickListener {
-            val header = viewModel.mPreferenceUtil.defaultPref()
-                .getString(PreferenceKey.AUTHORIZATION,"").toString()
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID,0)
             val subjectId = requireArguments().getInt("subject_saved_id")
-            val requestTestSaved = RequestTestSaved(userId, subjectId, 1, 2, "asc")
-            viewModel.savedTest(header, requestTestSaved)
+            viewModel.savedTest(RequestTestSaved(userId, subjectId, 1, 2, "asc"))
         }
 
         subject.setOnClickListener {
-            val header = viewModel.mPreferenceUtil.defaultPref()
-                .getString(PreferenceKey.AUTHORIZATION,"").toString()
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID,0)
             val subjectId = requireArguments().getInt("subject_saved_id")
-            val requestTestSaved = RequestTestSaved(userId, subjectId, 1, 3, "asc")
-            viewModel.savedTest(header, requestTestSaved)
+            viewModel.savedTest(RequestTestSaved(userId, subjectId, 1, 3, "asc"))
         }
 
         val popupWindow = PopupWindow(popUpView, width, height, focusable)

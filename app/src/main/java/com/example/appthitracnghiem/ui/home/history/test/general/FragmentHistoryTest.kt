@@ -17,8 +17,10 @@ import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.home.history.test.general.adapter.HistoryTestAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
     private var _binding: FragmentHistoryTestBinding? = null
     private val binding get() = _binding!!
@@ -35,12 +37,9 @@ class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
     override fun bindData() {
         super.bindData()
 
-        val header = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.AUTHORIZATION,"").toString()
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
-        val requestExamHistory = RequestExamHistory(userId,5,0,1,"asc")
-        viewModel.getExamHistory(header, requestExamHistory)
+        viewModel.getExamHistory(RequestExamHistory(userId,5,0,1,"asc"))
 
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
             if(it){
@@ -100,30 +99,21 @@ class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
         val point: LinearLayout = popUpView.findViewById(R.id.sortPoint)
 
         date.setOnClickListener {
-            val header = viewModel.mPreferenceUtil.defaultPref()
-                .getString(PreferenceKey.AUTHORIZATION,"").toString()
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID, 0)
-            val requestExamHistory = RequestExamHistory(userId,5,0,1,"asc")
-            viewModel.getExamHistory(header, requestExamHistory)
+            viewModel.getExamHistory(RequestExamHistory(userId,5,0,1,"asc"))
         }
 
         name.setOnClickListener {
-            val header = viewModel.mPreferenceUtil.defaultPref()
-                .getString(PreferenceKey.AUTHORIZATION,"").toString()
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID, 0)
-            val requestExamHistory = RequestExamHistory(userId,5,0,2,"asc")
-            viewModel.getExamHistory(header, requestExamHistory)
+            viewModel.getExamHistory(RequestExamHistory(userId,5,0,2,"asc"))
         }
 
         point.setOnClickListener {
-            val header = viewModel.mPreferenceUtil.defaultPref()
-                .getString(PreferenceKey.AUTHORIZATION,"").toString()
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID, 0)
-            val requestExamHistory = RequestExamHistory(userId,5,0,3,"asc")
-            viewModel.getExamHistory(header, requestExamHistory)
+            viewModel.getExamHistory(RequestExamHistory(userId,5,0,3,"asc"))
         }
 
         val popupWindow = PopupWindow(popUpView, width, height, focusable)

@@ -15,14 +15,15 @@ import com.example.appthitracnghiem.databinding.FragmentListDepartmentBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.department.listdepartment.adapter.ListDepartmentAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
+import dagger.hilt.android.AndroidEntryPoint
 
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
     private var _binding: FragmentListDepartmentBinding? = null
     private val binding get() = _binding!!
     lateinit var listDepartmentAdapter: ListDepartmentAdapter
-    lateinit var accessToken: String
     var userId: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,12 +63,9 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
             binding.recycleDetailListDepartment.adapter = listDepartmentAdapter
         }
 
-        accessToken = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.AUTHORIZATION,"").toString()
         userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID,0)
-        val requestDepartmentInfo = RequestDepartmentInfo(userId)
-        viewModel.getDataDepartmentDetail(accessToken, requestDepartmentInfo)
+        viewModel.getDataDepartmentDetail(RequestDepartmentInfo(userId))
     }
 
     @SuppressLint("ClickableViewAccessibility")

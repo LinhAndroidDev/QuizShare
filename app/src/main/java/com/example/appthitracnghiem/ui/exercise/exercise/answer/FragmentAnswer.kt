@@ -28,8 +28,10 @@ import com.google.gson.reflect.TypeToken
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.reflect.Type
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION", "CAST_NEVER_SUCCEEDS")
+@AndroidEntryPoint
 class FragmentAnswer : BaseFragment<AnswerViewModel>() {
     private var _binding: FragmentAnswerBinding? = null
     private val binding get() = _binding!!
@@ -95,18 +97,11 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
 
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
-        val accessToken =
-            viewModel.mPreferenceUtil.defaultPref()
-                .getString(PreferenceKey.AUTHORIZATION, "")
-                .toString()
         val idHistoryExam = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.EXAM_ID_HISTORY,0)
+            .getInt(PreferenceKey.EXAM_ID_HISTORY, 0)
         val idExam = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.ID_EXAM, 0)
-        val requestExamQuestion = RequestExamQuestion(userId, idExam)
-        viewModel.getExamListQuestion(accessToken, requestExamQuestion)
-
-        val requestAnswer = RequestAnswer(userId, idHistoryExam)
-        viewModel.getExamResult(accessToken, requestAnswer)
+        viewModel.getExamListQuestion(RequestExamQuestion(userId, idExam))
+        viewModel.getExamResult(RequestAnswer(userId, idHistoryExam))
 
         viewModel.listAnswerLiveData.observe(viewLifecycleOwner) { examResult ->
             JSONObject(examResult).toMap()

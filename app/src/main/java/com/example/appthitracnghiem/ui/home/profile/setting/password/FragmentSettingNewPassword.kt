@@ -16,8 +16,10 @@ import com.example.appthitracnghiem.databinding.FragmentSettingNewPasswordBindin
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.utils.PreferenceKey
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentSettingNewPassword : BaseFragment<ChangePasswordViewModel>() {
     private var _binding: FragmentSettingNewPasswordBinding? = null
     private val binding get() = _binding!!
@@ -74,13 +76,9 @@ class FragmentSettingNewPassword : BaseFragment<ChangePasswordViewModel>() {
             }else if(strPassword != strPasswordRepeat){
                 Toast.makeText(requireActivity(),"Mật khẩu nhập lại không đúng",Toast.LENGTH_SHORT).show()
             } else{
-                val header = viewModel.mPreferenceUtil.defaultPref()
-                    .getString(PreferenceKey.AUTHORIZATION, "").toString()
                 val userId = viewModel.mPreferenceUtil.defaultPref()
                     .getInt(PreferenceKey.USER_ID, 0)
-                val requestChangePassword = RequestChangePassword(strPassword, strPasswordRepeat, userId)
-
-                viewModel.changePassword(header, requestChangePassword)
+                viewModel.changePassword(RequestChangePassword(strPassword, strPasswordRepeat, userId))
             }
         }
 

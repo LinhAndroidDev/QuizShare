@@ -26,8 +26,10 @@ import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.login.forgetpassword.FragmentForgetPassword
 import com.example.appthitracnghiem.ui.register.RegisterActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentLogin : BaseFragment<LoginViewModel>() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!

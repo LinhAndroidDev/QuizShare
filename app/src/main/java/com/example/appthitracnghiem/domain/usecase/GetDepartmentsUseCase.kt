@@ -6,9 +6,9 @@ import javax.inject.Inject
 class GetDepartmentsUseCase @Inject constructor(
     private val homeRepository: HomeRepository,
 ) {
-    suspend fun getSystem(accessToken: String, userId: Int, keyword: String) =
-        homeRepository.getSystemDepartments(accessToken, userId, keyword)
+    suspend fun getSystem(userId: Int, keyword: String) =
+        homeRepository.getSystemDepartments(userId, keyword)
 
-    suspend fun getFromUser(accessToken: String, userId: Int, keyword: String) =
-        homeRepository.getUserDepartments(accessToken, userId, keyword)
+    suspend fun getFromUser(userId: Int, keyword: String) =
+        homeRepository.getUserDepartments(userId, keyword)
 }

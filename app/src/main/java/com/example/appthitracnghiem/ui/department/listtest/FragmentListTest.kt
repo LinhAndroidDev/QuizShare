@@ -19,8 +19,10 @@ import com.example.appthitracnghiem.databinding.FragmentListTestBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.department.listtest.adapter.TestAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentListTest : BaseFragment<ListTestViewModel>() {
     private var _binding: FragmentListTestBinding? = null
     private val binding get() = _binding!!
@@ -36,14 +38,10 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
 
         val type = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.TYPE, 5)
-
-        val accessToken = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.AUTHORIZATION, "").toString()
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
 
-        val requestListExam = RequestListExam(userId, id, type, 1, "asc")
-        viewModel.getListExam(accessToken, requestListExam)
+        viewModel.getListExam(RequestListExam(userId, id, type, 1, "asc"))
 
         initUi()
     }

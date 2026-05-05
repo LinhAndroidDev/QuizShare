@@ -14,8 +14,10 @@ import com.example.appthitracnghiem.model.Test
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.history.question.adapter.HistoryQuestionAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentHistoryQuestion : BaseFragment<EmptyViewModel>() {
     private var _binding: FragmentHistoryQuestionBinding? = null
     private val binding get() = _binding!!

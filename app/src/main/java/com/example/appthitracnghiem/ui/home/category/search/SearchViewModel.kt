@@ -1,54 +1,30 @@
 package com.example.appthitracnghiem.ui.home.category.search
 
 import androidx.lifecycle.MutableLiveData
-import com.example.appthitracnghiem.data.remote.ApiClient
+import androidx.lifecycle.viewModelScope
+import com.example.appthitracnghiem.core.ResultState
+import com.example.appthitracnghiem.data.remote.ApiService
 import com.example.appthitracnghiem.data.remote.entity.SearchResponse
+import com.example.appthitracnghiem.data.remote.safeApiCall
 import com.example.appthitracnghiem.ui.base.BaseViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SearchViewModel : BaseViewModel() {
+@HiltViewModel
+class SearchViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
     val isLoadingLiveData = MutableLiveData<Boolean>()
     val listSearchLiveData = MutableLiveData<ArrayList<SearchResponse.Results>>()
 
-    fun searchSubject(
-        header: String,
-        requestSearch: RequestSearch
-    ){
+    fun searchSubject(requestSearch: RequestSearch) {
         isLoadingLiveData.value = true
-        ApiClient.shared().searchSubject(header, requestSearch)
-            .enqueue(object : Callback<SearchResponse>{
-                override fun onResponse(
-                    call: Call<SearchResponse>,
-                    response: Response<SearchResponse>
-                ) {
-                    isLoadingLiveData.value = false
-                    if(response.isSuccessful){
-                        response.body().let {
-                            when(it?.statusCode){
-                                ApiClient.STATUS_CODE_SUCCESS->{
-                                    listSearchLiveData.value = it.result
-                                }
-                                ApiClient.STATUS_USER_EXIST->{
-                                    errorApiLiveData.value = it.message
-                                }
-                                ApiClient.STATUS_INVALID_TOKEN->{
-                                    errorApiLiveData.value = it.message
-                                }
-                                ApiClient.STATUS_CODE_SERVER_NOT_RESPONSE->{
-                                    errorApiLiveData.value = it.message
-                                }
-                            }
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
-                    isLoadingLiveData.value = false
-                    errorApiLiveData.value = t.message
-                }
-
-            })
+        viewModelScope.launch {
+            val result = safeApiCall { apiService.searchSubject(requestSearch) }
+            isLoadingLiveData.value = false
+            when (result) {
+                is ResultState.Success -> listSearchLiveData.value = result.data.result
+                is ResultState.Error -> errorApiLiveData.value = result.message
+            }
+        }
     }
 }

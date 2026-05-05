@@ -19,8 +19,10 @@ import com.example.appthitracnghiem.utils.PreferenceKey
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.*
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentTopic : BaseFragment<TopicViewModel>() {
     private var _binding: FragmentTopicBinding? = null
     private val binding get() = _binding!!
@@ -119,14 +121,11 @@ class FragmentTopic : BaseFragment<TopicViewModel>() {
         }
 
         binding.memoryTopic.setOnClickListener {
-            val header = viewModel.mPreferenceUtil.defaultPref()
-                .getString(PreferenceKey.AUTHORIZATION, "").toString()
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID, 0)
             val examId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.ID_EXAM, 0)
-            val requestSaveExam = RequestSaveExam(userId, examId)
-            viewModel.saveExam(header, requestSaveExam)
+            viewModel.saveExam(RequestSaveExam(userId, examId))
         }
 
         binding.backMemoryTopic.setOnClickListener {

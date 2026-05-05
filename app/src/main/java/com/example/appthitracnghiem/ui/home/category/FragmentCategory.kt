@@ -18,8 +18,10 @@ import com.example.appthitracnghiem.ui.department.listdepartment.RequestDepartme
 import com.example.appthitracnghiem.ui.home.category.adapter.SubjectAdapter
 import com.example.appthitracnghiem.ui.home.category.search.SearchSubject
 import com.example.appthitracnghiem.utils.PreferenceKey
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentCategory : BaseFragment<ListDepartmentViewModel>() {
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
@@ -45,12 +47,9 @@ class FragmentCategory : BaseFragment<ListDepartmentViewModel>() {
             }
         }
 
-        val header = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.AUTHORIZATION, "").toString()
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
-        val requestDepartmentInfo = RequestDepartmentInfo(userId)
-        viewModel.getDataDepartmentDetail(header, requestDepartmentInfo)
+        viewModel.getDataDepartmentDetail(RequestDepartmentInfo(userId))
 
         viewModel.listDepartmentLiveData.observe(viewLifecycleOwner){
             for(i in 0 until  it.size){

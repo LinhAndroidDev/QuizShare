@@ -5,7 +5,7 @@ import com.example.appthitracnghiem.domain.model.UserProfile
 import com.example.appthitracnghiem.model.Department
 
 interface HomeRepository {
-    suspend fun getSystemDepartments(accessToken: String, userId: Int, keyword: String): ResultState<List<Department>>
-    suspend fun getUserDepartments(accessToken: String, userId: Int, keyword: String): ResultState<List<Department>>
-    suspend fun getUserProfile(accessToken: String, userId: Int): ResultState<UserProfile>
+    suspend fun getSystemDepartments(userId: Int, keyword: String): ResultState<List<Department>>
+    suspend fun getUserDepartments(userId: Int, keyword: String): ResultState<List<Department>>
+    suspend fun getUserProfile(userId: Int): ResultState<UserProfile>
 }

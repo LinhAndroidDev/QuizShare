@@ -14,8 +14,10 @@ import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.profile.setting.SettingActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentProfile : BaseFragment<EmptyViewModel>() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!

@@ -26,8 +26,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentPoint : BaseFragment<PointViewModel>() {
     private var _binding: FragmentPointBinding? = null
     private val binding get() = _binding!!
@@ -44,8 +46,6 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
     override fun bindData() {
         super.bindData()
 
-        val header = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.AUTHORIZATION,"").toString()
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
         val examId = viewModel.mPreferenceUtil.defaultPref()
@@ -73,7 +73,7 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
 
         val requestPoint = RequestPoint(userId, examId, answerList,startTime, finishTime)
 
-        viewModel.getResult(header,requestPoint)
+        viewModel.getResult(requestPoint)
 
         viewModel.scoreLiveData.observe(viewLifecycleOwner){
             binding.progressPoint.apply {

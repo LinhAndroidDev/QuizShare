@@ -4,153 +4,130 @@ import com.example.appthitracnghiem.data.remote.entity.*
 import com.example.appthitracnghiem.utils.Const
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
     @POST("register")
-    fun registerUser(@Body requestRegister: Any)
-            : Call<RegisterResponse>
+    suspend fun registerUser(@Body requestRegister: Any): Response<RegisterResponse>
 
     @POST("login")
-    fun loginUser(@Body requestLogin: Any)
-            : Call<LoginResponse>
+    suspend fun loginUser(@Body requestLogin: Any): Response<LoginResponse>
 
     @POST("forgotPassword")
-    fun emailVerification(
+    suspend fun emailVerification(
         @Body requestEmailVerification: Any
-    ): Call<EmailVerificationResponse>
+    ): Response<EmailVerificationResponse>
 
     @POST("getDepartmentList")
-    fun getDepartmentList(
-        @Header("Authorization") header: String,
+    suspend fun getDepartmentList(
         @Body requestGetListDepartment: Any
-    ): Call<FromSystemResponse>
+    ): Response<FromSystemResponse>
 
     @POST("listDepartmentInfo")
-    fun getListDepartmentInfo(
-        @Header("Authorization") header: String,
+    suspend fun getListDepartmentInfo(
         @Body requestDepartmentInfo: Any
-    ): Call<DepartmentResponse>
+    ): Response<DepartmentResponse>
 
     @POST("listExam")
-    fun getListExam(
-        @Header("Authorization") header: String,
+    suspend fun getListExam(
         @Body requestListExam: Any
-    ): Call<ListExamResponse>
+    ): Response<ListExamResponse>
 
     @POST("examListQuestion")
-    fun getExamListQuestion(
-        @Header("Authorization") header: String,
+    suspend fun getExamListQuestion(
         @Body requestExamQuestion: Any
-    ): Call<ExamQuestionResponse>
+    ): Response<ExamQuestionResponse>
 
     @POST("submitExam")
-    fun submitExam(
-        @Header("Authorization") header: String,
+    suspend fun submitExam(
         @Body requestPoint: Any
-    ): Call<PointResponse>
+    ): Response<PointResponse>
 
     @POST("getUserInfo")
-    fun getUserInfo(
-        @Header("Authorization") header: String,
+    suspend fun getUserInfo(
         @Body requestUserInfo: Any
-    ): Call<UserResponse>
+    ): Response<UserResponse>
 
     @Multipart
     @POST("editAvatar")
-    fun postImage(
-        @Header("Authorization") header: String,
+    suspend fun postImage(
         @Part(Const.user_id) user_id: RequestBody,
         @Part file: MultipartBody.Part
-    ): Call<ChangeAvatarResponse>
+    ): Response<ChangeAvatarResponse>
 
     @POST("getExamHistoryList")
-    fun getExamHistory(
-        @Header("Authorization") header: String,
+    suspend fun getExamHistory(
         @Body requestExamHistory: Any
-    ): Call<ExamHistoryResponse>
+    ): Response<ExamHistoryResponse>
 
     @POST("changeEmail")
-    fun changeEmail(
-        @Header("Authorization") header: String,
+    suspend fun changeEmail(
         @Body requestUpdateEmail: Any
-    ): Call<UpdateEmailResponse>
+    ): Response<UpdateEmailResponse>
 
     @POST("updateUserInfo")
-    fun updateUserInfo(
-        @Header("Authorization") header: String,
+    suspend fun updateUserInfo(
         @Body requestUpdateInfo: Any
-    ): Call<UpdateInfoResponse>
+    ): Response<UpdateInfoResponse>
 
     @POST("changePassword")
-    fun changePassword(
-        @Header("Authorization") header: String,
+    suspend fun changePassword(
         @Body requestChangePassword: Any
-    ): Call<ChangePasswordResponse>
+    ): Response<ChangePasswordResponse>
 
     @POST("postSaveExam")
-    fun saveExam(
-        @Header("Authorization") header: String,
+    suspend fun saveExam(
         @Body requestSaveExam: Any
-    ): Call<SaveExamResponse>
+    ): Response<SaveExamResponse>
 
     @POST("savedDepartment")
-    fun savedDepartment(
-        @Header("Authorization") header: String,
+    suspend fun savedDepartment(
         @Body requestSavedDepartment: Any
-    ): Call<DepartmentSavedResponse>
+    ): Response<DepartmentSavedResponse>
 
     @POST("savedSubject")
-    fun savedSubject(
-        @Header("Authorization") header: String,
+    suspend fun savedSubject(
         @Body requestSaveSubjectSaved: Any
-    ): Call<SaveSubjectResponse>
+    ): Response<SaveSubjectResponse>
 
     @POST("savedExam")
-    fun saveTest(
-        @Header("Authorization") header: String,
+    suspend fun saveTest(
         @Body requestTestSaved: Any
-    ): Call<TestSavedResponse>
+    ): Response<TestSavedResponse>
 
     @POST("unpublicUser")
-    fun unPublishUser(
-        @Header("Authorization") header: String,
+    suspend fun unPublishUser(
         @Body requestUnPublishUser: Any
-    ): Call<UnPublishUserResponse>
+    ): Response<UnPublishUserResponse>
 
     @POST("searchSubject")
-    fun searchSubject(
-        @Header("Authorization") header: String,
+    suspend fun searchSubject(
         @Body requestSearch: Any
-    ): Call<SearchResponse>
+    ): Response<SearchResponse>
 
     @POST("getExamResult")
-    fun getExamResult(
-        @Header("Authorization") header: String,
+    suspend fun getExamResult(
         @Body requestAnswer: Any
-    ): Call<AnswerResponse>
+    ): Response<AnswerResponse>
 
     @POST("createExam")
-    fun createExam(
-        @Header("Authorization") header: String,
+    suspend fun createExam(
         @Body requestCreateExam: Any
-    ): Call<CreateExamResponse>
+    ): Response<CreateExamResponse>
 
     @GET("getExamHistoryDetail")
-    fun getExamHistoryDetail(
-        @Header("Authorization") header: String,
+    suspend fun getExamHistoryDetail(
         @Query("user_id") user_id: Int,
         @Query("exam_history_id") exam_history_id: Int
-    ): Call<HistoryTopicResponse>
+    ): Response<HistoryTopicResponse>
 
     @Multipart
     @POST("postUploadFile")
-    fun postUploadFile(
-        @Header("Authorization") header: String,
+    suspend fun postUploadFile(
         @Part(Const.user_id) user_id: RequestBody,
         @Part file: MultipartBody.Part,
         @Part(Const.folder_name) folder_name: RequestBody,
         @Part(Const.file_name) file_name: RequestBody
-    ): Call<UploadImageResponse>
+    ): Response<UploadImageResponse>
 }

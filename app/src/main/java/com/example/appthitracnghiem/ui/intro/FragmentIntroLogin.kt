@@ -11,12 +11,14 @@ import com.example.appthitracnghiem.databinding.FragmentIntroLoginBinding
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.login.LoginActivity
 import com.example.appthitracnghiem.ui.register.RegisterActivity
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * A simple [Fragment] subclass.
  * Use the [FragmentIntroLogin.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class FragmentIntroLogin : Fragment() {
     private var _binding: FragmentIntroLoginBinding? = null
     private val binding get() = _binding!!

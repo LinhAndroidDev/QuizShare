@@ -25,8 +25,10 @@ import com.example.appthitracnghiem.ui.home.profile.setting.password.FragmentSet
 import com.example.appthitracnghiem.ui.login.LoginActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentSetting : BaseFragment<SettingViewModel>() {
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
@@ -94,12 +96,9 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
             alertDialog.setIcon(R.drawable.icon_app_thitn)
             alertDialog.setMessage("Nếu bạn xoá tài khoản này sẽ bị vô hiệu hoá?")
             alertDialog.setPositiveButton("Vẫn xoá") { _, _ ->
-                val header = viewModel.mPreferenceUtil.defaultPref()
-                    .getString(PreferenceKey.AUTHORIZATION,"").toString()
                 val userId = viewModel.mPreferenceUtil.defaultPref()
                     .getInt(PreferenceKey.USER_ID, 0)
-                val requestUnPublishUser = RequestUnPublishUser(userId)
-                viewModel.unPublishUser(header, requestUnPublishUser)
+                viewModel.unPublishUser(RequestUnPublishUser(userId))
             }
             alertDialog.setNegativeButton("Không") { _, _ -> }
             alertDialog.show()

@@ -15,13 +15,14 @@ import com.example.appthitracnghiem.databinding.FragmentHomeBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.home.HomeViewModel
-import com.example.appthitracnghiem.ui.home.RequestUserInfo
 import com.example.appthitracnghiem.ui.home.home.adapter.ViewPagerDepartment
 import com.example.appthitracnghiem.ui.home.profile.FragmentProfile
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentHome : BaseFragment<HomeViewModel>() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -41,12 +42,9 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
 
         initUi()
 
-        val accessToken = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.AUTHORIZATION,"").toString()
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID,0)
-        val requestUserInfo = RequestUserInfo(userId)
-        viewModel.getDataUserInfo(accessToken, requestUserInfo)
+        viewModel.getDataUserInfo(userId)
     }
 
     private fun initUi() {

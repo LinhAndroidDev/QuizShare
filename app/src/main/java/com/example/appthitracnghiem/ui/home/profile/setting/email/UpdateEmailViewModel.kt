@@ -1,54 +1,29 @@
 package com.example.appthitracnghiem.ui.home.profile.setting.email
 
 import androidx.lifecycle.MutableLiveData
-import com.example.appthitracnghiem.data.remote.ApiClient
-import com.example.appthitracnghiem.data.remote.entity.UpdateEmailResponse
+import androidx.lifecycle.viewModelScope
+import com.example.appthitracnghiem.core.ResultState
+import com.example.appthitracnghiem.data.remote.ApiService
+import com.example.appthitracnghiem.data.remote.safeApiCall
 import com.example.appthitracnghiem.ui.base.BaseViewModel
-import retrofit2.Call
-import retrofit2.Response
-import javax.security.auth.callback.Callback
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UpdateEmailViewModel : BaseViewModel() {
+@HiltViewModel
+class UpdateEmailViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
     var isLoadingLiveData = MutableLiveData<Boolean>()
     var isSuccessfulLiveData = MutableLiveData<Boolean>()
 
-    fun updateEmail(
-        header: String,
-        requestUpdateEmail: RequestUpdateEmail
-    ){
+    fun updateEmail(requestUpdateEmail: RequestUpdateEmail) {
         isLoadingLiveData.value = true
-        ApiClient.shared().changeEmail(header, requestUpdateEmail)
-            .enqueue(object : retrofit2.Callback<UpdateEmailResponse>{
-                override fun onResponse(
-                    call: Call<UpdateEmailResponse>,
-                    response: Response<UpdateEmailResponse>
-                ) {
-                    isLoadingLiveData.value = false
-                    if(response.isSuccessful){
-                        response.body().let {
-                            when(it?.statusCode){
-                                ApiClient.STATUS_CODE_SUCCESS->{
-                                    isSuccessfulLiveData.value = true
-                                }
-                                ApiClient.STATUS_USER_EXIST->{
-                                    errorApiLiveData.value = it.message
-                                }
-                                ApiClient.STATUS_INVALID_TOKEN->{
-                                    errorApiLiveData.value = it.message
-                                }
-                                ApiClient.STATUS_CODE_SERVER_NOT_RESPONSE->{
-                                    errorApiLiveData.value = it.message
-                                }
-                            }
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<UpdateEmailResponse>, t: Throwable) {
-                    isLoadingLiveData.value = false
-                    errorApiLiveData.value = t.message
-                }
-
-            })
+        viewModelScope.launch {
+            val result = safeApiCall { apiService.changeEmail(requestUpdateEmail) }
+            isLoadingLiveData.value = false
+            when (result) {
+                is ResultState.Success -> isSuccessfulLiveData.value = true
+                is ResultState.Error -> errorApiLiveData.value = result.message
+            }
+        }
     }
 }

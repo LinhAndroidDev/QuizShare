@@ -6,6 +6,6 @@ import javax.inject.Inject
 class GetUserProfileUseCase @Inject constructor(
     private val homeRepository: HomeRepository,
 ) {
-    suspend operator fun invoke(accessToken: String, userId: Int) =
-        homeRepository.getUserProfile(accessToken, userId)
+    suspend operator fun invoke(userId: Int) =
+        homeRepository.getUserProfile(userId)
 }

@@ -13,8 +13,10 @@ import com.example.appthitracnghiem.databinding.ActivityIntroBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseActivity
 import com.example.appthitracnghiem.ui.intro.adapter.ViewPagerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class IntroActivity : BaseActivity<EmptyViewModel>() {
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private lateinit var binding: ActivityIntroBinding

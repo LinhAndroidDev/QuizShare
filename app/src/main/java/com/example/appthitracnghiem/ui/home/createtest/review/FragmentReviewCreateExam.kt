@@ -34,7 +34,9 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.lang.reflect.Type
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
     private var _binding: FragmentReviewCreateExamBinding? = null
     private val binding get() = _binding!!
@@ -140,8 +142,6 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
         }
 
         binding.doneExamReview.setOnClickListener {
-            val header = viewModel.mPreferenceUtil.defaultPref()
-                .getString(PreferenceKey.AUTHORIZATION, "").toString()
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID, 0)
             val title = viewModel.mPreferenceUtil.defaultPref()
@@ -156,7 +156,7 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
             val requestCreateExam = RequestCreateExam(
                 listQuestionCreate, userId, subjectId, title, time, number, status
             )
-            viewModel.createExam(header, requestCreateExam)
+            viewModel.createExam(requestCreateExam)
 
             val strImage = viewModel.mPreferenceUtil.defaultPref()
                 .getString(PreferenceKey.CREATE_URI_IMAGE_SUBJECT, "").toString()
@@ -176,7 +176,7 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
             val requestBodyFileName: RequestBody =
                 fileName.toRequestBody("multipart/form-data".toMediaTypeOrNull())
 
-            viewModel.postUploadFile(header,requestBodyId,multipartBodyImage,requestBodyFolder,requestBodyFileName)
+            viewModel.postUploadFile(requestBodyId,multipartBodyImage,requestBodyFolder,requestBodyFileName)
         }
 
         binding.backReview.setOnClickListener {

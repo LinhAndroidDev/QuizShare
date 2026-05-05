@@ -1,54 +1,29 @@
 package com.example.appthitracnghiem.ui.home.profile.setting.info
 
 import androidx.lifecycle.MutableLiveData
-import com.example.appthitracnghiem.data.remote.ApiClient
-import com.example.appthitracnghiem.data.remote.entity.UpdateInfoResponse
+import androidx.lifecycle.viewModelScope
+import com.example.appthitracnghiem.core.ResultState
+import com.example.appthitracnghiem.data.remote.ApiService
+import com.example.appthitracnghiem.data.remote.safeApiCall
 import com.example.appthitracnghiem.ui.base.BaseViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UpdateInfoViewModel : BaseViewModel() {
+@HiltViewModel
+class UpdateInfoViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
     var isLoadingLiveData = MutableLiveData<Boolean>()
     var isSuccessfulLiveData = MutableLiveData<Boolean>()
 
-    fun updateInfo(
-        header: String,
-        requestUpdateInfo: RequestUpdateInfo
-    ){
+    fun updateInfo(requestUpdateInfo: RequestUpdateInfo) {
         isLoadingLiveData.value = true
-        ApiClient.shared().updateUserInfo(header, requestUpdateInfo)
-            .enqueue(object : Callback<UpdateInfoResponse>{
-                override fun onResponse(
-                    call: Call<UpdateInfoResponse>,
-                    response: Response<UpdateInfoResponse>
-                ) {
-                    isLoadingLiveData.value = false
-                    if(response.isSuccessful){
-                        response.body().let {
-                            when(it?.statusCode){
-                                ApiClient.STATUS_CODE_SUCCESS->{
-                                    isSuccessfulLiveData.value = true
-                                }
-                                ApiClient.STATUS_USER_EXIST->{
-                                    errorApiLiveData.value = it.message
-                                }
-                                ApiClient.STATUS_INVALID_TOKEN->{
-                                    errorApiLiveData.value = it.message
-                                }
-                                ApiClient.STATUS_CODE_SERVER_NOT_RESPONSE->{
-                                    errorApiLiveData.value = it.message
-                                }
-                            }
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<UpdateInfoResponse>, t: Throwable) {
-                    isLoadingLiveData.value = false
-                    errorApiLiveData.value = t.message
-                }
-
-            })
+        viewModelScope.launch {
+            val result = safeApiCall { apiService.updateUserInfo(requestUpdateInfo) }
+            isLoadingLiveData.value = false
+            when (result) {
+                is ResultState.Success -> isSuccessfulLiveData.value = true
+                is ResultState.Error -> errorApiLiveData.value = result.message
+            }
+        }
     }
 }

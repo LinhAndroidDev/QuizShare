@@ -10,8 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.ActivityLinkSheetBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class LinkSheetActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLinkSheetBinding
 

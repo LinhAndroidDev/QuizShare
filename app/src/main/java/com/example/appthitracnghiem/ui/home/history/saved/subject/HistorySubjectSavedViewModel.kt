@@ -1,55 +1,30 @@
 package com.example.appthitracnghiem.ui.home.history.saved.subject
 
 import androidx.lifecycle.MutableLiveData
-import com.example.appthitracnghiem.data.remote.ApiClient
+import androidx.lifecycle.viewModelScope
+import com.example.appthitracnghiem.core.ResultState
+import com.example.appthitracnghiem.data.remote.ApiService
 import com.example.appthitracnghiem.data.remote.entity.SaveSubjectResponse
+import com.example.appthitracnghiem.data.remote.safeApiCall
 import com.example.appthitracnghiem.ui.base.BaseViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HistorySubjectSavedViewModel : BaseViewModel() {
+@HiltViewModel
+class HistorySubjectSavedViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
     var isLoadingLiveData = MutableLiveData<Boolean>()
     var listSubjectSaved = MutableLiveData<ArrayList<SaveSubjectResponse.Result>?>()
 
-    fun saveSubject(
-        header: String,
-        requestSubjectSaved: RequestSubjectSaved
-    )
-    {
+    fun saveSubject(requestSubjectSaved: RequestSubjectSaved) {
         isLoadingLiveData.value = true
-        ApiClient.shared().savedSubject(header, requestSubjectSaved)
-            .enqueue(object : Callback<SaveSubjectResponse>{
-                override fun onResponse(
-                    call: Call<SaveSubjectResponse>,
-                    response: Response<SaveSubjectResponse>
-                ) {
-                    isLoadingLiveData.value = false
-                    if(response.isSuccessful){
-                        response.body().let {
-                            when(it?.statusCode){
-                                ApiClient.STATUS_CODE_SUCCESS->{
-                                    listSubjectSaved.value = it.result
-                                }
-                                ApiClient.STATUS_USER_EXIST->{
-                                    errorApiLiveData.value = it.message
-                                }
-                                ApiClient.STATUS_INVALID_TOKEN->{
-                                    errorApiLiveData.value = it.message
-                                }
-                                ApiClient.STATUS_CODE_SERVER_NOT_RESPONSE->{
-                                    errorApiLiveData.value = it.message
-                                }
-                            }
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<SaveSubjectResponse>, t: Throwable) {
-                    isLoadingLiveData.value = false
-                    errorApiLiveData.value = t.message
-                }
-
-            })
+        viewModelScope.launch {
+            val result = safeApiCall { apiService.savedSubject(requestSubjectSaved) }
+            isLoadingLiveData.value = false
+            when (result) {
+                is ResultState.Success -> listSubjectSaved.value = result.data.result
+                is ResultState.Error -> errorApiLiveData.value = result.message
+            }
+        }
     }
 }

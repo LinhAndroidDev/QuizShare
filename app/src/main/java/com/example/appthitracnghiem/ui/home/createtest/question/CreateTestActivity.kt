@@ -22,8 +22,10 @@ import com.example.appthitracnghiem.ui.base.BaseActivity
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.createtest.question.adapter.PositiveQuestionAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class CreateTestActivity : BaseActivity<EmptyViewModel>() {
     private lateinit var binding: ActivityCreateTestBinding
 

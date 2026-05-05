@@ -12,15 +12,15 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentFromUserBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.department.listdepartment.FragmentListDepartment
-import com.example.appthitracnghiem.ui.home.home.system.RequestGetListDepartment
 import com.example.appthitracnghiem.ui.home.home.user.adapter.FromUserAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FragmentFromUser : BaseFragment<FromUserViewModel>() {
     private var _binding: FragmentFromUserBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapterFromUser: FromUserAdapter
-    lateinit var accessToken: String
     var userId: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,12 +59,9 @@ class FragmentFromUser : BaseFragment<FromUserViewModel>() {
             binding.recycleListFromUser.adapter = adapterFromUser
         }
 
-        accessToken = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.AUTHORIZATION,"").toString()
         userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID,0)
-        val requestGetListDepartment = RequestGetListDepartment(userId,"")
-        viewModel.getDataDepartmentFromUser(accessToken,requestGetListDepartment)
+        viewModel.getDataDepartmentFromUser(userId, "")
     }
 
     private fun setText() {

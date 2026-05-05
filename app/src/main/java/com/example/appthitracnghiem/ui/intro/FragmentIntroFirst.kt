@@ -9,7 +9,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentIntroFirstBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FragmentIntroFirst : Fragment() {
     private var _binding: FragmentIntroFirstBinding? = null
     private val binding get() = _binding!!

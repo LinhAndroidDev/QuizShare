@@ -1,38 +1,32 @@
 package com.example.appthitracnghiem.ui.login
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.data.remote.ApiClient
+import com.example.appthitracnghiem.data.local.preferences.SessionLocalDataSource
+import com.example.appthitracnghiem.data.remote.ApiService
 import com.example.appthitracnghiem.data.repository.impl.AuthRepositoryImpl
 import com.example.appthitracnghiem.domain.usecase.LoginUseCase
 import com.example.appthitracnghiem.core.ResultState
 import com.example.appthitracnghiem.core.UiState
 import com.example.appthitracnghiem.ui.base.BaseViewModel
 import com.example.appthitracnghiem.utils.Email
-import com.example.appthitracnghiem.utils.PreferenceKey
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel : BaseViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val apiService: ApiService,
+    private val sessionLocalDataSource: SessionLocalDataSource,
+) : BaseViewModel() {
     val loadingLiveData = MutableLiveData<Boolean>()
     val successLoginLiveData = MutableLiveData<Boolean>()
     val validateLiveData = MutableLiveData<ValidateModel>()
     val loginUiState = MutableLiveData<UiState<Boolean>>(UiState.Idle)
-    private val loginUseCase = LoginUseCase(AuthRepositoryImpl(ApiClient.shared()))
-
-    fun confirmLoggedIn(){
-        mPreferenceUtil.defaultPref().edit()
-            .putBoolean(PreferenceKey.KEY_USER_LOGGED_IN, true).apply()
-    }
-
-    @SuppressLint("CommitPrefEdits")
-    fun savedAuthentication(token:String, id: Int) {
-        mPreferenceUtil.defaultPref().edit()
-            .putString(PreferenceKey.AUTHORIZATION,token).apply()
-        mPreferenceUtil.defaultPref().edit()
-            .putInt(PreferenceKey.USER_ID,id).apply()
-    }
+    private val loginUseCase = LoginUseCase(AuthRepositoryImpl(apiService))
 
     private fun validateLogin(strEmail: String, strPassword: String): ValidateModel {
         return if (strEmail.isEmpty() || strPassword.isEmpty()) {
@@ -73,8 +67,7 @@ class LoginViewModel : BaseViewModel() {
 
                 is ResultState.Success -> {
                     loadingLiveData.value = false
-                    savedAuthentication(result.data.accessToken, result.data.userId)
-                    confirmLoggedIn()
+                    sessionLocalDataSource.saveUserSession(result.data.accessToken, result.data.userId)
                     successLoginLiveData.value = true
                     loginUiState.value = UiState.Success(true)
                 }

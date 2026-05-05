@@ -31,8 +31,10 @@ import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION", "NAME_SHADOWING")
+@AndroidEntryPoint
 class FragmentExam : BaseFragment<ExamViewModel>() {
     private var _binding: FragmentExamBinding? = null
     private val binding get() = _binding!!
@@ -127,13 +129,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
-        val accessToken =
-            viewModel.mPreferenceUtil.defaultPref()
-                .getString(PreferenceKey.AUTHORIZATION, "")
-                .toString()
         val idExam = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.ID_EXAM, 0)
-        val requestExamQuestion = RequestExamQuestion(userId, idExam)
-        viewModel.getExamListQuestion(accessToken, requestExamQuestion)
+        viewModel.getExamListQuestion(RequestExamQuestion(userId, idExam))
     }
 
     private fun setTime(time: Int) {

@@ -32,8 +32,10 @@ import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
+import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
     private var _binding: FragmentCreateExamBinding? = null
     private val binding get() = _binding!!

@@ -4,7 +4,7 @@ import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.data.remote.ApiClient
+import com.example.appthitracnghiem.data.remote.ApiService
 import com.example.appthitracnghiem.data.repository.impl.AuthRepositoryImpl
 import com.example.appthitracnghiem.core.ResultState
 import com.example.appthitracnghiem.core.UiState
@@ -12,15 +12,18 @@ import com.example.appthitracnghiem.domain.usecase.RegisterUseCase
 import com.example.appthitracnghiem.ui.base.BaseViewModel
 import com.example.appthitracnghiem.ui.login.ValidateModel
 import com.example.appthitracnghiem.utils.Email
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @Suppress("UNREACHABLE_CODE")
-class RegisterViewModel : BaseViewModel() {
+@HiltViewModel
+class RegisterViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
     val loadingLiveData = MutableLiveData<Boolean>()
     val successRegisterLiveData = MutableLiveData<Boolean>()
     val validateLiveData = MutableLiveData<ValidateModel>()
     val registerUiState = MutableLiveData<UiState<Boolean>>(UiState.Idle)
-    private val registerUseCase = RegisterUseCase(AuthRepositoryImpl(ApiClient.shared()))
+    private val registerUseCase = RegisterUseCase(AuthRepositoryImpl(apiService))
 
     private fun validateRegister(
         strEmail: String,

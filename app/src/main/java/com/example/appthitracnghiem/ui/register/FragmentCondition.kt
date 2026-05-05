@@ -9,12 +9,14 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentConditionBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * A simple [Fragment] subclass.
  * Use the [FragmentCondition.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class FragmentCondition : BaseFragment<EmptyViewModel>() {
     private var _binding: FragmentConditionBinding? = null
     private val binding get() = _binding!!

@@ -1,33 +1,36 @@
 package com.example.appthitracnghiem.ui.home
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.appthitracnghiem.data.remote.ApiClient
+import com.example.appthitracnghiem.data.remote.ApiService
 import com.example.appthitracnghiem.data.repository.impl.HomeRepositoryImpl
 import com.example.appthitracnghiem.core.ResultState
 import com.example.appthitracnghiem.core.UiState
 import com.example.appthitracnghiem.domain.usecase.GetUserProfileUseCase
 import com.example.appthitracnghiem.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel : BaseViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
     var nameUserLiveData = MutableLiveData<String>()
     var avartarUserLiveData = MutableLiveData<String>()
     var isLoadingLiveData = MutableLiveData<Boolean>()
     val userUiState = MutableLiveData<UiState<Pair<String, String>>>(UiState.Idle)
-    private val getUserProfileUseCase = GetUserProfileUseCase(HomeRepositoryImpl(ApiClient.shared()))
+    private val getUserProfileUseCase = GetUserProfileUseCase(HomeRepositoryImpl(apiService))
 
-    fun getDataUserInfo(header: String, requestUserInfo: RequestUserInfo){
+    fun getDataUserInfo(userId: Int) {
         isLoadingLiveData.value = true
         userUiState.value = UiState.Loading
         viewModelScope.launch {
-            when (val result = getUserProfileUseCase(header, requestUserInfo.user_id)) {
+            when (val result = getUserProfileUseCase(userId)) {
                 is ResultState.Error -> {
                     isLoadingLiveData.value = false
                     userUiState.value = UiState.Error(result.message)
                     errorApiLiveData.value = result.message
                 }
-
                 is ResultState.Success -> {
                     isLoadingLiveData.value = false
                     nameUserLiveData.value = result.data.name
