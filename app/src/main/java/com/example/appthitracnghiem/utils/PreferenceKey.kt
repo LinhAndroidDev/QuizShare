@@ -1,53 +1,29 @@
 package com.example.appthitracnghiem.utils
 
 object PreferenceKey {
-    var KEY_FIRST_INSTALL: String = "KEY_FIRST_INSTALL"
-
-    var KEY_USER_LOGGED_IN: String = "KEY_USER_LOGGED_IN"
-
-    var AUTHORIZATION: String = "AUTHORIZATION"
-
-    var USER_EMAIL: String = "USER_EMAIL"
-
-    var USER_PASSWORD: String = "USER_PASSWORD"
-
-    var SAVE_ACCOUNT: String = "SAVE_ACCOUNT"
-
-    var USER_ID: String = "USER_ID"
-
-    var ID_EXAM: String = "ID_EXAM"
-
-    var TIME_EXAM: String = "TIME_EXAM"
-
-    var USER_NAME: String = "USER_NAME"
-
-    var USER_AVATAR: String = "USER_AVATAR"
-
-    var TYPE: String = "TYPE"
-
-    var ARRAY_LIST_ANSWER: String = "ARRAY_LIST_ANSWER"
-
-    var START_DO_TEST: String = "START_DO_TEST"
-
-    var CREATE_STATUS: String = "STATUS"
-
-    var CREATE_DEPARTMENT: String = "CREATE_DEPARTMENT"
-
-    var CREATE_TITLE: String = "CREATE_TITLE"
-
-    var CREATE_DESCRIBE_QUIZ: String = "CREATE_DESCRIBE_QUIZ"
-
-    var EXAM_ID_HISTORY: String = "EXAM_ID_HISTORY"
-
-    var ARRAY_LIST_RESULTS: String = "ARRAY_LIST_RESULTS"
-
-    var ID_DEPARTMENT: String = "ID_DEPARTMENT"
-
-    var LIST_CREATE_QUESTION_EXAM: String = "LIST_CREATE_QUESTION_EXAM"
-
-    var LIST_CREATE_NUMBER_QUESTION: String = "LIST_CREATE_NUMBER_QUESTION"
-
-    var CREATE_SUBJECT_ID: String = "CREATE_SUBJECT_ID"
-
-    var CREATE_URI_IMAGE_SUBJECT: String = "CREATE_URI_IMAGE_SUBJECT"
+    const val KEY_FIRST_INSTALL = "KEY_FIRST_INSTALL"
+    const val KEY_USER_LOGGED_IN = "KEY_USER_LOGGED_IN"
+    const val AUTHORIZATION = "AUTHORIZATION"
+    const val USER_EMAIL = "USER_EMAIL"
+    const val USER_PASSWORD = "USER_PASSWORD"
+    const val SAVE_ACCOUNT = "SAVE_ACCOUNT"
+    const val USER_ID = "USER_ID"
+    const val ID_EXAM = "ID_EXAM"
+    const val TIME_EXAM = "TIME_EXAM"
+    const val USER_NAME = "USER_NAME"
+    const val USER_AVATAR = "USER_AVATAR"
+    const val TYPE = "TYPE"
+    const val ARRAY_LIST_ANSWER = "ARRAY_LIST_ANSWER"
+    const val START_DO_TEST = "START_DO_TEST"
+    const val CREATE_STATUS = "STATUS"
+    const val CREATE_DEPARTMENT = "CREATE_DEPARTMENT"
+    const val CREATE_TITLE = "CREATE_TITLE"
+    const val CREATE_DESCRIBE_QUIZ = "CREATE_DESCRIBE_QUIZ"
+    const val EXAM_ID_HISTORY = "EXAM_ID_HISTORY"
+    const val ARRAY_LIST_RESULTS = "ARRAY_LIST_RESULTS"
+    const val ID_DEPARTMENT = "ID_DEPARTMENT"
+    const val LIST_CREATE_QUESTION_EXAM = "LIST_CREATE_QUESTION_EXAM"
+    const val LIST_CREATE_NUMBER_QUESTION = "LIST_CREATE_NUMBER_QUESTION"
+    const val CREATE_SUBJECT_ID = "CREATE_SUBJECT_ID"
+    const val CREATE_URI_IMAGE_SUBJECT = "CREATE_URI_IMAGE_SUBJECT"
 }

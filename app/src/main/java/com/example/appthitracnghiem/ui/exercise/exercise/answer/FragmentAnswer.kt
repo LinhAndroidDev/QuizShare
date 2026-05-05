@@ -36,22 +36,14 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
     private var _binding: FragmentAnswerBinding? = null
     private val binding get() = _binding!!
 
-    private val txtTiltleAnswer get() = binding.txtTiltleAnswer
-    private val backAnswer get() = binding.backAnswer
-    private val menuQuestionAnswer get() = binding.menuQuestionAnswer
-    private val txtPositionQuizAnswer get() = binding.txtPositionQuizAnswer
-    private val titleAnswer get() = binding.titleAnswer
-    private val llContainerOptions get() = binding.llContainerOptions
-    private val backQuestionAnswer get() = binding.backQuestionAnswer
-    private val nextQuestionAnswer get() = binding.nextQuestionAnswer
-    private val layoutLoading get() = binding.root.findViewById<View>(R.id.layoutLoading)
     private lateinit var listQuestion: MutableList<PositiveQuestion>
+
 
     private lateinit var menuQuestionAdapter: MenuQuestionAdapter
 
-    private var POSITIVE_QUESTION: Int = 0
+    private var positiveQuestion: Int = 0
 
-    private var SIZE_LIST_QUESTION: Int = 0
+    private var sizeListQuestion: Int = 0
 
     private lateinit var listExamQuestion: ArrayList<ExamQuestion>
 
@@ -79,20 +71,20 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
 
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                layoutLoading.visibility = View.VISIBLE
+                binding.root.findViewById<View>(R.id.layoutLoading).visibility = View.VISIBLE
             } else {
-                layoutLoading.visibility = View.GONE
+                binding.root.findViewById<View>(R.id.layoutLoading).visibility = View.GONE
             }
         }
 
         viewModel.listExamQuestionLiveData.observe(viewLifecycleOwner) {
             listExamQuestion = it
-            SIZE_LIST_QUESTION = it.size
-            for (i in 0 until SIZE_LIST_QUESTION) {
+            sizeListQuestion = it.size
+            for (i in 0 until sizeListQuestion) {
                 listAnswer.add(-1)
             }
-            txtPositionQuizAnswer.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
-            setTextView(POSITIVE_QUESTION)
+            binding.txtPositionQuizAnswer.text = "Câu " + (positiveQuestion+1) + " trên " + sizeListQuestion
+            setTextView(positiveQuestion)
         }
 
         val userId = viewModel.mPreferenceUtil.defaultPref()
@@ -131,40 +123,40 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             decorView?.systemUiVisibility =
-                decorView?.systemUiVisibility?.and(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv())!!
+                decorView.systemUiVisibility.and(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv())
         } //set status text  light
     }
 
     @SuppressLint("SetTextI18n")
     private fun initUi() {
 
-        val titleAnswer: String = requireArguments().getString("title").toString()
-        txtTiltleAnswer.text = titleAnswer
+        val titleText: String = requireArguments().getString("title").toString()
+        binding.txtTiltleAnswer.text = titleText
 
         setStatusBar()
 
-        nextQuestionAnswer.setOnClickListener {
-            if (POSITIVE_QUESTION < SIZE_LIST_QUESTION - 1) {
-                POSITIVE_QUESTION++
-                setTextView(POSITIVE_QUESTION)
-                onClickNextQuestion?.invoke(POSITIVE_QUESTION)
+        binding.nextQuestionAnswer.setOnClickListener {
+            if (positiveQuestion < sizeListQuestion - 1) {
+                positiveQuestion++
+                setTextView(positiveQuestion)
+                onClickNextQuestion?.invoke(positiveQuestion)
             }
-            txtPositionQuizAnswer.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
+            binding.txtPositionQuizAnswer.text = "Câu " + (positiveQuestion+1) + " trên " + sizeListQuestion
         }
 
-        backQuestionAnswer.setOnClickListener {
-            if (POSITIVE_QUESTION > 0) {
-                POSITIVE_QUESTION--
-                setTextView(POSITIVE_QUESTION)
+        binding.backQuestionAnswer.setOnClickListener {
+            if (positiveQuestion > 0) {
+                positiveQuestion--
+                setTextView(positiveQuestion)
             }
-            txtPositionQuizAnswer.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
+            binding.txtPositionQuizAnswer.text = "Câu " + (positiveQuestion+1) + " trên " + sizeListQuestion
         }
 
-        menuQuestionAnswer.setOnClickListener {
-            showMenuQuestion(menuQuestionAnswer, R.layout.popup_list_question, 0, 250, Gravity.BOTTOM)
+        binding.menuQuestionAnswer.setOnClickListener {
+            showMenuQuestion(binding.menuQuestionAnswer, R.layout.popup_list_question, 0, 250, Gravity.BOTTOM)
         }
 
-        backAnswer.setOnClickListener {
+        binding.backAnswer.setOnClickListener {
             activity?.onBackPressedDispatcher?.onBackPressed()
         }
     }
@@ -181,15 +173,15 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         popupWindow.showAtLocation(view, gravity, x, y)
 
         listQuestion = mutableListOf()
-        for (i in 0 until SIZE_LIST_QUESTION) {
+        for (i in 0 until sizeListQuestion) {
             listQuestion.add(PositiveQuestion(i + 1,null))
         }
 
         menuQuestionAdapter = MenuQuestionAdapter(requireActivity(), listQuestion)
         menuQuestionAdapter.onClickItem = { positionItem ->
-            POSITIVE_QUESTION = positionItem
-            setTextView(POSITIVE_QUESTION)
-            txtPositionQuizAnswer.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
+            positiveQuestion = positionItem
+            setTextView(positiveQuestion)
+            binding.txtPositionQuizAnswer.text = "Câu " + (positiveQuestion+1) + " trên " + sizeListQuestion
         }
         val recycleQuestion: RecyclerView = popUpView.findViewById(R.id.recycleViewMenuQuestion)
         recycleQuestion.isEnabled = false
@@ -202,9 +194,9 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
 
     @SuppressLint("ResourceAsColor")
     fun setTextView(psQuestion: Int) {
-        titleAnswer.text = listExamQuestion[psQuestion].question_title
+        binding.titleAnswer.text = listExamQuestion[psQuestion].question_title
         val sizeAnswer = listExamQuestion[psQuestion].answer_list.size
-        llContainerOptions.removeAllViews()
+        binding.llContainerOptions.removeAllViews()
         arrayTxtQuestion.clear()
 
         for (i in 0 until sizeAnswer) {
@@ -218,7 +210,7 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
                     arrayTxtQuestion[j].setBackgroundResource(R.drawable.un_select_text_view)
                 }
                 txtQuestion.setBackgroundResource(R.drawable.select_text_view)
-                listAnswer[POSITIVE_QUESTION] = i
+                listAnswer[positiveQuestion] = i
             }
         }
 
@@ -239,7 +231,7 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         position: Int,
         i: Int,
     ) {
-        llContainerOptions.addView(txt)
+        binding.llContainerOptions.addView(txt)
         arrayTxt.add(txt)
         val params =
             LinearLayout.LayoutParams(

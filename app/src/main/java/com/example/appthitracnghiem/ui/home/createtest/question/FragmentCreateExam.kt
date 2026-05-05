@@ -33,38 +33,13 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.content.edit
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
 class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
     private var _binding: FragmentCreateExamBinding? = null
     private val binding get() = _binding!!
-
-    private val layoutOnClickCreate get() = binding.layoutOnClickCreate
-    private val isAnswer1 get() = binding.isAnswer1
-    private val isAnswer2 get() = binding.isAnswer2
-    private val isAnswer3 get() = binding.isAnswer3
-    private val isAnswer4 get() = binding.isAnswer4
-    private val recycleListNumber get() = binding.recycleListNumber
-    private val txtTime get() = binding.txtTime
-    private val txtLevel get() = binding.txtLevel
-    private val nextQuestionCreate get() = binding.nextQuestionCreate
-    private val backQuestionCreate get() = binding.backQuestionCreate
-    private val completeCreateTest get() = binding.completeCreateTest
-    private val backCreateTest get() = binding.backCreateTest
-    private val addCoverImageCreateTest get() = binding.addCoverImageCreateTest
-    private val menuCreateTestAct get() = binding.menuCreateTestAct
-    private val createLevel get() = binding.createLevel
-    private val questionCreate get() = binding.questionCreate
-    private val answerCreate1 get() = binding.answerCreate1
-    private val answerCreate2 get() = binding.answerCreate2
-    private val answerCreate3 get() = binding.answerCreate3
-    private val answerCreate4 get() = binding.answerCreate4
-    private val scrollCreateExam get() = binding.scrollCreateExam
-    private val txtCreateTest get() = binding.txtCreateTest
-    private val txtSelectImageCt get() = binding.txtSelectImageCt
-    private val txtAddQuestion get() = binding.txtAddQuestion
-    private val imageCoverCreateTest get() = binding.imageCoverCreateTest
 
     lateinit var positiveQuestionAdapter: PositiveQuestionAdapter
     private val GALLERY_RED_CODE: Int = 1000
@@ -89,19 +64,19 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        layoutOnClickCreate.setOnTouchListener { _, _ -> true }
+        binding.layoutOnClickCreate.setOnTouchListener { _, _ -> true }
 
         /** Insert checkbox in array **/
-        listTextViewAnswer.add(isAnswer1)
-        listTextViewAnswer.add(isAnswer2)
-        listTextViewAnswer.add(isAnswer3)
-        listTextViewAnswer.add(isAnswer4)
+        listTextViewAnswer.add(binding.isAnswer1)
+        listTextViewAnswer.add(binding.isAnswer2)
+        listTextViewAnswer.add(binding.isAnswer3)
+        listTextViewAnswer.add(binding.isAnswer4)
 
         /** Create List RecyclerView question **/
         numberQuiz = activity?.intent!!.getIntExtra("number_question", -1)
         val linearLayoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-        recycleListNumber.layoutManager = linearLayoutManager
+        binding.recycleListNumber.layoutManager = linearLayoutManager
 
         /** Create array results **/
         for(i in 0 until 4){
@@ -120,7 +95,7 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
         positiveQuestionAdapter.onClickItem = {
             questionIndex = it
         }
-        recycleListNumber.adapter = positiveQuestionAdapter
+        binding.recycleListNumber.adapter = positiveQuestionAdapter
 
         initUi()
     }
@@ -129,12 +104,12 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
     private fun initUi() {
         val time = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.TIME_EXAM, 0)
-        txtTime.text = "$time phút"
+        binding.txtTime.text = "$time phút"
 
         selectAnswer()
 
         positiveQuestionAdapter.onClickItem = {
-            val strLevel: String = txtLevel.text.toString()
+            val strLevel: String = binding.txtLevel.text.toString()
 
             if(strLevel.isEmpty()){
                 Toast.makeText(requireActivity(),"Bạn chưa nhập độ khó cho câu hỏi",Toast.LENGTH_SHORT).show()
@@ -149,8 +124,8 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
         }
 
         /** On Click **/
-        nextQuestionCreate.setOnClickListener {
-            val strLevel: String = txtLevel.text.toString()
+        binding.nextQuestionCreate.setOnClickListener {
+            val strLevel: String = binding.txtLevel.text.toString()
 
             if(strLevel.isEmpty()){
                 Toast.makeText(requireActivity(),"Bạn chưa nhập độ khó cho câu hỏi",Toast.LENGTH_SHORT).show()
@@ -165,13 +140,13 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
                     questionIndex++
                     positiveQuestionAdapter.setSelectedIndex(questionIndex)
                 }
-                recycleListNumber.scrollToPosition(questionIndex)
+                binding.recycleListNumber.scrollToPosition(questionIndex)
                 setTextView()
             }
         }
 
-        backQuestionCreate.setOnClickListener {
-            val strLevel: String = txtLevel.text.toString()
+        binding.backQuestionCreate.setOnClickListener {
+            val strLevel: String = binding.txtLevel.text.toString()
 
             if(strLevel.isEmpty()){
                 Toast.makeText(requireActivity(),"Bạn chưa nhập độ khó cho câu hỏi",Toast.LENGTH_SHORT).show()
@@ -183,12 +158,12 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
                     doEmptyText()
                     positiveQuestionAdapter.setSelectedIndex(questionIndex)
                 }
-                recycleListNumber.scrollToPosition(questionIndex)
+                binding.recycleListNumber.scrollToPosition(questionIndex)
                 setTextView()
             }
         }
 
-        completeCreateTest.setOnClickListener {
+        binding.completeCreateTest.setOnClickListener {
             saveExam()
             val bundle = Bundle()
             bundle.putInt("numberQuiz",numberQuiz)
@@ -199,19 +174,19 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
             fragmentReviewCreateExam.arguments = bundle
         }
 
-        backCreateTest.setOnClickListener {
+        binding.backCreateTest.setOnClickListener {
             activity?.finish()
         }
 
-        addCoverImageCreateTest.setOnClickListener {
+        binding.addCoverImageCreateTest.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             startActivityForResult(intent, GALLERY_RED_CODE)
         }
 
-        menuCreateTestAct.setOnClickListener {
+        binding.menuCreateTestAct.setOnClickListener {
             showMenuCreate(
-                menuCreateTestAct,
+                binding.menuCreateTestAct,
                 R.layout.popup_create_test_activity,
                 0,
                 -30,
@@ -219,29 +194,29 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
             )
         }
 
-        createLevel.setOnClickListener {
-            showMenuLevel(createLevel, 0, -30, Gravity.BOTTOM)
+        binding.createLevel.setOnClickListener {
+            showMenuLevel(binding.createLevel, 0, -30, Gravity.BOTTOM)
         }
 
         setText()
     }
 
     private fun clearFocusTextView() {
-        questionCreate.clearFocus()
-        answerCreate1.clearFocus()
-        answerCreate2.clearFocus()
-        answerCreate3.clearFocus()
-        answerCreate4.clearFocus()
+        binding.questionCreate.clearFocus()
+        binding.answerCreate1.clearFocus()
+        binding.answerCreate2.clearFocus()
+        binding.answerCreate3.clearFocus()
+        binding.answerCreate4.clearFocus()
     }
 
     private fun setTextView() {
         val listQuestion = getListQuestion(PreferenceKey.LIST_CREATE_QUESTION_EXAM)
         if(listQuestion[questionIndex]?.question_title != null){
-            questionCreate.setText(listQuestion[questionIndex]?.question_title)
-            answerCreate1.setText(listQuestion[questionIndex]?.answer_list?.get(0)?.content)
-            answerCreate2.setText(listQuestion[questionIndex]?.answer_list?.get(1)?.content)
-            answerCreate3.setText(listQuestion[questionIndex]?.answer_list?.get(2)?.content)
-            answerCreate4.setText(listQuestion[questionIndex]?.answer_list?.get(3)?.content)
+            binding.questionCreate.setText(listQuestion[questionIndex]?.question_title)
+            binding.answerCreate1.setText(listQuestion[questionIndex]?.answer_list?.get(0)?.content)
+            binding.answerCreate2.setText(listQuestion[questionIndex]?.answer_list?.get(1)?.content)
+            binding.answerCreate3.setText(listQuestion[questionIndex]?.answer_list?.get(2)?.content)
+            binding.answerCreate4.setText(listQuestion[questionIndex]?.answer_list?.get(3)?.content)
             val answerList = listQuestion[questionIndex]?.answer_list
             for(i in 0 until answerList?.size!!){
                 if(answerList[i]?.type == 1){
@@ -262,23 +237,24 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
                 }
             }
             if(checkVisibleComplete){
-                completeCreateTest.visibility = View.VISIBLE
+                binding.completeCreateTest.visibility = View.VISIBLE
             }else{
-                completeCreateTest.visibility = View.INVISIBLE
+                binding.completeCreateTest.visibility = View.INVISIBLE
             }
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun saveExam() {
-        scrollCreateExam.post {
-            scrollCreateExam.fling(0)
-            scrollCreateExam.smoothScrollTo(0, 0)
+        binding.scrollCreateExam.post {
+            binding.scrollCreateExam.fling(0)
+            binding.scrollCreateExam.smoothScrollTo(0, 0)
         }
-        val question: String = questionCreate.text.toString()
-        val answer1: String = answerCreate1.text.toString()
-        val answer2: String = answerCreate2.text.toString()
-        val answer3: String = answerCreate3.text.toString()
-        val answer4: String = answerCreate4.text.toString()
+        val question: String = binding.questionCreate.text.toString()
+        val answer1: String = binding.answerCreate1.text.toString()
+        val answer2: String = binding.answerCreate2.text.toString()
+        val answer3: String = binding.answerCreate3.text.toString()
+        val answer4: String = binding.answerCreate4.text.toString()
 
         val answers = mutableListOf<CreateAnswer?>()
 
@@ -310,11 +286,11 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
 
     private fun saveListPositive(list: ArrayList<Int>, key: String?) {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        val editor: SharedPreferences.Editor = prefs.edit()
-        val gson = Gson()
-        val json: String = gson.toJson(list)
-        editor.putString(key, json)
-        editor.apply()
+        prefs.edit {
+            val gson = Gson()
+            val json: String = gson.toJson(list)
+            putString(key, json)
+        }
     }
 
     private fun getListPositive(key: String?): ArrayList<Int> {
@@ -327,11 +303,11 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
 
     private fun saveListQuestion(list: ArrayList<CreateQuestion?>, key: String?) {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        val editor: SharedPreferences.Editor = prefs.edit()
-        val gson = Gson()
-        val json: String = gson.toJson(list)
-        editor.putString(key, json)
-        editor.apply()
+        prefs.edit {
+            val gson = Gson()
+            val json: String = gson.toJson(list)
+            putString(key, json)
+        }
     }
 
     private fun getListQuestion(key: String?): ArrayList<CreateQuestion?> {
@@ -344,77 +320,78 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
 
     internal fun visibleComplete(visible: Boolean) {
         if (visible) {
-            layoutOnClickCreate.visibility = View.GONE
+            binding.layoutOnClickCreate.visibility = View.GONE
         } else {
-            layoutOnClickCreate.visibility = View.VISIBLE
+            binding.layoutOnClickCreate.visibility = View.VISIBLE
         }
     }
 
     private fun doEmptyText() {
-        questionCreate.setText("")
-        answerCreate1.setText("")
-        answerCreate2.setText("")
-        answerCreate3.setText("")
-        answerCreate4.setText("")
+        binding.questionCreate.setText("")
+        binding.answerCreate1.setText("")
+        binding.answerCreate2.setText("")
+        binding.answerCreate3.setText("")
+        binding.answerCreate4.setText("")
         setUnSelectAnswer()
     }
 
     private fun selectAnswer() {
-        isAnswer1.setOnCheckedChangeListener { _, b ->
+        binding.isAnswer1.setOnCheckedChangeListener { _, b ->
             if (b) {
                 setUnSelectAnswer()
-                isAnswer1.isChecked = true
+                binding.isAnswer1.isChecked = true
                 listResults[0] = 1
             }
         }
-        isAnswer2.setOnCheckedChangeListener { _, b ->
+        binding.isAnswer2.setOnCheckedChangeListener { _, b ->
             if (b) {
                 setUnSelectAnswer()
-                isAnswer2.isChecked = true
+                binding.isAnswer2.isChecked = true
                 listResults[1] = 1
             }
         }
-        isAnswer3.setOnCheckedChangeListener { _, b ->
+        binding.isAnswer3.setOnCheckedChangeListener { _, b ->
             if (b) {
                 setUnSelectAnswer()
-                isAnswer3.isChecked = true
+                binding.isAnswer3.isChecked = true
                 listResults[2] = 1
             }
         }
-        isAnswer4.setOnCheckedChangeListener { _, b ->
+        binding.isAnswer4.setOnCheckedChangeListener { _, b ->
             if (b) {
                 setUnSelectAnswer()
-                isAnswer4.isChecked = true
+                binding.isAnswer4.isChecked = true
                 listResults[3] = 1
             }
         }
     }
 
     private fun setUnSelectAnswer() {
-        isAnswer1.isChecked = false
+        binding.isAnswer1.isChecked = false
         listResults[0] = 0
-        isAnswer2.isChecked = false
+        binding.isAnswer2.isChecked = false
         listResults[1] = 0
-        isAnswer3.isChecked = false
+        binding.isAnswer3.isChecked = false
         listResults[2] = 0
-        isAnswer4.isChecked = false
+        binding.isAnswer4.isChecked = false
         listResults[3] = 0
     }
 
     private fun setText() {
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        txtCreateTest.typeface = semibold
-        txtSelectImageCt.typeface = semibold
-        txtAddQuestion.typeface = semibold
+        binding.txtCreateTest.typeface = semibold
+        binding.txtSelectImageCt.typeface = semibold
+        binding.txtAddQuestion.typeface = semibold
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == AppCompatActivity.RESULT_OK) {
             if (requestCode == GALLERY_RED_CODE) {
-                imageCoverCreateTest.setImageURI(data?.data)
+                binding.imageCoverCreateTest.setImageURI(data?.data)
             }
         }
     }
@@ -448,19 +425,19 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
         /** On click view **/
         easy.setOnClickListener {
             level = 0
-            txtLevel.text = "Dễ"
+            binding.txtLevel.text = "Dễ"
             popupWindow.dismiss()
         }
 
         medium.setOnClickListener {
             level = 1
-            txtLevel.text = "Trung bình"
+            binding.txtLevel.text = "Trung bình"
             popupWindow.dismiss()
         }
 
         hard.setOnClickListener {
             level = 2
-            txtLevel.text = "Khó"
+            binding.txtLevel.text = "Khó"
             popupWindow.dismiss()
         }
     }

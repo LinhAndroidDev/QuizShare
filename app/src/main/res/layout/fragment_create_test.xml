@@ -50,6 +50,7 @@
                     android:layout_height="match_parent">
                     <ImageView
                         android:id="@+id/imageCover"
+                        android:importantForAccessibility="no"
                         android:scaleType="centerCrop"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
@@ -57,9 +58,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        tools:ignore="UseCompoundDrawables">
                         <ImageView
                             android:id="@+id/addCoverImage"
+                            android:importantForAccessibility="no"
                             android:src="@drawable/icon_image"
                             android:layout_width="64dp"
                             android:layout_height="64dp"/>
@@ -171,6 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <RelativeLayout
+                android:id="@+id/selectDepartment"
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -186,7 +190,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
                 <ImageView
-                    android:id="@+id/selectDepartment"
                     android:src="@drawable/down"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
@@ -205,7 +208,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"/>
             <RelativeLayout
-                android:id="@+id/layoutSelectSubject"
+                android:id="@+id/selectSubject"
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -222,7 +225,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
                 <ImageView
-                    android:id="@+id/selectSubject"
                     android:src="@drawable/down"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
@@ -240,6 +242,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <RelativeLayout
+                android:id="@+id/selectMode"
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -254,9 +257,9 @@
                     android:background="@drawable/boder_setting_new_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"/>
+                    android:inputType="textEmailAddress"
+                    tools:ignore="TextViewEdits" />
                 <ImageView
-                    android:id="@+id/selectMode"
                     android:src="@drawable/down"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"

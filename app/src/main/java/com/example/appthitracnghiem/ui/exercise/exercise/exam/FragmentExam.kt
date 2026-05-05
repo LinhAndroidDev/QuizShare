@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.example.appthitracnghiem.ui.exercise.exercise.exam
 
 import android.annotation.SuppressLint
@@ -32,29 +30,13 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.content.edit
 
 @Suppress("DEPRECATION", "NAME_SHADOWING")
 @AndroidEntryPoint
 class FragmentExam : BaseFragment<ExamViewModel>() {
     private var _binding: FragmentExamBinding? = null
     private val binding get() = _binding!!
-
-    private val layoutExercise get() = binding.layoutExercise
-    private val backExercise get() = binding.backExercise
-    private val txtTime get() = binding.txtTime
-    private val countTime get() = binding.countTime
-    private val finishQuiz get() = binding.finishQuiz
-    private val menuQuestion get() = binding.menuQuestion
-    private val txtPositionQuiz get() = binding.txtPositionQuiz
-    private val titleExam get() = binding.titleExam
-    private val llContainerAnswerOptions get() = binding.llContainerAnswerOptions
-    private val backQuestion get() = binding.backQuestion
-    private val nextQuestion get() = binding.nextQuestion
-    private val layoutSubmit get() = binding.layoutSubmit
-    private val backSubmit get() = binding.backSubmit
-    private val submit get() = binding.submit
-    private val layoutLoading get() = binding.root.findViewById<View>(R.id.layoutLoading)
-
 
     private lateinit var menuQuestionAdapter: MenuQuestionAdapter
 
@@ -73,8 +55,6 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
     private lateinit var listExamQuestion: ArrayList<ExamQuestion>
 
     private lateinit var listAnswer: ArrayList<Int>
-
-    var onClickChangeQuestion: ((Boolean) -> Unit)? = null
 
     companion object {
         var arrayTxtQuestion = arrayListOf<TextView>()
@@ -100,9 +80,9 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                layoutLoading.visibility = View.VISIBLE
+                binding.root.findViewById<View>(R.id.layoutLoading).visibility = View.VISIBLE
             } else {
-                layoutLoading.visibility = View.GONE
+                binding.root.findViewById<View>(R.id.layoutLoading).visibility = View.GONE
             }
         }
 
@@ -122,7 +102,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                 }
             }
             saveListAnswer(listResult, PreferenceKey.ARRAY_LIST_RESULTS)
-            txtPositionQuiz.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
+            binding.txtPositionQuiz.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
             setTextView(POSITIVE_QUESTION)
         }
@@ -136,6 +116,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
     private fun setTime(time: Int) {
         TIME_TOTAL = time * 60
         countDownTimer = object : CountDownTimer(600000, 1000) {
+            @SuppressLint("SetTextI18n")
             override fun onTick(millisUntilFinished: Long) {
                 TIME_TOTAL--
                 MINUTES = TIME_TOTAL / 60
@@ -155,13 +136,13 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                     fm?.replace(R.id.changeIdExam, fragmentPoint)?.addToBackStack(null)?.commit()
                 }
                 if (SECONDS < 10) {
-                    txtTime.text = "Còn lại $MINUTES:0$SECONDS phút"
+                    binding.txtTime.text = "Còn lại $MINUTES:0$SECONDS phút"
                 } else if (MINUTES < 1) {
-                    txtTime.text = "Còn lại $MINUTES:$SECONDS giây"
+                    binding.txtTime.text = "Còn lại $MINUTES:$SECONDS giây"
                 } else {
-                    txtTime.text = "Còn lại $MINUTES:$SECONDS phút"
+                    binding.txtTime.text = "Còn lại $MINUTES:$SECONDS phút"
                 }
-                countTime.progress = (TIME_TOTAL * 100 / (time * 60)).toFloat()
+                binding.countTime.progress = (TIME_TOTAL * 100 / (time * 60)).toFloat()
             }
 
             override fun onFinish() {
@@ -181,7 +162,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             decorView?.systemUiVisibility =
-                decorView?.systemUiVisibility?.and(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv())!!
+                decorView.systemUiVisibility.and(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv())
         }
     }
 
@@ -190,35 +171,35 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
         setStatusBar()
 
-        nextQuestion.setOnClickListener {
+        binding.nextQuestion.setOnClickListener {
             if (POSITIVE_QUESTION < SIZE_LIST_QUESTION - 1) {
                 POSITIVE_QUESTION++
                 setTextView(POSITIVE_QUESTION)
             } else {
                 showLayoutSubmit()
             }
-            txtPositionQuiz.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
+            binding.txtPositionQuiz.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
         }
 
-        backQuestion.setOnClickListener {
+        binding.backQuestion.setOnClickListener {
             if (POSITIVE_QUESTION > 0) {
                 POSITIVE_QUESTION--
                 setTextView(POSITIVE_QUESTION)
             }
-            txtPositionQuiz.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
+            binding.txtPositionQuiz.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
         }
 
-        menuQuestion.setOnClickListener {
-            showMenuQuestion(menuQuestion, R.layout.popup_list_question, 0, 250, Gravity.BOTTOM)
+        binding.menuQuestion.setOnClickListener {
+            showMenuQuestion(binding.menuQuestion, R.layout.popup_list_question, 0, 250, Gravity.BOTTOM)
         }
 
-        finishQuiz.setOnClickListener {
+        binding.finishQuiz.setOnClickListener {
             showLayoutSubmit()
         }
 
-        submit.setOnClickListener {
+        binding.submit.setOnClickListener {
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
             getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
             countDownTimer.cancel()
@@ -236,14 +217,14 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             fragmentPoint.arguments = bundle
         }
 
-        backSubmit.setOnClickListener {
-            layoutSubmit.visibility = View.GONE
+        binding.backSubmit.setOnClickListener {
+            binding.layoutSubmit.visibility = View.GONE
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                layoutExercise.setRenderEffect(null)
+                binding.layoutExercise.setRenderEffect(null)
             }
         }
 
-        backExercise.setOnClickListener {
+        binding.backExercise.setOnClickListener {
             val alertDialog : AlertDialog.Builder = AlertDialog.Builder(requireActivity())
             alertDialog.setTitle("Thông báo")
             alertDialog.setIcon(R.drawable.icon_app_thitn)
@@ -261,9 +242,9 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
     }
 
     private fun showLayoutSubmit() {
-        layoutSubmit.visibility = View.VISIBLE
+        binding.layoutSubmit.visibility = View.VISIBLE
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            layoutExercise.setRenderEffect(
+            binding.layoutExercise.setRenderEffect(
                 RenderEffect.createBlurEffect(
                     50f,
                     50f,
@@ -292,7 +273,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         menuQuestionAdapter = MenuQuestionAdapter(requireActivity(), listQuestion)
         menuQuestionAdapter.onClickItem = { positionItem ->
             POSITIVE_QUESTION = positionItem
-            txtPositionQuiz.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
+            binding.txtPositionQuiz.text = "Câu " + (POSITIVE_QUESTION+1) + " trên " + SIZE_LIST_QUESTION
             setTextView(POSITIVE_QUESTION)
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
         }
@@ -306,9 +287,9 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
     @SuppressLint("ResourceAsColor")
     fun setTextView(psQuestion: Int) {
-        titleExam.text = listExamQuestion[psQuestion].question_title
+        binding.titleExam.text = listExamQuestion[psQuestion].question_title
         val sizeAnswer = listExamQuestion[psQuestion].answer_list.size
-        llContainerAnswerOptions.removeAllViews()
+        binding.llContainerAnswerOptions.removeAllViews()
         arrayTxtQuestion.clear()
 
         for (i in 0 until sizeAnswer) {
@@ -340,7 +321,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         position: Int,
         i: Int,
     ) {
-        llContainerAnswerOptions.addView(txt)
+        binding.llContainerAnswerOptions.addView(txt)
         arrayTxt.add(txt)
         val params =
             LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
@@ -356,11 +337,11 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
     private fun saveListAnswer(list: ArrayList<Int>, key: String?) {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        val editor: SharedPreferences.Editor = prefs.edit()
-        val gson = Gson()
-        val json: String = gson.toJson(list)
-        editor.putString(key, json)
-        editor.apply()
+        prefs.edit {
+            val gson = Gson()
+            val json: String = gson.toJson(list)
+            putString(key, json)
+        }
     }
 
     private fun getListAnswer(key: String?): ArrayList<Int> {

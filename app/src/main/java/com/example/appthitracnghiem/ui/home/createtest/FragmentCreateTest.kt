@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -21,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentCreateTestBinding
-import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.department.listdepartment.ListDepartmentViewModel
 import com.example.appthitracnghiem.ui.department.listdepartment.RequestDepartmentInfo
@@ -30,44 +28,14 @@ import com.example.appthitracnghiem.ui.home.createtest.question.CreateTestActivi
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.content.edit
+import androidx.core.net.toUri
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
 class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
     private var _binding: FragmentCreateTestBinding? = null
     private val binding get() = _binding!!
-
-    private val scrollCreateTest get() = binding.scrollCreateTest
-    private val layoutCreateTest get() = binding.layoutCreateTest
-    private val layoutCreateTestCover get() = binding.layoutCreateTestCover
-    private val menuCreateTest get() = binding.menuCreateTest
-    private val selectDepartment get() = binding.selectDepartment
-    private val txtSelectSubject get() = binding.txtSelectSubject
-    private val layoutSelectSubject get() = binding.layoutSelectSubject
-    private val selectSubject get() = binding.selectSubject
-    private val selectMode get() = binding.selectMode
-    private val addCoverImage get() = binding.addCoverImage
-    private val googleSheet get() = binding.googleSheet
-    private val createTest get() = binding.createTest
-    private val shareWithFacebook get() = binding.root.findViewById<LinearLayout>(R.id.shareWithFacebook)
-    private val shareWithMail get() = binding.root.findViewById<LinearLayout>(R.id.shareWithMail)
-    private val shareTest get() = binding.shareTest
-    private val edtSelectDepartment get() = binding.edtSelectDepartment
-    private val edtSelectSubject get() = binding.edtSelectSubject
-    private val edtSelectLevel get() = binding.edtSelectLevel
-    private val edtSelectTitle get() = binding.edtSelectTitle
-    private val edtSelectTime get() = binding.edtSelectTime
-    private val edtSelectNumberQuiz get() = binding.edtSelectNumberQuiz
-    private val edtDescribeQuiz get() = binding.edtDescribeQuiz
-    private val imageCover get() = binding.imageCover
-    private val txtAddTest get() = binding.txtAddTest
-    private val txtTiltle get() = binding.txtTiltle
-    private val txtDownTest get() = binding.txtDownTest
-    private val txtSelectDepartment get() = binding.txtSelectDepartment
-    private val txtSelectMode get() = binding.txtSelectMode
-    private val txtTimeDoTest get() = binding.txtTimeDoTest
-    private val txtNumberQuestion get() = binding.txtNumberQuestion
-    private val txtDetail get() = binding.txtDetail
 
     private val GALLERY_RED_CODE: Int = 1000
     private var DEPARTMENT_ID: Int = -1
@@ -77,7 +45,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        (activity as HomeActivity).hideTabBar(scrollCreateTest)
+//        (activity as HomeActivity).hideTabBar(binding.scrollCreateTest)
 
         setBottomShare()
 
@@ -103,7 +71,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
         window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window?.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.white)
 
-        window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;//  set status text dark
+        window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR //  set status text dark
     }
 
     private fun View.hideKeyboard() {
@@ -111,30 +79,30 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
         inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.M)
     private fun initUi() {
 
         setStatusBar()
 
-        layoutCreateTestCover.setOnTouchListener { view, _ ->
+        binding.layoutCreateTestCover.setOnTouchListener { view, _ ->
             view.hideKeyboard()
             clearFocusTextView()
             false
         }
 
-        menuCreateTest.setOnClickListener {
+        binding.menuCreateTest.setOnClickListener {
             val popUpView: View = View.inflate(requireActivity(), R.layout.popup_create_test, null)
-            showMenuCreate(popUpView, menuCreateTest, 0, -30, Gravity.BOTTOM)
+            showMenuCreate(popUpView, binding.menuCreateTest, 0, -30, Gravity.BOTTOM)
         }
 
-        selectDepartment.setOnClickListener {
+        binding.selectDepartment.setOnClickListener {
             val popUpView: View = View.inflate(requireActivity(), R.layout.popup_select_partment, null)
             val width = ViewGroup.LayoutParams.WRAP_CONTENT
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
             val focusable = true
             val popupWindow = PopupWindow(popUpView, width, height, focusable)
-            popupWindow.showAsDropDown(selectDepartment, 0, -30, Gravity.BOTTOM)
+            popupWindow.showAsDropDown(binding.selectDepartment, 0, -30, Gravity.BOTTOM)
 
             val listDepartment: ArrayList<String> = arrayListOf()
             listDepartment.add("Khoa tự nhiên")
@@ -146,11 +114,11 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
             createDepartmentAdapter.onClickItem = {
                 DEPARTMENT_ID = it
                 popupWindow.dismiss()
-                txtSelectSubject.visibility = View.VISIBLE
-                layoutSelectSubject.visibility = View.VISIBLE
+                binding.txtSelectSubject.visibility = View.VISIBLE
+                binding.selectSubject.visibility = View.VISIBLE
             }
             createDepartmentAdapter.getStringItem = {
-                edtSelectDepartment.text = it
+                binding.edtSelectDepartment.text = it
             }
             val linear = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             val recyclerView: RecyclerView = popUpView.findViewById(R.id.recycleListTopic)
@@ -158,7 +126,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
             recyclerView.adapter = createDepartmentAdapter
         }
 
-        selectSubject.setOnClickListener {
+        binding.selectSubject.setOnClickListener {
             val popUpView: View = View.inflate(requireActivity(), R.layout.popup_select_partment, null)
             val width = ViewGroup.LayoutParams.WRAP_CONTENT
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -169,7 +137,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
                     Toast.makeText(requireActivity(),"Khoa chưa có môn",Toast.LENGTH_SHORT).show()
                 }else{
                     val popupWindow = PopupWindow(popUpView, width, height, focusable)
-                    popupWindow.showAsDropDown(selectSubject, 0, -30, Gravity.BOTTOM)
+                    popupWindow.showAsDropDown(binding.selectSubject, 0, -30, Gravity.BOTTOM)
 
                     val listDepartment: ArrayList<String> = arrayListOf()
                     for(i in 0 until it[DEPARTMENT_ID].subjects.size){
@@ -179,12 +147,12 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
                     createDepartmentAdapter.onClickItem = {
                         SUBJECT_ID = it
                         popupWindow.dismiss()
-                        viewModel.mPreferenceUtil.defaultPref().edit()
-                            .putInt(PreferenceKey.CREATE_SUBJECT_ID, it+1)
-                            .apply()
+                        viewModel.mPreferenceUtil.defaultPref().edit {
+                            putInt(PreferenceKey.CREATE_SUBJECT_ID, it + 1)
+                        }
                     }
                     createDepartmentAdapter.getStringItem = {
-                        edtSelectSubject.text = it
+                        binding.edtSelectSubject.text = it
                     }
                     val linear = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
                     val recyclerView: RecyclerView = popUpView.findViewById(R.id.recycleListTopic)
@@ -195,75 +163,95 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
 
         }
 
-        selectMode.setOnClickListener {
+        binding.selectMode.setOnClickListener {
             val popUpView: View = View.inflate(requireActivity(), R.layout.popup_select_mode, null)
             val width = ViewGroup.LayoutParams.WRAP_CONTENT
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
             val focusable = true
             val popupWindow = PopupWindow(popUpView, width, height, focusable)
-            popupWindow.showAsDropDown(selectMode, 0, -30, Gravity.BOTTOM)
+            popupWindow.showAsDropDown(binding.selectMode, 0, -30, Gravity.BOTTOM)
 
             val public: LinearLayout = popUpView.findViewById(R.id.selectPublic)
             val private: LinearLayout = popUpView.findViewById(R.id.selectPrivate)
 
             public.setOnClickListener {
-                edtSelectLevel.text = "Công khai"
+                binding.edtSelectLevel.text = "Công khai"
                 viewModel.mPreferenceUtil.defaultPref()
-                    .edit().putInt(PreferenceKey.CREATE_STATUS, 1)
-                    .apply()
+                    .edit {
+                        putInt(PreferenceKey.CREATE_STATUS, 1)
+                    }
                 popupWindow.dismiss()
             }
 
             private.setOnClickListener {
-                edtSelectLevel.text = "Riêng tư"
+                binding.edtSelectLevel.text = "Riêng tư"
                 viewModel.mPreferenceUtil.defaultPref()
-                    .edit().putInt(PreferenceKey.CREATE_STATUS, 2)
-                    .apply()
+                    .edit {
+                        putInt(PreferenceKey.CREATE_STATUS, 2)
+                    }
                 popupWindow.dismiss()
             }
         }
 
-        addCoverImage.setOnClickListener {
+        binding.addCoverImage.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             startActivityForResult(intent, GALLERY_RED_CODE)
         }
 
-        googleSheet.setOnClickListener {
+        binding.googleSheet.setOnClickListener {
             val intent = Intent(requireActivity(), LinkSheetActivity::class.java)
             startActivity(intent)
         }
 
-        createTest.setOnClickListener {
-                val title: String = edtSelectTitle.text.toString()
-                val department: String = edtSelectSubject.text.toString()
-                val time: String = edtSelectTime.text.toString()
-                val numberQuiz: String = edtSelectNumberQuiz.text.toString()
-                val describe: String = edtDescribeQuiz.text.toString()
+        binding.createTest.setOnClickListener {
+                val title: String = binding.edtSelectTitle.text.toString()
+                val department: String = binding.edtSelectSubject.text.toString()
+                val time: String = binding.edtSelectTime.text.toString()
+                val numberQuiz: String = binding.edtSelectNumberQuiz.text.toString()
+                val describe: String = binding.edtDescribeQuiz.text.toString()
 
                 if(title.isEmpty() || department.isEmpty() || time.isEmpty() || numberQuiz.isEmpty() || describe.isEmpty()){
                     Toast.makeText(requireActivity(), "Bạn chưa nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
                 }else{
                     viewModel.mPreferenceUtil.defaultPref()
-                        .edit().putString(PreferenceKey.CREATE_TITLE,title)
-                        .apply()
+                        .edit {
+                            putString(PreferenceKey.CREATE_TITLE, title)
+                        }
                     viewModel.mPreferenceUtil.defaultPref()
-                        .edit().putString(PreferenceKey.CREATE_DEPARTMENT,department)
-                        .apply()
+                        .edit {
+                            putString(
+                                PreferenceKey.CREATE_DEPARTMENT,
+                                department
+                            )
+                        }
                     viewModel.mPreferenceUtil.defaultPref()
-                        .edit().putInt(PreferenceKey.TIME_EXAM,time.toInt())
-                        .apply()
+                        .edit {
+                            putInt(PreferenceKey.TIME_EXAM, time.toInt())
+                        }
                     viewModel.mPreferenceUtil.defaultPref()
-                        .edit().putString(PreferenceKey.CREATE_DESCRIBE_QUIZ,describe)
-                        .apply()
+                        .edit {
+                            putString(
+                                PreferenceKey.CREATE_DESCRIBE_QUIZ,
+                                describe
+                            )
+                        }
                     if(uriImage.isEmpty()){
                         viewModel.mPreferenceUtil.defaultPref()
-                            .edit().putString(PreferenceKey.CREATE_URI_IMAGE_SUBJECT,"")
-                            .apply()
+                            .edit {
+                                putString(
+                                    PreferenceKey.CREATE_URI_IMAGE_SUBJECT,
+                                    ""
+                                )
+                            }
                     }else{
                         viewModel.mPreferenceUtil.defaultPref()
-                            .edit().putString(PreferenceKey.CREATE_URI_IMAGE_SUBJECT,uriImage)
-                            .apply()
+                            .edit {
+                                putString(
+                                    PreferenceKey.CREATE_URI_IMAGE_SUBJECT,
+                                    uriImage
+                                )
+                            }
                     }
                     val intent = Intent(requireActivity(), CreateTestActivity::class.java)
                     intent.putExtra("number_question",numberQuiz.toInt())
@@ -271,18 +259,18 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
                 }
         }
 
-        shareWithFacebook.setOnClickListener {
+        binding.root.findViewById<LinearLayout>(R.id.shareWithFacebook).setOnClickListener {
             val intent = Intent()
             intent.action = Intent.ACTION_VIEW
-            intent.data = Uri.parse("https://www.facebook.com")
+            intent.data = "https://www.facebook.com".toUri()
             startActivity(intent)
         }
 
-        shareWithMail.setOnClickListener {
+        binding.root.findViewById<LinearLayout>(R.id.shareWithMail).setOnClickListener {
             val intent = Intent()
             intent.action = Intent.ACTION_VIEW
             intent.data =
-                Uri.parse("https://accounts.google.com/v3/signin/identifier?dsh=S-620025444%3A1673854670857931&authuser=0&continue=http%3A%2F%2Fsupport.google.com%2Fmail%2Fanswer%2F8494%3Fhl%3Dvi%26co%3DGENIE.Platform%253DDesktop&ec=GAlAdQ&hl=vi&flowName=GlifWebSignIn&flowEntry=AddSession")
+                "https://accounts.google.com/v3/signin/identifier?dsh=S-620025444%3A1673854670857931&authuser=0&continue=http%3A%2F%2Fsupport.google.com%2Fmail%2Fanswer%2F8494%3Fhl%3Dvi%26co%3DGENIE.Platform%253DDesktop&ec=GAlAdQ&hl=vi&flowName=GlifWebSignIn&flowEntry=AddSession".toUri()
             startActivity(intent)
         }
     }
@@ -293,14 +281,14 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
         val layoutBottomShare = binding.root.findViewById<View>(R.id.layoutBottomShare)
         layoutBottomShare.setOnTouchListener { _, _ -> true }
         val bottomShareBehavior = BottomSheetBehavior.from(layoutBottomShare)
-        shareTest.setOnClickListener {
+        binding.shareTest.setOnClickListener {
             if (bottomShareBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
                 bottomShareBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             } else {
                 bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }
-        layoutCreateTest.setOnTouchListener { _, event ->
+        binding.layoutCreateTest.setOnTouchListener { _, event ->
             when(event.actionMasked){
                 MotionEvent.ACTION_UP->{
                     bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -310,7 +298,6 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
         }
     }
 
-
     /** Get Image from Storage*/
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -318,7 +305,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
 
         if (resultCode == AppCompatActivity.RESULT_OK) {
             if (requestCode == GALLERY_RED_CODE) {
-                imageCover.setImageURI(data?.data)
+                binding.imageCover.setImageURI(data?.data)
                 uriImage = data?.data.toString()
             }
         }
@@ -338,21 +325,21 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
     private fun setText() {
         val semibold: Typeface? =
             ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        txtAddTest.typeface = semibold
-        txtTiltle.typeface = semibold
-        txtDownTest.typeface = semibold
-        txtSelectDepartment.typeface = semibold
-        txtSelectMode.typeface = semibold
-        txtTimeDoTest.typeface = semibold
-        txtNumberQuestion.typeface = semibold
-        txtDetail.typeface = semibold
-        txtSelectSubject.typeface = semibold
+        binding.txtAddTest.typeface = semibold
+        binding.txtTiltle.typeface = semibold
+        binding.txtDownTest.typeface = semibold
+        binding.txtSelectDepartment.typeface = semibold
+        binding.txtSelectMode.typeface = semibold
+        binding.txtTimeDoTest.typeface = semibold
+        binding.txtNumberQuestion.typeface = semibold
+        binding.txtDetail.typeface = semibold
+        binding.txtSelectSubject.typeface = semibold
     }
 
     internal fun scrollTop(){
-        scrollCreateTest.post {
-            scrollCreateTest.fling(0)
-            scrollCreateTest.smoothScrollTo(0, 0)
+        binding.scrollCreateTest.post {
+            binding.scrollCreateTest.fling(0)
+            binding.scrollCreateTest.smoothScrollTo(0, 0)
         }
     }
 
@@ -374,9 +361,9 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
     }
 
     private fun clearFocusTextView() {
-        edtSelectTitle.clearFocus()
-        edtSelectTime.clearFocus()
-        edtSelectNumberQuiz.clearFocus()
-        edtDescribeQuiz.clearFocus()
+        binding.edtSelectTitle.clearFocus()
+        binding.edtSelectTime.clearFocus()
+        binding.edtSelectNumberQuiz.clearFocus()
+        binding.edtDescribeQuiz.clearFocus()
     }
 }
