@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
@@ -65,8 +64,7 @@ class MenuQuestionAdapter(val context: Context, private val listQuestion: List<P
     }
 
     private fun getListAnswer(key: String?): ArrayList<Int> {
-        val activity = context as AppCompatActivity
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val gson = Gson()
         val json: String? = prefs.getString(key, null)
         val type: Type = object : TypeToken<ArrayList<Int>>() {}.type

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
@@ -18,7 +17,9 @@ import com.example.appthitracnghiem.ui.home.home.system.adapter.DepartmentAdapte
 import com.example.appthitracnghiem.ui.home.home.user.FragmentFromUser
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.PreferenceUtil
-import com.squareup.picasso.Picasso
+import com.example.appthitracnghiem.utils.findAppCompatActivity
+import com.example.appthitracnghiem.utils.loadNetworkImage
+import androidx.core.content.edit
 
 class FromUserAdapter(
     private val listQuiz: List<Department>,
@@ -46,15 +47,12 @@ class FromUserAdapter(
 
     override fun onBindViewHolder(holder: FromUserAdapter.ViewHolderQuiz, position: Int) {
         val quiz: Department = listQuiz[position]
-        Picasso.get().load(quiz.image)
-            .placeholder(R.drawable.loadimage)
-            .error(R.drawable.errorimage)
-            .into(holder.image)
+        holder.image.loadNetworkImage(quiz.image)
         holder.title.text = quiz.title
         holder.description.text = quiz.description
 
         holder.itemView.setOnClickListener { v ->
-            val activity = v?.context as AppCompatActivity
+            val activity = v.context.findAppCompatActivity() ?: return@setOnClickListener
             val mPreferenceUtil = PreferenceUtil(activity)
             mPreferenceUtil.defaultPref().edit()
                 .putInt(PreferenceKey.TYPE, 1)
@@ -66,5 +64,5 @@ class FromUserAdapter(
             fm.add(R.id.changeIdHome, fragmentListDepartment).addToBackStack(null).commit()
 //            fragmentListDepartment.arguments = bundle
         }
-        }
+    }
 }

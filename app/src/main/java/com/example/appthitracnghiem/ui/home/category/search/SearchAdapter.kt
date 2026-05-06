@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.data.remote.entity.SearchResponse
 import com.example.appthitracnghiem.ui.department.listtest.FragmentListTest
-import com.squareup.picasso.Picasso
+import com.example.appthitracnghiem.utils.loadNetworkImage
 
 class SearchAdapter(
     val context: Context,
@@ -39,10 +39,13 @@ class SearchAdapter(
     override fun onBindViewHolder(holder: SearchAdapter.SearchViewHolder, position: Int) {
         val search: SearchResponse.Results = listSearch[position]
         holder.title.text = search.title
-        Picasso.get().load("https://storage.googleapis.com/quiz-app-storage/subject/"+search.image)
-            .placeholder(R.drawable.loadimage)
-            .error(R.drawable.errorimage)
-            .into(holder.image)
+        val imagePath = search.image?.trim().orEmpty()
+        val imageUrl = if (imagePath.isNotEmpty()) {
+            "https://storage.googleapis.com/quiz-app-storage/subject/$imagePath"
+        } else {
+            ""
+        }
+        holder.image.loadNetworkImage(imageUrl)
         holder.description.text = search.description + " • " + search.count_exam + " đề"
 
 //        holder.itemView.setOnClickListener {

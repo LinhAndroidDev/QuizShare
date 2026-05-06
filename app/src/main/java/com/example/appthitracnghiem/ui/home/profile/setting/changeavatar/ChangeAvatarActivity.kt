@@ -26,8 +26,8 @@ import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.utils.Const
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.UriConvertFile
+import com.example.appthitracnghiem.utils.loadNetworkImage
 import com.soundcloud.android.crop.Crop
-import com.squareup.picasso.Picasso
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -119,12 +119,11 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
 
         val strImage: String = intent.getStringExtra("Uri").toString()
         val uriImage: Uri = Uri.parse(strImage)
-        Picasso.get().load(uriImage)
-            .placeholder(R.drawable.loadimage)
-            .error(R.drawable.icon_error)
-            .centerCrop()
-            .fit()
-            .into(binding.avatarEdit)
+        binding.avatarEdit.loadNetworkImage(
+            uri = uriImage,
+            errorRes = R.drawable.icon_error,
+            transform = { centerCrop() },
+        )
 
         val strPath: String = UriConvertFile.getFileFromUri(this,uriImage).toString()
         val file = File(strPath)

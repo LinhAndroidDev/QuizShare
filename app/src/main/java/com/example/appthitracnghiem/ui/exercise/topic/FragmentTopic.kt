@@ -16,7 +16,7 @@ import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.ExamActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
-import com.squareup.picasso.Picasso
+import com.example.appthitracnghiem.utils.loadNetworkImage
 import java.text.SimpleDateFormat
 import java.util.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,14 +50,11 @@ class FragmentTopic : BaseFragment<TopicViewModel>() {
             binding.infoTopic.visibility = View.VISIBLE
             binding.memoryTopic.visibility = View.VISIBLE
             binding.nameTopic.text = name
-            if(avt!!.isEmpty()){
-                binding.avtTopic.setImageResource(R.drawable.logo6)
-            }else{
-                Picasso.get().load(avt)
-                    .placeholder(R.drawable.loadimage)
-                    .error(R.drawable.logo6)
-                    .into(binding.avtTopic)
-            }
+            binding.avtTopic.loadNetworkImage(
+                avt,
+                emptyUrlRes = R.drawable.logo6,
+                errorRes = R.drawable.logo6,
+            )
         }
 
         val loading = ProgressDialog(requireActivity())

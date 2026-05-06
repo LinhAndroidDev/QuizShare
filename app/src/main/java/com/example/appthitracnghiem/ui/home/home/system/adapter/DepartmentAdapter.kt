@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
@@ -15,7 +14,8 @@ import com.example.appthitracnghiem.model.Department
 import com.example.appthitracnghiem.ui.department.listdepartment.FragmentListDepartment
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.PreferenceUtil
-import com.squareup.picasso.Picasso
+import com.example.appthitracnghiem.utils.findAppCompatActivity
+import com.example.appthitracnghiem.utils.loadNetworkImage
 
 class DepartmentAdapter(
     private val listQuiz: List<Department>,
@@ -36,15 +36,12 @@ class DepartmentAdapter(
 
     override fun onBindViewHolder(holder: ViewHolderQuiz, position: Int) {
         val quiz: Department = listQuiz[position]
-        Picasso.get().load(quiz.image)
-            .placeholder(R.drawable.loadimage)
-            .error(R.drawable.errorimage)
-            .into(holder.image)
+        holder.image.loadNetworkImage(quiz.image)
         holder.title.text = quiz.title
         holder.description.text = quiz.description
 
         holder.itemView.setOnClickListener { v ->
-            val activity = v?.context as AppCompatActivity
+            val activity = v.context.findAppCompatActivity() ?: return@setOnClickListener
             val mPreferenceUtil = PreferenceUtil(activity)
             mPreferenceUtil.defaultPref().edit()
                 .putInt(PreferenceKey.TYPE, 0)

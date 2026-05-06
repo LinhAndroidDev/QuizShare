@@ -13,7 +13,7 @@ import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.profile.setting.SettingActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
-import com.squareup.picasso.Picasso
+import com.example.appthitracnghiem.utils.loadNetworkImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
@@ -35,15 +35,11 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
         val avt = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.USER_AVATAR,"")
 
-        if(avt?.isEmpty() == true){
-            binding.avatarUserProfile.setImageResource(R.drawable.logo6)
-        }else{
-            Picasso.get()
-                .load(avt)
-                .placeholder(R.drawable.loadimage)
-                .error(R.drawable.logo6)
-                .into(binding.avatarUserProfile)
-        }
+        binding.avatarUserProfile.loadNetworkImage(
+            avt,
+            emptyUrlRes = R.drawable.logo6,
+            errorRes = R.drawable.logo6,
+        )
 
 //        (activity as HomeActivity).hideTabBar(scrollProfile)
 

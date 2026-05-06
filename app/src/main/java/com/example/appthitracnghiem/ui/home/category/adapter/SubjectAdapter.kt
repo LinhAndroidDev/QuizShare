@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.Subject
-import com.squareup.picasso.Picasso
+import com.example.appthitracnghiem.utils.loadNetworkImage
 
 class SubjectAdapter(private val listSubject: ArrayList<Subject>, val context: Context) :
     RecyclerView.Adapter<SubjectAdapter.SubjectViewHolder>() {
@@ -27,10 +27,7 @@ class SubjectAdapter(private val listSubject: ArrayList<Subject>, val context: C
 
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
         val subject: Subject = listSubject[position]
-        Picasso.get().load(subject.image)
-            .placeholder(R.drawable.loadimage)
-            .error(R.drawable.errorimage)
-            .into(holder.imageSubject)
+        holder.imageSubject.loadNetworkImage(subject.image)
         holder.nameSubject.text = subject.title
 //        holder.detailSubject.text = subject.description
     }

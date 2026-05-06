@@ -8,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.data.remote.entity.SaveSubjectResponse
 import com.example.appthitracnghiem.ui.home.history.saved.test.FragmentHistoryTestSaved
-import com.squareup.picasso.Picasso
+import com.example.appthitracnghiem.utils.findAppCompatActivity
+import com.example.appthitracnghiem.utils.loadNetworkImage
 
 class HistorySubjectAdapter(val context: Context, private val listSubject: ArrayList<SaveSubjectResponse.Result>?) : RecyclerView.Adapter<HistorySubjectAdapter.SubjectViewHolder>() {
 
@@ -36,14 +36,11 @@ class HistorySubjectAdapter(val context: Context, private val listSubject: Array
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
         val savedSubject : SaveSubjectResponse.Result = listSubject!![position]
         holder.title.text = savedSubject.title
-        Picasso.get().load(savedSubject.image)
-            .placeholder(R.drawable.loadimage)
-            .error(R.drawable.errorimage)
-            .into(holder.image)
+        holder.image.loadNetworkImage(savedSubject.image)
         holder.description.text = savedSubject.department_title + " • " +  savedSubject.exem_number.toString() + " đề"
 
         holder.itemView.setOnClickListener {
-            val activity = context as AppCompatActivity
+            val activity = context.findAppCompatActivity() ?: return@setOnClickListener
             val bundle = Bundle()
             bundle.putInt("subject_saved_id", savedSubject.id)
             val fragmentHistoryTestSaved = FragmentHistoryTestSaved()

@@ -7,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.Department
 import com.example.appthitracnghiem.ui.home.history.saved.subject.FragmentHistorySubjectSaved
-import com.squareup.picasso.Picasso
+import com.example.appthitracnghiem.utils.findAppCompatActivity
+import com.example.appthitracnghiem.utils.loadNetworkImage
 
 class HistoryDepartmentAdapter(val context: Context, private val listTest: List<Department>) :
     RecyclerView.Adapter<HistoryDepartmentAdapter.DepartmentViewHolder>() {
@@ -38,14 +38,11 @@ class HistoryDepartmentAdapter(val context: Context, private val listTest: List<
     ) {
         val department : Department = listTest[position]
         holder.title.text = department.title
-        Picasso.get().load(department.image)
-            .placeholder(R.drawable.loadimage)
-            .error(R.drawable.errorimage)
-            .into(holder.image)
+        holder.image.loadNetworkImage(department.image)
         holder.description.text = department.description
 
         holder.itemView.setOnClickListener {
-            val activity = context as AppCompatActivity
+            val activity = context.findAppCompatActivity() ?: return@setOnClickListener
             val fragmentHistorySubjectSaved = FragmentHistorySubjectSaved()
             val bundle = Bundle()
             bundle.putInt("department_id_saved", department.id)

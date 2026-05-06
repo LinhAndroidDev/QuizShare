@@ -9,14 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.ExamSaved
 import com.example.appthitracnghiem.ui.exercise.topic.ExerciseActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.PreferenceUtil
-import com.squareup.picasso.Picasso
+import com.example.appthitracnghiem.utils.findAppCompatActivity
+import com.example.appthitracnghiem.utils.loadNetworkImage
 
 class HistoryTestAdapter(val context: Context, private val listTestSaved: ArrayList<ExamSaved>) : RecyclerView.Adapter<HistoryTestAdapter.TestViewHolder>() {
 
@@ -38,22 +38,19 @@ class HistoryTestAdapter(val context: Context, private val listTestSaved: ArrayL
     override fun onBindViewHolder(holder: TestViewHolder, position: Int) {
         val examSaved : ExamSaved = listTestSaved[position]
         holder.title.text = examSaved.title
-        Picasso.get().load(examSaved.image)
-            .placeholder(R.drawable.loadimage)
-            .error(R.drawable.errorimage)
-            .into(holder.image)
+        holder.image.loadNetworkImage(examSaved.image)
         holder.description.maxLines = 1
         holder.description.ellipsize = TextUtils.TruncateAt.END
         holder.description.text = "Lượt tạo: " + examSaved.saved_num + "| Người tạo: " + examSaved.author_name
 
         holder.itemView.setOnClickListener {
-            val activity = context as AppCompatActivity
+            val activity = context.findAppCompatActivity() ?: return@setOnClickListener
             val mPreferenceUtil = PreferenceUtil(activity)
             mPreferenceUtil.defaultPref().edit()
                 .putInt(PreferenceKey.TYPE, 1)
                 .apply()
-            val intent = Intent(context, ExerciseActivity::class.java)
-            context.startActivity(intent)
+            val intent = Intent(activity, ExerciseActivity::class.java)
+            activity.startActivity(intent)
         }
     }
 

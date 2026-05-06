@@ -8,14 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.HistoryExam
 import com.example.appthitracnghiem.ui.home.history.test.topic.HistoryTopicActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.PreferenceUtil
-import com.squareup.picasso.Picasso
+import com.example.appthitracnghiem.utils.findAppCompatActivity
+import com.example.appthitracnghiem.utils.loadNetworkImage
 
 class HistoryTestAdapter(val context: Context, private val listTest: ArrayList<HistoryExam>) : RecyclerView.Adapter<HistoryTestAdapter.TestViewHolder>() {
 
@@ -36,19 +36,12 @@ class HistoryTestAdapter(val context: Context, private val listTest: ArrayList<H
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: TestViewHolder, position: Int) {
         val historyExam: HistoryExam = listTest[position]
-        if(historyExam.image.toString().length > 7){
-            Picasso.get().load(historyExam.image)
-                .placeholder(R.drawable.loadimage)
-                .error(R.drawable.errorimage)
-                .into(holder.image)
-        }else{
-            holder.image.setImageResource(R.drawable.logo6)
-        }
+        holder.image.loadNetworkImage(historyExam.image)
         holder.title.text = historyExam.title
         holder.description.text = historyExam.score?.toInt().toString() + " điểm"
 
         holder.itemView.setOnClickListener{
-            val activity = it.context as AppCompatActivity
+            val activity = it.context.findAppCompatActivity() ?: return@setOnClickListener
             val mPreferenceUtils = PreferenceUtil(activity)
             historyExam.exam_history_id?.let { id ->
                 mPreferenceUtils.defaultPref().edit()
@@ -56,7 +49,7 @@ class HistoryTestAdapter(val context: Context, private val listTest: ArrayList<H
                     .apply()
             }
             val intent = Intent(activity, HistoryTopicActivity::class.java)
-            context.startActivity(intent)
+            activity.startActivity(intent)
         }
     }
 

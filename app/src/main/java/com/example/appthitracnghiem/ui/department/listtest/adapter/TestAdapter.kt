@@ -18,7 +18,7 @@ import com.example.appthitracnghiem.model.Exam
 import com.example.appthitracnghiem.ui.exercise.topic.ExerciseActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.PreferenceUtil
-import com.squareup.picasso.Picasso
+import com.example.appthitracnghiem.utils.loadNetworkImage
 
 class TestAdapter(
     val context: Context,
@@ -46,10 +46,7 @@ class TestAdapter(
 
     override fun onBindViewHolder(holder: TestAdapter.TestViewHolder, position: Int) {
         val exam: Exam = listTest[position]
-        Picasso.get().load(exam.image)
-            .error(R.drawable.errorimage)
-            .placeholder(R.drawable.loadimage)
-            .into(holder.image)
+        holder.image.loadNetworkImage(exam.image)
         holder.title.text = exam.title
         holder.description.text = exam.number.toString() + " Câu trắc nghiệm"
 

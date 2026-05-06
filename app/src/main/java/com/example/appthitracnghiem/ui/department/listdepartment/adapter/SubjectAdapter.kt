@@ -7,14 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.DetailDepartment
 import com.example.appthitracnghiem.model.Subject
 import com.example.appthitracnghiem.ui.department.listtest.FragmentListTest
-import com.squareup.picasso.Picasso
+import com.example.appthitracnghiem.utils.findAppCompatActivity
+import com.example.appthitracnghiem.utils.loadNetworkImage
 
 class SubjectAdapter(val context: Context, private val listSubject: List<Subject>) :
     RecyclerView.Adapter<SubjectAdapter.ViewHolderSubject>() {
@@ -36,10 +36,7 @@ class SubjectAdapter(val context: Context, private val listSubject: List<Subject
 
     override fun onBindViewHolder(holder: SubjectAdapter.ViewHolderSubject, position: Int) {
         val subject: Subject = listSubject[position]
-        Picasso.get().load(subject.image)
-            .error(R.drawable.errorimage)
-            .placeholder(R.drawable.loadimage)
-            .into(holder.image)
+        holder.image.loadNetworkImage(subject.image)
         holder.title.text = subject.title
         holder.description.text = subject.description
 
@@ -47,7 +44,7 @@ class SubjectAdapter(val context: Context, private val listSubject: List<Subject
             val bundle = Bundle()
             bundle.putInt("ID", subject.id)
             bundle.putString("title", subject.title)
-            val activity = context as AppCompatActivity
+            val activity = context.findAppCompatActivity() ?: return@setOnClickListener
             val fragmentListTest = FragmentListTest()
             val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
             fm.add(R.id.changeIdHome, fragmentListTest).addToBackStack(null).commit()

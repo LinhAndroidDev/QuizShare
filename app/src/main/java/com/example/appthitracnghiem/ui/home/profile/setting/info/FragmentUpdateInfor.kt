@@ -19,7 +19,7 @@ import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.home.profile.setting.changeavatar.ChangeAvatarActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
-import com.squareup.picasso.Picasso
+import com.example.appthitracnghiem.utils.loadNetworkImage
 import java.text.SimpleDateFormat
 import java.util.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,15 +67,11 @@ class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
         val avt = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.USER_AVATAR,"")
 
-        if(avt?.isEmpty() == true){
-            binding.avatarUpdateInfo.setImageResource(R.drawable.logo6)
-        }else{
-            Picasso.get()
-                .load(avt)
-                .placeholder(R.drawable.loadimage)
-                .error(R.drawable.logo6)
-                .into(binding.avatarUpdateInfo)
-        }
+        binding.avatarUpdateInfo.loadNetworkImage(
+            avt,
+            emptyUrlRes = R.drawable.logo6,
+            errorRes = R.drawable.logo6,
+        )
 
         binding.backUpdateInfo.setOnClickListener {
             activity?.onBackPressed()

@@ -18,7 +18,7 @@ import com.example.appthitracnghiem.ui.home.HomeViewModel
 import com.example.appthitracnghiem.ui.home.home.adapter.ViewPagerDepartment
 import com.example.appthitracnghiem.ui.home.profile.FragmentProfile
 import com.example.appthitracnghiem.utils.PreferenceKey
-import com.squareup.picasso.Picasso
+import com.example.appthitracnghiem.utils.loadNetworkImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
@@ -103,17 +103,14 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
         }
 
         viewModel.avartarUserLiveData.observe(viewLifecycleOwner) {
-            if(it.isEmpty()){
-                binding.avatarUseHome.setImageResource(R.drawable.logo6)
-            }else{
-                viewModel.mPreferenceUtil.defaultPref()
-                    .edit().putString(PreferenceKey.USER_AVATAR,it)
-                    .apply()
-                Picasso.get().load(it)
-                    .placeholder(R.drawable.loadimage)
-                    .error(R.drawable.logo6)
-                    .into(binding.avatarUseHome)
-            }
+            viewModel.mPreferenceUtil.defaultPref()
+                .edit().putString(PreferenceKey.USER_AVATAR,it)
+                .apply()
+            binding.avatarUseHome.loadNetworkImage(
+                url = it,
+                emptyUrlRes = R.drawable.logo6,
+                errorRes = R.drawable.logo6,
+            )
         }
     }
 
