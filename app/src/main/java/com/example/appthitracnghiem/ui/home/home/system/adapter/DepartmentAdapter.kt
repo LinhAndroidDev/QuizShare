@@ -1,7 +1,6 @@
 package com.example.appthitracnghiem.ui.home.home.system.adapter
 
 import android.content.Context
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.PreferenceUtil
 import com.example.appthitracnghiem.utils.findAppCompatActivity
 import com.example.appthitracnghiem.utils.loadNetworkImage
+import androidx.core.content.edit
 
 class DepartmentAdapter(
     private val listQuiz: List<Department>,
@@ -43,12 +43,12 @@ class DepartmentAdapter(
         holder.itemView.setOnClickListener { v ->
             val activity = v.context.findAppCompatActivity() ?: return@setOnClickListener
             val mPreferenceUtil = PreferenceUtil(activity)
-            mPreferenceUtil.defaultPref().edit()
-                .putInt(PreferenceKey.TYPE, 0)
-                .apply()
-            mPreferenceUtil.defaultPref().edit()
-                .putInt(PreferenceKey.ID_DEPARTMENT,position)
-                .apply()
+            mPreferenceUtil.defaultPref().edit {
+                putInt(PreferenceKey.TYPE, 0)
+            }
+            mPreferenceUtil.defaultPref().edit {
+                putInt(PreferenceKey.ID_DEPARTMENT, quiz.id)
+            }
             val fragmentListDepartment = FragmentListDepartment()
             val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
             fm.add(R.id.changeIdHome, fragmentListDepartment).addToBackStack(null).commit()

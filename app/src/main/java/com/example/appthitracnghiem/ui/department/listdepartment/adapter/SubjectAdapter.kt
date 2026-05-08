@@ -28,13 +28,13 @@ class SubjectAdapter(val context: Context, private val listSubject: List<Subject
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): SubjectAdapter.ViewHolderSubject {
+    ): ViewHolderSubject {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_general, parent, false)
         return ViewHolderSubject(itemView)
     }
 
-    override fun onBindViewHolder(holder: SubjectAdapter.ViewHolderSubject, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolderSubject, position: Int) {
         val subject: Subject = listSubject[position]
         holder.image.loadNetworkImage(subject.image)
         holder.title.text = subject.title

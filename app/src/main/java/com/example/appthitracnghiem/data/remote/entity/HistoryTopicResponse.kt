@@ -7,6 +7,7 @@ class HistoryTopicResponse(
     ) : BaseResponse<HistoryTopicResponse.Results>() {
     data class Results(
         val id: Int?,
+        val exam_id: Int?,
         val description: String?,
         val exam_title: String?,
         val time: Int?,

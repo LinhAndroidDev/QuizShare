@@ -15,15 +15,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.DetailDepartment
 import com.example.appthitracnghiem.model.Subject
-import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.Adapter
 
 class ListDepartmentAdapter(
     val context: Context,
-    var listDepartment: MutableList<DetailDepartment>
-) :
-    RecyclerView.Adapter<ListDepartmentAdapter.ViewholderDepartment>(), Filterable {
+    initialList: MutableList<DetailDepartment>,
+) : RecyclerView.Adapter<ListDepartmentAdapter.ViewholderDepartment>(), Filterable {
 
-    private var listDepartmentOlds: MutableList<DetailDepartment> = listDepartment
+    /** Full tree (departments + all subjects) used when clearing search or re-filtering. */
+    private var fullList: MutableList<DetailDepartment> = snapshotDepartments(initialList)
+
+    /** What is currently shown (may reflect subject search). */
+    var listDepartment: MutableList<DetailDepartment> = snapshotDepartments(fullList)
+        private set
 
     class ViewholderDepartment(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var txtNameDepartment: TextView = itemView.findViewById(R.id.txtNameDepartment)
@@ -32,22 +35,28 @@ class ListDepartmentAdapter(
             itemView.findViewById(R.id.listSubjectDepartment)
     }
 
+    fun replaceAll(departments: MutableList<DetailDepartment>) {
+        fullList = snapshotDepartments(departments)
+        listDepartment = snapshotDepartments(fullList)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): ListDepartmentAdapter.ViewholderDepartment {
+    ): ViewholderDepartment {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.layout_detail_department, parent, false)
         return ViewholderDepartment(itemView)
     }
 
     override fun onBindViewHolder(
-        holder: ListDepartmentAdapter.ViewholderDepartment,
+        holder: ViewholderDepartment,
         position: Int,
     ) {
         val detailDepartment: DetailDepartment = listDepartment[position]
         holder.txtNameDepartment.text = detailDepartment.title
-        val semibold: Typeface? = ResourcesCompat.getFont(context,R.font.svn_gilroy_semibold)
+        val semibold: Typeface? = ResourcesCompat.getFont(context, R.font.svn_gilroy_semibold)
         holder.txtNameDepartment.typeface = semibold
         val linearLayoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -57,41 +66,48 @@ class ListDepartmentAdapter(
         holder.recycleViewListSubjectDepartment.adapter = subjectAdapter
     }
 
-    override fun getItemCount(): Int {
-        return listDepartment.size
+    override fun getItemCount(): Int = listDepartment.size
+
+    override fun getFilter(): Filter = SubjectInDepartmentFilter()
+
+    private inner class SubjectInDepartmentFilter : Filter() {
+        override fun performFiltering(strTxt: CharSequence?): FilterResults {
+            val q = strTxt.toString().trim().lowercase()
+            val resultList: MutableList<DetailDepartment> = if (q.isEmpty()) {
+                snapshotDepartments(fullList)
+            } else {
+                fullList.mapNotNull { dept ->
+                    val matched = dept.subjects.filter { sub ->
+                        sub.title.lowercase().contains(q) ||
+                            sub.description.lowercase().contains(q)
+                    }
+                    if (matched.isEmpty()) null
+                    else DetailDepartment(dept.id, dept.exam_num, dept.title, matched)
+                }.toMutableList()
+            }
+            return FilterResults().apply { values = resultList }
+        }
+
+        @SuppressLint("NotifyDataSetChanged")
+        override fun publishResults(strTxt: CharSequence?, filterResults: FilterResults?) {
+            @Suppress("UNCHECKED_CAST")
+            val values = filterResults?.values as? MutableList<DetailDepartment> ?: return
+            listDepartment = values
+            notifyDataSetChanged()
+        }
     }
 
-    override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(strTxt: CharSequence?): FilterResults {
-                val strSearch: String = strTxt.toString().lowercase()
-
-                listDepartment = if(strSearch.isEmpty()){
-                    listDepartmentOlds
-                }else{
-                    val list: MutableList<DetailDepartment> = mutableListOf()
-                    for (department in listDepartmentOlds) {
-                        if(department.title.lowercase().contains(strSearch)){
-                            list.add(department)
-                        }
-                    }
-
-                    list
-                }
-
-                val filterResults = FilterResults()
-                filterResults.values = listDepartment
-                return filterResults
-            }
-
-            @SuppressLint("NotifyDataSetChanged")
-            override fun publishResults(strTxt: CharSequence?, filterResults: FilterResults?) {
-                if(filterResults?.values != null){
-                    listDepartment = filterResults.values as MutableList<DetailDepartment>
-                    notifyDataSetChanged()
-                }
-            }
-
-        }
+    companion object {
+        private fun snapshotDepartments(source: MutableList<DetailDepartment>): MutableList<DetailDepartment> =
+            source.map { dept ->
+                DetailDepartment(
+                    dept.id,
+                    dept.exam_num,
+                    dept.title,
+                    dept.subjects.map { sub ->
+                        Subject(sub.id, sub.image, sub.title, sub.description)
+                    },
+                )
+            }.toMutableList()
     }
 }

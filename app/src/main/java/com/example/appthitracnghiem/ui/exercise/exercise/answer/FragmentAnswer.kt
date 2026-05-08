@@ -77,14 +77,16 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
             }
         }
 
-        viewModel.listExamQuestionLiveData.observe(viewLifecycleOwner) {
-            listExamQuestion = it
-            sizeListQuestion = it.size
-            for (i in 0 until sizeListQuestion) {
-                listAnswer.add(-1)
+        viewModel.listExamQuestionLiveData.observe(viewLifecycleOwner) { examQuestions ->
+            examQuestions?.let {
+                listExamQuestion = it
+                sizeListQuestion = it.size
+                for (i in 0 until sizeListQuestion) {
+                    listAnswer.add(-1)
+                }
+                binding.txtPositionQuizAnswer.text = "Câu " + (positiveQuestion+1) + " trên " + sizeListQuestion
+                setTextView(positiveQuestion)
             }
-            binding.txtPositionQuizAnswer.text = "Câu " + (positiveQuestion+1) + " trên " + sizeListQuestion
-            setTextView(positiveQuestion)
         }
 
         val userId = viewModel.mPreferenceUtil.defaultPref()
@@ -96,7 +98,9 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         viewModel.getExamResult(RequestAnswer(userId, idHistoryExam))
 
         viewModel.listAnswerLiveData.observe(viewLifecycleOwner) { examResult ->
-            JSONObject(examResult).toMap()
+            if (!examResult.isNullOrBlank()) {
+                runCatching { JSONObject(examResult).toMap() }
+            }
         }
     }
 

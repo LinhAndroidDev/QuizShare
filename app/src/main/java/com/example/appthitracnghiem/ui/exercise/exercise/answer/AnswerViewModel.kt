@@ -8,13 +8,14 @@ import com.example.appthitracnghiem.data.remote.safeApiCall
 import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.ui.base.BaseViewModel
 import com.example.appthitracnghiem.ui.exercise.exercise.exam.RequestExamQuestion
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AnswerViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
-    val listExamQuestionLiveData = MutableLiveData<ArrayList<ExamQuestion>>()
+    val listExamQuestionLiveData = MutableLiveData<ArrayList<ExamQuestion>?>()
     val title = MutableLiveData<String>()
     val loadingLiveData = MutableLiveData<Boolean>()
     val listAnswerLiveData = MutableLiveData<String>()
@@ -35,7 +36,10 @@ class AnswerViewModel @Inject constructor(private val apiService: ApiService) : 
         viewModelScope.launch {
             val result = safeApiCall { apiService.getExamResult(requestAnswer) }
             when (result) {
-                is ResultState.Success -> listAnswerLiveData.value = result.data.result?.exam_result
+                is ResultState.Success -> {
+                    val map = result.data.result?.exam_result
+                    listAnswerLiveData.value = Gson().toJson(map ?: emptyMap<String, Int?>())
+                }
                 is ResultState.Error -> errorApiLiveData.value = result.message
             }
         }

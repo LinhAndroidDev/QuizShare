@@ -48,19 +48,28 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
             }
         }
 
-        viewModel.listDepartmentLiveData.observe(viewLifecycleOwner){ listDepartment->
-//            val bundle = requireArguments()
-//            val id: Int = bundle.getInt("id_department")
-//            if(id != null){
-//                listDepartmentAdapter = ListDepartmentAdapter(requireActivity(), listDepartment[id])
-//            }{
-                listDepartmentAdapter = ListDepartmentAdapter(requireActivity(), listDepartment)
-//            }
+        viewModel.listDepartmentLiveData.observe(viewLifecycleOwner) { apiDepartments ->
+            val selectedId = viewModel.mPreferenceUtil.defaultPref()
+                .getInt(PreferenceKey.ID_DEPARTMENT, -1)
+            val displayList = if (selectedId > 0) {
+                apiDepartments.filter { it.id == selectedId }.toMutableList()
+            } else {
+                apiDepartments.toMutableList()
+            }
 
-            val linear = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
-            listDepartmentAdapter.listDepartment =  listDepartment
-            binding.recycleDetailListDepartment.layoutManager = linear
-            binding.recycleDetailListDepartment.adapter = listDepartmentAdapter
+            if (!::listDepartmentAdapter.isInitialized) {
+                listDepartmentAdapter = ListDepartmentAdapter(requireActivity(), displayList)
+                val linear = LinearLayoutManager(
+                    requireActivity(),
+                    LinearLayoutManager.VERTICAL,
+                    false,
+                )
+                binding.recycleDetailListDepartment.layoutManager = linear
+                binding.recycleDetailListDepartment.adapter = listDepartmentAdapter
+            } else {
+                listDepartmentAdapter.replaceAll(displayList)
+            }
+            binding.searchDepartment.setText("")
         }
 
         userId = viewModel.mPreferenceUtil.defaultPref()
@@ -85,7 +94,9 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                listDepartmentAdapter.filter.filter(p0)
+                if (::listDepartmentAdapter.isInitialized) {
+                    listDepartmentAdapter.filter.filter(p0)
+                }
             }
 
             override fun afterTextChanged(p0: Editable?) {

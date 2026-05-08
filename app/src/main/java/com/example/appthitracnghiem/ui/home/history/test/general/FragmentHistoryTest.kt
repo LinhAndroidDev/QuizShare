@@ -49,29 +49,31 @@ class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
             }
         }
 
-        viewModel.listExamHistoryLiveData.observe(viewLifecycleOwner){
-            val linear = object : LinearLayoutManager(requireActivity()){
-                override fun canScrollVertically() = false
-            }
-            val linearUser = object : LinearLayoutManager(requireActivity()){
-                override fun canScrollVertically() = false
-            }
-            val listSystem: ArrayList<HistoryExam> = arrayListOf()
-            val listUser: ArrayList<HistoryExam> = arrayListOf()
-            for(i in 0 until it.size){
-                if(it[i].user_create == null){
-                    listSystem.add(it[i])
-                }else{
-                    listUser.add(it[i])
+        viewModel.listExamHistoryLiveData.observe(viewLifecycleOwner){ listExamHistory ->
+            listExamHistory?.let {
+                val linear = object : LinearLayoutManager(requireActivity()){
+                    override fun canScrollVertically() = false
                 }
-            }
-            testAdapter = HistoryTestAdapter(requireActivity(),listSystem)
-            binding.listTestFromSystem.layoutManager = linear
-            binding.listTestFromSystem.adapter = testAdapter
+                val linearUser = object : LinearLayoutManager(requireActivity()){
+                    override fun canScrollVertically() = false
+                }
+                val listSystem: ArrayList<HistoryExam> = arrayListOf()
+                val listUser: ArrayList<HistoryExam> = arrayListOf()
+                for(i in 0 until it.size){
+                    if(it[i].user_create.isNullOrBlank()){
+                        listSystem.add(it[i])
+                    }else{
+                        listUser.add(it[i])
+                    }
+                }
+                testAdapter = HistoryTestAdapter(requireActivity(),listSystem)
+                binding.listTestFromSystem.layoutManager = linear
+                binding.listTestFromSystem.adapter = testAdapter
 
-            testAdapterUser = HistoryTestAdapter(requireActivity(),listUser)
-            binding.listTestFromUser.layoutManager = linearUser
-            binding.listTestFromUser.adapter = testAdapterUser
+                testAdapterUser = HistoryTestAdapter(requireActivity(),listUser)
+                binding.listTestFromUser.layoutManager = linearUser
+                binding.listTestFromUser.adapter = testAdapterUser
+            }
         }
     }
 

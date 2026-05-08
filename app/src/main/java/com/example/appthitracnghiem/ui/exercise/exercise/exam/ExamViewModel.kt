@@ -1,5 +1,6 @@
 package com.example.appthitracnghiem.ui.exercise.exercise.exam
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.appthitracnghiem.core.ResultState
@@ -24,7 +25,10 @@ class ExamViewModel @Inject constructor(private val apiService: ApiService) : Ba
             loadingLiveData.value = false
             when (result) {
                 is ResultState.Success -> listExamQuestionLiveData.value = result.data.result.exam_question_list
-                is ResultState.Error -> errorApiLiveData.value = result.message
+                is ResultState.Error -> {
+                    Log.e("ExamViewModel", "Error fetching exam questions: ${result.message}")
+                    errorApiLiveData.value = result.message
+                }
             }
         }
     }

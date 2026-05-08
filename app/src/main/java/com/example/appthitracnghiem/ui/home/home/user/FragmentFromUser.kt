@@ -35,6 +35,9 @@ class FragmentFromUser : BaseFragment<FromUserViewModel>() {
         binding.recycleListFromUser.layoutManager = linearLayoutManager
 
         binding.seeAllUser.setOnClickListener {
+            viewModel.mPreferenceUtil.defaultPref().edit()
+                .remove(PreferenceKey.ID_DEPARTMENT)
+                .apply()
             val fragmentListDepartment = FragmentListDepartment()
             val fm: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
             fm.add(R.id.changeIdHome,fragmentListDepartment).addToBackStack(null).commit()

@@ -23,9 +23,10 @@ class HistoryTopicViewModel @Inject constructor(private val apiService: ApiServi
             isLoadingLiveData.value = false
             when (result) {
                 is ResultState.Success -> {
-                    result.data.result.id?.let { id ->
+                    // Backend: id = exam_history id; exam_id = exams.id (dùng cho examListQuestion)
+                    result.data.result.exam_id?.let { examId ->
                         mPreferenceUtil.defaultPref().edit()
-                            .putInt(PreferenceKey.ID_EXAM, id)
+                            .putInt(PreferenceKey.ID_EXAM, examId)
                             .apply()
                     }
                     isSuccessfulLiveData.value = true

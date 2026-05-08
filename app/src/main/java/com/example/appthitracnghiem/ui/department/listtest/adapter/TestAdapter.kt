@@ -3,7 +3,6 @@ package com.example.appthitracnghiem.ui.department.listtest.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.Exam
@@ -38,13 +36,14 @@ class TestAdapter(
         var description: TextView = itemView.findViewById(R.id.detail)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestAdapter.TestViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_general, parent, false)
         return TestViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: TestAdapter.TestViewHolder, position: Int) {
+    @SuppressLint("SetTextI18n")
+    override fun onBindViewHolder(holder: TestViewHolder, position: Int) {
         val exam: Exam = listTest[position]
         holder.image.loadNetworkImage(exam.image)
         holder.title.text = exam.title
@@ -89,7 +88,7 @@ class TestAdapter(
                     list
                 }
 
-                val filterResults: FilterResults = FilterResults()
+                val filterResults = FilterResults()
                 filterResults.values = listTest
                 return filterResults
             }

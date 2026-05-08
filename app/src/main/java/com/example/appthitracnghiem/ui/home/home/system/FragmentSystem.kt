@@ -35,6 +35,9 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
         binding.recycleListLiveQuizzes.layoutManager = linearLayoutManager
 
         binding.seeAllSystem.setOnClickListener {
+            viewModel.mPreferenceUtil.defaultPref().edit()
+                .remove(PreferenceKey.ID_DEPARTMENT)
+                .apply()
             val fragmentListDepartment = FragmentListDepartment()
             val fm: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
             fm.add(R.id.changeIdHome,fragmentListDepartment).addToBackStack(null).commit()

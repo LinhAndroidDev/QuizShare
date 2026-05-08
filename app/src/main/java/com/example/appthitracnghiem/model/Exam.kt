@@ -8,7 +8,8 @@ data class Exam(
     val image: String,
     val number: Int,
     val saved_num: Int,
-    val status: Int,
+    /** API may return string values such as `"PUBLIC"`, `"PRIVATE"`. */
+    val status: String?,
     val time: Int,
     val title: String
 )
