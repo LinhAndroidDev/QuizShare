@@ -1,53 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
+
     <androidx.cardview.widget.CardView
         android:layout_width="131dp"
         android:layout_height="88dp"
-        app:cardCornerRadius="12dp"
         android:layout_margin="15dp"
+        app:cardCornerRadius="12dp"
         app:cardElevation="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="12dp"
+            android:orientation="vertical"
             android:paddingHorizontal="18dp"
-            android:orientation="vertical">
+            android:paddingVertical="12dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:orientation="horizontal">
+
                 <ImageView
-                    android:src="@drawable/icon_clone"
                     android:layout_width="17dp"
-                    android:layout_height="17dp"/>
+                    android:layout_height="17dp"
+                    android:src="@drawable/icon_clone" />
+
                 <TextView
-                    android:text="@string/txtDuplicate"
-                    android:textSize="14sp"
-                    android:textColor="#858494"
-                    android:layout_marginStart="12dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/txtDuplicate"
+                    android:textColor="#858494"
+                    android:textSize="14sp" />
             </LinearLayout>
+
             <LinearLayout
-                android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal">
+
                 <ImageView
-                    android:src="@drawable/icon_delete"
                     android:layout_width="17dp"
-                    android:layout_height="17dp"/>
+                    android:layout_height="17dp"
+                    android:src="@drawable/icon_delete" />
+
                 <TextView
-                    android:text="@string/txtDeleteRemove"
-                    android:textSize="14sp"
-                    android:textColor="#EB5757"
-                    android:layout_marginStart="12dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/txtDeleteRemove"
+                    android:textColor="#EB5757"
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

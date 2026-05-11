@@ -2,31 +2,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutHomeActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/layoutHomeActivity"
     android:background="@color/backgroundIntro"
+    android:orientation="vertical"
     tools:context=".ui.home.HomeActivity">
 
     <RelativeLayout
         android:id="@+id/changeIdHome"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
     <RelativeLayout
+        android:id="@+id/bottomWrap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bottomWrap"
         android:layout_alignParentBottom="true">
+
         <View
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:background="@drawable/footer_shadow_bg"
-            android:layout_height="125dp"/>
+            android:layout_height="125dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/footer_shadow_bg" />
+
         <RelativeLayout
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="120dp">
+            android:layout_height="120dp"
+            android:layout_alignParentBottom="true">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
@@ -41,56 +45,61 @@
                     android:padding="10dp" />
 
                 <LinearLayout
-                    android:layout_alignParentBottom="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="5"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginBottom="20dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="5">
 
                     <ImageView
                         android:id="@+id/functionHome"
-                        android:layout_weight="1"
-                        android:src="@drawable/icon_tab_home_selector"
                         android:layout_width="20dp"
-                        android:layout_height="20dp"/>
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/icon_tab_home_selector" />
 
                     <ImageView
                         android:id="@+id/functionCreate"
-                        android:layout_weight="1"
-                        android:src="@drawable/icon_tab_create_selector"
                         android:layout_width="20dp"
-                        android:layout_height="20dp"/>
-                    <ImageView
+                        android:layout_height="20dp"
                         android:layout_weight="1"
+                        android:src="@drawable/icon_tab_create_selector" />
+
+                    <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
                     <ImageView
                         android:id="@+id/functionLeaderboard"
-                        android:layout_weight="1"
-                        android:src="@drawable/icon_tab_leaderboard_selector"
                         android:layout_width="20dp"
-                        android:layout_height="20dp"/>
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/icon_tab_leaderboard_selector" />
+
                     <ImageView
                         android:id="@+id/functionProfile"
-                        android:layout_weight="1"
-                        android:src="@drawable/icon_tab_profile_selector"
                         android:layout_width="20dp"
-                        android:layout_height="20dp"/>
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/icon_tab_profile_selector" />
                 </LinearLayout>
             </RelativeLayout>
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iconSearch"
-                android:src="@drawable/imagesearch"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="47dp"/>
+                android:layout_marginBottom="47dp"
+                android:src="@drawable/imagesearch" />
         </RelativeLayout>
     </RelativeLayout>
+
     <include
         android:id="@+id/loadingHome"
         layout="@layout/layout_loading"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </RelativeLayout>

@@ -11,81 +11,91 @@
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
         android:orientation="vertical">
+
         <RelativeLayout
-            android:layout_marginTop="17dp"
-            android:layout_marginHorizontal="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="17dp">
+
             <ImageView
                 android:id="@+id/backManageExam"
-                android:layout_centerVertical="true"
-                android:src="@drawable/icon_back_black"
                 android:layout_width="25dp"
-                android:layout_height="25dp"/>
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/icon_back_black" />
+
             <TextView
                 android:id="@+id/txtTitleManage"
-                android:layout_centerHorizontal="true"
-                android:text="@string/txtManageExam"
-                android:textSize="24sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/svn_gilroy_semibold"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/svn_gilroy_semibold"
+                android:text="@string/txtManageExam"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
         </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginHorizontal="24dp"
             android:layout_marginTop="20dp"
-            android:layout_marginHorizontal="24dp">
+            android:orientation="horizontal">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <EditText
                     android:id="@+id/searchTest"
-                    android:layout_gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/color_grey_blur"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_search_history"
                     android:hint="Tìm kiếm"
                     android:paddingVertical="16dp"
                     android:paddingStart="56dp"
                     android:paddingEnd="24dp"
-                    android:background="@drawable/bg_search_history"
-                    android:textSize="18sp"
-                    />
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/color_grey_blur"
+                    android:textSize="18sp" />
+
                 <ImageView
-                    android:src="@drawable/icon_search_grey"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="19dp"
-                    android:layout_centerVertical="true"/>
+                    android:src="@drawable/icon_search_grey" />
             </RelativeLayout>
         </LinearLayout>
+
         <LinearLayout
-            android:layout_marginHorizontal="24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/txtTitleTopic"
-                android:layout_marginTop="48dp"
-                android:text="@string/txtSampleIntegerProblem"
-                android:textSize="20sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/svn_gilroy_semibold"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:fontFamily="@font/svn_gilroy_semibold"
+                android:text="@string/txtSampleIntegerProblem"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listTestFromSystem"
-                android:layout_marginTop="24dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"/>
+            android:layout_height="120dp" />
     </LinearLayout>
 
 </FrameLayout>

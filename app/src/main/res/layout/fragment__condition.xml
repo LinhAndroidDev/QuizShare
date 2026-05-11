@@ -8,13 +8,13 @@
     tools:context=".ui.register.FragmentCondition">
 
     <TextView
-        android:text="@string/txtTitleCondition"
-        android:textSize="30sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_marginTop="81dp"
         android:layout_width="250dp"
-        android:layout_height="76dp"/>
+        android:layout_height="76dp"
+        android:layout_marginTop="81dp"
+        android:text="@string/txtTitleCondition"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
@@ -26,17 +26,18 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <Button
             android:id="@+id/backLogin"
-            android:text="@string/back"
-            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_alignParentBottom="true"
+            android:layout_marginTop="32dp"
             android:layout_marginBottom="35dp"
             android:background="@drawable/bg_button"
-            android:textColor="@color/white"
+            android:text="@string/back"
             android:textAllCaps="false"
-            android:layout_marginTop="32dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:textColor="@color/white"
+            android:textSize="18sp" />
     </RelativeLayout>
 </LinearLayout>

@@ -4,13 +4,14 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:layout_marginEnd="8dp">
+
     <TextView
         android:id="@+id/txtPositive"
-        android:text="@string/sample_question_number_one"
-        android:textSize="14sp"
-        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/un_select_positive_quiz"
         android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:text="@string/sample_question_number_one"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 </LinearLayout>

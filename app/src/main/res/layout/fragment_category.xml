@@ -1,86 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollCategory"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.home.category.FragmentCategory"
     android:background="@color/backgroundIntro"
-    android:id="@+id/scrollCategory">
+    tools:context=".ui.home.category.FragmentCategory">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <RelativeLayout
-            android:layout_marginTop="61dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/backCategory"
-                android:layout_centerVertical="true"
-                android:src="@drawable/back"
-                android:layout_width="25dp"
-                android:layout_height="25dp"/>
-            <TextView
-                android:id="@+id/textTitleCategory"
-                android:layout_centerHorizontal="true"
-                android:text="@string/txtCategory"
-                android:textSize="24sp"
-                android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginHorizontal="15dp">
-            <TextView
-                android:id="@+id/searchCategory"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/txtQuestionOrFriend"
-                android:textColor="@color/white"
-                android:paddingVertical="16dp"
-                android:paddingStart="56dp"
-                android:paddingEnd="24dp"
-                android:background="@drawable/bg_search"
-                android:textSize="18sp"
-                />
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="61dp">
+
             <ImageView
-                android:src="@drawable/icon_search"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginLeft="19dp"
-                android:layout_centerVertical="true"/>
+                android:id="@+id/backCategory"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:id="@+id/textTitleCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/txtCategory"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_marginTop="20dp"
-            android:layout_marginHorizontal="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/searchCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_search"
+                android:paddingVertical="16dp"
+                android:paddingStart="56dp"
+                android:paddingEnd="24dp"
+                android:text="@string/txtQuestionOrFriend"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="19dp"
+                android:src="@drawable/icon_search" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp">
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 app:cardBackgroundColor="@color/pink_white"
                 app:cardCornerRadius="25dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/bg_headline"
-                        android:paddingVertical="10dp"
                         android:paddingHorizontal="15dp"
+                        android:paddingVertical="10dp"
                         android:text="@string/txtOnTop"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
@@ -99,16 +106,19 @@
                             android:text="@string/txtMathTour"
                             android:textColor="@color/brown"
                             android:textSize="20sp" />
+
                         <LinearLayout
-                            android:layout_marginTop="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:orientation="horizontal">
+
                             <ImageView
-                                android:src="@drawable/icon_micro"
-                                android:layout_marginEnd="5dp"
                                 android:layout_width="17dp"
-                                android:layout_height="17dp"/>
+                                android:layout_height="17dp"
+                                android:layout_marginEnd="5dp"
+                                android:src="@drawable/icon_micro" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -119,53 +129,58 @@
                     </LinearLayout>
 
                     <ImageView
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/icon_animal"
                         android:layout_width="263dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
                         android:adjustViewBounds="true"
-                        android:layout_height="wrap_content"/>
+                        android:src="@drawable/icon_animal" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
 
         <LinearLayout
-            android:background="@drawable/boder_listquiz"
-            android:layout_marginTop="24dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/boder_listquiz"
             android:orientation="vertical">
+
             <RelativeLayout
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp">
+
                 <com.jpardogo.android.googleprogressbar.library.GoogleProgressBar
                     android:id="@+id/loadingSubject"
-                    android:layout_marginTop="120dp"
-                    android:layout_marginBottom="120dp"
-                    android:layout_centerHorizontal="true"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="120dp"
+                    android:layout_marginBottom="120dp"
                     android:visibility="invisible"
-                    app:type="chrome_floating_circles"/>
+                    app:type="chrome_floating_circles" />
+
                 <TextView
                     android:id="@+id/textSubject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/svn_gilroy_semibold"
                     android:text="@string/txtRecommand"
                     android:textColor="@color/black"
-                    android:textSize="23sp"
-                    android:fontFamily="@font/svn_gilroy_semibold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="23sp" />
+
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginTop="30dp"
                     android:id="@+id/recycleListSubject"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="30dp" />
             </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"/>
+                android:layout_height="120dp" />
         </LinearLayout>
 
     </LinearLayout>

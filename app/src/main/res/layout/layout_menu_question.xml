@@ -4,13 +4,14 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="16dp"
     android:layout_marginEnd="16dp">
+
     <TextView
         android:id="@+id/txtQuestion"
-        android:text="@string/sample_question_number_one"
-        android:textSize="16sp"
-        android:textColor="@color/backgroundIntro"
-        android:gravity="center"
-        android:background="@drawable/boder_question"
         android:layout_width="42dp"
-        android:layout_height="42dp"/>
+        android:layout_height="42dp"
+        android:background="@drawable/boder_question"
+        android:gravity="center"
+        android:text="@string/sample_question_number_one"
+        android:textColor="@color/backgroundIntro"
+        android:textSize="16sp" />
 </LinearLayout>

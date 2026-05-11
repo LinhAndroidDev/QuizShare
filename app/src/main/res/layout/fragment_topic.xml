@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.exercise.topic.FragmentTopic"
+    android:background="@color/backgroundIntro"
     android:orientation="vertical"
-    android:background="@color/backgroundIntro">
+    tools:context=".ui.exercise.topic.FragmentTopic">
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:id="@+id/layoutTopic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="66dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="66dp">
+
             <ImageView
                 android:id="@+id/backTopic"
-                android:src="@drawable/back"
-                android:layout_marginStart="27dp"
                 android:layout_width="25dp"
-                android:layout_height="25dp"/>
+                android:layout_height="25dp"
+                android:layout_marginStart="27dp"
+                android:src="@drawable/back" />
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="222dp"
-                android:src="@drawable/bg_exercise"/>
+                android:src="@drawable/bg_exercise" />
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,146 +38,168 @@
                 android:layout_marginBottom="8dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="32dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="24dp"
-                    android:paddingBottom="16dp"
+                    android:orientation="vertical"
                     android:paddingHorizontal="16dp"
-                    android:orientation="vertical">
+                    android:paddingTop="24dp"
+                    android:paddingBottom="16dp">
+
                     <TextView
-                        android:text="@string/sample_subject_math_full"
-                        android:textSize="14sp"
-                        android:textColor="@color/color_to_do_late"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:text="@string/sample_subject_math_full"
+                        android:textColor="@color/color_to_do_late"
+                        android:textSize="14sp" />
+
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/sample_exam_title"
-                        android:textSize="24sp"
                         android:textColor="@color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="24sp" />
+
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/sample_exam_system_note"
-                        android:textSize="14sp"
                         android:textColor="@color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="14sp" />
+
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
-                        app:cardCornerRadius="20dp"
                         app:cardBackgroundColor="@color/bg_card_setting"
+                        app:cardCornerRadius="20dp"
                         app:cardElevation="0dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:padding="16dp">
+
                             <LinearLayout
-                                android:layout_weight="1"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:orientation="horizontal">
+
                                 <ImageView
-                                    android:src="@drawable/icon_question_mark"
                                     android:layout_width="32dp"
-                                    android:layout_height="32dp"/>
+                                    android:layout_height="32dp"
+                                    android:src="@drawable/icon_question_mark" />
+
                                 <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="12dp"
                                     android:text="@string/sample_10_questions"
-                                    android:textSize="14sp"
                                     android:textColor="@color/black"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="12dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:textSize="14sp" />
                             </LinearLayout>
+
                             <LinearLayout
-                                android:layout_weight="1"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:orientation="horizontal">
+
                                 <ImageView
-                                    android:layout_marginStart="17dp"
-                                    android:src="@drawable/icon_time_mark"
                                     android:layout_width="32dp"
-                                    android:layout_height="32dp"/>
+                                    android:layout_height="32dp"
+                                    android:layout_marginStart="17dp"
+                                    android:src="@drawable/icon_time_mark" />
+
                                 <TextView
-                                    android:text="@string/sample_30_minutes"
-                                    android:textSize="14sp"
-                                    android:textColor="@color/black"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginStart="12dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:text="@string/sample_30_minutes"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
+
                     <TextView
-                        android:text="@string/txtDetail"
-                        android:textSize="14sp"
-                        android:textColor="@color/color_to_do_late"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:text="@string/txtDetail"
+                        android:textColor="@color/color_to_do_late"
+                        android:textSize="14sp" />
+
                     <TextView
-                        android:layout_marginTop="16dp"
-                        android:text="@string/sample_exam_long_description"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:lineSpacingExtra="8dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:lineSpacingExtra="8dp"
+                        android:text="@string/sample_exam_long_description"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
                     <LinearLayout
                         android:id="@+id/infoTopic"
-                        android:layout_marginTop="24dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
                         android:orientation="horizontal">
+
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/avtTopic"
-                            android:src="@drawable/logo6"
                             android:layout_width="40dp"
-                            android:layout_height="40dp"/>
+                            android:layout_height="40dp"
+                            android:src="@drawable/logo6" />
+
                         <LinearLayout
-                            android:layout_marginStart="14dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
                             android:orientation="vertical">
+
                             <TextView
                                 android:id="@+id/nameTopic"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:text="@string/sample_author_name"
-                                android:textSize="14dp"
                                 android:textColor="@color/black"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
+                                android:textSize="14sp" />
+
                             <TextView
-                                android:text="@string/txtExamCreator"
-                                android:textSize="12dp"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                android:text="@string/txtExamCreator"
+                                android:textSize="12sp" />
                         </LinearLayout>
                     </LinearLayout>
+
                     <RelativeLayout
-                        android:layout_marginTop="45dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="45dp"
                         android:orientation="horizontal">
+
                         <TextView
                             android:id="@+id/memoryTopic"
-                            android:text="@string/txtRememberExam"
-                            android:textSize="16dp"
-                            android:textColor="@color/backgroundIntro"
-                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
                             android:background="@drawable/boder_change_question"
-                            android:paddingVertical="16dp"
+                            android:gravity="center"
                             android:paddingHorizontal="19dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:paddingVertical="16dp"
+                            android:text="@string/txtRememberExam"
+                            android:textColor="@color/backgroundIntro"
+                            android:textSize="16sp" />
+
                         <androidx.cardview.widget.CardView
                             android:id="@+id/doTestNow"
                             android:layout_width="wrap_content"
@@ -180,22 +207,25 @@
                             android:layout_alignParentEnd="true"
                             app:cardBackgroundColor="@color/backgroundIntro"
                             app:cardCornerRadius="20dp"
-                            app:cardElevation="0dp">
+                            app:cardElevation="0dp"
+                            tools:ignore="RelativeOverlap">
+
                             <TextView
-                                android:text="@string/txtStartExamNow"
-                                android:textSize="16sp"
-                                android:textColor="@color/white"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:paddingHorizontal="34dp"
                                 android:paddingVertical="16dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
+                                android:text="@string/txtStartExamNow"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
                         </androidx.cardview.widget.CardView>
                     </RelativeLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
     <RelativeLayout
         android:id="@+id/layoutMemoryTopic"
         android:layout_width="match_parent"

@@ -1,55 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
+
     <androidx.cardview.widget.CardView
         android:layout_width="131dp"
         android:layout_height="88dp"
-        app:cardCornerRadius="12dp"
         android:layout_margin="20dp"
+        app:cardCornerRadius="12dp"
         app:cardElevation="15dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="12dp"
+            android:orientation="vertical"
             android:paddingHorizontal="18dp"
-            android:orientation="vertical">
+            android:paddingVertical="12dp">
+
             <LinearLayout
                 android:id="@+id/selectPublic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:orientation="horizontal">
+
                 <ImageView
-                    android:src="@drawable/icon_public"
                     android:layout_width="17dp"
-                    android:layout_height="17dp"/>
+                    android:layout_height="17dp"
+                    android:src="@drawable/icon_public" />
+
                 <TextView
-                    android:text="@string/txtModePublic"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"
-                    android:layout_marginStart="12dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/txtModePublic"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/selectPrivate"
-                android:layout_marginTop="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal">
+
                 <ImageView
-                    android:src="@drawable/icon_private"
                     android:layout_width="17dp"
-                    android:layout_height="17dp"/>
+                    android:layout_height="17dp"
+                    android:src="@drawable/icon_private" />
+
                 <TextView
-                    android:text="@string/txtModePrivate"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"
-                    android:layout_marginStart="12dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/txtModePrivate"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

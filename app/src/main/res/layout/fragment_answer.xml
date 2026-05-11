@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.exercise.exercise.answer.FragmentAnswer"
-    android:background="@color/backgroundIntro">
+    android:background="@color/backgroundIntro"
+    tools:context=".ui.exercise.exercise.answer.FragmentAnswer">
 
     <LinearLayout
         android:id="@+id/layoutExerciseAnswer"
@@ -13,17 +13,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingTop="50dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/txtTiltleAnswer"
-                android:text="@string/txtAnswer"
-                android:textSize="24sp"
-                android:textColor="@color/white"
-                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/txtAnswer"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
             <ImageView
                 android:id="@+id/backAnswer"
                 android:layout_width="24dp"
@@ -33,6 +36,7 @@
                 android:layout_marginEnd="23dp"
                 android:src="@drawable/icon_x_white" />
         </RelativeLayout>
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -40,15 +44,18 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="8dp"
             app:cardCornerRadius="32dp">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <androidx.core.widget.NestedScrollView
-                    android:layout_above="@+id/menuQuestionAnswer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_above="@+id/menuQuestionAnswer"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="20dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -66,13 +73,13 @@
 
                         <TextView
                             android:id="@+id/titleAnswer"
-                            android:lineSpacingExtra="8dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            tools:text="Bất phương trình bậc nhất hai ẩn x, y là bất phương trình có một trong các dạng sau:"
+                            android:lineSpacingExtra="8dp"
                             android:textColor="@color/black"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"
+                            tools:text="Bất phương trình bậc nhất hai ẩn x, y là bất phương trình có một trong các dạng sau:" />
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/imageAnswer"
@@ -80,19 +87,22 @@
                             android:layout_height="148dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="16dp"
+                            android:visibility="gone"
                             app:cardBackgroundColor="@color/bg_card_setting"
                             app:cardCornerRadius="16dp"
-                            app:cardElevation="0dp"
-                            android:visibility="gone">
+                            app:cardElevation="0dp">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:orientation="vertical">
+
                                 <ImageView
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
-                                    android:background="@drawable/icon_image_primary"/>
+                                    android:background="@drawable/icon_image_primary" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -109,32 +119,37 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:orientation="vertical">
+
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="28dp"
                                 android:layout_marginBottom="16dp"
-                                android:padding="1dp">
-                            </RelativeLayout>
+                                android:padding="1dp" />
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.core.widget.NestedScrollView>
-                <include layout="@layout/layout_loading"
-                    android:visibility="gone"/>
+
+                <include
+                    layout="@layout/layout_loading"
+                    android:visibility="gone" />
+
                 <LinearLayout
                     android:id="@+id/menuQuestionAnswer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:background="@drawable/boder_change_question"
                     android:padding="16dp">
+
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/icon_change_question" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -143,6 +158,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
                     android:orientation="horizontal">
+
                     <androidx.cardview.widget.CardView
                         android:id="@+id/backQuestionAnswer"
                         android:layout_width="56dp"
@@ -154,6 +170,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center">
+
                             <ImageView
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
@@ -168,10 +185,12 @@
                         android:layout_marginStart="16dp"
                         app:cardBackgroundColor="@color/backgroundIntro"
                         app:cardCornerRadius="20dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center">
+
                             <ImageView
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"

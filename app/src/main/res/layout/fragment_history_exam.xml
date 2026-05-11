@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/backgroundIntro"
     tools:context=".ui.home.history.test.FragmentHistoryExam">
 
@@ -19,12 +19,12 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="@string/txtHistoryTest"
-                android:textSize="24sp"
-                android:textColor="@color/white"
-                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/txtHistoryTest"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
 
             <ImageView
                 android:id="@+id/backHistoryExam"
@@ -121,15 +121,18 @@
                         app:cardBackgroundColor="@color/bg_card_setting"
                         app:cardCornerRadius="16dp"
                         app:cardElevation="0dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:background="@drawable/icon_image_primary" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -160,15 +163,18 @@
                         app:cardBackgroundColor="@color/bg_card_setting"
                         app:cardCornerRadius="16dp"
                         app:cardElevation="0dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:background="@drawable/icon_image_primary" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -199,15 +205,18 @@
                         app:cardBackgroundColor="@color/bg_card_setting"
                         app:cardCornerRadius="16dp"
                         app:cardElevation="0dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:background="@drawable/icon_image_primary" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -238,15 +247,18 @@
                         app:cardBackgroundColor="@color/bg_card_setting"
                         app:cardCornerRadius="16dp"
                         app:cardElevation="0dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:background="@drawable/icon_image_primary" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
