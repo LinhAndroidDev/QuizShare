@@ -3,11 +3,9 @@
 package com.example.appthitracnghiem.ui.exercise.exercise.answer
 
 import android.annotation.SuppressLint
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.PopupWindow
@@ -26,11 +24,6 @@ import com.example.appthitracnghiem.data.remote.dto.request.RequestAnswer
 import com.example.appthitracnghiem.data.remote.dto.request.RequestExamQuestion
 import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
 import com.example.appthitracnghiem.utils.PreferenceKey
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import org.json.JSONArray
-import org.json.JSONObject
-import java.lang.reflect.Type
 import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION", "CAST_NEVER_SUCCEEDS")
@@ -50,14 +43,12 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
 
     private lateinit var listExamQuestion: ArrayList<ExamQuestion>
 
-    var listAnswer: ArrayList<Int> = arrayListOf()
+    /** Parsed API `exam_result`: question_id → chosen answer_id (null = không chọn). */
+    private var examResultByQuestionId: Map<Int, Int?>? = null
+
+    private val optionTextViews = arrayListOf<TextView>()
 
     var onClickNextQuestion: ((Int) -> Unit)? = null
-
-    companion object {
-        var arrayTxtQuestion = arrayListOf<TextView>()
-        var listResult: ArrayList<Int> = arrayListOf()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -96,10 +87,6 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
             examQuestions?.let {
                 listExamQuestion = it
                 sizeListQuestion = it.size
-                listAnswer.clear()
-                for (i in 0 until sizeListQuestion) {
-                    listAnswer.add(-1)
-                }
                 positiveQuestion = 0
                 binding.txtPositionQuizAnswer.text =
                     getString(R.string.format_exam_question_position, positiveQuestion + 1, sizeListQuestion)
@@ -115,25 +102,18 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         viewModel.getExamListQuestion(RequestExamQuestion(userId, idExam))
         viewModel.getExamResult(RequestAnswer(userId, idHistoryExam))
 
-        viewModel.listAnswerLiveData.observe(viewLifecycleOwner) { examResult ->
-            if (!examResult.isNullOrBlank()) {
-                runCatching { JSONObject(examResult).toMap() }
+        viewModel.listAnswerLiveData.observe(viewLifecycleOwner) { raw ->
+            examResultByQuestionId = parseExamResultByQuestionId(raw)
+            if (::listExamQuestion.isInitialized && listExamQuestion.isNotEmpty()) {
+                setTextView(positiveQuestion)
             }
         }
     }
 
-     private fun JSONObject.toMap(): Map<String, Any?> =
-        keys().asSequence().associateWith { key -> toValue(get(key)) }
-
-    private fun JSONArray.toList(): List<Any?> =
-        (0 until length()).map { index -> toValue(get(index)) }
-
-    private fun toValue(element: Any) = when (element) {
-        JSONObject.NULL -> null
-        is JSONObject -> element.toMap()
-        is JSONArray -> element.toList()
-        else -> element
-    }
+    private fun parseExamResultByQuestionId(raw: Map<String, Int?>?): Map<Int, Int?> =
+        raw.orEmpty().mapNotNull { (key, value) ->
+            key.toIntOrNull()?.let { questionId -> questionId to value }
+        }.toMap()
 
     private fun setStatusBar() {
         val window: Window? = activity?.window
@@ -224,35 +204,48 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
 
     @SuppressLint("ResourceAsColor")
     fun setTextView(psQuestion: Int) {
-        binding.titleAnswer.text = listExamQuestion[psQuestion].question_title
-        val sizeAnswer = listExamQuestion[psQuestion].answer_list.size
+        if (!::listExamQuestion.isInitialized || listExamQuestion.isEmpty()) return
+        if (psQuestion !in listExamQuestion.indices) return
+
+        val question = listExamQuestion[psQuestion]
+        binding.titleAnswer.text = question.question_title
+        val sizeAnswer = question.answer_list.size
         binding.llContainerOptions.removeAllViews()
-        arrayTxtQuestion.clear()
+        optionTextViews.clear()
 
         for (i in 0 until sizeAnswer) {
             val txtQuestion = TextView(requireActivity())
             txtQuestion.isEnabled = false
+            txtQuestion.isClickable = false
+            createTextAnswer(optionTextViews, txtQuestion, psQuestion, i)
+        }
 
-            createTextAnswer(arrayTxtQuestion, txtQuestion, psQuestion, i)
+        applyExamReviewHighlights(question, optionTextViews)
+    }
 
-            txtQuestion.setOnClickListener {
-                for (j in 0 until arrayTxtQuestion.size) {
-                    arrayTxtQuestion[j].setBackgroundResource(R.drawable.un_select_text_view)
-                }
-                txtQuestion.setBackgroundResource(R.drawable.select_text_view)
-                listAnswer[positiveQuestion] = i
+    /**
+     * - Đúng: đáp án user chọn (type == 1) → viền xanh.
+     * - Sai: đáp án user chọn → viền đỏ; đáp án đúng (type == 1) → viền xanh.
+     * - Không chọn: mọi đáp án đúng (type == 1) → viền đỏ.
+     */
+    private fun applyExamReviewHighlights(question: ExamQuestion, views: List<TextView>) {
+        val resultMap = examResultByQuestionId ?: return
+        val userAnswerId: Int? = resultMap[question.question_id]
+
+        for (i in views.indices) {
+            val answer = question.answer_list[i]
+            val isCorrect = answer.type == 1
+            val userPickedThis = userAnswerId != null && userAnswerId == answer.answer_id
+            val unanswered = userAnswerId == null
+
+            val backgroundRes = when {
+                unanswered && isCorrect -> R.drawable.bg_answer_fail
+                userPickedThis && isCorrect -> R.drawable.bg_answer_border_green
+                userPickedThis && !isCorrect -> R.drawable.bg_answer_fail
+                !userPickedThis && isCorrect && userAnswerId != null -> R.drawable.bg_answer_border_green
+                else -> R.drawable.un_select_text_view
             }
-        }
-
-        val arrAnswer: ArrayList<Int> = getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER, sizeListQuestion)
-        val answerIdx = arrAnswer.getOrElse(psQuestion) { -1 }
-        if (answerIdx >= 0 && answerIdx < arrayTxtQuestion.size) {
-            arrayTxtQuestion[answerIdx].setBackgroundResource(R.drawable.select_text_view)
-        }
-        listResult = getListAnswer(PreferenceKey.ARRAY_LIST_RESULTS, sizeListQuestion)
-        val resultIdx = listResult.getOrElse(psQuestion) { -1 }
-        if (resultIdx != answerIdx && resultIdx >= 0 && resultIdx < arrayTxtQuestion.size) {
-            arrayTxtQuestion[resultIdx].setBackgroundResource(R.drawable.bg_answer_fail)
+            views[i].setBackgroundResource(backgroundRes)
         }
     }
 
@@ -278,22 +271,6 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         txt.text = listExamQuestion[position].answer_list[i].content
         txt.setTextColor(Color.BLACK)
         txt.setBackgroundResource(R.drawable.un_select_text_view)
-    }
-
-    private fun getListAnswer(key: String?, expectedMinSize: Int): ArrayList<Int> {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val json: String? = prefs.getString(key, null)
-        val type: Type = object : TypeToken<ArrayList<Int>>() {}.type
-        val parsed: ArrayList<Int>? = try {
-            if (json.isNullOrBlank()) null else Gson().fromJson<ArrayList<Int>>(json, type)
-        } catch (_: Exception) {
-            null
-        }
-        val out = parsed?.let { ArrayList(it) } ?: arrayListOf()
-        while (out.size < expectedMinSize) {
-            out.add(-1)
-        }
-        return out
     }
 
     override fun onFragmentBack(): Boolean {

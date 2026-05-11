@@ -19,7 +19,7 @@ class AnswerViewModel @Inject constructor(private val apiService: ApiService) : 
     val listExamQuestionLiveData = MutableLiveData<ArrayList<ExamQuestion>?>()
     val title = MutableLiveData<String>()
     val loadingLiveData = MutableLiveData<Boolean>()
-    val listAnswerLiveData = MutableLiveData<String>()
+    val listAnswerLiveData = MutableLiveData<Map<String, Int?>?>()
 
     fun getExamListQuestion(requestExamQuestion: RequestExamQuestion) {
         loadingLiveData.value = true
@@ -38,8 +38,7 @@ class AnswerViewModel @Inject constructor(private val apiService: ApiService) : 
             val result = safeApiCall { apiService.getExamResult(requestAnswer) }
             when (result) {
                 is ResultState.Success -> {
-                    val map = result.data.result?.exam_result
-                    listAnswerLiveData.value = Gson().toJson(map ?: emptyMap<String, Int?>())
+                    listAnswerLiveData.value = result.data.result?.exam_result
                 }
                 is ResultState.Error -> errorApiLiveData.value = result.message
             }

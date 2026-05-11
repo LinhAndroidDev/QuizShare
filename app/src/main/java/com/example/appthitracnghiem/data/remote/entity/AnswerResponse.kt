@@ -11,7 +11,7 @@ class AnswerResponse(
         val delete_at: String?,
         val exam_id: Int,
         /** Map of question_id (as string key) to chosen answer_id, e.g. `{"1": 3, "2": 6}`. */
-        val exam_result: HashMap<String, Int?>?,
+        val exam_result: Map<String, Int?>?,
         val finish_time: String?,
         val id: Int,
         val score: Float,
