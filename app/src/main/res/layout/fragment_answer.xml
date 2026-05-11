@@ -113,20 +113,15 @@
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
 
-                        <LinearLayout
-                            android:id="@+id/llContainerOptions"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerAnswerOptions"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:orientation="vertical">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="28dp"
-                                android:layout_marginBottom="16dp"
-                                android:padding="1dp" />
-                        </LinearLayout>
+                            android:nestedScrollingEnabled="false"
+                            android:overScrollMode="never"
+                            tools:itemCount="4"
+                            tools:listitem="@layout/item_fragment_answer_option" />
                     </LinearLayout>
                 </androidx.core.widget.NestedScrollView>
 

@@ -2,7 +2,6 @@ package com.example.appthitracnghiem.ui.exercise.exercise.exam
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.graphics.RenderEffect
 import android.graphics.Shader
 import android.os.Build
@@ -10,13 +9,12 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.preference.PreferenceManager
 import android.view.*
-import android.widget.LinearLayout.LayoutParams
 import android.widget.PopupWindow
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.data.remote.dto.request.RequestExamQuestion
@@ -42,6 +40,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
     private lateinit var menuQuestionAdapter: MenuQuestionAdapter
 
+    private val examAnswerAdapter = ExamAnswerOptionAdapter()
+
     private var countDownTimer: CountDownTimer? = null
 
     private var timeTotal: Int = 0
@@ -58,7 +58,6 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
     private lateinit var listAnswer: ArrayList<Int>
 
-    private var arrayTxtQuestion = arrayListOf<TextView>()
     private var listQuestion: MutableList<PositiveQuestion> = mutableListOf()
     private var listResult: ArrayList<Int> = arrayListOf()
 
@@ -217,11 +216,24 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         }
 
         binding.menuQuestion.setOnClickListener {
-            showMenuQuestion(binding.menuQuestion, R.layout.popup_list_question, 0, 250, Gravity.BOTTOM)
+            showMenuQuestion(binding.menuQuestion, R.layout.popup_list_question, 0, 290, Gravity.BOTTOM)
         }
 
         binding.finishQuiz.setOnClickListener {
             showLayoutSubmit()
+        }
+
+        binding.recyclerExamAnswerOptions.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerExamAnswerOptions.adapter = examAnswerAdapter
+        binding.recyclerExamAnswerOptions.setHasFixedSize(false)
+        binding.recyclerExamAnswerOptions.isNestedScrollingEnabled = false
+        binding.recyclerExamAnswerOptions.itemAnimator = null
+        examAnswerAdapter.onOptionClick = { optionIndex ->
+            if (::listExamQuestion.isInitialized) {
+                listAnswer[positiveQuestion] = optionIndex
+                saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
+                examAnswerAdapter.submit(listExamQuestion[positiveQuestion], optionIndex)
+            }
         }
 
         binding.submit.setOnClickListener {
@@ -319,51 +331,24 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
     @SuppressLint("ResourceAsColor")
     fun setTextView(psQuestion: Int) {
         binding.titleExam.text = listExamQuestion[psQuestion].question_title
-        val sizeAnswer = listExamQuestion[psQuestion].answer_list.size
-        binding.llContainerAnswerOptions.removeAllViews()
-        arrayTxtQuestion.clear()
 
-        for (i in 0 until sizeAnswer) {
-            val txtQuestion = TextView(requireActivity())
-
-            createTextAnswer(arrayTxtQuestion, txtQuestion, psQuestion, i)
-
-            txtQuestion.setOnClickListener {
-                for (j in 0 until arrayTxtQuestion.size) {
-                    arrayTxtQuestion[j].setBackgroundResource(R.drawable.un_select_text_view)
-                }
-                txtQuestion.setBackgroundResource(R.drawable.select_text_view)
-                listAnswer[positiveQuestion] = i
-            }
-        }
-
-        val arrAnswer: ArrayList<Int> = getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
-        if (arrAnswer[psQuestion] >= 0) {
-            arrayTxtQuestion[arrAnswer[psQuestion]].setBackgroundResource(R.drawable.select_text_view)
-        }else if(listAnswer[psQuestion] == -2){
+        if (listAnswer[psQuestion] == -2) {
             listAnswer[psQuestion] = -1
         }
-    }
 
-    /** Create Text Answer **/
-    private fun createTextAnswer(
-        arrayTxt: ArrayList<TextView>,
-        txt: TextView,
-        position: Int,
-        i: Int,
-    ) {
-        binding.llContainerAnswerOptions.addView(txt)
-        arrayTxt.add(txt)
-        val params =
-            LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-        params.setMargins(16, 16, 16, 16)
-        txt.setPadding(32, 24, 32, 24)
-        txt.layoutParams = params
-        txt.textSize = 16F
-        txt.text = listExamQuestion[position].answer_list[i].content
-        txt.setLineSpacing(2f,1.4f)
-        txt.setTextColor(Color.BLACK)
-        txt.setBackgroundResource(R.drawable.un_select_text_view)
+        val arrAnswer = try {
+            getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
+        } catch (_: Exception) {
+            null
+        }
+        val selectedIndex = when {
+            arrAnswer != null && psQuestion < arrAnswer.size && arrAnswer[psQuestion] >= 0 ->
+                arrAnswer[psQuestion]
+            listAnswer[psQuestion] >= 0 -> listAnswer[psQuestion]
+            else -> -1
+        }
+
+        examAnswerAdapter.submit(listExamQuestion[psQuestion], selectedIndex)
     }
 
     private fun saveListAnswer(list: ArrayList<Int>, key: String?) {

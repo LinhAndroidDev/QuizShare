@@ -3,21 +3,25 @@
 package com.example.appthitracnghiem.ui.exercise.exercise.answer
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.view.*
-import android.widget.LinearLayout
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import android.widget.PopupWindow
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentAnswerBinding
 import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.model.PositiveQuestion
+import com.example.appthitracnghiem.model.QuestionReviewChipState
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.adapter.MenuQuestionAdapter
 import com.example.appthitracnghiem.data.remote.dto.request.RequestAnswer
@@ -46,7 +50,7 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
     /** Parsed API `exam_result`: question_id → chosen answer_id (null = không chọn). */
     private var examResultByQuestionId: Map<Int, Int?>? = null
 
-    private val optionTextViews = arrayListOf<TextView>()
+    private val answerOptionsAdapter = AnswerReviewOptionAdapter()
 
     var onClickNextQuestion: ((Int) -> Unit)? = null
 
@@ -157,7 +161,7 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         }
 
         binding.menuQuestionAnswer.setOnClickListener {
-            showMenuQuestion(binding.menuQuestionAnswer, R.layout.popup_list_question, 0, 250, Gravity.BOTTOM)
+            showMenuQuestion(binding.menuQuestionAnswer, R.layout.popup_list_question, 0, 290, Gravity.BOTTOM)
         }
 
         binding.backAnswer.setOnClickListener {
@@ -168,6 +172,12 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
                 requireActivity().finish()
             }
         }
+
+        binding.recyclerAnswerOptions.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerAnswerOptions.adapter = answerOptionsAdapter
+        binding.recyclerAnswerOptions.setHasFixedSize(false)
+        binding.recyclerAnswerOptions.isNestedScrollingEnabled = false
+        binding.recyclerAnswerOptions.itemAnimator = null
     }
 
     @SuppressLint("SetTextI18n")
@@ -186,7 +196,16 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
             listQuestion.add(PositiveQuestion(i + 1,null))
         }
 
-        menuQuestionAdapter = MenuQuestionAdapter(requireActivity(), listQuestion)
+        menuQuestionAdapter = MenuQuestionAdapter(
+            requireActivity(),
+            listQuestion,
+            reviewChipStates = if (::listExamQuestion.isInitialized && listExamQuestion.isNotEmpty()) {
+                buildReviewChipStates()
+            } else {
+                null
+            },
+            currentQuestionIndex = positiveQuestion,
+        )
         menuQuestionAdapter.onClickItem = { positionItem ->
             positiveQuestion = positionItem
             setTextView(positiveQuestion)
@@ -202,75 +221,29 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         recycleQuestion.adapter = menuQuestionAdapter
     }
 
-    @SuppressLint("ResourceAsColor")
+    /** Trạng thái từng câu cho menu: đúng / sai / bỏ qua (map `exam_result`). */
+    private fun buildReviewChipStates(): List<QuestionReviewChipState> {
+        val map = examResultByQuestionId
+        return listExamQuestion.map { question ->
+            when {
+                map == null -> QuestionReviewChipState.PENDING
+                map[question.question_id] == null -> QuestionReviewChipState.SKIPPED
+                else -> {
+                    val userAid = map[question.question_id]!!
+                    val chosen = question.answer_list.find { it.answer_id == userAid }
+                    if (chosen?.type == 1) QuestionReviewChipState.CORRECT else QuestionReviewChipState.WRONG
+                }
+            }
+        }
+    }
+
     fun setTextView(psQuestion: Int) {
         if (!::listExamQuestion.isInitialized || listExamQuestion.isEmpty()) return
         if (psQuestion !in listExamQuestion.indices) return
 
         val question = listExamQuestion[psQuestion]
         binding.titleAnswer.text = question.question_title
-        val sizeAnswer = question.answer_list.size
-        binding.llContainerOptions.removeAllViews()
-        optionTextViews.clear()
-
-        for (i in 0 until sizeAnswer) {
-            val txtQuestion = TextView(requireActivity())
-            txtQuestion.isEnabled = false
-            txtQuestion.isClickable = false
-            createTextAnswer(optionTextViews, txtQuestion, psQuestion, i)
-        }
-
-        applyExamReviewHighlights(question, optionTextViews)
-    }
-
-    /**
-     * - Đúng: đáp án user chọn (type == 1) → viền xanh.
-     * - Sai: đáp án user chọn → viền đỏ; đáp án đúng (type == 1) → viền xanh.
-     * - Không chọn: mọi đáp án đúng (type == 1) → viền đỏ.
-     */
-    private fun applyExamReviewHighlights(question: ExamQuestion, views: List<TextView>) {
-        val resultMap = examResultByQuestionId ?: return
-        val userAnswerId: Int? = resultMap[question.question_id]
-
-        for (i in views.indices) {
-            val answer = question.answer_list[i]
-            val isCorrect = answer.type == 1
-            val userPickedThis = userAnswerId != null && userAnswerId == answer.answer_id
-            val unanswered = userAnswerId == null
-
-            val backgroundRes = when {
-                unanswered && isCorrect -> R.drawable.bg_answer_fail
-                userPickedThis && isCorrect -> R.drawable.bg_answer_border_green
-                userPickedThis && !isCorrect -> R.drawable.bg_answer_fail
-                !userPickedThis && isCorrect && userAnswerId != null -> R.drawable.bg_answer_border_green
-                else -> R.drawable.un_select_text_view
-            }
-            views[i].setBackgroundResource(backgroundRes)
-        }
-    }
-
-    /** Create Text Answer **/
-    private fun createTextAnswer(
-        arrayTxt: ArrayList<TextView>,
-        txt: TextView,
-        position: Int,
-        i: Int,
-    ) {
-        binding.llContainerOptions.addView(txt)
-        arrayTxt.add(txt)
-        val params =
-            LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-        params.setMargins(16, 16, 16, 16)
-        txt.setPadding(32, 24, 32, 24)
-        txt.layoutParams = params
-        txt.textSize = 16F
-        txt.setLineSpacing(2f,1.4f)
-        txt.text = listExamQuestion[position].answer_list[i].content
-        txt.setTextColor(Color.BLACK)
-        txt.setBackgroundResource(R.drawable.un_select_text_view)
+        answerOptionsAdapter.submit(question, examResultByQuestionId)
     }
 
     override fun onFragmentBack(): Boolean {
