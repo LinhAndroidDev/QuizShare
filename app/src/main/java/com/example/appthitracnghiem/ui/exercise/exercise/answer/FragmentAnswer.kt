@@ -205,6 +205,10 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
                 null
             },
             currentQuestionIndex = positiveQuestion,
+            isExamQuestionAnswered = { pos ->
+                if (!::listExamQuestion.isInitialized || pos !in listExamQuestion.indices) false
+                else examResultByQuestionId?.get(listExamQuestion[pos].question_id) != null
+            },
         )
         menuQuestionAdapter.onClickItem = { positionItem ->
             positiveQuestion = positionItem

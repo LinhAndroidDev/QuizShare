@@ -2,28 +2,25 @@ package com.example.appthitracnghiem.ui.exercise.exercise.point
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.activityViewModels
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.data.remote.dto.request.RequestPoint
 import com.example.appthitracnghiem.databinding.FragmentPointBinding
 import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.ExamActivity
+import com.example.appthitracnghiem.ui.exercise.exercise.ExamSessionViewModel
 import com.example.appthitracnghiem.ui.exercise.exercise.answer.FragmentAnswer
 import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
-import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -36,7 +33,20 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
     private var _binding: FragmentPointBinding? = null
     private val binding get() = _binding!!
 
+    private val examSessionViewModel: ExamSessionViewModel by activityViewModels()
+
     private lateinit var listExamQuestion: ArrayList<ExamQuestion>
+
+    /** Đồng bộ độ dài với số câu hỏi (tránh lệch nếu snapshot rỗng). */
+    private fun paddedExamAnswers(): ArrayList<Int> {
+        val raw = examSessionViewModel.snapshot()
+        val n = if (::listExamQuestion.isInitialized) listExamQuestion.size else raw.size
+        val out = ArrayList(raw)
+        while (out.size < n) {
+            out.add(-1)
+        }
+        return out
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,7 +64,7 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
 
         val bundle: Bundle = requireArguments()
         listExamQuestion = bundle.getSerializable("listExamQuestion") as ArrayList<ExamQuestion>
-        val listAnswer = getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
+        val listAnswer = paddedExamAnswers()
         val answerList = HashMap<String,Int?>()
 
         for(i in 0 until listAnswer.size){
@@ -121,17 +131,9 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
         }
     }
 
-    private fun getListAnswer(key: String?): ArrayList<Int> {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        val gson = Gson()
-        val json: String? = prefs.getString(key, null)
-        val type: Type = object : TypeToken<ArrayList<Int>>() {}.type
-        return gson.fromJson(json, type)
-    }
-
     private fun initUi() {
         var count = 0
-        val listAnswer = getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
+        val listAnswer = paddedExamAnswers()
         for (i in 0 until listAnswer.size){
             if(listAnswer[i] < 0){
                 count++
