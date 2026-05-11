@@ -1,11 +1,9 @@
 package com.example.appthitracnghiem.ui.home.home.system
 
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
@@ -15,6 +13,7 @@ import com.example.appthitracnghiem.ui.department.listdepartment.FragmentListDep
 import com.example.appthitracnghiem.ui.home.home.system.adapter.DepartmentAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.content.edit
 
 @AndroidEntryPoint
 class FragmentSystem : BaseFragment<SystemViewModel>() {
@@ -35,15 +34,13 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
         binding.recycleListLiveQuizzes.layoutManager = linearLayoutManager
 
         binding.seeAllSystem.setOnClickListener {
-            viewModel.mPreferenceUtil.defaultPref().edit()
-                .remove(PreferenceKey.ID_DEPARTMENT)
-                .apply()
+            viewModel.mPreferenceUtil.defaultPref().edit {
+                remove(PreferenceKey.ID_DEPARTMENT)
+            }
             val fragmentListDepartment = FragmentListDepartment()
             val fm: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
             fm.add(R.id.changeIdHome,fragmentListDepartment).addToBackStack(null).commit()
         }
-
-        setText()
     }
 
     override fun bindData() {
@@ -65,12 +62,6 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
         userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID,0)
         viewModel.getDataDepartment(userId, "")
-    }
-
-    private fun setText() {
-        val semibold: Typeface? =
-            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        binding.textQuizHome.typeface = semibold
     }
 
     override fun onCreateView(

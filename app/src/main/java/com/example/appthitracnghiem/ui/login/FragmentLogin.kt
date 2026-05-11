@@ -5,7 +5,6 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Paint
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -17,7 +16,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.ImageView
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentLoginBinding
@@ -82,20 +80,10 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
         }
     }
 
-    /** set font*/
-    private fun setText() {
-        binding.forgetPassword.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-
-        val semibold: Typeface? =
-            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        binding.textGoogle.typeface = semibold
-        binding.textFacebook.typeface = semibold
-        binding.textApple.typeface = semibold
-    }
-
     @SuppressLint("ResourceAsColor")
     private fun initUi() {
         checkSaveAccount()
+        binding.forgetPassword.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
         binding.hidePasswordLogin.setOnClickListener {
             hidePassword(binding.passwordLogin, binding.hidePasswordLogin)
@@ -140,8 +128,6 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
             intent.data = Uri.parse("https://www.facebook.com")
             startActivity(intent)
         }
-
-        setText()
     }
 
     private fun saveAccount(email: String, password: String) {

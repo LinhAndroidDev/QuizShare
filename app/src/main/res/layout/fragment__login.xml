@@ -143,6 +143,7 @@
                 android:text="@string/txtLoginWithGoogle"
                 android:textSize="16sp"
                 android:textColor="@color/color_login_other"
+                android:fontFamily="@font/svn_gilroy_semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -166,6 +167,7 @@
                 android:text="@string/txtLoginWithFacebook"
                 android:textSize="16sp"
                 android:textColor="@color/color_login_other"
+                android:fontFamily="@font/svn_gilroy_semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -193,7 +195,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/txtLoginWithApple"
                 android:textColor="@color/color_login_other"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:fontFamily="@font/svn_gilroy_semibold" />
         </LinearLayout>
 
             <LinearLayout
@@ -209,7 +212,7 @@
                     android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-                ư                                                                                                                                                                                                                                                                                          <TextView
+                <TextView
                     android:id="@+id/registerNow"
                     android:layout_marginStart="5dp"
                     android:text="@string/txtRegisterNow"

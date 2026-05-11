@@ -1,6 +1,5 @@
 package com.example.appthitracnghiem.ui.home.history.test.general
 
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -8,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.PopupWindow
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentHistoryTestBinding
@@ -83,14 +81,12 @@ class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
         }
 
         binding.menuHistoryTest.setOnClickListener {
-            showPopupMenu(binding.menuHistoryTest, R.layout.popup_history_test, 0, 0, Gravity.BOTTOM)
+            binding.menuHistoryTest.showPopupMenu()
         }
-
-        setText()
     }
 
-    private fun showPopupMenu(anchor: View, layout: Int, x: Int, y: Int, position: Int) {
-        val popUpView: View = View.inflate(requireActivity(), layout, null)
+    private fun View.showPopupMenu() {
+        val popUpView: View = View.inflate(requireActivity(), R.layout.popup_history_test, null)
 
         val width = ViewGroup.LayoutParams.WRAP_CONTENT
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -119,15 +115,7 @@ class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
         }
 
         val popupWindow = PopupWindow(popUpView, width, height, focusable)
-        popupWindow.showAsDropDown(anchor, x, y, position)
-    }
-
-    private fun setText() {
-        val semibold: Typeface? =
-            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        binding.txtTitleHistory.typeface = semibold
-        binding.txtFromSystem.typeface = semibold
-        binding.txtFromUser.typeface = semibold
+        popupWindow.showAsDropDown(this, 0, 0, Gravity.BOTTOM)
     }
 
     override fun onFragmentBack(): Boolean {

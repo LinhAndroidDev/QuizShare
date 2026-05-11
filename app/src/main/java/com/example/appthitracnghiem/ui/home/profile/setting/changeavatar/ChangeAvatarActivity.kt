@@ -9,7 +9,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Point
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,7 +16,6 @@ import android.view.Display
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.ActivityChangeAvatarBinding
@@ -35,6 +33,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.net.toUri
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -118,7 +117,7 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
         setSizeScreen()
 
         val strImage: String = intent.getStringExtra("Uri").toString()
-        val uriImage: Uri = Uri.parse(strImage)
+        val uriImage: Uri = strImage.toUri()
         binding.avatarEdit.loadNetworkImage(
             uri = uriImage,
             errorRes = R.drawable.icon_error,
@@ -151,8 +150,6 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
         binding.backChangeAvatar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-
-        setText()
     }
 
     override fun onRequestPermissionsResult(
@@ -211,10 +208,5 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
                 }
             }
         }
-    }
-
-    private fun setText() {
-        val semibold: Typeface? = ResourcesCompat.getFont(this,R.font.svn_gilroy_semibold)
-        binding.txtChangeAvatar.typeface = semibold
     }
 }

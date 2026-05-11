@@ -28,7 +28,8 @@
             android:text="@string/txtIntroFirst"
             android:textColor="@color/white"
             android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:fontFamily="@font/svn_gilroy_semibold"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -5,7 +5,6 @@ package com.example.appthitracnghiem.ui.home.createtest.review
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.SharedPreferences
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -14,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
@@ -35,6 +33,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.lang.reflect.Type
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
@@ -160,7 +159,7 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
 
             val strImage = viewModel.mPreferenceUtil.defaultPref()
                 .getString(PreferenceKey.CREATE_URI_IMAGE_SUBJECT, "").toString()
-            val uriImage: Uri = Uri.parse(strImage)
+            val uriImage: Uri = strImage.toUri()
             val strPath: String = UriConvertFile.getFileFromUri(requireActivity(),uriImage).toString()
             val file = File(strPath)
             val requestBodyImage: RequestBody =
@@ -182,8 +181,6 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
         binding.backReview.setOnClickListener {
             activity?.onBackPressedDispatcher?.onBackPressed()
         }
-
-        setText()
     }
 
     private fun getListQuestion(key: String?): ArrayList<CreateQuestion?> {
@@ -192,12 +189,6 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
         val json: String? = prefs.getString(key, null)
         val type: Type = object : TypeToken<ArrayList<CreateQuestion?>>() {}.type
         return gson.fromJson(json, type)
-    }
-
-    private fun setText() {
-        val semibold: Typeface? =
-            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        binding.txtSeeAgain.typeface = semibold
     }
 
     override fun onCreateView(

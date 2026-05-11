@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +12,8 @@ import android.widget.PopupWindow
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentHistoryTestSavedBinding
-import com.example.appthitracnghiem.model.Test
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.history.saved.test.adapter.HistoryTestAdapter
-import com.example.appthitracnghiem.ui.home.history.test.general.RequestExamHistory
 import com.example.appthitracnghiem.utils.PreferenceKey
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -84,12 +81,12 @@ class FragmentHistoryTestSaved : BaseFragment<TestSavedViewModel>() {
         }
 
         binding.menuHistoryTestSaved.setOnClickListener {
-            showPopupMenu(binding.menuHistoryTestSaved,R.layout.popup_list_test,0, 0, Gravity.BOTTOM)
+            binding.menuHistoryTestSaved.showPopupMenu()
         }
     }
 
-    private fun showPopupMenu(anchor: View, layout: Int, x: Int, y: Int, position: Int) {
-        val popUpView: View = View.inflate(requireActivity(), layout, null)
+    private fun View.showPopupMenu() {
+        val popUpView: View = View.inflate(requireActivity(), R.layout.popup_list_test, null)
 
         val width = ViewGroup.LayoutParams.WRAP_CONTENT
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -121,7 +118,7 @@ class FragmentHistoryTestSaved : BaseFragment<TestSavedViewModel>() {
         }
 
         val popupWindow = PopupWindow(popUpView, width, height, focusable)
-        popupWindow.showAsDropDown(anchor, x, y, position)
+        popupWindow.showAsDropDown(this, 0, 0, Gravity.BOTTOM)
     }
 
     override fun onCreateView(

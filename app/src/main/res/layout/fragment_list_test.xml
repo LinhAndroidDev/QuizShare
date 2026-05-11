@@ -92,7 +92,8 @@
                         android:layout_height="wrap_content"
                         android:text="Khoa tự nhiên"
                         android:textColor="@color/black"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:fontFamily="@font/svn_gilroy_semibold" />
                 </RelativeLayout>
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -3,7 +3,6 @@ package com.example.appthitracnghiem.ui.home.profile.setting
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -14,7 +13,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentSettingBinding
@@ -26,6 +24,7 @@ import com.example.appthitracnghiem.ui.login.LoginActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.content.edit
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -105,8 +104,6 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
         }
 
         setBottomShare()
-
-        setText()
     }
 
     private fun replaceFragment(fm: Fragment) {
@@ -136,13 +133,6 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
 
     override fun onFragmentBack(): Boolean {
         return true
-    }
-
-    /** set font*/
-    private fun setText() {
-        val semibold: Typeface? =
-            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        binding.txtSetting.typeface = semibold
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -177,8 +167,9 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
         logoutNow.setOnClickListener {
             viewModel.confirmLoggedOut()
             viewModel.mPreferenceUtil.defaultPref()
-                .edit().putString(PreferenceKey.USER_AVATAR,"")
-                .apply()
+                .edit {
+                    putString(PreferenceKey.USER_AVATAR, "")
+                }
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)

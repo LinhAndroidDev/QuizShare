@@ -3,12 +3,10 @@
 package com.example.appthitracnghiem.ui.home.home
 
 import android.annotation.SuppressLint
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentHomeBinding
@@ -20,6 +18,7 @@ import com.example.appthitracnghiem.ui.home.profile.FragmentProfile
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.loadNetworkImage
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.content.edit
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -66,7 +65,6 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
 //            (activity as HomeActivity).visibleTaBar(scrollPosition)
 //        }
 
-        setText()
     }
 
     private fun setStatusBar() {
@@ -97,27 +95,23 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
 
         viewModel.nameUserLiveData.observe(viewLifecycleOwner) {
             viewModel.mPreferenceUtil.defaultPref()
-                .edit().putString(PreferenceKey.USER_NAME,it)
-                .apply()
+                .edit {
+                    putString(PreferenceKey.USER_NAME, it)
+                }
             binding.txtNameUserHome.text = it
         }
 
         viewModel.avartarUserLiveData.observe(viewLifecycleOwner) {
             viewModel.mPreferenceUtil.defaultPref()
-                .edit().putString(PreferenceKey.USER_AVATAR,it)
-                .apply()
+                .edit {
+                    putString(PreferenceKey.USER_AVATAR, it)
+                }
             binding.avatarUseHome.loadNetworkImage(
                 url = it,
                 emptyUrlRes = R.drawable.logo6,
                 errorRes = R.drawable.logo6,
             )
         }
-    }
-
-    private fun setText() {
-        val semibold: Typeface? =
-            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        binding.textHome.typeface = semibold
     }
 
     internal fun scrollTop(){

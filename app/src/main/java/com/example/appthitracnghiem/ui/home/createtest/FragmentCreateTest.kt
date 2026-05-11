@@ -3,7 +3,6 @@ package com.example.appthitracnghiem.ui.home.createtest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,7 +14,6 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
@@ -37,10 +35,13 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
     private var _binding: FragmentCreateTestBinding? = null
     private val binding get() = _binding!!
 
-    private val GALLERY_RED_CODE: Int = 1000
-    private var DEPARTMENT_ID: Int = -1
-    private var SUBJECT_ID: Int = -1
+    private var departmentId: Int = -1
+    private var subjectId: Int = -1
     private var uriImage = ""
+
+    companion object {
+        const val GALLERY_RED_CODE: Int = 1000
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,8 +53,6 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             initUi()
         }
-
-        setText()
     }
 
     override fun bindData() {
@@ -112,7 +111,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
 
             val createDepartmentAdapter = CreateDepartmentAdapter(listDepartment, requireActivity())
             createDepartmentAdapter.onClickItem = {
-                DEPARTMENT_ID = it
+                departmentId = it
                 popupWindow.dismiss()
                 binding.txtSelectSubject.visibility = View.VISIBLE
                 binding.layoutSelectSubject.visibility = View.VISIBLE
@@ -133,19 +132,19 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
             val focusable = true
 
             viewModel.listDepartmentLiveData.observe(viewLifecycleOwner){
-                if(DEPARTMENT_ID >= it.size){
+                if(departmentId >= it.size){
                     Toast.makeText(requireActivity(),"Khoa chưa có môn",Toast.LENGTH_SHORT).show()
                 }else{
                     val popupWindow = PopupWindow(popUpView, width, height, focusable)
                     popupWindow.showAsDropDown(binding.selectSubject, 0, -30, Gravity.BOTTOM)
 
                     val listDepartment: ArrayList<String> = arrayListOf()
-                    for (i in 0 until it[DEPARTMENT_ID].subjects.size) {
-                        listDepartment.add(it[DEPARTMENT_ID].subjects[i].title)
+                    for (i in 0 until it[departmentId].subjects.size) {
+                        listDepartment.add(it[departmentId].subjects[i].title)
                     }
                     val createDepartmentAdapter = CreateDepartmentAdapter(listDepartment, requireActivity())
                     createDepartmentAdapter.onClickItem = {
-                        SUBJECT_ID = it
+                        subjectId = it
                         popupWindow.dismiss()
                         viewModel.mPreferenceUtil.defaultPref().edit {
                             putInt(PreferenceKey.CREATE_SUBJECT_ID, it + 1)
@@ -312,7 +311,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
     }
 
     /** show menu add test */
-    private fun showMenuCreate(popView: View,anchor: View, x: Int, y: Int, position: Int) {
+    private fun showMenuCreate(popView: View, anchor: View, x: Int, y: Int, position: Int) {
         val width = ViewGroup.LayoutParams.WRAP_CONTENT
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
         val focusable = true
@@ -321,22 +320,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
         popupWindow.showAsDropDown(anchor, x, y, position)
     }
 
-    /** set font **/
-    private fun setText() {
-        val semibold: Typeface? =
-            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        binding.txtAddTest.typeface = semibold
-        binding.txtTiltle.typeface = semibold
-        binding.txtDownTest.typeface = semibold
-        binding.txtSelectDepartment.typeface = semibold
-        binding.txtSelectMode.typeface = semibold
-        binding.txtTimeDoTest.typeface = semibold
-        binding.txtNumberQuestion.typeface = semibold
-        binding.txtDetail.typeface = semibold
-        binding.txtSelectSubject.typeface = semibold
-    }
-
-    internal fun scrollTop(){
+    internal fun scrollTop() {
         binding.scrollCreateTest.post {
             binding.scrollCreateTest.fling(0)
             binding.scrollCreateTest.smoothScrollTo(0, 0)

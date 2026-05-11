@@ -25,6 +25,7 @@
                 android:text="@string/txtCreateTest"
                 android:textColor="@color/black"
                 android:textSize="24sp"
+                android:fontFamily="@font/svn_gilroy_semibold"
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -106,6 +107,7 @@
                     android:text="@string/txtSelectImage"
                     android:textColor="@color/black"
                     android:textSize="16sp"
+                    android:fontFamily="@font/svn_gilroy_semibold"
                     android:layout_marginTop="14dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -149,6 +151,7 @@
                     android:text="@string/txtAddQuiz"
                     android:textSize="16sp"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/svn_gilroy_semibold"
                     android:layout_marginTop="24dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>

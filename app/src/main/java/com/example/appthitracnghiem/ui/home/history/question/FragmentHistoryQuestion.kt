@@ -1,12 +1,9 @@
 package com.example.appthitracnghiem.ui.home.history.question
 
-import android.graphics.Typeface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentHistoryQuestionBinding
@@ -38,18 +35,11 @@ class FragmentHistoryQuestion : BaseFragment<EmptyViewModel>() {
 
         historyQuestionAdapter = HistoryQuestionAdapter(requireActivity(),listQuestionHistory)
 
-        val linear: LinearLayoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
+        val linear = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
         binding.rcvListHistoryQuestion.layoutManager = linear
         binding.rcvListHistoryQuestion.adapter = historyQuestionAdapter
 
-        setText()
-
         click()
-    }
-
-    private fun setText() {
-        val semibold: Typeface? = ResourcesCompat.getFont(requireActivity(),R.font.svn_gilroy_semibold)
-        binding.txtHistoryTest.typeface = semibold
     }
 
     private fun click() {

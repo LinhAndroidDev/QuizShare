@@ -4,12 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.ActivityIntroLoginBinding
-import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.login.LoginActivity
 import com.example.appthitracnghiem.ui.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint

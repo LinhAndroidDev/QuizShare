@@ -1,18 +1,13 @@
 package com.example.appthitracnghiem.ui.home.profile.setting.email
 
 import android.app.ProgressDialog
-import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.Fragment
-import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentUpdateEmailBinding
-import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.utils.PreferenceKey
 import dagger.hilt.android.AndroidEntryPoint
@@ -69,15 +64,6 @@ class FragmentUpdateEmail : BaseFragment<UpdateEmailViewModel>() {
                 viewModel.updateEmail(RequestUpdateEmail(useId, strEmail))
             }
         }
-
-        setText()
-    }
-
-    /** set font*/
-    private fun setText() {
-        val semibold: Typeface? =
-            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        binding.txtCapNhatEmail.typeface = semibold
     }
 
     override fun onCreateView(

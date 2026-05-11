@@ -29,7 +29,8 @@
             android:gravity="center"
             android:text="@string/txtIntroThird"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/svn_gilroy_semibold"/>
     </LinearLayout>
 
 </LinearLayout>

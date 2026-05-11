@@ -29,6 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/svn_gilroy_semibold"
                     android:text="@string/txtAddTest"
                     android:textColor="@color/black"
                     android:textSize="24sp" />
@@ -91,6 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/svn_gilroy_semibold"
                 android:text="@string/txtTitleCreateTest"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -115,6 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/svn_gilroy_semibold"
                 android:text="@string/txtDownTest"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -189,6 +192,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/svn_gilroy_semibold"
                 android:text="@string/txtSelectDepartment"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -226,6 +230,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/svn_gilroy_semibold"
                 android:text="@string/txtSelectSubject"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -265,6 +270,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/svn_gilroy_semibold"
                 android:text="@string/txtSelectMode"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -302,6 +308,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/svn_gilroy_semibold"
                 android:text="@string/txtTimeDoTest"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -339,6 +346,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/svn_gilroy_semibold"
                 android:text="@string/txtNumberQuiz"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -363,6 +371,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/svn_gilroy_semibold"
                 android:text="@string/txtDetail"
                 android:textColor="@color/black"
                 android:textSize="16sp" />

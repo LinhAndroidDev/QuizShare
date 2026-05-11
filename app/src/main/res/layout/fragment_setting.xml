@@ -1,93 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentSetting"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragmentSetting"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.profile.setting.FragmentSetting">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="72dp"
                 android:orientation="vertical">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <ImageView
-                        android:layout_centerVertical="true"
                         android:id="@+id/backSetting"
-                        android:src="@drawable/icon_back_black"
                         android:layout_width="30dp"
-                        android:layout_height="25dp"/>
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_back_black" />
+
                     <TextView
                         android:id="@+id/txtSetting"
-                        android:text="@string/txtSetting"
-                        android:textSize="24sp"
-                        android:textColor="@color/black"
-                        android:layout_centerHorizontal="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="@font/svn_gilroy_semibold"
+                        android:text="@string/txtSetting"
+                        android:textColor="@color/black"
+                        android:textSize="24sp" />
                 </RelativeLayout>
+
                 <TextView
-                    android:text="@string/txtAccount"
-                    android:textSize="14sp"
-                    android:layout_marginTop="24dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/txtAccount"
+                    android:textSize="14sp" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/updateInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="16dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginHorizontal="1dp"
-                    app:cardBackgroundColor="@color/bg_card_setting">
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/bg_card_setting"
+                    app:cardCornerRadius="16dp">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
                             android:orientation="horizontal">
+
                             <ImageView
-                                android:src="@drawable/icon_person"
                                 android:layout_width="44dp"
-                                android:layout_height="44dp"/>
+                                android:layout_height="44dp"
+                                android:src="@drawable/icon_person" />
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
                                 android:orientation="vertical">
+
                                 <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="@string/txtUpdateInfor"
-                                    android:textSize="16sp"
                                     android:textColor="@color/black"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:textSize="16sp" />
+
                                 <TextView
-                                    android:text="@string/txtUpdateNameAge"
-                                    android:textSize="14sp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/txtUpdateNameAge"
+                                    android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>
+
                         <ImageView
-                            android:layout_marginEnd="15dp"
+                            android:layout_width="20dp"
+                            android:layout_height="25dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/icon_next_black"
-                            android:layout_width="20dp"
-                            android:layout_height="25dp"/>
+                            android:layout_marginEnd="15dp"
+                            android:src="@drawable/icon_next_black" />
                     </RelativeLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -96,48 +111,55 @@
                     android:id="@+id/changeEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="16dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginHorizontal="1dp"
-                    app:cardBackgroundColor="@color/bg_card_setting">
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/bg_card_setting"
+                    app:cardCornerRadius="16dp">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
                             android:orientation="horizontal">
+
                             <ImageView
-                                android:src="@drawable/icon_email"
                                 android:layout_width="44dp"
-                                android:layout_height="44dp"/>
+                                android:layout_height="44dp"
+                                android:src="@drawable/icon_email" />
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
                                 android:orientation="vertical">
+
                                 <TextView
-                                    android:text="@string/txtChangeEmail"
-                                    android:textSize="16sp"
-                                    android:textColor="@color/black"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/txtChangeEmail"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+
                                 <TextView
                                     android:id="@+id/emailSetting"
-                                    android:text="@string/txtEmail"
-                                    android:textSize="14sp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/txtEmail"
+                                    android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>
+
                         <ImageView
-                            android:layout_marginEnd="15dp"
+                            android:layout_width="20dp"
+                            android:layout_height="25dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/icon_next_black"
-                            android:layout_width="20dp"
-                            android:layout_height="25dp"/>
+                            android:layout_marginEnd="15dp"
+                            android:src="@drawable/icon_next_black" />
                     </RelativeLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -146,47 +168,54 @@
                     android:id="@+id/changePassWord"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="16dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginHorizontal="1dp"
-                    app:cardBackgroundColor="@color/bg_card_setting">
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/bg_card_setting"
+                    app:cardCornerRadius="16dp">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
                             android:orientation="horizontal">
+
                             <ImageView
-                                android:src="@drawable/icon_change_password"
                                 android:layout_width="44dp"
-                                android:layout_height="44dp"/>
+                                android:layout_height="44dp"
+                                android:src="@drawable/icon_change_password" />
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
                                 android:orientation="vertical">
+
                                 <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="@string/txtChangePassword"
-                                    android:textSize="16sp"
                                     android:textColor="@color/black"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:textSize="16sp" />
+
                                 <TextView
-                                    android:text="@string/txtInforChangePassword"
-                                    android:textSize="14sp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/txtInforChangePassword"
+                                    android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>
+
                         <ImageView
-                            android:layout_marginEnd="15dp"
+                            android:layout_width="20dp"
+                            android:layout_height="25dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/icon_next_black"
-                            android:layout_width="20dp"
-                            android:layout_height="25dp"/>
+                            android:layout_marginEnd="15dp"
+                            android:src="@drawable/icon_next_black" />
                     </RelativeLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -195,119 +224,137 @@
                     android:id="@+id/deleteAccount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="16dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginHorizontal="1dp"
-                    app:cardBackgroundColor="@color/bg_card_setting">
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/bg_card_setting"
+                    app:cardCornerRadius="16dp">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
                             android:orientation="horizontal">
+
                             <ImageView
-                                android:src="@drawable/icon_delete_account"
                                 android:layout_width="44dp"
-                                android:layout_height="44dp"/>
+                                android:layout_height="44dp"
+                                android:src="@drawable/icon_delete_account" />
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
                                 android:orientation="vertical">
+
                                 <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="@string/txtDeleteAccount"
-                                    android:textSize="16sp"
                                     android:textColor="@color/black"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:textSize="16sp" />
+
                                 <TextView
-                                    android:text="@string/txtCanntRefund"
-                                    android:textSize="14sp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/txtCanntRefund"
+                                    android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>
+
                         <ImageView
-                            android:layout_marginEnd="15dp"
+                            android:layout_width="20dp"
+                            android:layout_height="25dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/icon_next_black"
-                            android:layout_width="20dp"
-                            android:layout_height="25dp"/>
+                            android:layout_marginEnd="15dp"
+                            android:src="@drawable/icon_next_black" />
                     </RelativeLayout>
 
                 </androidx.cardview.widget.CardView>
+
                 <TextView
-                    android:text="@string/txtOther"
-                    android:textSize="14sp"
-                    android:layout_marginTop="24dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/txtOther"
+                    android:textSize="14sp" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp">
+
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/txtNoficationApp"
-                        android:textSize="16sp"
                         android:textColor="@color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="16sp" />
+
                     <androidx.appcompat.widget.SwitchCompat
-                        app:track="@drawable/bg_track"
-                        android:thumb="@drawable/bg_thumb"
-                        android:layout_alignParentEnd="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:thumb="@drawable/bg_thumb"
+                        app:track="@drawable/bg_track" />
                 </RelativeLayout>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/priorityMode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="16dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginHorizontal="1dp"
-                    app:cardBackgroundColor="@color/bg_card_setting">
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/bg_card_setting"
+                    app:cardCornerRadius="16dp">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
                             android:orientation="horizontal">
+
                             <ImageView
-                                android:src="@drawable/icon_priority"
                                 android:layout_width="44dp"
-                                android:layout_height="44dp"/>
+                                android:layout_height="44dp"
+                                android:src="@drawable/icon_priority" />
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
                                 android:orientation="vertical">
+
                                 <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="@string/txtModePriority"
-                                    android:textSize="16sp"
                                     android:textColor="@color/black"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:textSize="16sp" />
+
                                 <TextView
-                                    android:text="@string/txtShowOrHide"
-                                    android:textSize="14sp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/txtShowOrHide"
+                                    android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>
+
                         <ImageView
-                            android:layout_marginEnd="15dp"
+                            android:layout_width="20dp"
+                            android:layout_height="25dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/icon_next_black"
-                            android:layout_width="20dp"
-                            android:layout_height="25dp"/>
+                            android:layout_marginEnd="15dp"
+                            android:src="@drawable/icon_next_black" />
                     </RelativeLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -316,71 +363,81 @@
                     android:id="@+id/frequentQuestion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="16dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginHorizontal="1dp"
-                    app:cardBackgroundColor="@color/bg_card_setting">
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/bg_card_setting"
+                    app:cardCornerRadius="16dp">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
                             android:orientation="horizontal">
+
                             <ImageView
-                                android:src="@drawable/icon_question"
                                 android:layout_width="44dp"
-                                android:layout_height="44dp"/>
+                                android:layout_height="44dp"
+                                android:src="@drawable/icon_question" />
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
                                 android:orientation="vertical">
+
                                 <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="@string/txtQuestionSometimesSee"
-                                    android:textSize="16sp"
                                     android:textColor="@color/black"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:textSize="16sp" />
+
                                 <TextView
-                                    android:text="@string/txtQuestionBest"
-                                    android:textSize="14sp"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/txtQuestionBest"
+                                    android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>
+
                         <ImageView
-                            android:layout_marginEnd="15dp"
+                            android:layout_width="20dp"
+                            android:layout_height="25dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/icon_next_black"
-                            android:layout_width="20dp"
-                            android:layout_height="25dp"/>
+                            android:layout_marginEnd="15dp"
+                            android:src="@drawable/icon_next_black" />
                     </RelativeLayout>
 
                 </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/logout"
-                    android:text="@string/txtLogout"
-                    android:textSize="16sp"
-                    android:textColor="@color/color_logout"
-                    android:layout_marginTop="32dp"
-                    android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/txtLogout"
+                    android:textColor="@color/color_logout"
+                    android:textSize="16sp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"/>
+                    android:layout_height="100dp" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
         <RelativeLayout
             android:id="@+id/layoutLogoutCover"
-            android:background="#41111111"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:background="#41111111"
+            android:visibility="gone" />
     </RelativeLayout>
-    <include layout="@layout/layout_logout"/>
+
+    <include layout="@layout/layout_logout" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

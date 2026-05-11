@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentHistorySavedBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.history.saved.department.adapter.HistoryDepartmentAdapter
@@ -44,11 +43,13 @@ class FragmentHistoryDepartmentSaved : BaseFragment<HistoryDepartmentSavedViewMo
             .getInt(PreferenceKey.USER_ID,0)
         viewModel.getDepartmentSaved(RequestSavedDepartment(userId))
 
-        viewModel.listDepartmentSaved.observe(viewLifecycleOwner){
-            val linear = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
-            binding.rcvDepartmentHistory.layoutManager = linear
-            historyDepartmentAdapter = HistoryDepartmentAdapter(requireActivity(),it)
-            binding.rcvDepartmentHistory.adapter = historyDepartmentAdapter
+        viewModel.listDepartmentSaved.observe(viewLifecycleOwner){ listDepartment ->
+            listDepartment?.let {
+                val linear = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
+                binding.rcvDepartmentHistory.layoutManager = linear
+                historyDepartmentAdapter = HistoryDepartmentAdapter(requireActivity(),it)
+                binding.rcvDepartmentHistory.adapter = historyDepartmentAdapter
+            }
         }
     }
 

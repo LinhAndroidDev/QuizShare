@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentIntroLoginBinding
-import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.login.LoginActivity
 import com.example.appthitracnghiem.ui.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint

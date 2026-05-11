@@ -9,10 +9,8 @@ import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentTopicBinding
-import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.ExamActivity
 import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
@@ -21,6 +19,7 @@ import com.example.appthitracnghiem.utils.loadNetworkImage
 import java.text.SimpleDateFormat
 import java.util.*
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.content.edit
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -112,8 +111,9 @@ class FragmentTopic : BaseFragment<TopicViewModel>() {
             val sdf = SimpleDateFormat("yyyy/MM/dd hh:mm:ss")
             val currentDate = sdf.format(Date()).toString()
             viewModel.mPreferenceUtil.defaultPref()
-                .edit().putString(PreferenceKey.START_DO_TEST,currentDate)
-                .apply()
+                .edit {
+                    putString(PreferenceKey.START_DO_TEST, currentDate)
+                }
             val examId = requireArguments().getInt(ExamSessionExtras.ARG_EXAM_ID, 0)
             val timeMinutes = requireArguments().getInt(ExamSessionExtras.ARG_TIME_MINUTES, 0)
             val intent = Intent(requireActivity(), ExamActivity::class.java).apply {

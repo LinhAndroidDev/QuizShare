@@ -28,6 +28,7 @@
                 android:text="Lịch sử thi"
                 android:textSize="24sp"
                 android:textColor="@color/black"
+                android:fontFamily="@font/svn_gilroy_semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </RelativeLayout>
@@ -81,6 +82,7 @@
                 android:text="Từ hệ thống"
                 android:textSize="20sp"
                 android:textColor="@color/black"
+                android:fontFamily="@font/svn_gilroy_semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <androidx.recyclerview.widget.RecyclerView
@@ -94,6 +96,7 @@
                 android:text="Từ người dùng"
                 android:textSize="20sp"
                 android:textColor="@color/black"
+                android:fontFamily="@font/svn_gilroy_semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <androidx.recyclerview.widget.RecyclerView

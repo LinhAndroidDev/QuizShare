@@ -1,12 +1,10 @@
 package com.example.appthitracnghiem.ui.home.profile
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentProfileBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
@@ -83,11 +81,6 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
     private fun setText() {
         binding.txtName.text = viewModel.mPreferenceUtil.defaultPref()
             .getString(PreferenceKey.USER_NAME, "")
-
-        val semibold: Typeface? =
-            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        binding.txtName.typeface = semibold
-        binding.txtProfile.typeface = semibold
     }
 
     internal fun scrollTop(){

@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HistoryDepartmentSavedViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
     var isLoadingLiveData = MutableLiveData<Boolean>()
-    var listDepartmentSaved = MutableLiveData<ArrayList<Department>>()
+    var listDepartmentSaved = MutableLiveData<ArrayList<Department>?>()
 
     fun getDepartmentSaved(requestSavedDepartment: RequestSavedDepartment) {
         isLoadingLiveData.value = true

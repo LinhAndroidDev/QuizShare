@@ -2,11 +2,8 @@ package com.example.appthitracnghiem.ui.home
 
 import android.annotation.SuppressLint
 import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.View
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

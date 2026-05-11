@@ -154,6 +154,7 @@
                     android:text="@string/txtRecommand"
                     android:textColor="@color/black"
                     android:textSize="23sp"
+                    android:fontFamily="@font/svn_gilroy_semibold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <androidx.recyclerview.widget.RecyclerView

@@ -54,16 +54,13 @@ class FromUserAdapter(
         holder.itemView.setOnClickListener { v ->
             val activity = v.context.findAppCompatActivity() ?: return@setOnClickListener
             val mPreferenceUtil = PreferenceUtil(activity)
-            mPreferenceUtil.defaultPref().edit()
-                .putInt(PreferenceKey.TYPE, 1)
-                .putInt(PreferenceKey.ID_DEPARTMENT, quiz.id)
-                .apply()
-//            val bundle = Bundle()
-//            bundle.putString("title", quiz.title)
+            mPreferenceUtil.defaultPref().edit {
+                putInt(PreferenceKey.TYPE, 1)
+                    .putInt(PreferenceKey.ID_DEPARTMENT, quiz.id)
+            }
             val fragmentListDepartment = FragmentListDepartment()
             val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
             fm.add(R.id.changeIdHome, fragmentListDepartment).addToBackStack(null).commit()
-//            fragmentListDepartment.arguments = bundle
         }
     }
 }

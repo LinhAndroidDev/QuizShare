@@ -12,6 +12,7 @@
             android:text="Khoa tự nhiên"
             android:textSize="20sp"
             android:textColor="@color/black"
+            android:fontFamily="@font/svn_gilroy_semibold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView

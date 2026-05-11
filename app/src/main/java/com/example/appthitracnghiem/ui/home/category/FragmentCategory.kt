@@ -2,12 +2,10 @@ package com.example.appthitracnghiem.ui.home.category
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentCategoryBinding
@@ -93,14 +91,6 @@ class FragmentCategory : BaseFragment<ListDepartmentViewModel>() {
             val intent = Intent(requireActivity(), SearchSubject::class.java)
             startActivity(intent)
         }
-
-        setText()
-    }
-
-    private fun setText() {
-        val semibold: Typeface? =
-            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        binding.textSubject.typeface = semibold
     }
 
     internal fun scrollTop(){

@@ -8,7 +8,6 @@ object PreferenceKey {
     const val USER_PASSWORD = "USER_PASSWORD"
     const val SAVE_ACCOUNT = "SAVE_ACCOUNT"
     const val USER_ID = "USER_ID"
-    const val ID_EXAM = "ID_EXAM"
     const val TIME_EXAM = "TIME_EXAM"
     const val USER_NAME = "USER_NAME"
     const val USER_AVATAR = "USER_AVATAR"

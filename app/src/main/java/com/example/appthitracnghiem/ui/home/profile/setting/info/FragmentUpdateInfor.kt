@@ -3,7 +3,6 @@ package com.example.appthitracnghiem.ui.home.profile.setting.info
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -11,10 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentUpdateInforBinding
-import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.ui.home.profile.setting.changeavatar.ChangeAvatarActivity
@@ -29,8 +26,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
     private var _binding: FragmentUpdateInforBinding? = null
     private val binding get() = _binding!!
-    private val GALLERY_RED_CODE: Int = 1000
     private var formatDate = SimpleDateFormat("yyyy/MM/dd", Locale.UK)
+
+    companion object {
+        private const val GALLERY_RED_CODE = 1000
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -112,15 +112,6 @@ class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
                 viewModel.updateInfo(RequestUpdateInfo(userId, name, birth))
             }
         }
-
-        setText()
-    }
-
-    /** set font*/
-    private fun setText() {
-        val semibold: Typeface? =
-            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        binding.txtCapNhatThongTin.typeface = semibold
     }
 
     /** Get Image from Storage*/

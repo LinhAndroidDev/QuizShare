@@ -3,104 +3,118 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.history.FragmentHistory"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".ui.home.history.FragmentHistory">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="60dp">
+        android:layout_marginTop="60dp"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/txtLichSu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/svn_gilroy_semibold"
             android:text="@string/txtHistory"
             android:textColor="@color/black"
-            android:textSize="24sp"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textSize="24sp" />
 
         <LinearLayout
             android:id="@+id/historyTest"
-            android:layout_marginTop="24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@drawable/boder_quiz">
+            android:layout_marginTop="24dp"
+            android:background="@drawable/boder_quiz"
+            android:padding="10dp">
 
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:importantForAccessibility="no"
                 android:src="@drawable/history_test" />
 
             <TextView
                 android:id="@+id/txtLichSuThi"
-                android:text="@string/txtHistoryTest"
-                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
-                android:textSize="16sp"
+                android:fontFamily="@font/svn_gilroy_semibold"
+                android:gravity="center"
+                android:text="@string/txtHistoryTest"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textSize="16sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center|end">
+                android:gravity="center|end"
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_marginEnd="15dp"
-                    android:src="@drawable/icon_next_black"
                     android:layout_width="20dp"
-                    android:layout_height="25dp"/>
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="15dp"
+                    android:src="@drawable/icon_next_black" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/saved"
-            android:layout_marginTop="24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@drawable/boder_quiz">
+            android:layout_marginTop="24dp"
+            android:background="@drawable/boder_quiz"
+            android:padding="10dp">
+
             <ImageView
-                android:src="@drawable/saved"
                 android:layout_width="70dp"
-                android:layout_height="70dp"/>
+                android:layout_height="70dp"
+                android:src="@drawable/saved" />
+
             <TextView
                 android:id="@+id/txtDaLuu"
-                android:text="@string/txtSaved"
-                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
-                android:textSize="16sp"
+                android:fontFamily="@font/svn_gilroy_semibold"
+                android:gravity="center"
+                android:text="@string/txtSaved"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textSize="16sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center|end">
+                android:gravity="center|end"
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_marginEnd="15dp"
-                    android:src="@drawable/icon_next_black"
                     android:layout_width="20dp"
-                    android:layout_height="25dp"/>
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="15dp"
+                    android:src="@drawable/icon_next_black" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/historyQuiz"
-            android:layout_marginTop="24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@drawable/boder_quiz">
+            android:layout_marginTop="24dp"
+            android:background="@drawable/boder_quiz"
+            android:padding="10dp">
+
             <ImageView
-                android:src="@drawable/history_quiz"
                 android:layout_width="70dp"
-                android:layout_height="70dp"/>
+                android:layout_height="70dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/history_quiz" />
 
             <TextView
                 android:id="@+id/txtLichSuCauHoi"
@@ -108,20 +122,24 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
+                android:fontFamily="@font/svn_gilroy_semibold"
                 android:gravity="center"
                 android:text="@string/txtHistoryQuiz"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center|end">
+                android:gravity="center|end"
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_marginEnd="15dp"
-                    android:src="@drawable/icon_next_black"
                     android:layout_width="20dp"
-                    android:layout_height="25dp"/>
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="15dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/icon_next_black" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

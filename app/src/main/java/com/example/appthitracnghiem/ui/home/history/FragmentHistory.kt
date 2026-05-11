@@ -1,12 +1,10 @@
 package com.example.appthitracnghiem.ui.home.history
 
 import android.annotation.SuppressLint
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentHistoryBinding
@@ -37,7 +35,7 @@ class FragmentHistory : BaseFragment<EmptyViewModel>() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        };//  set status text dark
+        } //  set status text dark
     }
 
     @SuppressLint("CommitTransaction")
@@ -62,17 +60,6 @@ class FragmentHistory : BaseFragment<EmptyViewModel>() {
             val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
             fm.add(R.id.changeIdHome,fragmentHistorySaved).addToBackStack(null).commit()
         }
-
-        setText()
-    }
-
-    private fun setText() {
-        val semibold: Typeface? =
-            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        binding.txtLichSu.typeface = semibold
-        binding.txtLichSuThi.typeface = semibold
-        binding.txtDaLuu.typeface = semibold
-        binding.txtLichSuCauHoi.typeface = semibold
     }
 
     override fun onCreateView(

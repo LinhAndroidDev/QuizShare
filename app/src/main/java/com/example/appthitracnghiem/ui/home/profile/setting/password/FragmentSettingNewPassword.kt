@@ -1,7 +1,6 @@
 package com.example.appthitracnghiem.ui.home.profile.setting.password
 
 import android.app.ProgressDialog
-import android.graphics.Typeface
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
@@ -10,10 +9,8 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentSettingNewPasswordBinding
-import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.utils.PreferenceKey
 import dagger.hilt.android.AndroidEntryPoint
@@ -82,14 +79,6 @@ class FragmentSettingNewPassword : BaseFragment<ChangePasswordViewModel>() {
             }
         }
 
-        setText()
-    }
-
-    /** set font*/
-    private fun setText() {
-        val semibold: Typeface? =
-            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        binding.txtMatKhauMoi.typeface = semibold
     }
 
     private fun hidePassword(password: EditText, hide: ImageView) {

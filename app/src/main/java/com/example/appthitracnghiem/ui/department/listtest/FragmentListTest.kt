@@ -2,7 +2,6 @@ package com.example.appthitracnghiem.ui.department.listtest
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.PopupWindow
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentListTestBinding
@@ -55,11 +53,6 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
     private fun View.hideKeyboard() {
         val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(windowToken, 0)
-    }
-
-    private fun setText() {
-        val semibold: Typeface? = ResourcesCompat.getFont(requireActivity(),R.font.svn_gilroy_semibold)
-        binding.textNatural.typeface = semibold
     }
 
     override fun bindData() {
@@ -109,7 +102,6 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
 
         })
 
-        setText()
     }
 
     private fun showMenuCreate(anchor: View, layout: Int, x: Int, y: Int, position: Int) {

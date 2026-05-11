@@ -3,7 +3,6 @@ package com.example.appthitracnghiem.ui.home.createtest.question
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Typeface
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.provider.MediaStore
@@ -11,13 +10,11 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
@@ -42,23 +39,22 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
     private val binding get() = _binding!!
 
     lateinit var positiveQuestionAdapter: PositiveQuestionAdapter
-    private val GALLERY_RED_CODE: Int = 1000
-//    private var type1: Int = -1
-//    private var type2: Int = -1
-//    private var type3: Int = -1
-//    private var type4: Int = -1
     private var numberQuiz: Int = 0
     private var questionIndex = 0
     private var checkVisibleComplete: Boolean = false
     private var level: Int = -1
 
-    var listQuestionCreate: ArrayList<CreateQuestion?> = arrayListOf()
+    private var listQuestionCreate: ArrayList<CreateQuestion?> = arrayListOf()
 
-    var listNumberQuestion: ArrayList<Int> = arrayListOf()
+    private var listNumberQuestion: ArrayList<Int> = arrayListOf()
 
-    var listTextViewAnswer: ArrayList<CheckBox> = arrayListOf()
+    private var listTextViewAnswer: ArrayList<CheckBox> = arrayListOf()
 
-    var listResults: ArrayList<Int> = arrayListOf()
+    private var listResults: ArrayList<Int> = arrayListOf()
+
+    companion object {
+        private const val GALLERY_RED_CODE = 1000
+    }
 
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,17 +75,17 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
         binding.recycleListNumber.layoutManager = linearLayoutManager
 
         /** Create array results **/
-        for(i in 0 until 4){
+        repeat(4) {
             listResults.add(-1)
         }
 
         /** Create element for array **/
-        for(i in 0 until numberQuiz){
+        repeat(numberQuiz) {
             listNumberQuestion.add(-2)
             listQuestionCreate.add(null)
         }
 
-        saveListPositive(listNumberQuestion,PreferenceKey.LIST_CREATE_NUMBER_QUESTION)
+        saveListPositive(listNumberQuestion)
 
         positiveQuestionAdapter = PositiveQuestionAdapter(numberQuiz, requireActivity())
         positiveQuestionAdapter.onClickItem = {
@@ -185,20 +181,12 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
         }
 
         binding.menuCreateTestAct.setOnClickListener {
-            showMenuCreate(
-                binding.menuCreateTestAct,
-                R.layout.popup_create_test_activity,
-                0,
-                -30,
-                Gravity.BOTTOM
-            )
+            binding.menuCreateTestAct.showMenuCreate(R.layout.popup_create_test_activity)
         }
 
         binding.createLevel.setOnClickListener {
-            showMenuLevel(binding.createLevel, 0, -30, Gravity.BOTTOM)
+            binding.createLevel.showMenuLevel()
         }
-
-        setText()
     }
 
     private fun clearFocusTextView() {
@@ -210,7 +198,7 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
     }
 
     private fun setTextView() {
-        val listQuestion = getListQuestion(PreferenceKey.LIST_CREATE_QUESTION_EXAM)
+        val listQuestion = getListQuestion()
         if(listQuestion[questionIndex]?.question_title != null){
             binding.questionCreate.setText(listQuestion[questionIndex]?.question_title)
             binding.answerCreate1.setText(listQuestion[questionIndex]?.answer_list?.get(0)?.content)
@@ -227,7 +215,7 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
     }
 
     private fun visibleCompleteExam() {
-        getListPositive(PreferenceKey.LIST_CREATE_NUMBER_QUESTION).let {
+        getListPositive().let {
             for (i in 0 until it.size) {
                 if (it[i] != 0) {
                     checkVisibleComplete = false
@@ -260,11 +248,11 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
 
         if(question.isEmpty()){
             listNumberQuestion[questionIndex] = -1
-            saveListPositive(listNumberQuestion,PreferenceKey.LIST_CREATE_NUMBER_QUESTION)
+            saveListPositive(listNumberQuestion)
             positiveQuestionAdapter.notifyDataSetChanged()
         }else{
             listNumberQuestion[questionIndex] = 0
-            saveListPositive(listNumberQuestion,PreferenceKey.LIST_CREATE_NUMBER_QUESTION)
+            saveListPositive(listNumberQuestion)
             positiveQuestionAdapter.notifyDataSetChanged()
         }
 
@@ -273,7 +261,7 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
         answers.add(CreateAnswer(answer3, "", 3, "", listResults[2]))
         answers.add(CreateAnswer(answer4, "", 4, "", listResults[3]))
 
-        val listNumber = getListPositive(PreferenceKey.LIST_CREATE_NUMBER_QUESTION)
+        val listNumber = getListPositive()
         if(listNumber[questionIndex] == 0){
             listQuestionCreate[questionIndex] = CreateQuestion(answers, "", "", level, questionIndex + 1, question)
         }else{
@@ -281,39 +269,39 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
                 CreateQuestion(answers, "", "", level, questionIndex + 1, question)
             )
         }
-        saveListQuestion(listQuestionCreate, PreferenceKey.LIST_CREATE_QUESTION_EXAM)
+        saveListQuestion(listQuestionCreate)
     }
 
-    private fun saveListPositive(list: ArrayList<Int>, key: String?) {
+    private fun saveListPositive(list: ArrayList<Int>) {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         prefs.edit {
             val gson = Gson()
             val json: String = gson.toJson(list)
-            putString(key, json)
+            putString(PreferenceKey.LIST_CREATE_NUMBER_QUESTION, json)
         }
     }
 
-    private fun getListPositive(key: String?): ArrayList<Int> {
+    private fun getListPositive(): ArrayList<Int> {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         val gson = Gson()
-        val json: String? = prefs.getString(key, null)
+        val json: String? = prefs.getString(PreferenceKey.LIST_CREATE_NUMBER_QUESTION, null)
         val type: Type = object : TypeToken<ArrayList<Int>>() {}.type
         return gson.fromJson(json, type)
     }
 
-    private fun saveListQuestion(list: ArrayList<CreateQuestion?>, key: String?) {
+    private fun saveListQuestion(list: ArrayList<CreateQuestion?>) {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         prefs.edit {
             val gson = Gson()
             val json: String = gson.toJson(list)
-            putString(key, json)
+            putString(PreferenceKey.LIST_CREATE_QUESTION_EXAM, json)
         }
     }
 
-    private fun getListQuestion(key: String?): ArrayList<CreateQuestion?> {
+    private fun getListQuestion(): ArrayList<CreateQuestion?> {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         val gson = Gson()
-        val json: String? = prefs.getString(key, null)
+        val json: String? = prefs.getString(PreferenceKey.LIST_CREATE_QUESTION_EXAM, null)
         val type: Type = object : TypeToken<ArrayList<CreateQuestion?>>() {}.type
         return gson.fromJson(json, type)
     }
@@ -377,14 +365,6 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
         listResults[3] = 0
     }
 
-    private fun setText() {
-        val semibold: Typeface? =
-            ResourcesCompat.getFont(requireActivity(), R.font.svn_gilroy_semibold)
-        binding.txtCreateTest.typeface = semibold
-        binding.txtSelectImageCt.typeface = semibold
-        binding.txtAddQuestion.typeface = semibold
-    }
-
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -396,7 +376,7 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
         }
     }
 
-    private fun showMenuCreate(anchor: View, layout: Int, x: Int, y: Int, position: Int) {
+    private fun View.showMenuCreate(layout: Int) {
         val popUpView: View = View.inflate(requireActivity(), layout, null)
 
         val width = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -404,10 +384,11 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
         val focusable = true
 
         val popupWindow = PopupWindow(popUpView, width, height, focusable)
-        popupWindow.showAsDropDown(anchor, x, y, position)
+        popupWindow.showAsDropDown(this, 0, -30, Gravity.BOTTOM)
     }
 
-    private fun showMenuLevel(anchor: View, x: Int, y: Int, position: Int){
+    @SuppressLint("SetTextI18n")
+    private fun View.showMenuLevel(){
         val popUpView: View = View.inflate(requireActivity(), R.layout.popup_level, null)
 
         val width = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -415,7 +396,7 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
         val focusable = true
 
         val popupWindow = PopupWindow(popUpView, width, height, focusable)
-        popupWindow.showAsDropDown(anchor, x, y, position)
+        popupWindow.showAsDropDown(this, 0, -30, Gravity.BOTTOM)
 
         /** init view **/
         val easy: TextView = popUpView.findViewById(R.id.levelEasy)

@@ -1,13 +1,11 @@
 package com.example.appthitracnghiem.ui.home.history.question.adapter
 
 import android.content.Context
-import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.appthitracnghiem.R
@@ -36,9 +34,6 @@ class HistoryQuestionAdapter(val context: Context,val listQuestion: List<Test>) 
         holder.image.setBackgroundResource(test.image)
         holder.title.text = test.title
         holder.description.text = test.description
-
-        val semibold: Typeface? = ResourcesCompat.getFont(context,R.font.svn_gilroy_semibold)
-        holder.title.typeface = semibold
     }
 
     override fun getItemCount(): Int {

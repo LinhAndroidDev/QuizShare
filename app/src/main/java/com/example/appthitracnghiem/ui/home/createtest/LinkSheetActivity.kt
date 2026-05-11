@@ -2,13 +2,10 @@ package com.example.appthitracnghiem.ui.home.createtest
 
 import android.graphics.RenderEffect
 import android.graphics.Shader
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
-import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.ActivityLinkSheetBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,13 +46,6 @@ class LinkSheetActivity : AppCompatActivity() {
                 binding.layoutSheet.setRenderEffect(null)
             }
         }
-
-        setText()
     }
 
-    /** set font*/
-    private fun setText() {
-        val semibold: Typeface? = ResourcesCompat.getFont(this, R.font.svn_gilroy_semibold)
-        binding.txtGoogleSheet.typeface = semibold
-    }
 }

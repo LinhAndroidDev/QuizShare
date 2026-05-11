@@ -25,6 +25,7 @@
                 android:text="Đổi ảnh đại diện"
                 android:textSize="24sp"
                 android:textColor="@color/black"
+                android:fontFamily="@font/svn_gilroy_semibold"
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
