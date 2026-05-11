@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.data.remote.dto.request.RequestSavedDepartment
 import com.example.appthitracnghiem.databinding.FragmentHistorySavedBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.history.saved.department.adapter.HistoryDepartmentAdapter

@@ -12,7 +12,7 @@ import com.example.appthitracnghiem.databinding.FragmentCategoryBinding
 import com.example.appthitracnghiem.model.Subject
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.department.listdepartment.ListDepartmentViewModel
-import com.example.appthitracnghiem.ui.department.listdepartment.RequestDepartmentInfo
+import com.example.appthitracnghiem.data.remote.dto.request.RequestDepartmentInfo
 import com.example.appthitracnghiem.ui.home.category.adapter.SubjectAdapter
 import com.example.appthitracnghiem.ui.home.category.search.SearchSubject
 import com.example.appthitracnghiem.utils.PreferenceKey

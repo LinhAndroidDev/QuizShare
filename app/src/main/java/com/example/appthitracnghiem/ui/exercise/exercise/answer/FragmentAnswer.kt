@@ -22,7 +22,8 @@ import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.model.PositiveQuestion
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.adapter.MenuQuestionAdapter
-import com.example.appthitracnghiem.ui.exercise.exercise.exam.RequestExamQuestion
+import com.example.appthitracnghiem.data.remote.dto.request.RequestAnswer
+import com.example.appthitracnghiem.data.remote.dto.request.RequestExamQuestion
 import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.gson.Gson

@@ -20,7 +20,7 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentCreateTestBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.department.listdepartment.ListDepartmentViewModel
-import com.example.appthitracnghiem.ui.department.listdepartment.RequestDepartmentInfo
+import com.example.appthitracnghiem.data.remote.dto.request.RequestDepartmentInfo
 import com.example.appthitracnghiem.ui.home.createtest.adapter.CreateDepartmentAdapter
 import com.example.appthitracnghiem.ui.home.createtest.question.CreateTestActivity
 import com.example.appthitracnghiem.utils.PreferenceKey

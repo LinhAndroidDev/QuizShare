@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.data.remote.dto.request.RequestUpdateInfo
 import com.example.appthitracnghiem.databinding.FragmentUpdateInforBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.HomeActivity

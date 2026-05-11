@@ -10,6 +10,7 @@ import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.data.remote.dto.request.RequestPoint
 import com.example.appthitracnghiem.databinding.FragmentPointBinding
 import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.ui.base.BaseFragment

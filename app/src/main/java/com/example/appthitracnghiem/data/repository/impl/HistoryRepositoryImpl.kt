@@ -2,6 +2,10 @@ package com.example.appthitracnghiem.data.repository.impl
 
 import com.example.appthitracnghiem.core.ResultState
 import com.example.appthitracnghiem.data.remote.ApiService
+import com.example.appthitracnghiem.data.remote.dto.request.RequestExamHistory
+import com.example.appthitracnghiem.data.remote.dto.request.RequestSavedDepartment
+import com.example.appthitracnghiem.data.remote.dto.request.RequestSubjectSaved
+import com.example.appthitracnghiem.data.remote.dto.request.RequestTestSaved
 import com.example.appthitracnghiem.data.remote.entity.DepartmentSavedResponse
 import com.example.appthitracnghiem.data.remote.entity.ExamHistoryResponse
 import com.example.appthitracnghiem.data.remote.entity.HistoryTopicResponse
@@ -14,7 +18,7 @@ import javax.inject.Inject
 class HistoryRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
 ) : HistoryRepository {
-    override suspend fun getExamHistory(request: Any): ResultState<ExamHistoryResponse> {
+    override suspend fun getExamHistory(request: RequestExamHistory): ResultState<ExamHistoryResponse> {
         return safeApiCall { apiService.getExamHistory(request) }
     }
 
@@ -22,15 +26,15 @@ class HistoryRepositoryImpl @Inject constructor(
         return safeApiCall { apiService.getExamHistoryDetail(userId, examHistoryId) }
     }
 
-    override suspend fun getSavedDepartments(request: Any): ResultState<DepartmentSavedResponse> {
+    override suspend fun getSavedDepartments(request: RequestSavedDepartment): ResultState<DepartmentSavedResponse> {
         return safeApiCall { apiService.savedDepartment(request) }
     }
 
-    override suspend fun getSavedSubjects(request: Any): ResultState<SaveSubjectResponse> {
+    override suspend fun getSavedSubjects(request: RequestSubjectSaved): ResultState<SaveSubjectResponse> {
         return safeApiCall { apiService.savedSubject(request) }
     }
 
-    override suspend fun getSavedTests(request: Any): ResultState<TestSavedResponse> {
+    override suspend fun getSavedTests(request: RequestTestSaved): ResultState<TestSavedResponse> {
         return safeApiCall { apiService.saveTest(request) }
     }
 }

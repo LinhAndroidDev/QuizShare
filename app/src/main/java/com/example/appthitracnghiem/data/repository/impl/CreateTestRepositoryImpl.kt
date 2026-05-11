@@ -2,6 +2,7 @@ package com.example.appthitracnghiem.data.repository.impl
 
 import com.example.appthitracnghiem.core.ResultState
 import com.example.appthitracnghiem.data.remote.ApiService
+import com.example.appthitracnghiem.data.remote.dto.request.RequestCreateExam
 import com.example.appthitracnghiem.data.remote.entity.CreateExamResponse
 import com.example.appthitracnghiem.data.remote.entity.UploadImageResponse
 import com.example.appthitracnghiem.data.remote.safeApiCall
@@ -13,7 +14,7 @@ import javax.inject.Inject
 class CreateTestRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
 ) : CreateTestRepository {
-    override suspend fun createExam(request: Any): ResultState<CreateExamResponse> {
+    override suspend fun createExam(request: RequestCreateExam): ResultState<CreateExamResponse> {
         return safeApiCall { apiService.createExam(request) }
     }
 

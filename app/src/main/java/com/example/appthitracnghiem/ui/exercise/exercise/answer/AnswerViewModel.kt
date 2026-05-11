@@ -4,10 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.appthitracnghiem.core.ResultState
 import com.example.appthitracnghiem.data.remote.ApiService
+import com.example.appthitracnghiem.data.remote.dto.request.RequestAnswer
+import com.example.appthitracnghiem.data.remote.dto.request.RequestExamQuestion
 import com.example.appthitracnghiem.data.remote.safeApiCall
 import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.ui.base.BaseViewModel
-import com.example.appthitracnghiem.ui.exercise.exercise.exam.RequestExamQuestion
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
