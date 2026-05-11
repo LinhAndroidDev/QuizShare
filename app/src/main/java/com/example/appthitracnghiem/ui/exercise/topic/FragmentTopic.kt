@@ -58,8 +58,8 @@ class FragmentTopic : BaseFragment<TopicViewModel>() {
         }
 
         val loading = ProgressDialog(requireActivity())
-        loading.setTitle("Thông báo")
-        loading.setMessage("Please wait...")
+        loading.setTitle(getString(R.string.dialog_title_notice))
+        loading.setMessage(getString(R.string.loading_please_wait))
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
             if(it){
                 loading.show()

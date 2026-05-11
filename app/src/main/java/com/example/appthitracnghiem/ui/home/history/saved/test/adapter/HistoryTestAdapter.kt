@@ -42,7 +42,11 @@ class HistoryTestAdapter(val context: Context, private val listTestSaved: ArrayL
         holder.image.loadNetworkImage(examSaved.image)
         holder.description.maxLines = 1
         holder.description.ellipsize = TextUtils.TruncateAt.END
-        holder.description.text = "Lượt tạo: " + examSaved.saved_num + "| Người tạo: " + examSaved.author_name
+        holder.description.text = context.getString(
+            R.string.format_history_test_meta,
+            examSaved.saved_num.toString(),
+            examSaved.author_name,
+        )
 
         holder.itemView.setOnClickListener {
             val activity = context.findAppCompatActivity() ?: return@setOnClickListener

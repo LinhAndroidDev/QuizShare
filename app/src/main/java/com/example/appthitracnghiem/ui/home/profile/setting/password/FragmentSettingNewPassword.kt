@@ -31,8 +31,8 @@ class FragmentSettingNewPassword : BaseFragment<ChangePasswordViewModel>() {
         super.bindData()
 
         val loading = ProgressDialog(requireActivity())
-        loading.setTitle("Thông báo")
-        loading.setMessage("Please wait...")
+        loading.setTitle(getString(R.string.dialog_title_notice))
+        loading.setMessage(getString(R.string.loading_please_wait))
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
             if(it){
                 loading.show()
@@ -43,7 +43,7 @@ class FragmentSettingNewPassword : BaseFragment<ChangePasswordViewModel>() {
 
         viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner){
             if(it){
-                Toast.makeText(requireActivity(),"Bạn đã cập nhật mật khẩu thành công",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.toast_password_updated), Toast.LENGTH_SHORT).show()
                 activity?.onBackPressed()
             }
         }
@@ -67,11 +67,11 @@ class FragmentSettingNewPassword : BaseFragment<ChangePasswordViewModel>() {
             val strPasswordRepeat = binding.edtRepeatPasswordUpdate.text.toString()
 
             if(strPassword.isEmpty() || strPasswordRepeat.isEmpty()){
-                Toast.makeText(requireActivity(),"Bạn chưa nhập đầy đử thông tin",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.toast_fill_all_fields_password), Toast.LENGTH_SHORT).show()
             } else if(strPassword.length < 7 || strPasswordRepeat.length < 7){
-                Toast.makeText(requireActivity(),"Mật khẩu phải lớn hơn 6 kí tự",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.txt_warning_password), Toast.LENGTH_SHORT).show()
             }else if(strPassword != strPasswordRepeat){
-                Toast.makeText(requireActivity(),"Mật khẩu nhập lại không đúng",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.toast_password_repeat_mismatch), Toast.LENGTH_SHORT).show()
             } else{
                 val userId = viewModel.mPreferenceUtil.defaultPref()
                     .getInt(PreferenceKey.USER_ID, 0)

@@ -33,7 +33,7 @@
     <TextView
         android:id="@+id/skip"
         android:layout_margin="20dp"
-        android:text="bỏ qua"
+        android:text="@string/txtSkip"
         android:textSize="18dp"
         android:textColor="@color/white"
         android:layout_alignParentEnd="true"

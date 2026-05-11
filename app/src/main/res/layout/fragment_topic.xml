@@ -41,21 +41,21 @@
                     android:paddingHorizontal="16dp"
                     android:orientation="vertical">
                     <TextView
-                        android:text="Toán Học"
+                        android:text="@string/sample_subject_math_full"
                         android:textSize="14sp"
                         android:textColor="@color/color_to_do_late"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
                         android:layout_marginTop="8dp"
-                        android:text="Đề 2: Bất phương trình"
+                        android:text="@string/sample_exam_title"
                         android:textSize="24sp"
                         android:textColor="@color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
                         android:layout_marginTop="8dp"
-                        android:text="(Đề được tạo bởi hệ thống"
+                        android:text="@string/sample_exam_system_note"
                         android:textSize="14sp"
                         android:textColor="@color/black"
                         android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
                                     android:layout_width="32dp"
                                     android:layout_height="32dp"/>
                                 <TextView
-                                    android:text="10 câu hỏi"
+                                    android:text="@string/sample_10_questions"
                                     android:textSize="14sp"
                                     android:textColor="@color/black"
                                     android:layout_gravity="center_vertical"
@@ -101,7 +101,7 @@
                                     android:layout_width="32dp"
                                     android:layout_height="32dp"/>
                                 <TextView
-                                    android:text="30 phút"
+                                    android:text="@string/sample_30_minutes"
                                     android:textSize="14sp"
                                     android:textColor="@color/black"
                                     android:layout_gravity="center_vertical"
@@ -112,7 +112,7 @@
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                     <TextView
-                        android:text="Mô tả"
+                        android:text="@string/txtDetail"
                         android:textSize="14sp"
                         android:textColor="@color/color_to_do_late"
                         android:layout_marginTop="24dp"
@@ -120,7 +120,7 @@
                         android:layout_height="wrap_content"/>
                     <TextView
                         android:layout_marginTop="16dp"
-                        android:text="Bất phương trình bậc nhất hai ẩn tổng hợp các dạng bài tập trắc nghiệm về bất phương trình phổ biến trong các kì thi, bài kiểm tra trong chương trình trọng ..."
+                        android:text="@string/sample_exam_long_description"
                         android:textSize="16sp"
                         android:textColor="@color/black"
                         android:lineSpacingExtra="8dp"
@@ -144,13 +144,13 @@
                             android:orientation="vertical">
                             <TextView
                                 android:id="@+id/nameTopic"
-                                android:text="Nguyễn Hoàng"
+                                android:text="@string/sample_author_name"
                                 android:textSize="14dp"
                                 android:textColor="@color/black"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                             <TextView
-                                android:text="Người tạo đề"
+                                android:text="@string/txtExamCreator"
                                 android:textSize="12dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
@@ -163,7 +163,7 @@
                         android:orientation="horizontal">
                         <TextView
                             android:id="@+id/memoryTopic"
-                            android:text="Ghi nhớ đề thi"
+                            android:text="@string/txtRememberExam"
                             android:textSize="16dp"
                             android:textColor="@color/backgroundIntro"
                             android:gravity="center"
@@ -182,7 +182,7 @@
                             app:cardCornerRadius="20dp"
                             app:cardElevation="0dp">
                             <TextView
-                                android:text="Làm bài ngay"
+                                android:text="@string/txtStartExamNow"
                                 android:textSize="16sp"
                                 android:textColor="@color/white"
                                 android:gravity="center"
@@ -225,7 +225,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="23dp"
-                        android:text="Ghi nhớ đề thi thành công"
+                        android:text="@string/txtRememberExamSuccess"
                         android:textColor="@color/black"
                         android:textSize="20sp" />
 
@@ -237,7 +237,7 @@
                         android:layout_marginTop="8dp"
                         android:gravity="center"
                         android:lineSpacingExtra="8dp"
-                        android:text="Đề dược lưu trong danh sách đề đã lưu của bạn"
+                        android:text="@string/txtExamSavedToList"
                         android:textSize="16sp" />
 
                     <LinearLayout
@@ -260,7 +260,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="Xong"
+                                android:text="@string/txtDone"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
                         </androidx.cardview.widget.CardView>

@@ -46,7 +46,7 @@ class TestAdapter(
         val exam: Exam = listTest[position]
         holder.image.loadNetworkImage(exam.image)
         holder.title.text = exam.title
-        holder.description.text = exam.number.toString() + " Câu trắc nghiệm"
+        holder.description.text = context.getString(R.string.format_exam_mc_count, exam.number)
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ExerciseActivity::class.java).apply {

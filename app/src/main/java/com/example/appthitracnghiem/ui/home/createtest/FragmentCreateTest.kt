@@ -103,11 +103,8 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
             val popupWindow = PopupWindow(popUpView, width, height, focusable)
             popupWindow.showAsDropDown(binding.selectDepartment, 0, -30, Gravity.BOTTOM)
 
-            val listDepartment: ArrayList<String> = arrayListOf()
-            listDepartment.add("Khoa tự nhiên")
-            listDepartment.add("Khoa nhạc")
-            listDepartment.add("Khoa thể chất")
-            listDepartment.add("Khoa truyền thông")
+            val listDepartment: ArrayList<String> =
+                resources.getStringArray(R.array.create_test_sample_departments).toCollection(ArrayList())
 
             val createDepartmentAdapter = CreateDepartmentAdapter(listDepartment, requireActivity())
             createDepartmentAdapter.onClickItem = {
@@ -133,7 +130,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
 
             viewModel.listDepartmentLiveData.observe(viewLifecycleOwner){
                 if(departmentId >= it.size){
-                    Toast.makeText(requireActivity(),"Khoa chưa có môn",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), getString(R.string.toast_department_no_subjects), Toast.LENGTH_SHORT).show()
                 }else{
                     val popupWindow = PopupWindow(popUpView, width, height, focusable)
                     popupWindow.showAsDropDown(binding.selectSubject, 0, -30, Gravity.BOTTOM)
@@ -174,7 +171,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
             val private: LinearLayout = popUpView.findViewById(R.id.selectPrivate)
 
             public.setOnClickListener {
-                binding.edtSelectLevel.text = "Công khai"
+                binding.edtSelectLevel.text = getString(R.string.txtModePublic)
                 viewModel.mPreferenceUtil.defaultPref()
                     .edit {
                         putInt(PreferenceKey.CREATE_STATUS, 1)
@@ -183,7 +180,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
             }
 
             private.setOnClickListener {
-                binding.edtSelectLevel.text = "Riêng tư"
+                binding.edtSelectLevel.text = getString(R.string.txtModePrivate)
                 viewModel.mPreferenceUtil.defaultPref()
                     .edit {
                         putInt(PreferenceKey.CREATE_STATUS, 2)
@@ -211,7 +208,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
                 val describe: String = binding.edtDescribeQuiz.text.toString()
 
                 if(title.isEmpty() || department.isEmpty() || time.isEmpty() || numberQuiz.isEmpty() || describe.isEmpty()){
-                    Toast.makeText(requireActivity(), "Bạn chưa nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), getString(R.string.toast_create_test_incomplete), Toast.LENGTH_SHORT).show()
                 }else{
                     viewModel.mPreferenceUtil.defaultPref()
                         .edit {

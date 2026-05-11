@@ -137,7 +137,7 @@
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"/>
                             <TextView
-                                android:text="Hình ảnh"
+                                android:text="@string/txtImageCaption"
                                 android:textSize="16sp"
                                 android:layout_marginTop="19dp"
                                 android:textColor="#6A5AE0"

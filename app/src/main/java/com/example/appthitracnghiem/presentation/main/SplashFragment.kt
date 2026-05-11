@@ -51,7 +51,7 @@ class SplashFragment : Fragment() {
                     }
                     findNavController().navigate(destination)
                 } else {
-                    CheckConnect.showToastShort(requireContext(), "Bạn đang ngoại tuyến")
+                    CheckConnect.showToastShort(requireContext(), getString(R.string.toast_offline))
                 }
             }
         }

@@ -22,7 +22,7 @@
                 android:layout_height="25dp"/>
             <TextView
                 android:id="@+id/txtChangeAvatar"
-                android:text="Đổi ảnh đại diện"
+                android:text="@string/txtChangeAvatarTitle"
                 android:textSize="24sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/svn_gilroy_semibold"
@@ -32,7 +32,7 @@
         </RelativeLayout>
         <TextView
             android:gravity="center"
-            android:text="Bạn có thể di chuyển hoặc zoom ảnh"
+            android:text="@string/txtChangeAvatarHint"
             android:textSize="16sp"
             android:layout_marginTop="24dp"
             android:layout_width="match_parent"
@@ -85,7 +85,7 @@
             android:gravity="center"
             android:paddingHorizontal="20dp"
             android:paddingVertical="16dp"
-            android:text="Xong"
+            android:text="@string/txtDone"
             android:textColor="@color/white"
             android:textSize="16sp" />
     </androidx.cardview.widget.CardView>

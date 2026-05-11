@@ -67,8 +67,8 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
         super.bindData()
 
         val loading = ProgressDialog(requireActivity())
-        loading.setTitle("Thông báo")
-        loading.setMessage("Please wait...")
+        loading.setTitle(getString(R.string.dialog_title_notice))
+        loading.setMessage(getString(R.string.loading_please_wait))
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
             if(it){
                 loading.show()
@@ -88,7 +88,7 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
 
         viewModel.uploadSuccessfulLiveData.observe(viewLifecycleOwner){
             if(it){
-                Toast.makeText(requireActivity(), "Tải ảnh lên thành công", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.toast_upload_cover_success), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -113,7 +113,7 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
     private fun initUi() {
         time = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.TIME_EXAM, 0)
-        binding.txtTimeReview.text = "$time phút"
+        binding.txtTimeReview.text = getString(R.string.format_minutes_suffix, time)
 
         setTextExam(questionIndex)
 

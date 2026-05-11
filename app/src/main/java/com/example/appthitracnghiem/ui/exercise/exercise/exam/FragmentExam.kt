@@ -100,7 +100,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                 }
             }
             saveListAnswer(listResult, PreferenceKey.ARRAY_LIST_RESULTS)
-            binding.txtPositionQuiz.text = "Câu " + (positiveQuestion+1) + " trên " + sizeListQuestion
+            binding.txtPositionQuiz.text =
+                getString(R.string.format_exam_question_position, positiveQuestion + 1, sizeListQuestion)
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
             setTextView(positiveQuestion)
         }
@@ -145,11 +146,23 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                     fm?.replace(R.id.changeIdExam, fragmentPoint)?.addToBackStack(null)?.commit()
                 }
                 if (seconds < 10) {
-                    b.txtTime.text = "Còn lại $minutes:0$seconds phút"
+                    b.txtTime.text = getString(
+                        R.string.format_time_remaining_pad_minute,
+                        minutes,
+                        seconds,
+                    )
                 } else if (minutes < 1) {
-                    b.txtTime.text = "Còn lại $minutes:$seconds giây"
+                    b.txtTime.text = getString(
+                        R.string.format_time_remaining_seconds,
+                        minutes,
+                        seconds,
+                    )
                 } else {
-                    b.txtTime.text = "Còn lại $minutes:$seconds phút"
+                    b.txtTime.text = getString(
+                        R.string.format_time_remaining_minutes,
+                        minutes,
+                        seconds,
+                    )
                 }
                 b.countTime.progress = (timeTotal * 100 / (time * 60)).toFloat()
             }
@@ -187,7 +200,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             } else {
                 showLayoutSubmit()
             }
-            binding.txtPositionQuiz.text = "Câu " + (positiveQuestion+1) + " trên " + sizeListQuestion
+            binding.txtPositionQuiz.text =
+                getString(R.string.format_exam_question_position, positiveQuestion + 1, sizeListQuestion)
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
         }
 
@@ -196,7 +210,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                 positiveQuestion--
                 setTextView(positiveQuestion)
             }
-            binding.txtPositionQuiz.text = "Câu " + (positiveQuestion+1) + " trên " + sizeListQuestion
+            binding.txtPositionQuiz.text =
+                getString(R.string.format_exam_question_position, positiveQuestion + 1, sizeListQuestion)
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
         }
 
@@ -240,17 +255,17 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
         binding.backExercise.setOnClickListener {
             val alertDialog : AlertDialog.Builder = AlertDialog.Builder(requireActivity())
-            alertDialog.setTitle("Thông báo")
+            alertDialog.setTitle(getString(R.string.dialog_title_notice))
             alertDialog.setIcon(R.drawable.icon_app_thitn)
-            alertDialog.setMessage("Nếu bạn thoát điểm bài thi sẽ không được tính?")
-            alertDialog.setPositiveButton("Vẫn thoát") { _, _ ->
+            alertDialog.setMessage(getString(R.string.dialog_exit_exam_message))
+            alertDialog.setPositiveButton(getString(R.string.btn_still_exit)) { _, _ ->
                 for (i in 0 until sizeListQuestion) {
                     listAnswer.add(-1)
                 }
                 saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
                 activity?.onBackPressedDispatcher?.onBackPressed()
             }
-            alertDialog.setNegativeButton("Không") { _, _ -> }
+            alertDialog.setNegativeButton(getString(R.string.btn_no)) { _, _ -> }
             alertDialog.show()
         }
     }
@@ -287,7 +302,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         menuQuestionAdapter = MenuQuestionAdapter(requireActivity(), listQuestion)
         menuQuestionAdapter.onClickItem = { positionItem ->
             positiveQuestion = positionItem
-            binding.txtPositionQuiz.text = "Câu " + (positiveQuestion+1) + " trên " + sizeListQuestion
+            binding.txtPositionQuiz.text =
+                getString(R.string.format_exam_question_position, positiveQuestion + 1, sizeListQuestion)
             setTextView(positiveQuestion)
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
         }

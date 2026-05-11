@@ -25,7 +25,7 @@
                     android:layout_width="17dp"
                     android:layout_height="17dp"/>
                 <TextView
-                    android:text="Quản lí"
+                    android:text="@string/txtManageShort"
                     android:textSize="14sp"
                     android:textColor="#858494"
                     android:layout_marginStart="12dp"
@@ -42,7 +42,7 @@
                     android:layout_width="17dp"
                     android:layout_height="17dp"/>
                 <TextView
-                    android:text="Lịch sử"
+                    android:text="@string/txtHistory"
                     android:textSize="14sp"
                     android:textColor="#858494"
                     android:layout_marginStart="12dp"
@@ -59,7 +59,7 @@
                     android:layout_width="17dp"
                     android:layout_height="17dp"/>
                 <TextView
-                    android:text="Xoá bỏ"
+                    android:text="@string/txtDeleteRemove"
                     android:textSize="14sp"
                     android:textColor="#EB5757"
                     android:layout_marginStart="12dp"

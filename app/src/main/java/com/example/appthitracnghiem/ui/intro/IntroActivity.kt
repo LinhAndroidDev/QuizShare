@@ -40,7 +40,7 @@ class IntroActivity : BaseActivity<EmptyViewModel>() {
             initUi()
 
         } else {
-            CheckConnect.showToastShort(this@IntroActivity, "Bạn đang ngoại tuyến")
+            CheckConnect.showToastShort(this@IntroActivity, getString(R.string.toast_offline))
         }
     }
 

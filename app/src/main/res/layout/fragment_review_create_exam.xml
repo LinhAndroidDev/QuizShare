@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:fontFamily="@font/svn_gilroy_semibold"
-                android:text="Xem lại"
+                android:text="@string/txtReviewAgain"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
 
@@ -142,7 +142,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="19dp"
-                                android:text="Hình ảnh"
+                                android:text="@string/txtImageCaption"
                                 android:textColor="#6A5AE0"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -155,7 +155,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="4dp"
-                    android:text="Bất phương trình bậc nhất ..."
+                    android:text="@string/sample_inequality_title_short"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
@@ -243,7 +243,7 @@
                 android:gravity="center"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="16dp"
-                android:text="Chỉnh sửa"
+                android:text="@string/txtEditAction"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
         </androidx.cardview.widget.CardView>

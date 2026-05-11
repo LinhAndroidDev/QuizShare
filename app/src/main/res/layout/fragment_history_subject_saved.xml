@@ -22,7 +22,7 @@
                 android:layout_height="25dp"/>
             <TextView
                 android:id="@+id/txtHistoryTest"
-                android:text="Đã lưu"
+                android:text="@string/txtSaved"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:layout_centerHorizontal="true"
@@ -36,13 +36,13 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/txtDepartmentSaved"
-                android:text="Khoa tự nhiên"
+                android:text="@string/txtScienceDepartment"
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
-                android:text="Xem tất cả"
+                android:text="@string/txtSeeAll"
                 android:textSize="14sp"
                 android:textColor="@color/backgroundIntro"
                 android:layout_alignParentEnd="true"

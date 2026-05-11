@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="Danh sách đề"
+                android:text="@string/txtListExam"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
         </RelativeLayout>
@@ -90,7 +90,7 @@
                         android:id="@+id/textNatural"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Khoa tự nhiên"
+                        android:text="@string/txtScienceDepartment"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:fontFamily="@font/svn_gilroy_semibold" />

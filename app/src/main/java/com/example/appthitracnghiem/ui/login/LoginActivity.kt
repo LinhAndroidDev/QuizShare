@@ -29,7 +29,7 @@ class LoginActivity : BaseActivity<EmptyViewModel>() {
         if (CheckConnect.haveNetworkConnected(this@LoginActivity)) {
             replaceFragmentLogin(FragmentLogin())
         } else {
-            CheckConnect.showToastShort(this@LoginActivity, "Bạn đang ngoại tuyến")
+            CheckConnect.showToastShort(this@LoginActivity, getString(R.string.toast_offline))
         }
     }
 

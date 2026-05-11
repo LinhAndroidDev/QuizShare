@@ -33,7 +33,7 @@ class FragmentCreatePassword : BaseFragment<EmptyViewModel>() {
         val uri = activity?.intent?.data
         if(uri != null){
             val path = uri.toString()
-            Toast.makeText(requireActivity(),"Data : $path", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), getString(R.string.toast_debug_data_path, path), Toast.LENGTH_SHORT).show()
         }
 
         initUi()
@@ -43,7 +43,7 @@ class FragmentCreatePassword : BaseFragment<EmptyViewModel>() {
         binding.resetPassword.setOnClickListener {
             val password: String = binding.newPasswordCreate.text.toString()
             val progressDialog = ProgressDialog(requireActivity())
-            progressDialog.setMessage("Đang cập nhật mật khẩu")
+            progressDialog.setMessage(getString(R.string.loading_updating_password))
 
             val fragmentLogin: FragmentLogin = FragmentLogin()
             val fm: FragmentTransaction =

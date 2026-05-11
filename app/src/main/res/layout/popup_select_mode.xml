@@ -26,7 +26,7 @@
                     android:layout_width="17dp"
                     android:layout_height="17dp"/>
                 <TextView
-                    android:text="Công khai"
+                    android:text="@string/txtModePublic"
                     android:textSize="14sp"
                     android:textColor="@color/black"
                     android:layout_marginStart="12dp"
@@ -44,7 +44,7 @@
                     android:layout_width="17dp"
                     android:layout_height="17dp"/>
                 <TextView
-                    android:text="Riêng tư"
+                    android:text="@string/txtModePrivate"
                     android:textSize="14sp"
                     android:textColor="@color/black"
                     android:layout_marginStart="12dp"

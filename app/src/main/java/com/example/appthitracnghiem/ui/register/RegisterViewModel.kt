@@ -1,5 +1,6 @@
 package com.example.appthitracnghiem.ui.register
 
+import android.content.Context
 import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -13,17 +14,21 @@ import com.example.appthitracnghiem.ui.base.BaseViewModel
 import com.example.appthitracnghiem.ui.login.ValidateModel
 import com.example.appthitracnghiem.utils.Email
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @Suppress("UNREACHABLE_CODE")
 @HiltViewModel
-class RegisterViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
+class RegisterViewModel @Inject constructor(
+    @ApplicationContext private val appContext: Context,
+    private val apiService: ApiService,
+) : BaseViewModel() {
     val loadingLiveData = MutableLiveData<Boolean>()
     val successRegisterLiveData = MutableLiveData<Boolean>()
     val validateLiveData = MutableLiveData<ValidateModel>()
     val registerUiState = MutableLiveData<UiState<Boolean>>(UiState.Idle)
-    private val registerUseCase = RegisterUseCase(AuthRepositoryImpl(apiService))
+    private val registerUseCase = RegisterUseCase(AuthRepositoryImpl(appContext, apiService))
 
     private fun validateRegister(
         strEmail: String,

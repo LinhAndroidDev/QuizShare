@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentHistorySavedBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.history.saved.department.adapter.HistoryDepartmentAdapter
@@ -29,8 +30,8 @@ class FragmentHistoryDepartmentSaved : BaseFragment<HistoryDepartmentSavedViewMo
         super.bindData()
 
         val loading = ProgressDialog(requireActivity())
-        loading.setTitle("Thông báo")
-        loading.setTitle("Please wait...")
+        loading.setTitle(getString(R.string.dialog_title_notice))
+        loading.setMessage(getString(R.string.loading_please_wait))
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
             if(it){
                 loading.show()

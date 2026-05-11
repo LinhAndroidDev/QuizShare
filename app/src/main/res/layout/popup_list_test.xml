@@ -27,7 +27,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="12dp"
-                    android:text="Theo thời gian"
+                    android:text="@string/txtSortByTime"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:text="Số lượt tạo"
+                    android:text="@string/txtSortByCreateCount"
                     android:textSize="14sp"
                     android:textColor="@color/black"
                     android:layout_marginStart="12dp"
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:text="Môn học"
+                    android:text="@string/txtSortBySubject"
                     android:textSize="14sp"
                     android:textColor="@color/black"
                     android:layout_marginStart="12dp"

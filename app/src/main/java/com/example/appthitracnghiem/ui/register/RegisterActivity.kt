@@ -27,7 +27,7 @@ class RegisterActivity : BaseActivity<EmptyViewModel>() {
         if (CheckConnect.haveNetworkConnected(this@RegisterActivity)) {
             replaceFragmentRegister(FragmentRegister())
         } else {
-            CheckConnect.showToastShort(this@RegisterActivity, "Bạn đang ngoại tuyến")
+            CheckConnect.showToastShort(this@RegisterActivity, getString(R.string.toast_offline))
         }
     }
 

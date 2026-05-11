@@ -46,7 +46,11 @@ class SearchAdapter(
             ""
         }
         holder.image.loadNetworkImage(imageUrl)
-        holder.description.text = search.description + " • " + search.count_exam + " đề"
+        holder.description.text = context.getString(
+            R.string.format_subject_exam_line,
+            search.description,
+            search.count_exam,
+        )
 
 //        holder.itemView.setOnClickListener {
 //            val bundle = Bundle()

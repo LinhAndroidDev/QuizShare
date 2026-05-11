@@ -100,7 +100,7 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
     private fun initUi() {
         val time = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.TIME_EXAM, 0)
-        binding.txtTime.text = "$time phút"
+        binding.txtTime.text = getString(R.string.format_minutes_suffix, time)
 
         selectAnswer()
 
@@ -108,7 +108,7 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
             val strLevel: String = binding.txtLevel.text.toString()
 
             if(strLevel.isEmpty()){
-                Toast.makeText(requireActivity(),"Bạn chưa nhập độ khó cho câu hỏi",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.toast_need_question_level), Toast.LENGTH_SHORT).show()
             }else{
                 clearFocusTextView()
                 saveExam()
@@ -124,7 +124,7 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
             val strLevel: String = binding.txtLevel.text.toString()
 
             if(strLevel.isEmpty()){
-                Toast.makeText(requireActivity(),"Bạn chưa nhập độ khó cho câu hỏi",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.toast_need_question_level), Toast.LENGTH_SHORT).show()
             }else{
                 clearFocusTextView()
                 saveExam()
@@ -145,7 +145,7 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
             val strLevel: String = binding.txtLevel.text.toString()
 
             if(strLevel.isEmpty()){
-                Toast.makeText(requireActivity(),"Bạn chưa nhập độ khó cho câu hỏi",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.toast_need_question_level), Toast.LENGTH_SHORT).show()
             }else{
                 clearFocusTextView()
                 saveExam()
@@ -406,19 +406,19 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
         /** On click view **/
         easy.setOnClickListener {
             level = 0
-            binding.txtLevel.text = "Dễ"
+            binding.txtLevel.text = getString(R.string.txtLevelEasy)
             popupWindow.dismiss()
         }
 
         medium.setOnClickListener {
             level = 1
-            binding.txtLevel.text = "Trung bình"
+            binding.txtLevel.text = getString(R.string.txtMedium)
             popupWindow.dismiss()
         }
 
         hard.setOnClickListener {
             level = 2
-            binding.txtLevel.text = "Khó"
+            binding.txtLevel.text = getString(R.string.txtLevelHard)
             popupWindow.dismiss()
         }
     }

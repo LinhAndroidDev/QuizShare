@@ -42,8 +42,8 @@ class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
         super.bindData()
 
         val loading = ProgressDialog(requireActivity())
-        loading.setTitle("Thông báo")
-        loading.setMessage("Please wait...")
+        loading.setTitle(getString(R.string.dialog_title_notice))
+        loading.setMessage(getString(R.string.loading_please_wait))
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
             if(it){
                 loading.show()
@@ -54,7 +54,7 @@ class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
 
         viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner){
             if(it){
-                Toast.makeText(requireActivity(),"Bạn đã cập nhật lại thông tin",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.toast_profile_updated), Toast.LENGTH_SHORT).show()
                 val intent = Intent(requireActivity(), HomeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
@@ -105,7 +105,7 @@ class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
             val birth = binding.edtBirthInfo.text.toString()
 
             if(name.isEmpty() || birth.isEmpty()){
-                Toast.makeText(requireActivity(),"Bạn chưa nhập đủ thông tin",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.toast_profile_incomplete), Toast.LENGTH_SHORT).show()
             }else{
                 val userId = viewModel.mPreferenceUtil.defaultPref()
                     .getInt(PreferenceKey.USER_ID, 0)

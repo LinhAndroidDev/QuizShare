@@ -89,7 +89,7 @@
                 android:gravity="center"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="16dp"
-                android:text="Kiểm tra"
+                android:text="@string/txtVerifySheet"
                 android:textColor="@color/white"
                 android:textSize="16dp" />
         </androidx.cardview.widget.CardView>
@@ -124,7 +124,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="23dp"
-                        android:text="Google Sheet"
+                        android:text="@string/googleSheet"
                         android:textColor="@color/black"
                         android:textSize="20sp" />
 
@@ -136,7 +136,7 @@
                         android:layout_marginTop="8dp"
                         android:gravity="center"
                         android:lineSpacingExtra="8dp"
-                        android:text="Tải link từ Sheet đã thành công!"
+                        android:text="@string/txtSheetLoadSuccess"
                         android:textSize="16sp" />
 
                     <LinearLayout
@@ -159,7 +159,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="Trở lại"
+                                android:text="@string/back"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
                         </androidx.cardview.widget.CardView>

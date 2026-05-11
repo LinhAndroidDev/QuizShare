@@ -100,7 +100,8 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
                     listAnswer.add(-1)
                 }
                 positiveQuestion = 0
-                binding.txtPositionQuizAnswer.text = "Câu " + (positiveQuestion + 1) + " trên " + sizeListQuestion
+                binding.txtPositionQuizAnswer.text =
+                    getString(R.string.format_exam_question_position, positiveQuestion + 1, sizeListQuestion)
                 setTextView(positiveQuestion)
             }
         }
@@ -161,7 +162,8 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
                 setTextView(positiveQuestion)
                 onClickNextQuestion?.invoke(positiveQuestion)
             }
-            binding.txtPositionQuizAnswer.text = "Câu " + (positiveQuestion+1) + " trên " + sizeListQuestion
+            binding.txtPositionQuizAnswer.text =
+                getString(R.string.format_exam_question_position, positiveQuestion + 1, sizeListQuestion)
         }
 
         binding.backQuestionAnswer.setOnClickListener {
@@ -169,7 +171,8 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
                 positiveQuestion--
                 setTextView(positiveQuestion)
             }
-            binding.txtPositionQuizAnswer.text = "Câu " + (positiveQuestion+1) + " trên " + sizeListQuestion
+            binding.txtPositionQuizAnswer.text =
+                getString(R.string.format_exam_question_position, positiveQuestion + 1, sizeListQuestion)
         }
 
         binding.menuQuestionAnswer.setOnClickListener {
@@ -206,7 +209,8 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         menuQuestionAdapter.onClickItem = { positionItem ->
             positiveQuestion = positionItem
             setTextView(positiveQuestion)
-            binding.txtPositionQuizAnswer.text = "Câu " + (positiveQuestion+1) + " trên " + sizeListQuestion
+            binding.txtPositionQuizAnswer.text =
+                getString(R.string.format_exam_question_position, positiveQuestion + 1, sizeListQuestion)
         }
         val recycleQuestion: RecyclerView = popUpView.findViewById(R.id.recycleViewMenuQuestion)
         recycleQuestion.isEnabled = false

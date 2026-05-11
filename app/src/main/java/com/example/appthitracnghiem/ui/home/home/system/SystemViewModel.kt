@@ -1,5 +1,6 @@
 package com.example.appthitracnghiem.ui.home.home.system
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.appthitracnghiem.data.remote.ApiService
@@ -10,15 +11,19 @@ import com.example.appthitracnghiem.domain.usecase.GetDepartmentsUseCase
 import com.example.appthitracnghiem.model.Department
 import com.example.appthitracnghiem.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SystemViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
+class SystemViewModel @Inject constructor(
+    @ApplicationContext private val appContext: Context,
+    private val apiService: ApiService,
+) : BaseViewModel() {
     var loadingData = MutableLiveData<Boolean>()
     var listDepartmentLiveData = MutableLiveData<MutableList<Department>>()
     val uiState = MutableLiveData<UiState<List<Department>>>(UiState.Idle)
-    private val getDepartmentsUseCase = GetDepartmentsUseCase(HomeRepositoryImpl(apiService))
+    private val getDepartmentsUseCase = GetDepartmentsUseCase(HomeRepositoryImpl(appContext, apiService))
 
     fun getDataDepartment(userId: Int, keyword: String) {
         loadingData.value = true

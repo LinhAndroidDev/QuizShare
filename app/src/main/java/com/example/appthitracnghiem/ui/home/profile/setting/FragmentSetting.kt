@@ -42,8 +42,8 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
         super.bindData()
 
         val loading = ProgressDialog(requireActivity())
-        loading.setTitle("Thông báo")
-        loading.setMessage("Đang vô hiệu hoá tài khoản...")
+        loading.setTitle(getString(R.string.dialog_title_notice))
+        loading.setMessage(getString(R.string.loading_disabling_account))
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
             if(it){
                 loading.show()
@@ -61,7 +61,7 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
 
                 Toast.makeText(
                     requireActivity(),
-                    "Đã vô hiệu hoá tài khoản",
+                    getString(R.string.toast_account_disabled),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -91,15 +91,15 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
 
         binding.deleteAccount.setOnClickListener {
             val alertDialog = AlertDialog.Builder(requireActivity())
-            alertDialog.setTitle("Cảnh báo!!")
+            alertDialog.setTitle(getString(R.string.dialog_warning_title))
             alertDialog.setIcon(R.drawable.icon_app_thitn)
-            alertDialog.setMessage("Nếu bạn xoá tài khoản này sẽ bị vô hiệu hoá?")
-            alertDialog.setPositiveButton("Vẫn xoá") { _, _ ->
+            alertDialog.setMessage(getString(R.string.dialog_delete_account_message))
+            alertDialog.setPositiveButton(getString(R.string.btn_still_delete)) { _, _ ->
                 val userId = viewModel.mPreferenceUtil.defaultPref()
                     .getInt(PreferenceKey.USER_ID, 0)
                 viewModel.unPublishUser(RequestUnPublishUser(userId))
             }
-            alertDialog.setNegativeButton("Không") { _, _ -> }
+            alertDialog.setNegativeButton(getString(R.string.btn_no)) { _, _ -> }
             alertDialog.show()
         }
 

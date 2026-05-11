@@ -53,7 +53,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
         super.bindData()
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                progressDialog.setMessage("Please wait ...")
+                progressDialog.setMessage(getString(R.string.loading_please_wait))
                 progressDialog.show()
             } else {
                 progressDialog.dismiss()

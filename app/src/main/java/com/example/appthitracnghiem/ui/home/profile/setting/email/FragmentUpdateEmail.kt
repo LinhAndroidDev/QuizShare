@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentUpdateEmailBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.utils.PreferenceKey
@@ -28,8 +29,8 @@ class FragmentUpdateEmail : BaseFragment<UpdateEmailViewModel>() {
         super.bindData()
 
         val loading = ProgressDialog(requireActivity())
-        loading.setTitle("Thông báo")
-        loading.setMessage("Please wait...")
+        loading.setTitle(getString(R.string.dialog_title_notice))
+        loading.setMessage(getString(R.string.loading_please_wait))
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
             if(it){
                 loading.show()
@@ -40,7 +41,7 @@ class FragmentUpdateEmail : BaseFragment<UpdateEmailViewModel>() {
 
         viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner){
             if(it){
-                Toast.makeText(requireActivity(),"Bạn đã đổi Email thành công",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.toast_email_updated), Toast.LENGTH_SHORT).show()
                 activity?.onBackPressed()
             }
         }
@@ -54,10 +55,10 @@ class FragmentUpdateEmail : BaseFragment<UpdateEmailViewModel>() {
         binding.updateEmail.setOnClickListener {
             val strEmail = binding.edtUpdateEmail.text.toString()
             if(strEmail.isEmpty()){
-                Toast.makeText(requireActivity(),"Bạn chưa nhập Email",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.toast_email_empty), Toast.LENGTH_SHORT).show()
             }else if(!Patterns.EMAIL_ADDRESS.matcher(strEmail)
                     .matches()){
-                Toast.makeText(requireActivity(),"Vui lòng nhập lại Email",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.toast_email_invalid), Toast.LENGTH_SHORT).show()
             } else{
                 val useId = viewModel.mPreferenceUtil.defaultPref()
                     .getInt(PreferenceKey.USER_ID, 0)

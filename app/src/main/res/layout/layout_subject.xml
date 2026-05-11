@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Toán"
+            android:text="@string/sample_subject_math_short"
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="20dp" />
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="20dp"
-            android:text="21 câu đố"
+            android:text="@string/sample_quiz_count_21"
             android:textColor="#DFDFDF"
             android:textSize="16dp" />
     </LinearLayout>

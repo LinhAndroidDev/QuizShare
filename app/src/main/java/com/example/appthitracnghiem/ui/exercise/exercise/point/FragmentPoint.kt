@@ -82,12 +82,12 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
             }
 
             binding.txtPoint.text = it.toInt().toString()
-            binding.notifiPoint.text = "Bạn nhận được +${it.toInt()} điểm kiểm tra"
-            binding.completePercent.text = "${it.toInt()}%"
+            binding.notifiPoint.text = getString(R.string.format_points_earned, it.toInt())
+            binding.completePercent.text = getString(R.string.format_percent_int, it.toInt())
         }
 
         viewModel.numberCorrectLiveData.observe(viewLifecycleOwner){
-            binding.numberCorrect.text = "$it câu hỏi"
+            binding.numberCorrect.text = getString(R.string.format_question_count, it)
         }
 
         viewModel.wrongNumberLiveData.observe(viewLifecycleOwner){
@@ -175,7 +175,7 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
         binding.seeAnswer.setOnClickListener {
             val fragmentAnswer = FragmentAnswer()
             val bundle = Bundle().apply {
-                putString("title", "Câu trả lời")
+                putString("title", getString(R.string.txtAnswer))
                 putInt(
                     ExamSessionExtras.ARG_EXAM_ID,
                     requireArguments().getInt(ExamSessionExtras.ARG_EXAM_ID, 0),

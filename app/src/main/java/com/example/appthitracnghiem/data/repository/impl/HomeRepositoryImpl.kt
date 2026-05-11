@@ -1,5 +1,7 @@
 package com.example.appthitracnghiem.data.repository.impl
 
+import android.content.Context
+import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.core.ResultState
 import com.example.appthitracnghiem.data.remote.ApiService
 import com.example.appthitracnghiem.data.remote.dto.request.RequestGetListDepartment
@@ -8,9 +10,11 @@ import com.example.appthitracnghiem.data.remote.safeApiCall
 import com.example.appthitracnghiem.domain.model.UserProfile
 import com.example.appthitracnghiem.domain.repository.HomeRepository
 import com.example.appthitracnghiem.model.Department
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val apiService: ApiService,
 ) : HomeRepository {
     override suspend fun getSystemDepartments(userId: Int, keyword: String): ResultState<List<Department>> {
@@ -38,7 +42,7 @@ class HomeRepositoryImpl @Inject constructor(
             is ResultState.Success -> {
                 val profile = result.data.result
                 if (profile?.id == null || profile.name.isNullOrBlank()) {
-                    ResultState.Error("User profile is invalid")
+                    ResultState.Error(context.getString(R.string.error_user_profile_invalid))
                 } else {
                     ResultState.Success(
                         UserProfile(

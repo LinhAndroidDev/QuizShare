@@ -19,7 +19,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="Lịch sử thi"
+                android:text="@string/txtHistoryTest"
                 android:textSize="24sp"
                 android:textColor="@color/white"
                 android:layout_centerHorizontal="true"
@@ -54,7 +54,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Câu 3 trên 10"
+                    android:text="@string/sample_question_progress"
                     android:textColor="@color/color_to_do_late"
                     android:textSize="14sp" />
 
@@ -62,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Bất phương trình bậc nhất hai ẩn x, y là bất phương trình có một trong các dạng sau:"
+                    android:text="@string/sample_question_intro"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
@@ -90,7 +90,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="19dp"
-                            android:text="Hình ảnh"
+                            android:text="@string/txtImageCaption"
                             android:textColor="@color/color_purple"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -109,7 +109,7 @@
                         android:background="@drawable/un_select_text_view"
                         android:paddingHorizontal="24dp"
                         android:paddingVertical="16dp"
-                        android:text="ax + by = c"
+                        android:text="@string/sample_equation_eq"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -134,7 +134,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="19dp"
-                                android:text="Hình ảnh"
+                                android:text="@string/txtImageCaption"
                                 android:textColor="@color/color_purple"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -148,7 +148,7 @@
                         android:background="@drawable/un_select_text_view"
                         android:paddingHorizontal="24dp"
                         android:paddingVertical="16dp"
-                        android:text="ax + by > c"
+                        android:text="@string/sample_equation_gt"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -173,7 +173,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="19dp"
-                                android:text="Hình ảnh"
+                                android:text="@string/txtImageCaption"
                                 android:textColor="@color/color_purple"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -187,7 +187,7 @@
                         android:background="@drawable/un_select_text_view"
                         android:paddingHorizontal="24dp"
                         android:paddingVertical="16dp"
-                        android:text="ax + by ≤ c"
+                        android:text="@string/sample_equation_le"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -212,7 +212,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="19dp"
-                                android:text="Hình ảnh"
+                                android:text="@string/txtImageCaption"
                                 android:textColor="@color/color_purple"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -226,7 +226,7 @@
                         android:background="@drawable/un_select_text_view"
                         android:paddingHorizontal="24dp"
                         android:paddingVertical="16dp"
-                        android:text="ax + by ≥ c"
+                        android:text="@string/sample_equation_ge"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -251,7 +251,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="19dp"
-                                android:text="Hình ảnh"
+                                android:text="@string/txtImageCaption"
                                 android:textColor="@color/color_purple"
                                 android:textSize="16sp" />
                         </LinearLayout>

@@ -31,8 +31,11 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewPagerDepartment = ViewPagerDepartment(requireActivity().supportFragmentManager,
-            FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
+        viewPagerDepartment = ViewPagerDepartment(
+            requireContext(),
+            requireActivity().supportFragmentManager,
+            FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
+        )
         binding.pageDepartment.adapter = viewPagerDepartment
 
         binding.tabDepartment.setupWithViewPager(binding.pageDepartment)

@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:text="Tự nhiên"
+                    android:text="@string/txtNaturalShort"
                     android:textSize="14sp"
                     android:textColor="@color/black"
                     android:layout_marginStart="12dp"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:text="Xã hội"
+                    android:text="@string/txtSocialStudies"
                     android:textSize="14sp"
                     android:textColor="@color/black"
                     android:layout_marginStart="12dp"

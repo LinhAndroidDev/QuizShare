@@ -25,13 +25,17 @@ class FragmentHistoryQuestion : BaseFragment<EmptyViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         listQuestionHistory = arrayListOf()
-        listQuestionHistory.add(Test(1,R.drawable.icon_test_subject,"Đề 1","Toán • 12 Trắc nghiệm"))
-        listQuestionHistory.add(Test(2,R.drawable.icon_test_subject,"Đề 2","Toán • 12 Trắc nghiệm"))
-        listQuestionHistory.add(Test(3,R.drawable.icon_test_subject,"Đề 3","Toán • 12 Trắc nghiệm"))
-        listQuestionHistory.add(Test(4,R.drawable.icon_test_subject,"Đề 4","Toán • 12 Trắc nghiệm"))
-        listQuestionHistory.add(Test(5,R.drawable.icon_test_subject,"Đề 5","Toán • 12 Trắc nghiệm"))
-        listQuestionHistory.add(Test(6,R.drawable.icon_test_subject,"Đề 6","Toán • 12 Trắc nghiệm"))
-        listQuestionHistory.add(Test(7,R.drawable.icon_test_subject,"Đề 7","Toán • 12 Trắc nghiệm"))
+        val subtitle = getString(R.string.history_question_subtitle_sample)
+        for (i in 1..7) {
+            listQuestionHistory.add(
+                Test(
+                    i,
+                    R.drawable.icon_test_subject,
+                    getString(R.string.history_question_title_sample, i),
+                    subtitle,
+                ),
+            )
+        }
 
         historyQuestionAdapter = HistoryQuestionAdapter(requireActivity(),listQuestionHistory)
 

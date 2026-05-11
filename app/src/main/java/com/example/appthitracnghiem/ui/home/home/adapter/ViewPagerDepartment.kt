@@ -1,19 +1,25 @@
 package com.example.appthitracnghiem.ui.home.home.adapter
 
+import android.content.Context
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.home.home.user.FragmentFromUser
 import com.example.appthitracnghiem.ui.home.home.system.FragmentSystem
 
-enum class Page(val title: String, val fragment: Class<out Fragment>) {
-    FragmentFirst("Hệ thống", FragmentSystem::class.java),
-    FragmentSecond("Người dùng", FragmentFromUser::class.java);
+enum class Page(@StringRes val titleRes: Int, val fragment: Class<out Fragment>) {
+    FragmentFirst(R.string.tab_department_system, FragmentSystem::class.java),
+    FragmentSecond(R.string.tab_department_user, FragmentFromUser::class.java),
 }
 
 @Suppress("DEPRECATION")
-class ViewPagerDepartment(fm: FragmentManager, behavior: Int) :
-    FragmentStatePagerAdapter(fm, behavior) {
+class ViewPagerDepartment(
+    private val context: Context,
+    fm: FragmentManager,
+    behavior: Int,
+) : FragmentStatePagerAdapter(fm, behavior) {
 
     private val pages: List<Page> = arrayListOf<Page>().apply {
         addAll(Page.values())
@@ -28,6 +34,6 @@ class ViewPagerDepartment(fm: FragmentManager, behavior: Int) :
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return pages[position].title
+        return context.getString(pages[position].titleRes)
     }
 }

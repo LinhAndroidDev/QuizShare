@@ -33,8 +33,8 @@ class FragmentHistoryTopic : BaseFragment<HistoryTopicViewModel>() {
         super.bindData()
 
         val loading = ProgressDialog(requireActivity())
-        loading.setTitle("Thông báo")
-        loading.setMessage("Please wait...")
+        loading.setTitle(getString(R.string.dialog_title_notice))
+        loading.setMessage(getString(R.string.loading_please_wait))
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
             if(it){
                 loading.show()
@@ -50,7 +50,7 @@ class FragmentHistoryTopic : BaseFragment<HistoryTopicViewModel>() {
 
             val fragmentAnswer = FragmentAnswer()
             val bundle = Bundle().apply {
-                putString("title", "Lịch sử thi")
+                putString("title", getString(R.string.txtHistoryTest))
                 putInt(ExamSessionExtras.ARG_EXAM_ID, examId)
             }
             fragmentAnswer.arguments = bundle

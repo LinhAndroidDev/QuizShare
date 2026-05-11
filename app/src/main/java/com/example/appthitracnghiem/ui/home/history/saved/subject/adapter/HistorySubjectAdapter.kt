@@ -37,7 +37,11 @@ class HistorySubjectAdapter(val context: Context, private val listSubject: Array
         val savedSubject : SaveSubjectResponse.Result = listSubject!![position]
         holder.title.text = savedSubject.title
         holder.image.loadNetworkImage(savedSubject.image)
-        holder.description.text = savedSubject.department_title + " • " +  savedSubject.exem_number.toString() + " đề"
+        holder.description.text = context.getString(
+            R.string.format_subject_exam_line,
+            savedSubject.department_title,
+            savedSubject.exem_number,
+        )
 
         holder.itemView.setOnClickListener {
             val activity = context.findAppCompatActivity() ?: return@setOnClickListener

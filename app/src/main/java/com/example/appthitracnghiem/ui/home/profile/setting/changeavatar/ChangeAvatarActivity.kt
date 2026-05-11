@@ -93,7 +93,8 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
         super.bindData()
 
         val progressDialog = ProgressDialog(this)
-        progressDialog.setTitle("Please wait...")
+        progressDialog.setTitle(getString(R.string.dialog_title_notice))
+        progressDialog.setMessage(getString(R.string.loading_please_wait))
 
         viewModel.isLoadingLiveData.observe(this, Observer {
             if(it){
@@ -105,7 +106,7 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
 
         viewModel.isSuccessfulLiveData.observe(this, Observer {
             if(it){
-                Toast.makeText(this, "Thay đổi ảnh đại diện thành công", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.toast_avatar_updated), Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@ChangeAvatarActivity, HomeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
@@ -162,9 +163,9 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED &&
                 grantResults[1] == PackageManager.PERMISSION_GRANTED
             ) {
-                Toast.makeText(this, "Permissions granted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.toast_permissions_granted), Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Permissions not granted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.toast_permissions_denied), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -202,9 +203,9 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
             contentResolver.openOutputStream(uri).use { outputStream ->
                 if (outputStream != null) {
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
-                    Toast.makeText(this, "Image saved to gallery", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.toast_image_saved), Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this, "Failed to save image to gallery", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.toast_image_save_failed), Toast.LENGTH_SHORT).show()
                 }
             }
         }

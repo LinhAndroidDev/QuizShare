@@ -31,8 +31,8 @@ class FragmentForgetPassword : BaseFragment<ForgetPasswordViewModel>() {
         super.bindData()
 
         val loading = ProgressDialog(requireActivity())
-        loading.setTitle("Thông báo")
-        loading.setMessage("Please wait...")
+        loading.setTitle(getString(R.string.dialog_title_notice))
+        loading.setMessage(getString(R.string.loading_please_wait))
         viewModel.isLoading.observe(viewLifecycleOwner){
             if(it){
                 loading.show()
@@ -66,9 +66,9 @@ class FragmentForgetPassword : BaseFragment<ForgetPasswordViewModel>() {
         binding.sendTo.setOnClickListener {
             val edtEmail: String = binding.emailForgetPassword.text.toString()
             if(edtEmail.isEmpty()){
-                Toast.makeText(requireActivity(),"Bạn chưa nhập email",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.toast_forget_password_no_email), Toast.LENGTH_SHORT).show()
             }else if(!Patterns.EMAIL_ADDRESS.matcher(edtEmail).matches()){
-                Toast.makeText(requireActivity(),"Email không đúng định dạng",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.toast_forget_password_email_invalid), Toast.LENGTH_SHORT).show()
             }else{
                 val requestEmailVerification = RequestEmailVerification(edtEmail)
                 viewModel.checkEmail(requestEmailVerification)

@@ -6,7 +6,7 @@
     android:layout_marginEnd="8dp">
     <TextView
         android:id="@+id/txtPositive"
-        android:text="1"
+        android:text="@string/sample_question_number_one"
         android:textSize="14sp"
         android:textColor="@color/black"
         android:background="@drawable/un_select_positive_quiz"

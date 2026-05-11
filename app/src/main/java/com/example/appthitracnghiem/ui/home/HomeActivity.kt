@@ -39,7 +39,7 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
 
             initUi()
         } else {
-            CheckConnect.showToastShort(this@HomeActivity, "Bạn đang ngoại tuyến")
+            CheckConnect.showToastShort(this@HomeActivity, getString(R.string.toast_offline))
         }
     }
 
@@ -192,7 +192,7 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
                 if (backPressTime + 2000 > System.currentTimeMillis()) {
                     finish()
                 } else {
-                    Toast.makeText(this, "Nhấn lần nữa để thoát", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.toast_press_again_to_exit), Toast.LENGTH_SHORT).show()
                 }
                 backPressTime = System.currentTimeMillis()
             } else if (fm !is FragmentHome) {

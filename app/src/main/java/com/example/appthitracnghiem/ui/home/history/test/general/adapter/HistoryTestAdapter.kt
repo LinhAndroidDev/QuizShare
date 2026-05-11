@@ -39,7 +39,10 @@ class HistoryTestAdapter(val context: Context, private val listTest: ArrayList<H
         val historyExam: HistoryExam = listTest[position]
         holder.image.loadNetworkImage(historyExam.image)
         holder.title.text = historyExam.title
-        holder.description.text = historyExam.score?.toInt().toString() + " điểm"
+        holder.description.text = context.getString(
+            R.string.format_score_short,
+            historyExam.score?.toInt() ?: 0,
+        )
 
         holder.itemView.setOnClickListener{
             val activity = it.context.findAppCompatActivity() ?: return@setOnClickListener

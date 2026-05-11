@@ -18,7 +18,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/txtTiltleAnswer"
-                android:text="Câu trả lời"
+                android:text="@string/txtAnswer"
                 android:textSize="24sp"
                 android:textColor="@color/white"
                 android:layout_centerHorizontal="true"
@@ -60,7 +60,7 @@
                             android:id="@+id/txtPositionQuizAnswer"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Câu 3 trên 10"
+                            android:text="@string/sample_question_progress"
                             android:textColor="@color/color_to_do_late"
                             android:textSize="14sp" />
 
@@ -97,7 +97,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="19dp"
-                                    android:text="Hình ảnh"
+                                    android:text="@string/txtImageCaption"
                                     android:textColor="@color/color_purple"
                                     android:textSize="16sp" />
                             </LinearLayout>

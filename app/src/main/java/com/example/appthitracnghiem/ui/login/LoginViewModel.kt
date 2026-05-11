@@ -1,6 +1,7 @@
 package com.example.appthitracnghiem.ui.login
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -14,11 +15,13 @@ import com.example.appthitracnghiem.core.UiState
 import com.example.appthitracnghiem.ui.base.BaseViewModel
 import com.example.appthitracnghiem.utils.Email
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
+    @ApplicationContext private val appContext: Context,
     private val apiService: ApiService,
     private val sessionLocalDataSource: SessionLocalDataSource,
 ) : BaseViewModel() {
@@ -26,7 +29,7 @@ class LoginViewModel @Inject constructor(
     val successLoginLiveData = MutableLiveData<Boolean>()
     val validateLiveData = MutableLiveData<ValidateModel>()
     val loginUiState = MutableLiveData<UiState<Boolean>>(UiState.Idle)
-    private val loginUseCase = LoginUseCase(AuthRepositoryImpl(apiService))
+    private val loginUseCase = LoginUseCase(AuthRepositoryImpl(appContext, apiService))
 
     private fun validateLogin(strEmail: String, strPassword: String): ValidateModel {
         return if (strEmail.isEmpty() || strPassword.isEmpty()) {

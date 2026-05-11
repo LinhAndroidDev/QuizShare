@@ -46,7 +46,7 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
 
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                progressDialog.setMessage("Đang cập nhật tài khoản")
+                progressDialog.setMessage(getString(R.string.loading_updating_account))
                 progressDialog.show()
             } else {
                 progressDialog.dismiss()
