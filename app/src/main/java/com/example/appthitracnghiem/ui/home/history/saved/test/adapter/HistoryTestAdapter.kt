@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.ExamSaved
 import com.example.appthitracnghiem.ui.exercise.topic.ExerciseActivity
+import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.PreferenceUtil
 import com.example.appthitracnghiem.utils.findAppCompatActivity
@@ -49,7 +50,10 @@ class HistoryTestAdapter(val context: Context, private val listTestSaved: ArrayL
             mPreferenceUtil.defaultPref().edit()
                 .putInt(PreferenceKey.TYPE, 1)
                 .apply()
-            val intent = Intent(activity, ExerciseActivity::class.java)
+            val intent = Intent(activity, ExerciseActivity::class.java).apply {
+                putExtra(ExamSessionExtras.INTENT_EXAM_ID, examSaved.id)
+                putExtra(ExamSessionExtras.INTENT_TIME_MINUTES, examSaved.time)
+            }
             activity.startActivity(intent)
         }
     }

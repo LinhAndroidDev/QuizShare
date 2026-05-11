@@ -14,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.Exam
 import com.example.appthitracnghiem.ui.exercise.topic.ExerciseActivity
-import com.example.appthitracnghiem.utils.PreferenceKey
-import com.example.appthitracnghiem.utils.PreferenceUtil
+import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
 import com.example.appthitracnghiem.utils.loadNetworkImage
 
 class TestAdapter(
@@ -50,24 +49,16 @@ class TestAdapter(
         holder.description.text = exam.number.toString() + " Câu trắc nghiệm"
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, ExerciseActivity::class.java)
+            val intent = Intent(context, ExerciseActivity::class.java).apply {
+                putExtra(ExamSessionExtras.INTENT_EXAM_ID, exam.id)
+                putExtra(ExamSessionExtras.INTENT_TIME_MINUTES, exam.time)
+            }
             context.startActivity(intent)
-            saveKey(exam.id,exam.time)
         }
     }
 
     override fun getItemCount(): Int {
         return listTest.size
-    }
-
-    private fun saveKey(id: Int, time: Int){
-        val mPreferenceUtil = PreferenceUtil(context)
-        mPreferenceUtil.defaultPref().edit()
-            .putInt(PreferenceKey.ID_EXAM,id)
-            .apply()
-        mPreferenceUtil.defaultPref().edit()
-            .putInt(PreferenceKey.TIME_EXAM,time)
-            .apply()
     }
 
     override fun getFilter(): Filter {

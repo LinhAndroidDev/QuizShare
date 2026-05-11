@@ -15,6 +15,7 @@ import com.example.appthitracnghiem.databinding.FragmentTopicBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.ExamActivity
+import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.loadNetworkImage
 import java.text.SimpleDateFormat
@@ -113,15 +114,19 @@ class FragmentTopic : BaseFragment<TopicViewModel>() {
             viewModel.mPreferenceUtil.defaultPref()
                 .edit().putString(PreferenceKey.START_DO_TEST,currentDate)
                 .apply()
-            val intent = Intent(requireActivity(), ExamActivity::class.java)
+            val examId = requireArguments().getInt(ExamSessionExtras.ARG_EXAM_ID, 0)
+            val timeMinutes = requireArguments().getInt(ExamSessionExtras.ARG_TIME_MINUTES, 0)
+            val intent = Intent(requireActivity(), ExamActivity::class.java).apply {
+                putExtra(ExamSessionExtras.INTENT_EXAM_ID, examId)
+                putExtra(ExamSessionExtras.INTENT_TIME_MINUTES, timeMinutes)
+            }
             startActivity(intent)
         }
 
         binding.memoryTopic.setOnClickListener {
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID, 0)
-            val examId = viewModel.mPreferenceUtil.defaultPref()
-                .getInt(PreferenceKey.ID_EXAM, 0)
+            val examId = requireArguments().getInt(ExamSessionExtras.ARG_EXAM_ID, 0)
             viewModel.saveExam(RequestSaveExam(userId, examId))
         }
 

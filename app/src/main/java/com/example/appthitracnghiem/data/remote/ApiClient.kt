@@ -6,5 +6,5 @@ object ApiClient {
     const val STATUS_INVALID_TOKEN = 401
     const val STATUS_CODE_SERVER_NOT_RESPONSE = 500
 
-    const val BASE_URL = "http://192.168.10.18:8080/api/v1/"
+    const val BASE_URL = "http://10.0.2.2:8080/api/v1/"
 }

@@ -24,6 +24,7 @@ import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.model.PositiveQuestion
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.point.FragmentPoint
+import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
 import com.example.appthitracnghiem.ui.exercise.exercise.adapter.MenuQuestionAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.gson.Gson
@@ -40,7 +41,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
     private lateinit var menuQuestionAdapter: MenuQuestionAdapter
 
-    private lateinit var countDownTimer: CountDownTimer
+    private var countDownTimer: CountDownTimer? = null
 
     private var TIME_TOTAL: Int = 0
 
@@ -64,12 +65,11 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
     @SuppressLint("SetTextI18n", "ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        listAnswer = arrayListOf()
         super.onViewCreated(view, savedInstanceState)
 
-        listAnswer = arrayListOf()
-
-        val time = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.TIME_EXAM, 0)
-        setTime(time)
+        val timeMinutes = requireArguments().getInt(ExamSessionExtras.ARG_TIME_MINUTES, 0)
+        setTime(timeMinutes)
 
         initUi()
     }
@@ -109,22 +109,33 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
-        val idExam = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.ID_EXAM, 0)
+        val idExam = requireArguments().getInt(ExamSessionExtras.ARG_EXAM_ID, 0)
         viewModel.getExamListQuestion(RequestExamQuestion(userId, idExam))
     }
 
     private fun setTime(time: Int) {
         TIME_TOTAL = time * 60
+        countDownTimer?.cancel()
         countDownTimer = object : CountDownTimer(600000, 1000) {
             @SuppressLint("SetTextI18n")
             override fun onTick(millisUntilFinished: Long) {
+                val b = _binding ?: return
                 TIME_TOTAL--
                 MINUTES = TIME_TOTAL / 60
                 SECONDS = TIME_TOTAL % 60
 
                 if (MINUTES == 0 && SECONDS < 1) {
                     this.cancel()
+                    if (!::listExamQuestion.isInitialized) return@onTick
                     val fragmentPoint = FragmentPoint()
+                    val pointBundle = Bundle().apply {
+                        putSerializable("listExamQuestion", listExamQuestion)
+                        putInt(
+                            ExamSessionExtras.ARG_EXAM_ID,
+                            requireArguments().getInt(ExamSessionExtras.ARG_EXAM_ID, 0),
+                        )
+                    }
+                    fragmentPoint.arguments = pointBundle
                     val fm: FragmentTransaction? =
                         activity?.supportFragmentManager?.beginTransaction()
                     fm?.setCustomAnimations(
@@ -136,20 +147,20 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                     fm?.replace(R.id.changeIdExam, fragmentPoint)?.addToBackStack(null)?.commit()
                 }
                 if (SECONDS < 10) {
-                    binding.txtTime.text = "Còn lại $MINUTES:0$SECONDS phút"
+                    b.txtTime.text = "Còn lại $MINUTES:0$SECONDS phút"
                 } else if (MINUTES < 1) {
-                    binding.txtTime.text = "Còn lại $MINUTES:$SECONDS giây"
+                    b.txtTime.text = "Còn lại $MINUTES:$SECONDS giây"
                 } else {
-                    binding.txtTime.text = "Còn lại $MINUTES:$SECONDS phút"
+                    b.txtTime.text = "Còn lại $MINUTES:$SECONDS phút"
                 }
-                binding.countTime.progress = (TIME_TOTAL * 100 / (time * 60)).toFloat()
+                b.countTime.progress = (TIME_TOTAL * 100 / (time * 60)).toFloat()
             }
 
             override fun onFinish() {
                 this.start()
             }
 
-        }.start()
+        }.also { it.start() }
     }
 
     private fun setStatusBar() {
@@ -202,10 +213,16 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         binding.submit.setOnClickListener {
             saveListAnswer(listAnswer, PreferenceKey.ARRAY_LIST_ANSWER)
             getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
-            countDownTimer.cancel()
-            val bundle = Bundle()
-            bundle.putSerializable("listExamQuestion",listExamQuestion)
+            countDownTimer?.cancel()
             val fragmentPoint = FragmentPoint()
+            val bundle = Bundle().apply {
+                putSerializable("listExamQuestion", listExamQuestion)
+                putInt(
+                    ExamSessionExtras.ARG_EXAM_ID,
+                    requireArguments().getInt(ExamSessionExtras.ARG_EXAM_ID, 0),
+                )
+            }
+            fragmentPoint.arguments = bundle
             val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
             fm.setCustomAnimations(
                 R.anim.anim_up_enter,
@@ -214,7 +231,6 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                 R.anim.anim_down_enter
             )
             fm.replace(R.id.changeIdExam, fragmentPoint).addToBackStack(null).commit()
-            fragmentPoint.arguments = bundle
         }
 
         binding.backSubmit.setOnClickListener {
@@ -365,6 +381,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
     }
 
     override fun onDestroyView() {
+        countDownTimer?.cancel()
+        countDownTimer = null
         _binding = null
         super.onDestroyView()
     }

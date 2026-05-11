@@ -1,11 +1,12 @@
 package com.example.appthitracnghiem.ui.exercise.topic
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
 import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
@@ -15,7 +16,15 @@ class ExerciseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exercise)
 
-        replaceFragment(FragmentTopic())
+        val examId = intent.getIntExtra(ExamSessionExtras.INTENT_EXAM_ID, 0)
+        val timeMinutes = intent.getIntExtra(ExamSessionExtras.INTENT_TIME_MINUTES, 0)
+        val topic = FragmentTopic().apply {
+            arguments = Bundle().apply {
+                putInt(ExamSessionExtras.ARG_EXAM_ID, examId)
+                putInt(ExamSessionExtras.ARG_TIME_MINUTES, timeMinutes)
+            }
+        }
+        replaceFragment(topic)
     }
 
     private fun replaceFragment(fm: Fragment){

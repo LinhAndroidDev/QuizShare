@@ -41,6 +41,12 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
 
+        // Adapter must exist before initUi: restoreViewState can fire TextWatcher before API returns.
+        testAdapter = TestAdapter(requireActivity(), mutableListOf())
+        binding.recycleListTest.layoutManager =
+            LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        binding.recycleListTest.adapter = testAdapter
+
         viewModel.getListExam(RequestListExam(userId, id, type, 1, "asc"))
 
         initUi()
@@ -69,9 +75,6 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
 
         viewModel.listTestLiveData.observe(viewLifecycleOwner) {
             testAdapter = TestAdapter(requireActivity(), it)
-            val linear =
-                LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-            binding.recycleListTest.layoutManager = linear
             binding.recycleListTest.adapter = testAdapter
         }
     }

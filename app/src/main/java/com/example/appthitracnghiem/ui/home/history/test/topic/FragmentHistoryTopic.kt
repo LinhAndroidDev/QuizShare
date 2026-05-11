@@ -5,13 +5,11 @@ import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentHistoryTopicBinding
-import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.answer.FragmentAnswer
-import com.example.appthitracnghiem.ui.home.history.test.FragmentHistoryExam
+import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
 import com.example.appthitracnghiem.utils.PreferenceKey
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,6 +18,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class FragmentHistoryTopic : BaseFragment<HistoryTopicViewModel>() {
     private var _binding: FragmentHistoryTopicBinding? = null
     private val binding get() = _binding!!
+
+    companion object {
+        private const val TAG_HISTORY_ANSWER = "FragmentHistoryTopic_answer"
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,16 +43,21 @@ class FragmentHistoryTopic : BaseFragment<HistoryTopicViewModel>() {
             }
         }
 
-        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner){
-            if(it){
-                val fragmentAnswer = FragmentAnswer()
-                val bundle = Bundle()
-                bundle.putString("title", "Lịch sử thi")
-                val fm: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-                fm.add(R.id.changeIdTopicHistory, fragmentAnswer)
-                    .addToBackStack(null).commit()
-                fragmentAnswer.arguments = bundle
+        viewModel.navigateToAnswerExamIdLiveData.observe(viewLifecycleOwner) { examId ->
+            val fm = requireActivity().supportFragmentManager
+            if (fm.isStateSaved) return@observe
+            if (fm.findFragmentByTag(TAG_HISTORY_ANSWER) != null) return@observe
+
+            val fragmentAnswer = FragmentAnswer()
+            val bundle = Bundle().apply {
+                putString("title", "Lịch sử thi")
+                putInt(ExamSessionExtras.ARG_EXAM_ID, examId)
             }
+            fragmentAnswer.arguments = bundle
+            fm.beginTransaction()
+                .add(R.id.changeIdTopicHistory, fragmentAnswer, TAG_HISTORY_ANSWER)
+                .addToBackStack(null)
+                .commit()
         }
     }
 
@@ -73,7 +80,7 @@ class FragmentHistoryTopic : BaseFragment<HistoryTopicViewModel>() {
         setStatusBar()
 
         binding.backTopicHistory.setOnClickListener {
-            activity?.onBackPressed()
+            requireActivity().finish()
         }
 
         binding.seeAgainHistory.setOnClickListener {

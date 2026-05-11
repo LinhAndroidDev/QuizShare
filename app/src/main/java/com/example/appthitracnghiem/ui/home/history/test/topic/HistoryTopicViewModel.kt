@@ -6,7 +6,6 @@ import com.example.appthitracnghiem.core.ResultState
 import com.example.appthitracnghiem.data.remote.ApiService
 import com.example.appthitracnghiem.data.remote.safeApiCall
 import com.example.appthitracnghiem.ui.base.BaseViewModel
-import com.example.appthitracnghiem.utils.PreferenceKey
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,7 +13,9 @@ import javax.inject.Inject
 @HiltViewModel
 class HistoryTopicViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
     val isLoadingLiveData = MutableLiveData<Boolean>()
-    val isSuccessfulLiveData = MutableLiveData<Boolean>()
+
+    /** Emits real [com.example.appthitracnghiem.model.Exam.id] for loading questions via Bundle (not prefs). */
+    val navigateToAnswerExamIdLiveData = MutableLiveData<Int>()
 
     fun getIdExam(userId: Int, examHistoryId: Int) {
         isLoadingLiveData.value = true
@@ -23,13 +24,12 @@ class HistoryTopicViewModel @Inject constructor(private val apiService: ApiServi
             isLoadingLiveData.value = false
             when (result) {
                 is ResultState.Success -> {
-                    // Backend: id = exam_history id; exam_id = exams.id (dùng cho examListQuestion)
-                    result.data.result.exam_id?.let { examId ->
-                        mPreferenceUtil.defaultPref().edit()
-                            .putInt(PreferenceKey.ID_EXAM, examId)
-                            .apply()
+                    val examId = result.data.result.exam_id
+                    if (examId != null && examId > 0) {
+                        navigateToAnswerExamIdLiveData.value = examId
+                    } else {
+                        errorApiLiveData.value = "Không lấy được mã đề thi (exam_id)."
                     }
-                    isSuccessfulLiveData.value = true
                 }
                 is ResultState.Error -> errorApiLiveData.value = result.message
             }

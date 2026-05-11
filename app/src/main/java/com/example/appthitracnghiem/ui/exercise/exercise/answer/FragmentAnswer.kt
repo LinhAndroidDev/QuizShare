@@ -12,6 +12,7 @@ import android.view.*
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +23,7 @@ import com.example.appthitracnghiem.model.PositiveQuestion
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.adapter.MenuQuestionAdapter
 import com.example.appthitracnghiem.ui.exercise.exercise.exam.RequestExamQuestion
+import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -59,8 +61,20 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        answer1.setBackgroundResource(R.drawable.bg_answer_fail)
-//        answer3.setBackgroundResource(R.drawable.select_text_view)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    val fm = requireActivity().supportFragmentManager
+                    if (fm.isStateSaved) return
+                    if (fm.backStackEntryCount > 0) {
+                        fm.popBackStack()
+                    } else {
+                        requireActivity().finish()
+                    }
+                }
+            },
+        )
 
         initUi()
     }
@@ -81,10 +95,12 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
             examQuestions?.let {
                 listExamQuestion = it
                 sizeListQuestion = it.size
+                listAnswer.clear()
                 for (i in 0 until sizeListQuestion) {
                     listAnswer.add(-1)
                 }
-                binding.txtPositionQuizAnswer.text = "Câu " + (positiveQuestion+1) + " trên " + sizeListQuestion
+                positiveQuestion = 0
+                binding.txtPositionQuizAnswer.text = "Câu " + (positiveQuestion + 1) + " trên " + sizeListQuestion
                 setTextView(positiveQuestion)
             }
         }
@@ -93,7 +109,7 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
             .getInt(PreferenceKey.USER_ID, 0)
         val idHistoryExam = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.EXAM_ID_HISTORY, 0)
-        val idExam = viewModel.mPreferenceUtil.defaultPref().getInt(PreferenceKey.ID_EXAM, 0)
+        val idExam = requireArguments().getInt(ExamSessionExtras.ARG_EXAM_ID, 0)
         viewModel.getExamListQuestion(RequestExamQuestion(userId, idExam))
         viewModel.getExamResult(RequestAnswer(userId, idHistoryExam))
 
@@ -161,7 +177,12 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         }
 
         binding.backAnswer.setOnClickListener {
-            activity?.onBackPressedDispatcher?.onBackPressed()
+            val fm = requireActivity().supportFragmentManager
+            if (!fm.isStateSaved && fm.backStackEntryCount > 0) {
+                fm.popBackStack()
+            } else {
+                requireActivity().finish()
+            }
         }
     }
 
@@ -218,13 +239,15 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
             }
         }
 
-        val arrAnswer: ArrayList<Int> = getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER)
-        if (arrAnswer[psQuestion] >= 0) {
-            arrayTxtQuestion[arrAnswer[psQuestion]].setBackgroundResource(R.drawable.select_text_view)
+        val arrAnswer: ArrayList<Int> = getListAnswer(PreferenceKey.ARRAY_LIST_ANSWER, sizeListQuestion)
+        val answerIdx = arrAnswer.getOrElse(psQuestion) { -1 }
+        if (answerIdx >= 0 && answerIdx < arrayTxtQuestion.size) {
+            arrayTxtQuestion[answerIdx].setBackgroundResource(R.drawable.select_text_view)
         }
-        listResult = getListAnswer(PreferenceKey.ARRAY_LIST_RESULTS)
-        if(listResult[psQuestion] != arrAnswer[psQuestion]){
-            arrayTxtQuestion[listResult[psQuestion]].setBackgroundResource(R.drawable.bg_answer_fail)
+        listResult = getListAnswer(PreferenceKey.ARRAY_LIST_RESULTS, sizeListQuestion)
+        val resultIdx = listResult.getOrElse(psQuestion) { -1 }
+        if (resultIdx != answerIdx && resultIdx >= 0 && resultIdx < arrayTxtQuestion.size) {
+            arrayTxtQuestion[resultIdx].setBackgroundResource(R.drawable.bg_answer_fail)
         }
     }
 
@@ -252,12 +275,20 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         txt.setBackgroundResource(R.drawable.un_select_text_view)
     }
 
-    private fun getListAnswer(key: String?): ArrayList<Int> {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        val gson = Gson()
+    private fun getListAnswer(key: String?, expectedMinSize: Int): ArrayList<Int> {
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         val json: String? = prefs.getString(key, null)
         val type: Type = object : TypeToken<ArrayList<Int>>() {}.type
-        return gson.fromJson(json, type)
+        val parsed: ArrayList<Int>? = try {
+            if (json.isNullOrBlank()) null else Gson().fromJson<ArrayList<Int>>(json, type)
+        } catch (_: Exception) {
+            null
+        }
+        val out = parsed?.let { ArrayList(it) } ?: arrayListOf()
+        while (out.size < expectedMinSize) {
+            out.add(-1)
+        }
+        return out
     }
 
     override fun onFragmentBack(): Boolean {

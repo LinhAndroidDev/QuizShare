@@ -15,6 +15,7 @@ import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.ExamActivity
 import com.example.appthitracnghiem.ui.exercise.exercise.answer.FragmentAnswer
+import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
 import com.example.appthitracnghiem.ui.home.HomeActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.gson.Gson
@@ -48,8 +49,7 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
 
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
-        val examId = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.ID_EXAM, 0)
+        val examId = requireArguments().getInt(ExamSessionExtras.ARG_EXAM_ID, 0)
 
         val bundle: Bundle = requireArguments()
         listExamQuestion = bundle.getSerializable("listExamQuestion") as ArrayList<ExamQuestion>
@@ -174,11 +174,16 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
 
         binding.seeAnswer.setOnClickListener {
             val fragmentAnswer = FragmentAnswer()
-            val bundle = Bundle()
-            bundle.putString("title","Câu trả lời")
-            val fm: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-            fm.replace(R.id.changeIdExam,fragmentAnswer).addToBackStack(null).commit()
+            val bundle = Bundle().apply {
+                putString("title", "Câu trả lời")
+                putInt(
+                    ExamSessionExtras.ARG_EXAM_ID,
+                    requireArguments().getInt(ExamSessionExtras.ARG_EXAM_ID, 0),
+                )
+            }
             fragmentAnswer.arguments = bundle
+            val fm: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+            fm.replace(R.id.changeIdExam, fragmentAnswer).addToBackStack(null).commit()
         }
     }
 
