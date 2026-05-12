@@ -25,11 +25,11 @@ class SystemViewModel @Inject constructor(
     val uiState = MutableLiveData<UiState<List<Department>>>(UiState.Idle)
     private val getDepartmentsUseCase = GetDepartmentsUseCase(HomeRepositoryImpl(appContext, apiService))
 
-    fun getDataDepartment(userId: Int, keyword: String) {
+    fun getDataDepartment(keyword: String) {
         loadingData.value = true
         uiState.value = UiState.Loading
         viewModelScope.launch {
-            when (val result = getDepartmentsUseCase.getSystem(userId = userId, keyword = keyword)) {
+            when (val result = getDepartmentsUseCase.getSystem(userId = 3, keyword = keyword)) {
                 is ResultState.Error -> {
                     loadingData.value = false
                     uiState.value = UiState.Error(result.message)

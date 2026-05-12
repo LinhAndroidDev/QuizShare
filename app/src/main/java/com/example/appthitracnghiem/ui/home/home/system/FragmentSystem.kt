@@ -20,7 +20,6 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
     private var _binding: FragmentSystemBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapterFromSystem: DepartmentAdapter
-    var userId: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,10 +57,7 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
             adapterFromSystem = DepartmentAdapter(listDepart,requireActivity())
             binding.recycleListLiveQuizzes.adapter = adapterFromSystem
         }
-
-        userId = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.USER_ID,0)
-        viewModel.getDataDepartment(userId, "")
+        viewModel.getDataDepartment("")
     }
 
     override fun onCreateView(
