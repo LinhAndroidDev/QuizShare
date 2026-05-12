@@ -1,12 +1,13 @@
 package com.example.appthitracnghiem.ui.exercise.exercise.answer
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.model.Answer
-import com.example.appthitracnghiem.model.ExamQuestion
+import com.example.appthitracnghiem.model.examui.ExamReviewAnswerOption
+import com.example.appthitracnghiem.model.examui.ExamReviewQuestion
 import com.example.appthitracnghiem.ui.exercise.exercise.adapter.AnswerOptionItemUi
 
 /**
@@ -15,18 +16,15 @@ import com.example.appthitracnghiem.ui.exercise.exercise.adapter.AnswerOptionIte
  */
 class AnswerReviewOptionAdapter : RecyclerView.Adapter<AnswerReviewOptionAdapter.OptionViewHolder>() {
 
-    private var answers: List<Answer> = emptyList()
-    private var questionId: Int = 0
-    private var resultMap: Map<Int, Int?>? = null
+    private var options: List<ExamReviewAnswerOption> = emptyList()
 
-    fun submit(question: ExamQuestion, examResult: Map<Int, Int?>?) {
-        questionId = question.question_id
-        answers = question.answer_list.toList()
-        resultMap = examResult
+    @SuppressLint("NotifyDataSetChanged")
+    fun submit(question: ExamReviewQuestion) {
+        options = question.options
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int = answers.size
+    override fun getItemCount(): Int = options.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OptionViewHolder {
         val textView = LayoutInflater.from(parent.context)
@@ -38,26 +36,10 @@ class AnswerReviewOptionAdapter : RecyclerView.Adapter<AnswerReviewOptionAdapter
     }
 
     override fun onBindViewHolder(holder: OptionViewHolder, position: Int) {
-        val answer = answers[position]
-        holder.textView.text = answer.content
-        holder.textView.setBackgroundResource(backgroundFor(answer))
+        val row = options[position]
+        holder.textView.text = row.content
+        holder.textView.setBackgroundResource(row.backgroundRes)
     }
 
     class OptionViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
-
-    private fun backgroundFor(answer: Answer): Int {
-        val map = resultMap ?: return R.drawable.un_select_text_view
-        val userAnswerId: Int? = map[questionId]
-        val isCorrect = answer.type == 1
-        val userPickedThis = userAnswerId != null && userAnswerId == answer.answer_id
-        val unanswered = userAnswerId == null
-
-        return when {
-            unanswered && isCorrect -> R.drawable.bg_answer_fail
-            userPickedThis && isCorrect -> R.drawable.bg_answer_border_green
-            userPickedThis && !isCorrect -> R.drawable.bg_answer_fail
-            !userPickedThis && isCorrect && userAnswerId != null -> R.drawable.bg_answer_border_green
-            else -> R.drawable.un_select_text_view
-        }
-    }
 }

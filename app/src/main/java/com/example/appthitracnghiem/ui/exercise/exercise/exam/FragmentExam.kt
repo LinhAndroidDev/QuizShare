@@ -81,7 +81,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         viewModel.listExamQuestionLiveData.observe(viewLifecycleOwner) {
             listExamQuestion = it
             sizeListQuestion = it.size
-            examSessionViewModel.initAnswers(sizeListQuestion)
+            examSessionViewModel.initWithQuestions(it)
             binding.txtPositionQuiz.text =
                 getString(R.string.format_exam_question_position, positiveQuestion + 1, sizeListQuestion)
             setTextView(positiveQuestion)
@@ -195,7 +195,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         }
 
         binding.menuQuestion.setOnClickListener {
-            showMenuQuestion(binding.menuQuestion, R.layout.popup_list_question, 0, 290, Gravity.BOTTOM)
+            binding.menuQuestion.showMenuQuestion()
         }
 
         binding.finishQuiz.setOnClickListener {
@@ -210,7 +210,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         examAnswerAdapter.onOptionClick = { optionIndex ->
             if (::listExamQuestion.isInitialized) {
                 examSessionViewModel.setSelection(positiveQuestion, optionIndex)
-                examAnswerAdapter.submit(listExamQuestion[positiveQuestion], optionIndex)
+                examSessionViewModel.questionAt(positiveQuestion)?.let { examAnswerAdapter.submit(it) }
             }
         }
 
@@ -270,15 +270,15 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun showMenuQuestion(view: View, popupViewId: Int, x: Int, y: Int, gravity: Int) {
-        val popUpView: View = View.inflate(requireActivity(), popupViewId, null)
+    private fun View.showMenuQuestion() {
+        val popUpView: View = View.inflate(requireActivity(), R.layout.popup_list_question, null)
 
         val width = ViewGroup.LayoutParams.MATCH_PARENT
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
         val focusable = true
 
         val popupWindow = PopupWindow(popUpView, width, height, focusable)
-        popupWindow.showAtLocation(view, gravity, x, y)
+        popupWindow.showAtLocation(this, Gravity.BOTTOM, 0, 290)
 
         listQuestion = mutableListOf()
         for (i in 0 until sizeListQuestion) {
@@ -306,12 +306,10 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
     @SuppressLint("ResourceAsColor")
     fun setTextView(psQuestion: Int) {
-        binding.titleExam.text = listExamQuestion[psQuestion].question_title
-
         examSessionViewModel.ensureVisited(psQuestion)
-        val selectedIndex = examSessionViewModel.getSelection(psQuestion).let { if (it >= 0) it else -1 }
-
-        examAnswerAdapter.submit(listExamQuestion[psQuestion], selectedIndex)
+        val taking = examSessionViewModel.questionAt(psQuestion) ?: return
+        binding.titleExam.text = taking.source.question_title
+        examAnswerAdapter.submit(taking)
     }
 
     override fun onFragmentBack(): Boolean {

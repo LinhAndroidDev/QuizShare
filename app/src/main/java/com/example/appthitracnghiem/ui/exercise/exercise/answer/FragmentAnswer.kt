@@ -21,7 +21,7 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentAnswerBinding
 import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.model.PositiveQuestion
-import com.example.appthitracnghiem.model.QuestionReviewChipState
+import com.example.appthitracnghiem.model.examui.ExamReviewQuestion
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.adapter.MenuQuestionAdapter
 import com.example.appthitracnghiem.data.remote.dto.request.RequestAnswer
@@ -46,6 +46,9 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
     private var sizeListQuestion: Int = 0
 
     private lateinit var listExamQuestion: ArrayList<ExamQuestion>
+
+    /** Mô hình màn hình xem lại (mỗi câu + đáp án đã gán drawable + chip menu). */
+    private var reviewSession: List<ExamReviewQuestion> = emptyList()
 
     /** Parsed API `exam_result`: question_id → chosen answer_id (null = không chọn). */
     private var examResultByQuestionId: Map<Int, Int?>? = null
@@ -92,6 +95,7 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
                 listExamQuestion = it
                 sizeListQuestion = it.size
                 positiveQuestion = 0
+                rebuildReviewSession()
                 binding.txtPositionQuizAnswer.text =
                     getString(R.string.format_exam_question_position, positiveQuestion + 1, sizeListQuestion)
                 setTextView(positiveQuestion)
@@ -108,6 +112,7 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
 
         viewModel.listAnswerLiveData.observe(viewLifecycleOwner) { raw ->
             examResultByQuestionId = parseExamResultByQuestionId(raw)
+            rebuildReviewSession()
             if (::listExamQuestion.isInitialized && listExamQuestion.isNotEmpty()) {
                 setTextView(positiveQuestion)
             }
@@ -199,15 +204,14 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         menuQuestionAdapter = MenuQuestionAdapter(
             requireActivity(),
             listQuestion,
-            reviewChipStates = if (::listExamQuestion.isInitialized && listExamQuestion.isNotEmpty()) {
-                buildReviewChipStates()
+            reviewChipStates = if (reviewSession.size == sizeListQuestion && reviewSession.isNotEmpty()) {
+                reviewSession.map { it.chipState }
             } else {
                 null
             },
             currentQuestionIndex = positiveQuestion,
             isExamQuestionAnswered = { pos ->
-                if (!::listExamQuestion.isInitialized || pos !in listExamQuestion.indices) false
-                else examResultByQuestionId?.get(listExamQuestion[pos].question_id) != null
+                reviewSession.getOrNull(pos)?.isUserAnswered == true
             },
         )
         menuQuestionAdapter.onClickItem = { positionItem ->
@@ -225,29 +229,26 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
         recycleQuestion.adapter = menuQuestionAdapter
     }
 
-    /** Trạng thái từng câu cho menu: đúng / sai / bỏ qua (map `exam_result`). */
-    private fun buildReviewChipStates(): List<QuestionReviewChipState> {
-        val map = examResultByQuestionId
-        return listExamQuestion.map { question ->
-            when {
-                map == null -> QuestionReviewChipState.PENDING
-                map[question.question_id] == null -> QuestionReviewChipState.SKIPPED
-                else -> {
-                    val userAid = map[question.question_id]!!
-                    val chosen = question.answer_list.find { it.answer_id == userAid }
-                    if (chosen?.type == 1) QuestionReviewChipState.CORRECT else QuestionReviewChipState.WRONG
-                }
-            }
+    private fun rebuildReviewSession() {
+        if (!::listExamQuestion.isInitialized || listExamQuestion.isEmpty()) {
+            reviewSession = emptyList()
+            return
+        }
+        reviewSession = listExamQuestion.map { q ->
+            ExamReviewQuestion.fromApi(q, examResultByQuestionId)
         }
     }
 
     fun setTextView(psQuestion: Int) {
         if (!::listExamQuestion.isInitialized || listExamQuestion.isEmpty()) return
         if (psQuestion !in listExamQuestion.indices) return
+        if (reviewSession.size != listExamQuestion.size) {
+            rebuildReviewSession()
+        }
 
-        val question = listExamQuestion[psQuestion]
-        binding.titleAnswer.text = question.question_title
-        answerOptionsAdapter.submit(question, examResultByQuestionId)
+        val row = reviewSession.getOrNull(psQuestion) ?: return
+        binding.titleAnswer.text = row.source.question_title
+        answerOptionsAdapter.submit(row)
     }
 
     override fun onFragmentBack(): Boolean {

@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.model.Answer
-import com.example.appthitracnghiem.model.ExamQuestion
+import com.example.appthitracnghiem.model.examui.ExamTakingAnswerOption
+import com.example.appthitracnghiem.model.examui.ExamTakingQuestion
 import com.example.appthitracnghiem.ui.exercise.exercise.adapter.AnswerOptionItemUi
 
 /**
@@ -14,18 +14,18 @@ import com.example.appthitracnghiem.ui.exercise.exercise.adapter.AnswerOptionIte
  */
 class ExamAnswerOptionAdapter : RecyclerView.Adapter<ExamAnswerOptionAdapter.OptionViewHolder>() {
 
-    private var answers: List<Answer> = emptyList()
+    private var options: List<ExamTakingAnswerOption> = emptyList()
     private var selectedIndex: Int = -1
 
     var onOptionClick: ((optionIndex: Int) -> Unit)? = null
 
-    fun submit(question: ExamQuestion, selectedOptionIndex: Int) {
-        answers = question.answer_list.toList()
-        selectedIndex = selectedOptionIndex
+    fun submit(question: ExamTakingQuestion) {
+        options = question.answerOptions
+        selectedIndex = question.selectedIndexForAdapter()
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int = answers.size
+    override fun getItemCount(): Int = options.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OptionViewHolder {
         val textView = LayoutInflater.from(parent.context)
@@ -36,7 +36,7 @@ class ExamAnswerOptionAdapter : RecyclerView.Adapter<ExamAnswerOptionAdapter.Opt
 
     override fun onBindViewHolder(holder: OptionViewHolder, position: Int) {
         val tv = holder.textView
-        tv.text = answers[position].content
+        tv.text = options[position].content
         tv.setBackgroundResource(
             if (position == selectedIndex) R.drawable.select_text_view else R.drawable.un_select_text_view,
         )

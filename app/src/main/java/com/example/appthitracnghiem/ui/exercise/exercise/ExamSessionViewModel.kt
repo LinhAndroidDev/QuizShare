@@ -2,59 +2,76 @@ package com.example.appthitracnghiem.ui.exercise.exercise
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.appthitracnghiem.model.ExamQuestion
+import com.example.appthitracnghiem.model.examui.ExamTakingQuestion
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 /**
- * Trạng thái làm bài trong [ExamActivity]: mỗi câu lưu **index đáp án đã chọn** trong [ExamQuestion.answer_list],
- * hoặc `-1` (bỏ qua / chưa chọn), `-2` (chưa mở câu — chỉ dùng lúc khởi tạo, sẽ về `-1` khi vào câu).
+ * Phiên làm bài trong [ExamActivity]: danh sách [ExamTakingQuestion] (mỗi câu + đáp án UI + chọn/đã xem).
  */
 @HiltViewModel
 class ExamSessionViewModel @Inject constructor() : ViewModel() {
 
-    private val _answers = MutableLiveData<ArrayList<Int>>()
+    private val _questions = MutableLiveData<List<ExamTakingQuestion>>()
 
-    fun initAnswers(questionCount: Int) {
-        if (questionCount <= 0) return
-        if (_answers.value?.size == questionCount) return
-        val list = ArrayList<Int>(questionCount)
-        for (i in 0 until questionCount) {
-            list.add(if (i == 0) -1 else -2)
+    fun initWithQuestions(questions: List<ExamQuestion>) {
+        if (questions.isEmpty()) return
+        val existing = _questions.value
+        if (existing != null &&
+            existing.size == questions.size &&
+            existing.map { it.source.question_id } == questions.map { it.question_id }
+        ) {
+            return
         }
-        _answers.value = list
+        _questions.value = questions.mapIndexed { index, q ->
+            ExamTakingQuestion.fromApi(q, initiallyVisited = index == 0)
+        }
     }
 
-    fun isQuestionAnswered(questionIndex: Int): Boolean {
-        val list = _answers.value ?: return false
-        val v = list.getOrNull(questionIndex) ?: return false
-        return v >= 0
-    }
+    fun questionAt(index: Int): ExamTakingQuestion? = _questions.value?.getOrNull(index)
 
-    fun getSelection(questionIndex: Int): Int =
-        _answers.value?.getOrNull(questionIndex) ?: -1
+    fun isQuestionAnswered(questionIndex: Int): Boolean =
+        questionAt(questionIndex)?.isAnswered() == true
 
-    /** Khi hiển thị câu: `-2` (chưa vào) → `-1` (đã xem, chưa chọn). */
     fun ensureVisited(questionIndex: Int) {
-        val current = _answers.value ?: return
-        if (current.getOrNull(questionIndex) != -2) return
-        val copy = ArrayList(current)
-        copy[questionIndex] = -1
-        _answers.value = copy
+        val list = _questions.value ?: return
+        if (questionIndex !in list.indices) return
+        val q = list[questionIndex]
+        if (q.hasBeenVisited) return
+        replaceQuestion(questionIndex, q.copy(hasBeenVisited = true))
     }
 
     fun setSelection(questionIndex: Int, optionIndex: Int) {
-        val current = _answers.value ?: return
-        if (questionIndex !in current.indices) return
-        val copy = ArrayList(current)
-        copy[questionIndex] = optionIndex
-        _answers.value = copy
+        val list = _questions.value ?: return
+        if (questionIndex !in list.indices) return
+        val q = list[questionIndex]
+        if (optionIndex !in q.answerOptions.indices) return
+        replaceQuestion(
+            questionIndex,
+            q.copy(hasBeenVisited = true, selectedIndex = optionIndex),
+        )
     }
 
-    fun snapshot(): ArrayList<Int> = ArrayList(_answers.value ?: arrayListOf())
+    /** Mỗi phần tử: index đáp án đã chọn hoặc `-1` (bỏ qua / chưa chọn), thứ tự theo câu hỏi. */
+    fun selectedOptionIndicesForScoring(): List<Int> {
+        val list = _questions.value ?: return emptyList()
+        return list.map { it.selectedIndexForScoring() }
+    }
 
-    /** Thoát giữa chừng: coi như mọi câu chưa trả lời. */
+    fun snapshotIndices(): ArrayList<Int> = ArrayList(selectedOptionIndicesForScoring())
+
+    /** Thoát giữa chừng: mọi câu coi như đã xem, chưa chọn đáp án. */
     fun markAllUnanswered(questionCount: Int) {
-        if (questionCount <= 0) return
-        _answers.value = ArrayList(List(questionCount) { -1 })
+        val list = _questions.value ?: return
+        if (list.size != questionCount) return
+        _questions.value = list.map { it.copy(hasBeenVisited = true, selectedIndex = -1) }
+    }
+
+    private fun replaceQuestion(index: Int, updated: ExamTakingQuestion) {
+        val list = _questions.value ?: return
+        val out = list.toMutableList()
+        out[index] = updated
+        _questions.value = out.toList()
     }
 }

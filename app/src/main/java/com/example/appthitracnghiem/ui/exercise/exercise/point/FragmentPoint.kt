@@ -26,6 +26,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.content.edit
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -39,7 +40,7 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
 
     /** Đồng bộ độ dài với số câu hỏi (tránh lệch nếu snapshot rỗng). */
     private fun paddedExamAnswers(): ArrayList<Int> {
-        val raw = examSessionViewModel.snapshot()
+        val raw = examSessionViewModel.snapshotIndices()
         val n = if (::listExamQuestion.isInitialized) listExamQuestion.size else raw.size
         val out = ArrayList(raw)
         while (out.size < n) {
@@ -107,8 +108,9 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
 
         viewModel.examIdHistory.observe(viewLifecycleOwner){
             viewModel.mPreferenceUtil.defaultPref()
-                .edit().putInt(PreferenceKey.EXAM_ID_HISTORY, it)
-                .apply()
+                .edit {
+                    putInt(PreferenceKey.EXAM_ID_HISTORY, it)
+                }
         }
 
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
