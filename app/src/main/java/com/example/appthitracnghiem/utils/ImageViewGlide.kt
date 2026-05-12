@@ -13,7 +13,7 @@ import com.example.appthitracnghiem.R
  */
 fun ImageView.loadNetworkImage(
     url: String?,
-    @DrawableRes placeholderRes: Int = R.drawable.loadimage,
+    @DrawableRes placeholderRes: Int = R.mipmap.ic_launcher_foreground,
     @DrawableRes errorRes: Int = R.drawable.errorimage,
     @DrawableRes emptyUrlRes: Int = placeholderRes,
 ) {
@@ -35,7 +35,7 @@ fun ImageView.loadNetworkImage(
  */
 fun ImageView.loadNetworkImage(
     uri: Uri?,
-    @DrawableRes placeholderRes: Int = R.drawable.loadimage,
+    @DrawableRes placeholderRes: Int = R.mipmap.ic_launcher_foreground,
     @DrawableRes errorRes: Int = R.drawable.errorimage,
     @DrawableRes emptyUriRes: Int = placeholderRes,
     transform: (RequestBuilder<Drawable>.() -> RequestBuilder<Drawable>)? = null,
