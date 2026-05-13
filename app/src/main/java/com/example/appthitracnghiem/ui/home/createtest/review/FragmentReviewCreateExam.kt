@@ -4,35 +4,31 @@ package com.example.appthitracnghiem.ui.home.createtest.review
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.data.remote.dto.request.RequestCreateExam
 import com.example.appthitracnghiem.databinding.FragmentReviewCreateExamBinding
-import com.example.appthitracnghiem.model.CreateQuestion
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.createtest.manager.FragmentManageExam
+import com.example.appthitracnghiem.ui.home.createtest.question.CreateExamDraftViewModel
 import com.example.appthitracnghiem.utils.Const
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.UriConvertFile
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
-import java.lang.reflect.Type
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.core.net.toUri
 
@@ -40,6 +36,9 @@ import androidx.core.net.toUri
 class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
     private var _binding: FragmentReviewCreateExamBinding? = null
     private val binding get() = _binding!!
+
+    private val draftViewModel: CreateExamDraftViewModel by activityViewModels()
+
     lateinit var positionReviewAdapter: PositionReviewAdapter
     var questionIndex: Int = 0
     var numberQuiz: Int = 0
@@ -57,7 +56,7 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
 
         numberQuiz = requireArguments().getInt("numberQuiz")
         positionReviewAdapter = PositionReviewAdapter(numberQuiz, requireActivity())
-        val linear = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
+        val linear = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         binding.recycleListNumberReview.layoutManager = linear
         binding.recycleListNumberReview.adapter = positionReviewAdapter
 
@@ -70,16 +69,16 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
         val loading = ProgressDialog(requireActivity())
         loading.setTitle(getString(R.string.dialog_title_notice))
         loading.setMessage(getString(R.string.loading_please_wait))
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 loading.show()
-            }else{
+            } else {
                 loading.dismiss()
             }
         }
 
-        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 val fragmentManageExam = FragmentManageExam()
                 val fm: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
                 fm?.add(R.id.changeIdCreateExam, fragmentManageExam)
@@ -87,24 +86,26 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
             }
         }
 
-        viewModel.uploadSuccessfulLiveData.observe(viewLifecycleOwner){
-            if(it){
-                Toast.makeText(requireActivity(), getString(R.string.toast_upload_cover_success), Toast.LENGTH_SHORT).show()
+        viewModel.uploadSuccessfulLiveData.observe(viewLifecycleOwner) {
+            if (it) {
+                Toast.makeText(requireActivity(), getString(R.string.toast_upload_cover_success), Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
 
-    private fun setTextExam(index: Int){
-        val listQuestion = getListQuestion(PreferenceKey.LIST_CREATE_QUESTION_EXAM)
-        binding.txtQuestionReview.text = listQuestion[index]?.question_title
-        binding.answerReview1.text = listQuestion[index]?.answer_list?.get(0)?.content
-        binding.answerReview2.text = listQuestion[index]?.answer_list?.get(1)?.content
-        binding.answerReview3.text = listQuestion[index]?.answer_list?.get(2)?.content
-        binding.answerReview4.text = listQuestion[index]?.answer_list?.get(3)?.content
-        for(i in 0 until listQuestion[index]?.answer_list!!.size){
-            if(listQuestion[index]?.answer_list?.get(i)?.type == 1){
+    private fun setTextExam(index: Int) {
+        val listQuestion = draftViewModel.questions
+        val q = listQuestion.getOrNull(index) ?: return
+        binding.txtQuestionReview.text = q.question_title
+        binding.answerReview1.text = q.answer_list.getOrNull(0)?.content
+        binding.answerReview2.text = q.answer_list.getOrNull(1)?.content
+        binding.answerReview3.text = q.answer_list.getOrNull(2)?.content
+        binding.answerReview4.text = q.answer_list.getOrNull(3)?.content
+        for (i in q.answer_list.indices) {
+            if (q.answer_list[i]?.type == 1) {
                 listTextViewAnswer[i].setBackgroundResource(R.drawable.boder_answer_create)
-            }else{
+            } else {
                 listTextViewAnswer[i].setBackgroundResource(R.drawable.boder_setting_new_password)
             }
         }
@@ -151,7 +152,7 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
                 .getInt(PreferenceKey.CREATE_STATUS, 0)
             val subjectId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.CREATE_SUBJECT_ID, -1)
-            val listQuestionCreate = getListQuestion(PreferenceKey.LIST_CREATE_QUESTION_EXAM)
+            val listQuestionCreate = draftViewModel.questions
 
             val requestCreateExam = RequestCreateExam(
                 listQuestionCreate, userId, subjectId, title, time, number, status
@@ -161,12 +162,12 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
             val strImage = viewModel.mPreferenceUtil.defaultPref()
                 .getString(PreferenceKey.CREATE_URI_IMAGE_SUBJECT, "").toString()
             val uriImage: Uri = strImage.toUri()
-            val strPath: String = UriConvertFile.getFileFromUri(requireActivity(),uriImage).toString()
+            val strPath: String = UriConvertFile.getFileFromUri(requireActivity(), uriImage).toString()
             val file = File(strPath)
             val requestBodyImage: RequestBody =
                 file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
             val multipartBodyImage: MultipartBody.Part =
-                MultipartBody.Part.createFormData(Const.file,file.name,requestBodyImage)
+                MultipartBody.Part.createFormData(Const.file, file.name, requestBodyImage)
             val requestBodyId: RequestBody =
                 userId.toString().toRequestBody("multipart/form-data".toMediaTypeOrNull())
             val folder = "exam"
@@ -176,20 +177,12 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
             val requestBodyFileName: RequestBody =
                 fileName.toRequestBody("multipart/form-data".toMediaTypeOrNull())
 
-            viewModel.postUploadFile(requestBodyId,multipartBodyImage,requestBodyFolder,requestBodyFileName)
+            viewModel.postUploadFile(requestBodyId, multipartBodyImage, requestBodyFolder, requestBodyFileName)
         }
 
         binding.backReview.setOnClickListener {
             activity?.onBackPressedDispatcher?.onBackPressed()
         }
-    }
-
-    private fun getListQuestion(key: String?): ArrayList<CreateQuestion?> {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        val gson = Gson()
-        val json: String? = prefs.getString(key, null)
-        val type: Type = object : TypeToken<ArrayList<CreateQuestion?>>() {}.type
-        return gson.fromJson(json, type)
     }
 
     override fun onCreateView(

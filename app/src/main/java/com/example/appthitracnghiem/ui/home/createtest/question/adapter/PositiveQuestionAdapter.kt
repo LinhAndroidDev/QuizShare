@@ -1,12 +1,8 @@
-@file:Suppress("DEPRECATION")
-
 package com.example.appthitracnghiem.ui.home.createtest.question.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Color
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,16 +10,15 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
-import com.example.appthitracnghiem.model.CreateQuestion
-import com.example.appthitracnghiem.utils.PreferenceKey
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Type
+import com.example.appthitracnghiem.model.createexam.CreateQuestionSlotStatus
 
-class PositiveQuestionAdapter(private val max: Int, val context: Context) :
-    RecyclerView.Adapter<PositiveQuestionAdapter.PositiveViewHolder>() {
+class PositiveQuestionAdapter(
+    private val max: Int,
+    private val context: Context,
+    private val slotStatus: (Int) -> CreateQuestionSlotStatus,
+) : RecyclerView.Adapter<PositiveQuestionAdapter.PositiveViewHolder>() {
     private var selectedIndex: Int = 0
-    var onClickItem: ((Int)->Unit)? = null
+    var onClickItem: ((Int) -> Unit)? = null
 
     class PositiveViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var txtPositive: TextView = itemView.findViewById(R.id.txtPositive)
@@ -49,32 +44,26 @@ class PositiveQuestionAdapter(private val max: Int, val context: Context) :
             holder.txtPositive.setTextColor(Color.WHITE)
             holder.txtPositive.setBackgroundResource(R.drawable.select_positive_quiz)
         } else {
-            val listPositive = getListPositive(PreferenceKey.LIST_CREATE_NUMBER_QUESTION)
-            if(listPositive[position] == -2){
-                holder.txtPositive.setTextColor(Color.BLACK)
-            }else if(listPositive[position] == -1){
-                holder.txtPositive.setTextColor(ContextCompat.getColor(context,R.color.pink_red))
-            }else{
-                holder.txtPositive.setTextColor(ContextCompat.getColor(context,R.color.backgroundIntro))
+            when (slotStatus(position)) {
+                CreateQuestionSlotStatus.NOT_STARTED -> {
+                    holder.txtPositive.setTextColor(Color.BLACK)
+                }
+                CreateQuestionSlotStatus.INCOMPLETE -> {
+                    holder.txtPositive.setTextColor(ContextCompat.getColor(context, R.color.pink_red))
+                }
+                CreateQuestionSlotStatus.COMPLETE -> {
+                    holder.txtPositive.setTextColor(ContextCompat.getColor(context, R.color.backgroundIntro))
+                }
             }
             holder.txtPositive.setBackgroundResource(R.drawable.un_select_positive_quiz)
         }
     }
 
-    private fun getListPositive(key: String?): ArrayList<Int> {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val gson = Gson()
-        val json: String? = prefs.getString(key, null)
-        val type: Type = object : TypeToken<ArrayList<Int>>() {}.type
-        return gson.fromJson(json, type)
-    }
+    override fun getItemCount(): Int = max
 
-    override fun getItemCount(): Int {
-        return max
-    }
-
+    @SuppressLint("NotifyDataSetChanged")
     fun setSelectedIndex(index: Int) {
         selectedIndex = index
-        this.notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 }

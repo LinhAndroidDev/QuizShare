@@ -35,7 +35,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
     private var _binding: FragmentCreateTestBinding? = null
     private val binding get() = _binding!!
 
-    private var departmentId: Int = -1
+    private var selectedDepartmentId: Int = -1
     private var subjectId: Int = -1
     private var uriImage = ""
 
@@ -61,6 +61,7 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
         viewModel.getDataDepartmentDetail(RequestDepartmentInfo(userId))
+        viewModel.fetchDepartmentListForCreateTest()
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -103,12 +104,22 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
             val popupWindow = PopupWindow(popUpView, width, height, focusable)
             popupWindow.showAsDropDown(binding.selectDepartment, 0, -30, Gravity.BOTTOM)
 
-            val listDepartment: ArrayList<String> =
-                resources.getStringArray(R.array.create_test_sample_departments).toCollection(ArrayList())
+            val departments = viewModel.createTestDepartmentsLiveData.value.orEmpty()
+            if (departments.isEmpty()) {
+                Toast.makeText(
+                    requireActivity(),
+                    getString(R.string.toast_department_list_not_ready),
+                    Toast.LENGTH_SHORT,
+                ).show()
+                viewModel.fetchDepartmentListForCreateTest()
+                return@setOnClickListener
+            }
 
-            val createDepartmentAdapter = CreateDepartmentAdapter(listDepartment, requireActivity())
-            createDepartmentAdapter.onClickItem = {
-                departmentId = it
+            val listTitles = departments.map { it.title }.toCollection(ArrayList())
+
+            val createDepartmentAdapter = CreateDepartmentAdapter(listTitles, requireActivity())
+            createDepartmentAdapter.onClickItem = { position ->
+                selectedDepartmentId = departments[position].id
                 popupWindow.dismiss()
                 binding.txtSelectSubject.visibility = View.VISIBLE
                 binding.layoutSelectSubject.visibility = View.VISIBLE
@@ -123,40 +134,53 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
         }
 
         binding.layoutSelectSubject.setOnClickListener {
+            if (selectedDepartmentId < 0) {
+                Toast.makeText(
+                    requireActivity(),
+                    getString(R.string.toast_select_department_first),
+                    Toast.LENGTH_SHORT,
+                ).show()
+                return@setOnClickListener
+            }
+
             val popUpView: View = View.inflate(requireActivity(), R.layout.popup_select_partment, null)
             val width = ViewGroup.LayoutParams.WRAP_CONTENT
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
             val focusable = true
 
-            viewModel.listDepartmentLiveData.observe(viewLifecycleOwner){
-                if(departmentId >= it.size){
-                    Toast.makeText(requireActivity(), getString(R.string.toast_department_no_subjects), Toast.LENGTH_SHORT).show()
-                }else{
-                    val popupWindow = PopupWindow(popUpView, width, height, focusable)
-                    popupWindow.showAsDropDown(binding.selectSubject, 0, -30, Gravity.BOTTOM)
+            val details = viewModel.listDepartmentLiveData.value
+            val detail = details?.find { it.id == selectedDepartmentId }
+            if (detail == null || detail.subjects.isEmpty()) {
+                Toast.makeText(
+                    requireActivity(),
+                    getString(R.string.toast_department_no_subjects),
+                    Toast.LENGTH_SHORT,
+                ).show()
+                return@setOnClickListener
+            }
 
-                    val listDepartment: ArrayList<String> = arrayListOf()
-                    for (i in 0 until it[departmentId].subjects.size) {
-                        listDepartment.add(it[departmentId].subjects[i].title)
-                    }
-                    val createDepartmentAdapter = CreateDepartmentAdapter(listDepartment, requireActivity())
-                    createDepartmentAdapter.onClickItem = {
-                        subjectId = it
-                        popupWindow.dismiss()
-                        viewModel.mPreferenceUtil.defaultPref().edit {
-                            putInt(PreferenceKey.CREATE_SUBJECT_ID, it + 1)
-                        }
-                    }
-                    createDepartmentAdapter.getStringItem = {
-                        binding.edtSelectSubject.text = it
-                    }
-                    val linear = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-                    val recyclerView: RecyclerView = popUpView.findViewById(R.id.recycleListTopic)
-                    recyclerView.layoutManager = linear
-                    recyclerView.adapter = createDepartmentAdapter
-                }
-                }
+            val popupWindow = PopupWindow(popUpView, width, height, focusable)
+            popupWindow.showAsDropDown(binding.selectSubject, 0, -30, Gravity.BOTTOM)
 
+            val listSubjectTitles: ArrayList<String> = arrayListOf()
+            for (i in 0 until detail.subjects.size) {
+                listSubjectTitles.add(detail.subjects[i].title)
+            }
+            val createDepartmentAdapter = CreateDepartmentAdapter(listSubjectTitles, requireActivity())
+            createDepartmentAdapter.onClickItem = {
+                subjectId = it
+                popupWindow.dismiss()
+                viewModel.mPreferenceUtil.defaultPref().edit {
+                    putInt(PreferenceKey.CREATE_SUBJECT_ID, it + 1)
+                }
+            }
+            createDepartmentAdapter.getStringItem = {
+                binding.edtSelectSubject.text = it
+            }
+            val linear = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+            val recyclerView: RecyclerView = popUpView.findViewById(R.id.recycleListTopic)
+            recyclerView.layoutManager = linear
+            recyclerView.adapter = createDepartmentAdapter
         }
 
         binding.layoutSelectMode.setOnClickListener {

@@ -333,6 +333,8 @@
     <string name="toast_image_saved">Đã lưu ảnh vào thư viện</string>
     <string name="toast_image_save_failed">Lưu ảnh vào thư viện thất bại</string>
     <string name="toast_department_no_subjects">Khoa chưa có môn</string>
+    <string name="toast_select_department_first">Vui lòng chọn khoa trước</string>
+    <string name="toast_department_list_not_ready">Danh sách khoa chưa tải xong, thử lại sau</string>
     <string name="toast_create_test_incomplete">Bạn chưa nhập đầy đủ thông tin</string>
     <string name="toast_need_question_level">Bạn chưa nhập độ khó cho câu hỏi</string>
     <string name="toast_upload_cover_success">Tải ảnh lên thành công</string>
@@ -360,13 +362,6 @@
     <string name="format_history_test_meta">Lượt tạo: %1$s | Người tạo: %2$s</string>
     <string name="history_question_subtitle_sample">Toán • 12 Trắc nghiệm</string>
     <string name="history_question_title_sample">Đề %1$d</string>
-
-    <string-array name="create_test_sample_departments">
-        <item>Khoa tự nhiên</item>
-        <item>Khoa nhạc</item>
-        <item>Khoa thể chất</item>
-        <item>Khoa truyền thông</item>
-    </string-array>
 
     <!-- Kotlin: adapters / tabs / errors -->
     <string name="tab_department_system">Hệ thống</string>
