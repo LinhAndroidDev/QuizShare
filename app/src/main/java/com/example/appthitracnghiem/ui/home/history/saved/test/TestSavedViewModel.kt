@@ -31,6 +31,7 @@ class TestSavedViewModel @Inject constructor(private val apiService: ApiService)
                     testTitleLiveData.value = result.data.result?.subject_title
                     listTestSavedLiveData.value = result.data.result?.exam_list
                 }
+
                 is ResultState.Error -> errorApiLiveData.value = result.message
             }
         }

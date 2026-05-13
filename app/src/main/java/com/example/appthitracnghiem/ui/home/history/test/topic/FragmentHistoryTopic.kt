@@ -35,31 +35,33 @@ class FragmentHistoryTopic : BaseFragment<HistoryTopicViewModel>() {
         val loading = ProgressDialog(requireActivity())
         loading.setTitle(getString(R.string.dialog_title_notice))
         loading.setMessage(getString(R.string.loading_please_wait))
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 loading.show()
-            }else{
+            } else {
                 loading.dismiss()
             }
         }
 
         viewModel.navigateToAnswerExamIdLiveData.observe(viewLifecycleOwner) { examId ->
-            val fm = requireActivity().supportFragmentManager
-            if (fm.isStateSaved) return@observe
-            if (fm.findFragmentByTag(TAG_HISTORY_ANSWER) != null) return@observe
+            examId?.let {
+                val fm = requireActivity().supportFragmentManager
+                if (fm.isStateSaved) return@observe
+                if (fm.findFragmentByTag(TAG_HISTORY_ANSWER) != null) return@observe
 
-            val examHistoryId = requireArguments().getInt(ExamSessionExtras.ARG_EXAM_HISTORY_ID, 0)
-            val fragmentAnswer = FragmentAnswer()
-            val bundle = Bundle().apply {
-                putString("title", getString(R.string.txtHistoryTest))
-                putInt(ExamSessionExtras.ARG_EXAM_ID, examId)
-                putInt(ExamSessionExtras.ARG_EXAM_HISTORY_ID, examHistoryId)
+                val examHistoryId = requireArguments().getInt(ExamSessionExtras.ARG_EXAM_HISTORY_ID, 0)
+                val fragmentAnswer = FragmentAnswer()
+                val bundle = Bundle().apply {
+                    putString("title", getString(R.string.txtHistoryTest))
+                    putInt(ExamSessionExtras.ARG_EXAM_ID, it)
+                    putInt(ExamSessionExtras.ARG_EXAM_HISTORY_ID, examHistoryId)
+                }
+                fragmentAnswer.arguments = bundle
+                fm.beginTransaction()
+                    .add(R.id.changeIdTopicHistory, fragmentAnswer, TAG_HISTORY_ANSWER)
+                    .addToBackStack(null)
+                    .commit()
             }
-            fragmentAnswer.arguments = bundle
-            fm.beginTransaction()
-                .add(R.id.changeIdTopicHistory, fragmentAnswer, TAG_HISTORY_ANSWER)
-                .addToBackStack(null)
-                .commit()
         }
     }
 

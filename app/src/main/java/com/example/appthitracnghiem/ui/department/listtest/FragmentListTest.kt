@@ -87,7 +87,7 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
         }
 
         binding.menuListTest.setOnClickListener {
-            showMenuCreate(binding.menuListTest,R.layout.popup_list_test,0,0,Gravity.BOTTOM)
+            binding.menuListTest.showMenuCreate()
         }
 
         binding.searchTest.addTextChangedListener(object : TextWatcher {
@@ -107,15 +107,15 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
 
     }
 
-    private fun showMenuCreate(anchor: View, layout: Int, x: Int, y: Int, position: Int) {
-        val popUpView: View = View.inflate(requireActivity(), layout, null)
+    private fun View.showMenuCreate() {
+        val popUpView: View = View.inflate(requireActivity(), R.layout.popup_list_test, null)
 
         val width = ViewGroup.LayoutParams.WRAP_CONTENT
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
         val focusable = true
 
         val popupWindow = PopupWindow(popUpView, width, height, focusable)
-        popupWindow.showAsDropDown(anchor, x, y, position)
+        popupWindow.showAsDropDown(this, 0, 0, Gravity.BOTTOM)
     }
 
     override fun onFragmentBack(): Boolean {

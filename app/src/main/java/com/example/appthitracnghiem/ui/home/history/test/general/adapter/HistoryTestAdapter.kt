@@ -16,7 +16,8 @@ import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
 import com.example.appthitracnghiem.utils.findAppCompatActivity
 import com.example.appthitracnghiem.utils.loadNetworkImage
 
-class HistoryTestAdapter(val context: Context, private val listTest: ArrayList<HistoryExam>) : RecyclerView.Adapter<HistoryTestAdapter.TestViewHolder>() {
+class HistoryTestAdapter(val context: Context, private val listTest: ArrayList<HistoryExam>) :
+    RecyclerView.Adapter<HistoryTestAdapter.TestViewHolder>() {
 
     class TestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.topic)
@@ -28,7 +29,7 @@ class HistoryTestAdapter(val context: Context, private val listTest: ArrayList<H
         parent: ViewGroup,
         viewType: Int,
     ): TestViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_general,parent,false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_general, parent, false)
         return TestViewHolder(itemView)
     }
 
@@ -42,7 +43,7 @@ class HistoryTestAdapter(val context: Context, private val listTest: ArrayList<H
             historyExam.score?.toInt() ?: 0,
         )
 
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             val activity = it.context.findAppCompatActivity() ?: return@setOnClickListener
             val historyId = historyExam.exam_history_id ?: return@setOnClickListener
             val intent = Intent(activity, HistoryTopicActivity::class.java).apply {

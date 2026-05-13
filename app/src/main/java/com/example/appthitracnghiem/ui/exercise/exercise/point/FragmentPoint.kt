@@ -34,7 +34,7 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
 
     private var lastExamHistoryId: Int = 0
 
-    /** Snapshot đáp án do [FragmentExam] truyền bundle (không đọc [ExamViewModel]). */
+    /** Snapshot đáp án do [com.example.appthitracnghiem.ui.exercise.exercise.exam.FragmentExam] truyền bundle (không đọc [com.example.appthitracnghiem.ui.exercise.exercise.exam.ExamViewModel]). */
     private fun answerOptionIndicesFromArgs(): ArrayList<Int> {
         val list = requireArguments().getIntegerArrayList(ExamSessionExtras.ARG_ANSWER_OPTION_INDICES)
         return if (list != null) ArrayList(list) else ArrayList()
@@ -68,14 +68,14 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
         val bundle: Bundle = requireArguments()
         listExamQuestion = bundle.getSerializable("listExamQuestion") as ArrayList<ExamQuestion>
         val listAnswer = paddedExamAnswers()
-        val answerList = HashMap<String,Int?>()
+        val answerList = HashMap<String, Int?>()
 
-        for(i in 0 until listAnswer.size){
+        for (i in 0 until listAnswer.size) {
             val value = listAnswer[i]
-            if(value == -1){
-                answerList[(i+1).toString()] = -1
-            }else{
-                answerList[(i+1).toString()] = listExamQuestion[i].answer_list[listAnswer[i]].answer_id
+            if (value == -1) {
+                answerList[(i + 1).toString()] = -1
+            } else {
+                answerList[(i + 1).toString()] = listExamQuestion[i].answer_list[listAnswer[i]].answer_id
             }
         }
 
@@ -84,15 +84,15 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
         val sdf = SimpleDateFormat("yyyy/MM/dd hh:mm:ss")
         val finishTime = sdf.format(Date()).toString()
 
-        val requestPoint = RequestPoint(userId, examId, answerList,startTime, finishTime)
+        val requestPoint = RequestPoint(userId, examId, answerList, startTime, finishTime)
 
         viewModel.getResult(requestPoint)
 
-        viewModel.scoreLiveData.observe(viewLifecycleOwner){ score ->
+        viewModel.scoreLiveData.observe(viewLifecycleOwner) { score ->
             score?.let {
                 binding.progressPoint.apply {
                     progressMax = 100f
-                    setProgressWithAnimation(it,3000)
+                    setProgressWithAnimation(it, 3000)
                 }
 
                 binding.txtPoint.text = it.toInt().toString()
@@ -113,10 +113,10 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
             id?.let { if (it > 0) lastExamHistoryId = it }
         }
 
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 (activity as ExamActivity).loadingVisible(true)
-            }else{
+            } else {
                 (activity as ExamActivity).loadingVisible(false)
             }
         }
@@ -136,8 +136,8 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
     private fun initUi() {
         var count = 0
         val listAnswer = paddedExamAnswers()
-        for (i in 0 until listAnswer.size){
-            if(listAnswer[i] < 0){
+        for (i in 0 until listAnswer.size) {
+            if (listAnswer[i] < 0) {
                 count++
             }
         }
@@ -172,7 +172,7 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
         }
 
         binding.finishAndSaved.setOnClickListener {
-            val intent = Intent(requireActivity(),HomeActivity::class.java)
+            val intent = Intent(requireActivity(), HomeActivity::class.java)
             startActivity(intent)
             activity?.finish()
         }

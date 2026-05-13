@@ -48,9 +48,11 @@ class PositiveQuestionAdapter(
                 CreateQuestionSlotStatus.NOT_STARTED -> {
                     holder.txtPositive.setTextColor(Color.BLACK)
                 }
+
                 CreateQuestionSlotStatus.INCOMPLETE -> {
                     holder.txtPositive.setTextColor(ContextCompat.getColor(context, R.color.pink_red))
                 }
+
                 CreateQuestionSlotStatus.COMPLETE -> {
                     holder.txtPositive.setTextColor(ContextCompat.getColor(context, R.color.backgroundIntro))
                 }

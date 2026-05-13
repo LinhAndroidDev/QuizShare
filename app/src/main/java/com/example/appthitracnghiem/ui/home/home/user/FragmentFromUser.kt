@@ -30,7 +30,9 @@ class FragmentFromUser : BaseFragment<FromUserViewModel>() {
 
     private fun initUi() {
         val linearLayoutManager =
-            object : LinearLayoutManager(requireActivity()) { override fun canScrollVertically() = false }
+            object : LinearLayoutManager(requireActivity()) {
+                override fun canScrollVertically() = false
+            }
         binding.recycleListFromUser.layoutManager = linearLayoutManager
 
         binding.seeAllUser.setOnClickListener {
@@ -41,28 +43,28 @@ class FragmentFromUser : BaseFragment<FromUserViewModel>() {
                 }
             }
             val fm: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-            fm.add(R.id.changeIdHome,fragmentListDepartment).addToBackStack(null).commit()
+            fm.add(R.id.changeIdHome, fragmentListDepartment).addToBackStack(null).commit()
         }
     }
 
     override fun bindData() {
         super.bindData()
 
-        viewModel.loadingFromUserData.observe(viewLifecycleOwner){ isLoading->
-            if(isLoading){
+        viewModel.loadingFromUserData.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
                 binding.loadingQuizFromUser.visibility = View.VISIBLE
-            }else{
+            } else {
                 binding.loadingQuizFromUser.visibility = View.INVISIBLE
             }
         }
 
-        viewModel.listDepartmentFromUserLiveData.observe(viewLifecycleOwner){
-            adapterFromUser = FromUserAdapter(it,requireActivity())
+        viewModel.listDepartmentFromUserLiveData.observe(viewLifecycleOwner) {
+            adapterFromUser = FromUserAdapter(it, requireActivity())
             binding.recycleListFromUser.adapter = adapterFromUser
         }
 
         userId = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.USER_ID,0)
+            .getInt(PreferenceKey.USER_ID, 0)
         viewModel.getDataDepartmentFromUser(userId, "")
     }
 

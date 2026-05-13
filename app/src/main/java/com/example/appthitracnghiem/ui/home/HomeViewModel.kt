@@ -36,6 +36,7 @@ class HomeViewModel @Inject constructor(
                     userUiState.value = UiState.Error(result.message)
                     errorApiLiveData.value = result.message
                 }
+
                 is ResultState.Success -> {
                     isLoadingLiveData.value = false
                     nameUserLiveData.value = result.data.name

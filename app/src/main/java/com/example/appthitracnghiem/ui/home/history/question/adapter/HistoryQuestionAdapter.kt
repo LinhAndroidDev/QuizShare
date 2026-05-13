@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.Test
 
-class HistoryQuestionAdapter(val context: Context,val listQuestion: List<Test>) : Adapter<HistoryQuestionAdapter.QuestionHolder>() {
+class HistoryQuestionAdapter(val context: Context, val listQuestion: List<Test>) :
+    Adapter<HistoryQuestionAdapter.QuestionHolder>() {
 
     class QuestionHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.imageQuestionHistory)
@@ -25,7 +26,7 @@ class HistoryQuestionAdapter(val context: Context,val listQuestion: List<Test>) 
         parent: ViewGroup,
         viewType: Int
     ): HistoryQuestionAdapter.QuestionHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_history_question,parent,false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_history_question, parent, false)
         return QuestionHolder(itemView)
     }
 

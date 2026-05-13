@@ -45,16 +45,16 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
         val loading = ProgressDialog(requireActivity())
         loading.setTitle(getString(R.string.dialog_title_notice))
         loading.setMessage(getString(R.string.loading_disabling_account))
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 loading.show()
-            }else{
+            } else {
                 loading.dismiss()
             }
         }
 
-        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 viewModel.confirmLoggedOut()
                 val intent = Intent(requireActivity(), LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -72,7 +72,7 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
     private fun initUi() {
 
         binding.emailSetting.text = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.USER_EMAIL,"").toString()
+            .getString(PreferenceKey.USER_EMAIL, "").toString()
 
         binding.backSetting.setOnClickListener {
             activity?.finish()
@@ -156,8 +156,8 @@ class FragmentSetting : BaseFragment<SettingViewModel>() {
         }
 
         binding.layoutLogoutCover.setOnTouchListener { _, event ->
-            when(event.actionMasked){
-                MotionEvent.ACTION_UP->{
+            when (event.actionMasked) {
+                MotionEvent.ACTION_UP -> {
                     binding.layoutLogoutCover.visibility = View.GONE
                     bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 }

@@ -53,7 +53,7 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
             }
         }
 
-        viewModel.successRegisterLiveData.observe(viewLifecycleOwner) { isSuccess ->
+        viewModel.successRegisterLiveData.observe(viewLifecycleOwner) { _ ->
             val fragmentCondition = FragmentCondition()
             val fm: FragmentTransaction =
                 requireActivity().supportFragmentManager.beginTransaction()
@@ -110,8 +110,9 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
         binding.selectDate.setOnClickListener {
 
             val getDate = Calendar.getInstance()
-            val datePicker = DatePickerDialog(requireActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                { view, year, month, dayOfMonth ->
+            val datePicker = DatePickerDialog(
+                requireActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                { _, year, month, dayOfMonth ->
 
                     val selectDate: Calendar = Calendar.getInstance()
                     selectDate.set(Calendar.YEAR, year)
@@ -120,7 +121,8 @@ class FragmentRegister : BaseFragment<RegisterViewModel>() {
 
                     binding.edtEnterYearOfBirthRegister.setText(formatDate.format(selectDate.time))
 
-                }, getDate.get(Calendar.YEAR), getDate.get((Calendar.MONTH)), getDate.get(Calendar.DAY_OF_MONTH))
+                }, getDate.get(Calendar.YEAR), getDate.get((Calendar.MONTH)), getDate.get(Calendar.DAY_OF_MONTH)
+            )
             datePicker.show()
         }
 

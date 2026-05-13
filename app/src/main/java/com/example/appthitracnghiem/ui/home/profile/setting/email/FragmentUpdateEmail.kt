@@ -32,16 +32,16 @@ class FragmentUpdateEmail : BaseFragment<UpdateEmailViewModel>() {
         val loading = ProgressDialog(requireActivity())
         loading.setTitle(getString(R.string.dialog_title_notice))
         loading.setMessage(getString(R.string.loading_please_wait))
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 loading.show()
-            }else{
+            } else {
                 loading.dismiss()
             }
         }
 
-        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 Toast.makeText(requireActivity(), getString(R.string.toast_email_updated), Toast.LENGTH_SHORT).show()
                 activity?.onBackPressed()
             }
@@ -55,12 +55,13 @@ class FragmentUpdateEmail : BaseFragment<UpdateEmailViewModel>() {
 
         binding.updateEmail.setOnClickListener {
             val strEmail = binding.edtUpdateEmail.text.toString()
-            if(strEmail.isEmpty()){
+            if (strEmail.isEmpty()) {
                 Toast.makeText(requireActivity(), getString(R.string.toast_email_empty), Toast.LENGTH_SHORT).show()
-            }else if(!Patterns.EMAIL_ADDRESS.matcher(strEmail)
-                    .matches()){
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(strEmail)
+                    .matches()
+            ) {
                 Toast.makeText(requireActivity(), getString(R.string.toast_email_invalid), Toast.LENGTH_SHORT).show()
-            } else{
+            } else {
                 val useId = viewModel.mPreferenceUtil.defaultPref()
                     .getInt(PreferenceKey.USER_ID, 0)
                 viewModel.updateEmail(RequestUpdateEmail(useId, strEmail))
@@ -83,5 +84,5 @@ class FragmentUpdateEmail : BaseFragment<UpdateEmailViewModel>() {
 
     override fun onFragmentBack(): Boolean {
         return false
-        }
+    }
 }

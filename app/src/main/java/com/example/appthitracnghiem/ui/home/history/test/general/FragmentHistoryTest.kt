@@ -38,38 +38,38 @@ class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
 
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
-        viewModel.getExamHistory(RequestExamHistory(userId,5,0,1,"asc"))
+        viewModel.getExamHistory(RequestExamHistory(userId, 5, 0, 1, "asc"))
 
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 (activity as HomeActivity).loadingVisible(true)
-            }else{
+            } else {
                 (activity as HomeActivity).loadingVisible(false)
             }
         }
 
-        viewModel.listExamHistoryLiveData.observe(viewLifecycleOwner){ listExamHistory ->
+        viewModel.listExamHistoryLiveData.observe(viewLifecycleOwner) { listExamHistory ->
             listExamHistory?.let {
-                val linear = object : LinearLayoutManager(requireActivity()){
+                val linear = object : LinearLayoutManager(requireActivity()) {
                     override fun canScrollVertically() = false
                 }
-                val linearUser = object : LinearLayoutManager(requireActivity()){
+                val linearUser = object : LinearLayoutManager(requireActivity()) {
                     override fun canScrollVertically() = false
                 }
                 val listSystem: ArrayList<HistoryExam> = arrayListOf()
                 val listUser: ArrayList<HistoryExam> = arrayListOf()
-                for(i in 0 until it.size){
-                    if(it[i].user_create.isNullOrBlank()){
+                for (i in 0 until it.size) {
+                    if (it[i].user_create.isNullOrBlank()) {
                         listSystem.add(it[i])
-                    }else{
+                    } else {
                         listUser.add(it[i])
                     }
                 }
-                testAdapter = HistoryTestAdapter(requireActivity(),listSystem)
+                testAdapter = HistoryTestAdapter(requireActivity(), listSystem)
                 binding.listTestFromSystem.layoutManager = linear
                 binding.listTestFromSystem.adapter = testAdapter
 
-                testAdapterUser = HistoryTestAdapter(requireActivity(),listUser)
+                testAdapterUser = HistoryTestAdapter(requireActivity(), listUser)
                 binding.listTestFromUser.layoutManager = linearUser
                 binding.listTestFromUser.adapter = testAdapterUser
             }
@@ -100,19 +100,19 @@ class FragmentHistoryTest : BaseFragment<HistoryTestViewModel>() {
         date.setOnClickListener {
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID, 0)
-            viewModel.getExamHistory(RequestExamHistory(userId,5,0,1,"asc"))
+            viewModel.getExamHistory(RequestExamHistory(userId, 5, 0, 1, "asc"))
         }
 
         name.setOnClickListener {
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID, 0)
-            viewModel.getExamHistory(RequestExamHistory(userId,5,0,2,"asc"))
+            viewModel.getExamHistory(RequestExamHistory(userId, 5, 0, 2, "asc"))
         }
 
         point.setOnClickListener {
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID, 0)
-            viewModel.getExamHistory(RequestExamHistory(userId,5,0,3,"asc"))
+            viewModel.getExamHistory(RequestExamHistory(userId, 5, 0, 3, "asc"))
         }
 
         val popupWindow = PopupWindow(popUpView, width, height, focusable)

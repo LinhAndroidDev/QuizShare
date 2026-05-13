@@ -31,7 +31,7 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
         }
 
         val avt = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.USER_AVATAR,"")
+            .getString(PreferenceKey.USER_AVATAR, "")
 
         binding.avatarUserProfile.loadNetworkImage(
             avt,
@@ -83,7 +83,7 @@ class FragmentProfile : BaseFragment<EmptyViewModel>() {
             .getString(PreferenceKey.USER_NAME, "")
     }
 
-    internal fun scrollTop(){
+    internal fun scrollTop() {
         binding.scrollProfile.post {
             binding.scrollProfile.fling(0)
             binding.scrollProfile.smoothScrollTo(0, 0)

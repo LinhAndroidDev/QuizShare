@@ -9,7 +9,7 @@ import java.io.File
 
 class UriConvertFile {
 
-    companion object{
+    companion object {
         fun getFileFromUri(context: Context, uri: Uri?): File? {
             uri ?: return null
             uri.path ?: return null
@@ -63,10 +63,12 @@ class UriConvertFile {
                         "/document/raw:",
                         ""
                     )
+
                     newUri.path?.contains("/document/primary:") == true -> newUri.path?.replace(
                         "/document/primary:",
                         "/storage/emulated/0/"
                     )
+
                     else -> return null
                 }
             }

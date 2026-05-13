@@ -41,10 +41,10 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
     override fun bindData() {
         super.bindData()
 
-        viewModel.loadingDepartmentLiveData.observe(viewLifecycleOwner){ isLoading->
-            if(isLoading && binding.recycleDetailListDepartment.adapter == null){
+        viewModel.loadingDepartmentLiveData.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading && binding.recycleDetailListDepartment.adapter == null) {
                 binding.loadingDepartmentInfo.visibility = View.VISIBLE
-            }else{
+            } else {
                 binding.loadingDepartmentInfo.visibility = View.INVISIBLE
             }
         }
@@ -74,7 +74,7 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
         }
 
         userId = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.USER_ID,0)
+            .getInt(PreferenceKey.USER_ID, 0)
         viewModel.getDataDepartmentDetail(RequestDepartmentInfo(userId))
     }
 
@@ -85,11 +85,11 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
             false
         }
 
-        binding.backDepartment.setOnClickListener{
+        binding.backDepartment.setOnClickListener {
             activity?.onBackPressed()
         }
 
-        binding.searchDepartment.addTextChangedListener(object : TextWatcher{
+        binding.searchDepartment.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }

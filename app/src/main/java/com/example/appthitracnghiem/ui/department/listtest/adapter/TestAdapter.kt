@@ -25,7 +25,7 @@ class TestAdapter(
     private var listTest: MutableList<Exam>,
     private val listSourceType: Int,
 ) :
-    RecyclerView.Adapter<TestAdapter.TestViewHolder>(), Filterable{
+    RecyclerView.Adapter<TestAdapter.TestViewHolder>(), Filterable {
 
     var listTestOld: MutableList<Exam> = listTest
 
@@ -87,12 +87,12 @@ class TestAdapter(
             override fun performFiltering(strTxt: CharSequence?): FilterResults {
                 val txtString: String = strTxt.toString().lowercase().trim()
 
-                listTest = if(txtString.isEmpty()){
+                listTest = if (txtString.isEmpty()) {
                     listTestOld
-                }else{
+                } else {
                     val list: MutableList<Exam> = mutableListOf()
-                    for(test in listTestOld){
-                        if(test.title.lowercase().contains(txtString)){
+                    for (test in listTestOld) {
+                        if (test.title.lowercase().contains(txtString)) {
                             list.add(test)
                         }
                     }
@@ -107,7 +107,7 @@ class TestAdapter(
 
             @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(strTxt: CharSequence?, p1: FilterResults?) {
-                if(p1?.values != null){
+                if (p1?.values != null) {
                     listTest = p1.values as MutableList<Exam>
                     notifyDataSetChanged()
                 }

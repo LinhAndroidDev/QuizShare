@@ -9,7 +9,6 @@ import com.example.appthitracnghiem.data.remote.dto.request.RequestExamQuestion
 import com.example.appthitracnghiem.data.remote.safeApiCall
 import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.ui.base.BaseViewModel
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -40,6 +39,7 @@ class AnswerViewModel @Inject constructor(private val apiService: ApiService) : 
                 is ResultState.Success -> {
                     listAnswerLiveData.value = result.data.result?.exam_result
                 }
+
                 is ResultState.Error -> errorApiLiveData.value = result.message
             }
         }

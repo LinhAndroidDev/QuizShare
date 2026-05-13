@@ -16,7 +16,6 @@ import javax.inject.Inject
 class HistoryTestViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
     var isLoadingLiveData = MutableLiveData<Boolean>()
     var listExamHistoryLiveData = MutableLiveData<ArrayList<HistoryExam>?>()
-    var idExamHistoryLiveData = MutableLiveData<Int>()
 
     fun getExamHistory(requestExamHistory: RequestExamHistory) {
         isLoadingLiveData.value = true

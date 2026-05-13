@@ -19,6 +19,7 @@ import com.example.appthitracnghiem.ui.home.history.FragmentHistory
 import com.example.appthitracnghiem.ui.home.home.FragmentHome
 import com.example.appthitracnghiem.ui.home.profile.FragmentProfile
 import dagger.hilt.android.AndroidEntryPoint
+
 @Suppress("DEPRECATION", "DEPRECATED_IDENTITY_EQUALS")
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<HomeViewModel>() {
@@ -50,7 +51,7 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
             if (fm !is FragmentCategory) {
                 resetTab()
                 attachFragment(R.id.changeIdHome, FragmentCategory())
-            }else{
+            } else {
                 fm.scrollTop()
             }
         }
@@ -63,7 +64,7 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
                 val fragmentHome = FragmentHome()
                 val fg = supportFragmentManager.beginTransaction()
                 fg.replace(R.id.changeIdHome, fragmentHome).addToBackStack(null).commit()
-            }else{
+            } else {
                 fm.scrollTop()
             }
         }
@@ -74,7 +75,7 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
                 resetTab()
                 binding.functionCreate.isSelected = true
                 attachFragment(R.id.changeIdHome, FragmentCreateTest())
-            }else{
+            } else {
                 fm.scrollTop()
             }
         }
@@ -94,7 +95,7 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
                 resetTab()
                 binding.functionProfile.isSelected = true
                 attachFragment(R.id.changeIdHome, FragmentProfile())
-            }else{
+            } else {
                 fm.scrollTop()
             }
         }
@@ -111,7 +112,7 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
 
                 if (keypadHeight > screenHeight * 0.15) {
                     binding.bottomWrap.visibility = View.GONE
-                }else{
+                } else {
                     binding.bottomWrap.visibility = View.VISIBLE
                 }
             }
@@ -155,15 +156,15 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
 //        bottomWrapView?.setOnTouchListener(TranslateAnimation(this, bottomWrap))
 //    }
 
-    internal fun loadingVisible(isLoading: Boolean){
-        if(isLoading){
+    internal fun loadingVisible(isLoading: Boolean) {
+        if (isLoading) {
             binding.loadingHome.root.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.loadingHome.root.visibility = View.GONE
         }
     }
 
-    internal fun clickAvatar(){
+    internal fun clickAvatar() {
         binding.functionHome.isSelected = false
         binding.functionProfile.isSelected = true
     }
@@ -175,11 +176,10 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
     private fun attachFragment(
         fragmentHolderLayoutId: Int,
         fragment: Fragment
-        )
-    {
+    ) {
         val manager: FragmentManager = supportFragmentManager
         val fg: FragmentTransaction = manager.beginTransaction()
-            fg.add(fragmentHolderLayoutId, fragment).addToBackStack(null).commit()
+        fg.add(fragmentHolderLayoutId, fragment).addToBackStack(null).commit()
     }
 
     /** Click Back */
@@ -196,7 +196,7 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
                 }
                 backPressTime = System.currentTimeMillis()
             } else if (fm !is FragmentHome) {
-                if(fm is FragmentCreateTest || fm is FragmentHistory || fm is FragmentProfile || fm is FragmentCategory){
+                if (fm is FragmentCreateTest || fm is FragmentHistory || fm is FragmentProfile || fm is FragmentCategory) {
                     val fragmentHome = FragmentHome()
                     val fragment: FragmentTransaction = supportFragmentManager.beginTransaction()
                     fragment.replace(R.id.changeIdHome, fragmentHome)
@@ -204,7 +204,7 @@ class HomeActivity : BaseActivity<HomeViewModel>() {
                         .commit()
                     resetTab()
                     binding.functionHome.isSelected = true
-                }else{
+                } else {
                     super.onBackPressed()
                     setSelectIcon()
                 }

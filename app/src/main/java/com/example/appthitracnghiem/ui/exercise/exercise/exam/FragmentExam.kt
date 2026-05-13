@@ -260,7 +260,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         }
 
         binding.backExercise.setOnClickListener {
-            val alertDialog : AlertDialog.Builder = AlertDialog.Builder(requireActivity())
+            val alertDialog: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
             alertDialog.setTitle(getString(R.string.dialog_title_notice))
             alertDialog.setIcon(R.drawable.icon_app_thitn)
             alertDialog.setMessage(getString(R.string.dialog_exit_exam_message))
@@ -299,7 +299,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
         listQuestion = mutableListOf()
         for (i in 0..sizeListQuestion) {
-            listQuestion.add(PositiveQuestion(i + 1,null))
+            listQuestion.add(PositiveQuestion(i + 1, null))
         }
 
         menuQuestionAdapter = MenuQuestionAdapter(

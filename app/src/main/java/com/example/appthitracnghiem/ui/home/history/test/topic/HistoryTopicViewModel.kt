@@ -21,7 +21,7 @@ class HistoryTopicViewModel @Inject constructor(
     val isLoadingLiveData = MutableLiveData<Boolean>()
 
     /** Emits real [com.example.appthitracnghiem.model.Exam.id] for loading questions via Bundle (not prefs). */
-    val navigateToAnswerExamIdLiveData = MutableLiveData<Int>()
+    val navigateToAnswerExamIdLiveData = MutableLiveData<Int?>()
 
     fun getIdExam(userId: Int, examHistoryId: Int) {
         isLoadingLiveData.value = true
@@ -37,6 +37,7 @@ class HistoryTopicViewModel @Inject constructor(
                         errorApiLiveData.value = appContext.getString(R.string.error_exam_id_missing)
                     }
                 }
+
                 is ResultState.Error -> errorApiLiveData.value = result.message
             }
         }

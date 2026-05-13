@@ -25,7 +25,7 @@ import androidx.core.content.edit
 class FragmentHome : BaseFragment<HomeViewModel>() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewPagerDepartment : ViewPagerDepartment
+    private lateinit var viewPagerDepartment: ViewPagerDepartment
     private var scrollPosition = 0.00
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
         initUi()
 
         val userId = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.USER_ID,0)
+            .getInt(PreferenceKey.USER_ID, 0)
         viewModel.getDataUserInfo(userId)
     }
 
@@ -56,7 +56,7 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
         binding.avatarUseHome.setOnClickListener {
             val fragmentProfile = FragmentProfile()
             val fm = activity?.supportFragmentManager?.beginTransaction()
-            fm?.add(R.id.changeIdHome,fragmentProfile)?.addToBackStack(null)?.commit()
+            fm?.add(R.id.changeIdHome, fragmentProfile)?.addToBackStack(null)?.commit()
             (activity as HomeActivity).clickAvatar()
         }
 
@@ -88,10 +88,10 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
     override fun bindData() {
         super.bindData()
 
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 (activity as HomeActivity).loadingVisible(true)
-            }else{
+            } else {
                 (activity as HomeActivity).loadingVisible(false)
             }
         }
@@ -117,7 +117,7 @@ class FragmentHome : BaseFragment<HomeViewModel>() {
         }
     }
 
-    internal fun scrollTop(){
+    internal fun scrollTop() {
         binding.scrollHome.post {
             binding.scrollHome.fling(0)
             binding.scrollHome.smoothScrollTo(0, 0)

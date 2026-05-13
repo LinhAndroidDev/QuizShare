@@ -97,15 +97,15 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
         progressDialog.setMessage(getString(R.string.loading_please_wait))
 
         viewModel.isLoadingLiveData.observe(this, Observer {
-            if(it){
+            if (it) {
                 progressDialog.show()
-            }else{
+            } else {
                 progressDialog.dismiss()
             }
         })
 
         viewModel.isSuccessfulLiveData.observe(this, Observer {
-            if(it){
+            if (it) {
                 Toast.makeText(this, getString(R.string.toast_avatar_updated), Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@ChangeAvatarActivity, HomeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -125,14 +125,15 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
             transform = { centerCrop() },
         )
 
-        val strPath: String = UriConvertFile.getFileFromUri(this,uriImage).toString()
+        val strPath: String = UriConvertFile.getFileFromUri(this, uriImage).toString()
         val file = File(strPath)
         val requestBodyAvatar: RequestBody =
             file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-        val multipartBodyAvt: MultipartBody.Part = MultipartBody.Part.createFormData(Const.file,file.name,requestBodyAvatar)
+        val multipartBodyAvt: MultipartBody.Part =
+            MultipartBody.Part.createFormData(Const.file, file.name, requestBodyAvatar)
 
         val userId = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.USER_ID,0).toString()
+            .getInt(PreferenceKey.USER_ID, 0).toString()
         val requestBodyId: RequestBody =
             userId.toRequestBody("multipart/form-data".toMediaTypeOrNull())
 
@@ -182,13 +183,13 @@ class ChangeAvatarActivity : BaseActivity<ChangeAvatarViewModel>() {
             }
         } else
             if (requestCode == Crop.REQUEST_CROP) {
-            val croppedUri = Crop.getOutput(data)
-            if ( croppedUri != null) {
-                val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, croppedUri)
-                binding.avatarEdit.setImageBitmap(bitmap)
+                val croppedUri = Crop.getOutput(data)
+                if (croppedUri != null) {
+                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, croppedUri)
+                    binding.avatarEdit.setImageBitmap(bitmap)
 //                saveImageToGallery(bitmap)
+                }
             }
-        }
     }
 
     private fun saveImageToGallery(bitmap: Bitmap) {

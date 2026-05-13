@@ -69,6 +69,7 @@ class IntroActivity : BaseActivity<EmptyViewModel>() {
                     startActivity(intent)
                     finish()
                 }
+
                 else -> {
                     binding.viewPagerIntro.currentItem += 1
                 }

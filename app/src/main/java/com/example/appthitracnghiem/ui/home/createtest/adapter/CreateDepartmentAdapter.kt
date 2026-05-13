@@ -15,7 +15,7 @@ class CreateDepartmentAdapter(
     var onClickItem: ((Int) -> Unit)? = null
     var getStringItem: ((String) -> Unit)? = null
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtTopic: TextView = itemView.findViewById(R.id.txtTopic)
     }
 

@@ -35,6 +35,7 @@ class SystemViewModel @Inject constructor(
                     uiState.value = UiState.Error(result.message)
                     errorApiLiveData.value = result.message
                 }
+
                 is ResultState.Success -> {
                     loadingData.value = false
                     listDepartmentLiveData.value = result.data.toMutableList()

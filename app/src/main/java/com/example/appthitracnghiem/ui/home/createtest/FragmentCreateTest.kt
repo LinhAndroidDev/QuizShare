@@ -37,8 +37,10 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
     private val binding get() = _binding!!
 
     private var selectedDepartmentId: Int = -1
+
     /** API subject id (1-based index from subject picker row). */
     private var createSubjectApiId: Int = -1
+
     /** 0 = unset, 1 = public, 2 = private. */
     private var createStatus: Int = 0
     private var uriImage = ""
@@ -220,36 +222,37 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
         }
 
         binding.createTest.setOnClickListener {
-                val title: String = binding.edtSelectTitle.text.toString()
-                val department: String = binding.edtSelectSubject.text.toString()
-                val time: String = binding.edtSelectTime.text.toString()
-                val numberQuiz: String = binding.edtSelectNumberQuiz.text.toString()
-                val describe: String = binding.edtDescribeQuiz.text.toString()
+            val title: String = binding.edtSelectTitle.text.toString()
+            val department: String = binding.edtSelectSubject.text.toString()
+            val time: String = binding.edtSelectTime.text.toString()
+            val numberQuiz: String = binding.edtSelectNumberQuiz.text.toString()
+            val describe: String = binding.edtDescribeQuiz.text.toString()
 
-                if(title.isEmpty() || department.isEmpty() || time.isEmpty() || numberQuiz.isEmpty() || describe.isEmpty()){
-                    Toast.makeText(requireActivity(), getString(R.string.toast_create_test_incomplete), Toast.LENGTH_SHORT).show()
-                } else if (createSubjectApiId < 1) {
-                    Toast.makeText(
-                        requireActivity(),
-                        getString(R.string.toast_create_test_incomplete),
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                } else {
-                    val form = CreateExamFormState(
-                        numberQuestion = numberQuiz.toInt(),
-                        title = title,
-                        timeMinutes = time.toInt(),
-                        status = createStatus,
-                        subjectId = createSubjectApiId,
-                        departmentLabel = department,
-                        describe = describe,
-                        coverUri = uriImage,
-                    )
-                    val intent = Intent(requireActivity(), CreateTestActivity::class.java).apply {
-                        putExtra(CreateTestIntentExtras.FORM_STATE, form)
-                    }
-                    startActivity(intent)
+            if (title.isEmpty() || department.isEmpty() || time.isEmpty() || numberQuiz.isEmpty() || describe.isEmpty()) {
+                Toast.makeText(requireActivity(), getString(R.string.toast_create_test_incomplete), Toast.LENGTH_SHORT)
+                    .show()
+            } else if (createSubjectApiId < 1) {
+                Toast.makeText(
+                    requireActivity(),
+                    getString(R.string.toast_create_test_incomplete),
+                    Toast.LENGTH_SHORT,
+                ).show()
+            } else {
+                val form = CreateExamFormState(
+                    numberQuestion = numberQuiz.toInt(),
+                    title = title,
+                    timeMinutes = time.toInt(),
+                    status = createStatus,
+                    subjectId = createSubjectApiId,
+                    departmentLabel = department,
+                    describe = describe,
+                    coverUri = uriImage,
+                )
+                val intent = Intent(requireActivity(), CreateTestActivity::class.java).apply {
+                    putExtra(CreateTestIntentExtras.FORM_STATE, form)
                 }
+                startActivity(intent)
+            }
         }
 
         binding.root.findViewById<LinearLayout>(R.id.shareWithFacebook).setOnClickListener {
@@ -282,8 +285,8 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
             }
         }
         binding.layoutCreateTest.setOnTouchListener { _, event ->
-            when(event.actionMasked){
-                MotionEvent.ACTION_UP->{
+            when (event.actionMasked) {
+                MotionEvent.ACTION_UP -> {
                     bottomShareBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
             }

@@ -33,9 +33,9 @@ class ExerciseActivity : AppCompatActivity() {
         replaceFragment(topic)
     }
 
-    private fun replaceFragment(fm: Fragment){
+    private fun replaceFragment(fm: Fragment) {
         val fragment: FragmentTransaction = supportFragmentManager.beginTransaction()
-        fragment.replace(R.id.changeIdExercise,fm).addToBackStack(null).commit()
+        fragment.replace(R.id.changeIdExercise, fm).addToBackStack(null).commit()
     }
 
     override fun onBackPressed() {

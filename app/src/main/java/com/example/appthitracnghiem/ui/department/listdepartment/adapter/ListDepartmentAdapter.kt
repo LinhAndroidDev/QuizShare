@@ -34,6 +34,7 @@ class ListDepartmentAdapter(
             itemView.findViewById(R.id.listSubjectDepartment)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun replaceAll(departments: MutableList<DetailDepartment>) {
         fullList = snapshotDepartments(departments)
         listDepartment = snapshotDepartments(fullList)
@@ -76,7 +77,7 @@ class ListDepartmentAdapter(
                 fullList.mapNotNull { dept ->
                     val matched = dept.subjects.filter { sub ->
                         sub.title.lowercase().contains(q) ||
-                            sub.description.lowercase().contains(q)
+                                sub.description.lowercase().contains(q)
                     }
                     if (matched.isEmpty()) null
                     else DetailDepartment(dept.id, dept.exam_num, dept.title, matched)

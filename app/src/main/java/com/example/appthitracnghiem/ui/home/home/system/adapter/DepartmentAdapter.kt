@@ -19,7 +19,7 @@ import com.example.appthitracnghiem.utils.loadNetworkImage
 class DepartmentAdapter(
     private val listQuiz: List<Department>,
     val context: Context
-    ) : RecyclerView.Adapter<DepartmentAdapter.ViewHolderQuiz>() {
+) : RecyclerView.Adapter<DepartmentAdapter.ViewHolderQuiz>() {
 
     class ViewHolderQuiz(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var image: ImageView = itemView.findViewById(R.id.image)

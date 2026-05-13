@@ -33,23 +33,23 @@ class FragmentHistoryDepartmentSaved : BaseFragment<HistoryDepartmentSavedViewMo
         val loading = ProgressDialog(requireActivity())
         loading.setTitle(getString(R.string.dialog_title_notice))
         loading.setMessage(getString(R.string.loading_please_wait))
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 loading.show()
-            }else{
+            } else {
                 loading.dismiss()
             }
         }
 
         val userId = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.USER_ID,0)
+            .getInt(PreferenceKey.USER_ID, 0)
         viewModel.getDepartmentSaved(RequestSavedDepartment(userId))
 
-        viewModel.listDepartmentSaved.observe(viewLifecycleOwner){ listDepartment ->
+        viewModel.listDepartmentSaved.observe(viewLifecycleOwner) { listDepartment ->
             listDepartment?.let {
-                val linear = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
+                val linear = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
                 binding.rcvDepartmentHistory.layoutManager = linear
-                historyDepartmentAdapter = HistoryDepartmentAdapter(requireActivity(),it)
+                historyDepartmentAdapter = HistoryDepartmentAdapter(requireActivity(), it)
                 binding.rcvDepartmentHistory.adapter = historyDepartmentAdapter
             }
         }

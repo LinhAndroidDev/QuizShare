@@ -1,5 +1,6 @@
 package com.example.appthitracnghiem.ui.exercise.exercise.exam
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -19,6 +20,7 @@ class ExamAnswerOptionAdapter : RecyclerView.Adapter<ExamAnswerOptionAdapter.Opt
 
     var onOptionClick: ((optionIndex: Int) -> Unit)? = null
 
+    @SuppressLint("NotifyDataSetChanged")
     fun submit(question: ExamTakingQuestion) {
         options = question.answerOptions
         selectedIndex = question.selectedIndexForAdapter()

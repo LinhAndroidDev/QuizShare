@@ -35,6 +35,7 @@ class FromUserViewModel @Inject constructor(
                     uiState.value = UiState.Error(result.message)
                     errorApiLiveData.value = result.message
                 }
+
                 is ResultState.Success -> {
                     loadingFromUserData.value = false
                     listDepartmentFromUserLiveData.value = result.data.toMutableList()

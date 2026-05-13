@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.data.remote.dto.request.RequestSearch
 import com.example.appthitracnghiem.databinding.ActivitySearchSubjectBinding
-import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,19 +32,21 @@ class SearchSubject : BaseActivity<SearchViewModel>() {
         super.bindData()
 
         viewModel.isLoadingLiveData.observe(this, Observer {
-            if(it){
+            if (it) {
                 binding.loadingSubject.visibility = View.VISIBLE
-            }else{
+            } else {
                 binding.loadingSubject.visibility = View.GONE
             }
         })
 
-        viewModel.listSearchLiveData.observe(this, Observer {
-            val linear = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
-            binding.recycleListSubject.layoutManager = linear
-            searchAdapter = SearchAdapter(this, it)
-            binding.recycleListSubject.adapter = searchAdapter
-        })
+        viewModel.listSearchLiveData.observe(this) { listSearch ->
+            listSearch?.let {
+                val linear = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                binding.recycleListSubject.layoutManager = linear
+                searchAdapter = SearchAdapter(this, it)
+                binding.recycleListSubject.adapter = searchAdapter
+            }
+        }
     }
 
     private fun setStatusBar() {
@@ -73,11 +73,11 @@ class SearchSubject : BaseActivity<SearchViewModel>() {
 
         binding.search.setOnClickListener {
             var strSearch = binding.edtSearchSubject.text.toString()
-            if(strSearch.isEmpty()){
+            if (strSearch.isEmpty()) {
                 strSearch = ""
             }
             val userId = viewModel.mPreferenceUtil.defaultPref()
-                .getInt(PreferenceKey.USER_ID,0)
+                .getInt(PreferenceKey.USER_ID, 0)
             viewModel.searchSubject(RequestSearch(userId, 1, strSearch))
         }
     }

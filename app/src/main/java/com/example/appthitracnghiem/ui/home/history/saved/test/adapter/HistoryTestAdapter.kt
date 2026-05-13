@@ -19,9 +19,10 @@ import com.example.appthitracnghiem.utils.PreferenceUtil
 import com.example.appthitracnghiem.utils.findAppCompatActivity
 import com.example.appthitracnghiem.utils.loadNetworkImage
 
-class HistoryTestAdapter(val context: Context, private val listTestSaved: ArrayList<ExamSaved>) : RecyclerView.Adapter<HistoryTestAdapter.TestViewHolder>() {
+class HistoryTestAdapter(val context: Context, private val listTestSaved: ArrayList<ExamSaved>) :
+    RecyclerView.Adapter<HistoryTestAdapter.TestViewHolder>() {
 
-    class TestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class TestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.topic)
         var image: ImageView = itemView.findViewById(R.id.image)
         var description: TextView = itemView.findViewById(R.id.detail)
@@ -31,13 +32,13 @@ class HistoryTestAdapter(val context: Context, private val listTestSaved: ArrayL
         parent: ViewGroup,
         viewType: Int
     ): TestViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_general,parent,false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_general, parent, false)
         return TestViewHolder(itemView)
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: TestViewHolder, position: Int) {
-        val examSaved : ExamSaved = listTestSaved[position]
+        val examSaved: ExamSaved = listTestSaved[position]
         holder.title.text = examSaved.title
         holder.image.loadNetworkImage(examSaved.image)
         holder.description.maxLines = 1

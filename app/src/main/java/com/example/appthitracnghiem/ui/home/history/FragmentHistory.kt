@@ -43,22 +43,22 @@ class FragmentHistory : BaseFragment<EmptyViewModel>() {
 
         setStatusBar()
 
-        binding.historyTest.setOnClickListener{
+        binding.historyTest.setOnClickListener {
             val fragmentHistoryTest = FragmentHistoryTest()
             val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
-            fm.add(R.id.changeIdHome,fragmentHistoryTest).addToBackStack(null).commit()
+            fm.add(R.id.changeIdHome, fragmentHistoryTest).addToBackStack(null).commit()
         }
 
         binding.historyQuiz.setOnClickListener {
             val fragmentHistoryQuestion = FragmentHistoryQuestion()
             val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
-            fm.add(R.id.changeIdHome,fragmentHistoryQuestion).addToBackStack(null).commit()
+            fm.add(R.id.changeIdHome, fragmentHistoryQuestion).addToBackStack(null).commit()
         }
 
         binding.saved.setOnClickListener {
             val fragmentHistorySaved = FragmentHistoryDepartmentSaved()
             val fm: FragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
-            fm.add(R.id.changeIdHome,fragmentHistorySaved).addToBackStack(null).commit()
+            fm.add(R.id.changeIdHome, fragmentHistorySaved).addToBackStack(null).commit()
         }
     }
 

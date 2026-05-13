@@ -24,7 +24,8 @@ class FragmentHistoryTestSaved : BaseFragment<TestSavedViewModel>() {
     private var _binding: FragmentHistoryTestSavedBinding? = null
     private val binding get() = _binding!!
     lateinit var historyTestAdapter: HistoryTestAdapter
-    companion object{
+
+    companion object {
         var department: String = ""
         var subject: String = ""
     }
@@ -42,25 +43,27 @@ class FragmentHistoryTestSaved : BaseFragment<TestSavedViewModel>() {
         val loading = ProgressDialog(requireActivity())
         loading.setTitle(getString(R.string.dialog_title_notice))
         loading.setMessage(getString(R.string.loading_please_wait))
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 loading.show()
-            }else{
+            } else {
                 loading.dismiss()
             }
         }
 
         val userId = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.USER_ID,0)
+            .getInt(PreferenceKey.USER_ID, 0)
         val subjectId = requireArguments().getInt("subject_saved_id")
         viewModel.savedTest(RequestTestSaved(userId, subjectId, 1, 3, "asc"))
 
-        viewModel.listTestSavedLiveData.observe(viewLifecycleOwner){
-            val linear = LinearLayoutManager(requireActivity(),
-                LinearLayoutManager.VERTICAL,false)
+        viewModel.listTestSavedLiveData.observe(viewLifecycleOwner) {
+            val linear = LinearLayoutManager(
+                requireActivity(),
+                LinearLayoutManager.VERTICAL, false
+            )
             binding.rcvTestHistorySaved.layoutManager = linear
-            if(it != null){
-                historyTestAdapter = HistoryTestAdapter(requireActivity(),it)
+            if (it != null) {
+                historyTestAdapter = HistoryTestAdapter(requireActivity(), it)
                 binding.rcvTestHistorySaved.adapter = historyTestAdapter
             }
         }
@@ -68,11 +71,11 @@ class FragmentHistoryTestSaved : BaseFragment<TestSavedViewModel>() {
 
     @SuppressLint("SetTextI18n")
     private fun initUi() {
-        viewModel.departmentTitleLiveData.observe(viewLifecycleOwner){
+        viewModel.departmentTitleLiveData.observe(viewLifecycleOwner) {
             department = it
             binding.txtTestSaved.text = "$subject | $department"
         }
-        viewModel.testTitleLiveData.observe(viewLifecycleOwner){
+        viewModel.testTitleLiveData.observe(viewLifecycleOwner) {
             subject = it
             binding.txtTestSaved.text = "$subject | $department"
         }
@@ -99,21 +102,21 @@ class FragmentHistoryTestSaved : BaseFragment<TestSavedViewModel>() {
 
         time.setOnClickListener {
             val userId = viewModel.mPreferenceUtil.defaultPref()
-                .getInt(PreferenceKey.USER_ID,0)
+                .getInt(PreferenceKey.USER_ID, 0)
             val subjectId = requireArguments().getInt("subject_saved_id")
             viewModel.savedTest(RequestTestSaved(userId, subjectId, 1, 1, "asc"))
         }
 
         numberCreate.setOnClickListener {
             val userId = viewModel.mPreferenceUtil.defaultPref()
-                .getInt(PreferenceKey.USER_ID,0)
+                .getInt(PreferenceKey.USER_ID, 0)
             val subjectId = requireArguments().getInt("subject_saved_id")
             viewModel.savedTest(RequestTestSaved(userId, subjectId, 1, 2, "asc"))
         }
 
         subject.setOnClickListener {
             val userId = viewModel.mPreferenceUtil.defaultPref()
-                .getInt(PreferenceKey.USER_ID,0)
+                .getInt(PreferenceKey.USER_ID, 0)
             val subjectId = requireArguments().getInt("subject_saved_id")
             viewModel.savedTest(RequestTestSaved(userId, subjectId, 1, 3, "asc"))
         }

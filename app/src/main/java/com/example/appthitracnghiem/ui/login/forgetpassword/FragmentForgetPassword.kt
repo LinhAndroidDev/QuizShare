@@ -13,7 +13,6 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.data.remote.dto.request.RequestEmailVerification
 import com.example.appthitracnghiem.databinding.FragmentForgetPasswordBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import com.example.appthitracnghiem.utils.Email
 import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
@@ -34,16 +33,16 @@ class FragmentForgetPassword : BaseFragment<ForgetPasswordViewModel>() {
         val loading = ProgressDialog(requireActivity())
         loading.setTitle(getString(R.string.dialog_title_notice))
         loading.setMessage(getString(R.string.loading_please_wait))
-        viewModel.isLoading.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
                 loading.show()
-            }else{
+            } else {
                 loading.dismiss()
             }
         }
 
-        viewModel.isSuccessful.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isSuccessful.observe(viewLifecycleOwner) {
+            if (it) {
                 val edtEmail: String = binding.emailForgetPassword.text.toString()
                 val bundle = Bundle()
                 bundle.putString("email", edtEmail)
@@ -66,11 +65,19 @@ class FragmentForgetPassword : BaseFragment<ForgetPasswordViewModel>() {
     private fun initUi() {
         binding.sendTo.setOnClickListener {
             val edtEmail: String = binding.emailForgetPassword.text.toString()
-            if(edtEmail.isEmpty()){
-                Toast.makeText(requireActivity(), getString(R.string.toast_forget_password_no_email), Toast.LENGTH_SHORT).show()
-            }else if(!Patterns.EMAIL_ADDRESS.matcher(edtEmail).matches()){
-                Toast.makeText(requireActivity(), getString(R.string.toast_forget_password_email_invalid), Toast.LENGTH_SHORT).show()
-            }else{
+            if (edtEmail.isEmpty()) {
+                Toast.makeText(
+                    requireActivity(),
+                    getString(R.string.toast_forget_password_no_email),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(edtEmail).matches()) {
+                Toast.makeText(
+                    requireActivity(),
+                    getString(R.string.toast_forget_password_email_invalid),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
                 val requestEmailVerification = RequestEmailVerification(edtEmail)
                 viewModel.checkEmail(requestEmailVerification)
             }

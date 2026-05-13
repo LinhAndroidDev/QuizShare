@@ -31,9 +31,10 @@ class FragmentCreatePassword : BaseFragment<EmptyViewModel>() {
         email = bundle.getString("email").toString()
 
         val uri = activity?.intent?.data
-        if(uri != null){
+        if (uri != null) {
             val path = uri.toString()
-            Toast.makeText(requireActivity(), getString(R.string.toast_debug_data_path, path), Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), getString(R.string.toast_debug_data_path, path), Toast.LENGTH_SHORT)
+                .show()
         }
 
         initUi()
@@ -41,11 +42,10 @@ class FragmentCreatePassword : BaseFragment<EmptyViewModel>() {
 
     private fun initUi() {
         binding.resetPassword.setOnClickListener {
-            val password: String = binding.newPasswordCreate.text.toString()
             val progressDialog = ProgressDialog(requireActivity())
             progressDialog.setMessage(getString(R.string.loading_updating_password))
 
-            val fragmentLogin: FragmentLogin = FragmentLogin()
+            val fragmentLogin = FragmentLogin()
             val fm: FragmentTransaction =
                 requireActivity().supportFragmentManager.beginTransaction()
             fm.setCustomAnimations(

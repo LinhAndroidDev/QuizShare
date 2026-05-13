@@ -10,12 +10,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 
-class PositionReviewAdapter(private val max: Int, context: Context) : RecyclerView.Adapter<PositionReviewAdapter.ReviewViewHolder>() {
+class PositionReviewAdapter(private val max: Int, context: Context) :
+    RecyclerView.Adapter<PositionReviewAdapter.ReviewViewHolder>() {
     private var selectedIndex: Int = 0
     var number: Int = -1
-    var onClickItem: ((Int)->Unit)? = null
+    var onClickItem: ((Int) -> Unit)? = null
 
-    class ReviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class ReviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var txtPositive: TextView = itemView.findViewById(R.id.txtPositive)
     }
 
@@ -23,12 +24,15 @@ class PositionReviewAdapter(private val max: Int, context: Context) : RecyclerVi
         parent: ViewGroup,
         viewType: Int,
     ): PositionReviewAdapter.ReviewViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_position_question,parent,false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_position_question, parent, false)
         return ReviewViewHolder(itemView)
     }
 
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
-    override fun onBindViewHolder(holder: PositionReviewAdapter.ReviewViewHolder, @SuppressLint("RecyclerView") position: Int) {
+    override fun onBindViewHolder(
+        holder: PositionReviewAdapter.ReviewViewHolder,
+        @SuppressLint("RecyclerView") position: Int
+    ) {
         holder.txtPositive.text = (position + 1).toString()
 
         holder.itemView.setOnClickListener {

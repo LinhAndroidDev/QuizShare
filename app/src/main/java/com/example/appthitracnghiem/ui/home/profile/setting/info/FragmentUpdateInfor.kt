@@ -45,16 +45,16 @@ class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
         val loading = ProgressDialog(requireActivity())
         loading.setTitle(getString(R.string.dialog_title_notice))
         loading.setMessage(getString(R.string.loading_please_wait))
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 loading.show()
-            }else{
+            } else {
                 loading.dismiss()
             }
         }
 
-        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 Toast.makeText(requireActivity(), getString(R.string.toast_profile_updated), Toast.LENGTH_SHORT).show()
                 val intent = Intent(requireActivity(), HomeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -66,7 +66,7 @@ class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
     private fun initUi() {
 
         val avt = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.USER_AVATAR,"")
+            .getString(PreferenceKey.USER_AVATAR, "")
 
         binding.avatarUpdateInfo.loadNetworkImage(
             avt,
@@ -87,17 +87,19 @@ class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
         binding.selectDateInfo.setOnClickListener {
 
             val getDate = Calendar.getInstance()
-            val datePicker = DatePickerDialog(requireActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+            val datePicker = DatePickerDialog(
+                requireActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                 { _, year, month, dayOfMonth ->
 
-                val selectDate: Calendar = Calendar.getInstance()
-                selectDate.set(Calendar.YEAR, year)
-                selectDate.set(Calendar.MONTH, month)
-                selectDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val selectDate: Calendar = Calendar.getInstance()
+                    selectDate.set(Calendar.YEAR, year)
+                    selectDate.set(Calendar.MONTH, month)
+                    selectDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
                     binding.edtBirthInfo.text = formatDate.format(selectDate.time)
 
-            }, getDate.get(Calendar.YEAR), getDate.get((Calendar.MONTH)), getDate.get(Calendar.DAY_OF_MONTH))
+                }, getDate.get(Calendar.YEAR), getDate.get((Calendar.MONTH)), getDate.get(Calendar.DAY_OF_MONTH)
+            )
             datePicker.show()
         }
 
@@ -105,9 +107,10 @@ class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
             val name = binding.edtNameInfo.text.toString()
             val birth = binding.edtBirthInfo.text.toString()
 
-            if(name.isEmpty() || birth.isEmpty()){
-                Toast.makeText(requireActivity(), getString(R.string.toast_profile_incomplete), Toast.LENGTH_SHORT).show()
-            }else{
+            if (name.isEmpty() || birth.isEmpty()) {
+                Toast.makeText(requireActivity(), getString(R.string.toast_profile_incomplete), Toast.LENGTH_SHORT)
+                    .show()
+            } else {
                 val userId = viewModel.mPreferenceUtil.defaultPref()
                     .getInt(PreferenceKey.USER_ID, 0)
                 viewModel.updateInfo(RequestUpdateInfo(userId, name, birth))
@@ -123,7 +126,7 @@ class FragmentUpdateInfor : BaseFragment<UpdateInfoViewModel>() {
         if (resultCode == AppCompatActivity.RESULT_OK) {
             if (requestCode == GALLERY_RED_CODE) {
                 val intent = Intent(requireActivity(), ChangeAvatarActivity::class.java)
-                intent.putExtra("Uri",data?.data.toString())
+                intent.putExtra("Uri", data?.data.toString())
                 startActivity(intent)
             }
         }

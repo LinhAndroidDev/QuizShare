@@ -61,11 +61,13 @@ class MenuQuestionAdapter(
         val (bg, textColor) = when (state) {
             QuestionReviewChipState.CORRECT ->
                 R.drawable.bg_review_chip_correct to ContextCompat.getColor(context, R.color.black)
+
             QuestionReviewChipState.WRONG ->
                 R.drawable.bg_review_chip_wrong to ContextCompat.getColor(context, R.color.color_red)
+
             QuestionReviewChipState.SKIPPED,
             QuestionReviewChipState.PENDING,
-            -> R.drawable.bg_review_chip_skipped to ContextCompat.getColor(context, R.color.grey_dark)
+                -> R.drawable.bg_review_chip_skipped to ContextCompat.getColor(context, R.color.grey_dark)
         }
         tv.setBackgroundResource(bg)
         tv.setTextColor(textColor)

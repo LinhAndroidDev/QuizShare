@@ -197,7 +197,7 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
 
         listQuestion = mutableListOf()
         for (i in 0 until sizeListQuestion) {
-            listQuestion.add(PositiveQuestion(i + 1,null))
+            listQuestion.add(PositiveQuestion(i + 1, null))
         }
 
         menuQuestionAdapter = MenuQuestionAdapter(

@@ -28,7 +28,9 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
 
     private fun initUi() {
         val linearLayoutManager =
-            object : LinearLayoutManager(requireActivity()) { override fun canScrollVertically() = false }
+            object : LinearLayoutManager(requireActivity()) {
+                override fun canScrollVertically() = false
+            }
         binding.recycleListLiveQuizzes.layoutManager = linearLayoutManager
 
         binding.seeAllSystem.setOnClickListener {
@@ -39,23 +41,23 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
                 }
             }
             val fm: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-            fm.add(R.id.changeIdHome,fragmentListDepartment).addToBackStack(null).commit()
+            fm.add(R.id.changeIdHome, fragmentListDepartment).addToBackStack(null).commit()
         }
     }
 
     override fun bindData() {
         super.bindData()
 
-        viewModel.loadingData.observe(viewLifecycleOwner){ isLoading ->
-            if(isLoading && binding.recycleListLiveQuizzes.adapter == null){
+        viewModel.loadingData.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading && binding.recycleListLiveQuizzes.adapter == null) {
                 binding.loadingDepartment.visibility = View.VISIBLE
-            }else{
+            } else {
                 binding.loadingDepartment.visibility = View.GONE
             }
         }
 
-        viewModel.listDepartmentLiveData.observe(viewLifecycleOwner){ listDepart ->
-            adapterFromSystem = DepartmentAdapter(listDepart,requireActivity())
+        viewModel.listDepartmentLiveData.observe(viewLifecycleOwner) { listDepart ->
+            adapterFromSystem = DepartmentAdapter(listDepart, requireActivity())
             binding.recycleListLiveQuizzes.adapter = adapterFromSystem
         }
         viewModel.getDataDepartment("")

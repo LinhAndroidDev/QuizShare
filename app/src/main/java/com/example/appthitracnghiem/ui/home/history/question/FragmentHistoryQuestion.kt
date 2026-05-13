@@ -37,9 +37,9 @@ class FragmentHistoryQuestion : BaseFragment<EmptyViewModel>() {
             )
         }
 
-        historyQuestionAdapter = HistoryQuestionAdapter(requireActivity(),listQuestionHistory)
+        historyQuestionAdapter = HistoryQuestionAdapter(requireActivity(), listQuestionHistory)
 
-        val linear = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
+        val linear = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         binding.rcvListHistoryQuestion.layoutManager = linear
         binding.rcvListHistoryQuestion.adapter = historyQuestionAdapter
 

@@ -40,10 +40,10 @@ class FragmentTopic : BaseFragment<TopicViewModel>() {
         val avt = requireArguments().getString(ExamSessionExtras.ARG_TOPIC_USER_AVATAR).orEmpty()
 
         val type = requireArguments().getInt(ExamSessionExtras.ARG_TOPIC_UI_MODE, -1)
-        if(type == 0){
+        if (type == 0) {
             binding.infoTopic.visibility = View.GONE
             binding.memoryTopic.visibility = View.GONE
-        }else if(type == 1){
+        } else if (type == 1) {
             binding.infoTopic.visibility = View.VISIBLE
             binding.memoryTopic.visibility = View.VISIBLE
             val displayName = name.ifEmpty {
@@ -63,16 +63,16 @@ class FragmentTopic : BaseFragment<TopicViewModel>() {
         val loading = ProgressDialog(requireActivity())
         loading.setTitle(getString(R.string.dialog_title_notice))
         loading.setMessage(getString(R.string.loading_please_wait))
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 loading.show()
-            }else{
+            } else {
                 loading.dismiss()
             }
         }
 
-        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner){ isSuccessful->
-            if(isSuccessful){
+        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner) { isSuccessful ->
+            if (isSuccessful) {
                 binding.layoutMemoryTopic.visibility = View.VISIBLE
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     binding.layoutTopic.setRenderEffect(

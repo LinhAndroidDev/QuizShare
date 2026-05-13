@@ -37,10 +37,10 @@ class FragmentCategory : BaseFragment<ListDepartmentViewModel>() {
 
         listCategory = arrayListOf()
 
-        viewModel.loadingDepartmentLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.loadingDepartmentLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 binding.loadingSubject.visibility = View.VISIBLE
-            }else{
+            } else {
                 binding.loadingSubject.visibility = View.GONE
             }
         }
@@ -49,9 +49,9 @@ class FragmentCategory : BaseFragment<ListDepartmentViewModel>() {
             .getInt(PreferenceKey.USER_ID, 0)
         viewModel.getDataDepartmentDetail(RequestDepartmentInfo(userId))
 
-        viewModel.listDepartmentLiveData.observe(viewLifecycleOwner){
-            for(i in 0 until  it.size){
-                for (j in 0 until  it[i].subjects.size){
+        viewModel.listDepartmentLiveData.observe(viewLifecycleOwner) {
+            for (i in 0 until it.size) {
+                for (j in 0 until it[i].subjects.size) {
                     listCategory.add(it[i].subjects[j])
                 }
             }
@@ -93,7 +93,7 @@ class FragmentCategory : BaseFragment<ListDepartmentViewModel>() {
         }
     }
 
-    internal fun scrollTop(){
+    internal fun scrollTop() {
         binding.scrollCategory.post {
             binding.scrollCategory.fling(0)
             binding.scrollCategory.smoothScrollTo(0, 0)

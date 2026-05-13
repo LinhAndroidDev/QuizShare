@@ -31,7 +31,7 @@ class SearchAdapter(
         parent: ViewGroup,
         viewType: Int
     ): SearchAdapter.SearchViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_general, parent,false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_general, parent, false)
         return SearchViewHolder(itemView)
     }
 

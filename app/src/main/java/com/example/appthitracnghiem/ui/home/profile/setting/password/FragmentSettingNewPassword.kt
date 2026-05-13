@@ -34,16 +34,16 @@ class FragmentSettingNewPassword : BaseFragment<ChangePasswordViewModel>() {
         val loading = ProgressDialog(requireActivity())
         loading.setTitle(getString(R.string.dialog_title_notice))
         loading.setMessage(getString(R.string.loading_please_wait))
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 loading.show()
-            }else{
+            } else {
                 loading.dismiss()
             }
         }
 
-        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isSuccessfulLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 Toast.makeText(requireActivity(), getString(R.string.toast_password_updated), Toast.LENGTH_SHORT).show()
                 activity?.onBackPressed()
             }
@@ -67,13 +67,21 @@ class FragmentSettingNewPassword : BaseFragment<ChangePasswordViewModel>() {
             val strPassword = binding.edtPasswordUpdate.text.toString()
             val strPasswordRepeat = binding.edtRepeatPasswordUpdate.text.toString()
 
-            if(strPassword.isEmpty() || strPasswordRepeat.isEmpty()){
-                Toast.makeText(requireActivity(), getString(R.string.toast_fill_all_fields_password), Toast.LENGTH_SHORT).show()
-            } else if(strPassword.length < 7 || strPasswordRepeat.length < 7){
+            if (strPassword.isEmpty() || strPasswordRepeat.isEmpty()) {
+                Toast.makeText(
+                    requireActivity(),
+                    getString(R.string.toast_fill_all_fields_password),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (strPassword.length < 7 || strPasswordRepeat.length < 7) {
                 Toast.makeText(requireActivity(), getString(R.string.txt_warning_password), Toast.LENGTH_SHORT).show()
-            }else if(strPassword != strPasswordRepeat){
-                Toast.makeText(requireActivity(), getString(R.string.toast_password_repeat_mismatch), Toast.LENGTH_SHORT).show()
-            } else{
+            } else if (strPassword != strPasswordRepeat) {
+                Toast.makeText(
+                    requireActivity(),
+                    getString(R.string.toast_password_repeat_mismatch),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
                 val userId = viewModel.mPreferenceUtil.defaultPref()
                     .getInt(PreferenceKey.USER_ID, 0)
                 viewModel.changePassword(RequestChangePassword(strPassword, strPasswordRepeat, userId))

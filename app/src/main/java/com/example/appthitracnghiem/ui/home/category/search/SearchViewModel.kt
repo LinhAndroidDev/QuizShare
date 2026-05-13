@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
     val isLoadingLiveData = MutableLiveData<Boolean>()
-    val listSearchLiveData = MutableLiveData<ArrayList<SearchResponse.Results>>()
+    val listSearchLiveData = MutableLiveData<ArrayList<SearchResponse.Results>?>()
 
     fun searchSubject(requestSearch: RequestSearch) {
         isLoadingLiveData.value = true

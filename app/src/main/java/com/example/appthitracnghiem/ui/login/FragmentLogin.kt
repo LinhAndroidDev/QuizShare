@@ -5,7 +5,6 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Paint
-import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.text.method.PasswordTransformationMethod
@@ -25,6 +24,8 @@ import com.example.appthitracnghiem.ui.login.forgetpassword.FragmentForgetPasswo
 import com.example.appthitracnghiem.ui.register.RegisterActivity
 import com.example.appthitracnghiem.utils.PreferenceKey
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.net.toUri
+import androidx.core.content.edit
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -68,7 +69,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
             intent.flags =
                 Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
-            saveAccount(strEmail, strPassword);
+            saveAccount(strEmail, strPassword)
         }
 
         viewModel.validateLiveData.observe(viewLifecycleOwner) { model ->
@@ -90,7 +91,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
         }
 
         binding.forgetPassword.setOnClickListener {
-            val fragmentForgetpassword: FragmentForgetPassword = FragmentForgetPassword()
+            val fragmentForgetPassword = FragmentForgetPassword()
             val fm: FragmentTransaction =
                 requireActivity().supportFragmentManager.beginTransaction()
             fm.setCustomAnimations(
@@ -100,7 +101,7 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
                 R.anim.anim_translate_exit_right
             )
             fm.addToBackStack("Fragment_ForgetPassword")
-            fm.replace(R.id.loginContainerID, fragmentForgetpassword).commit()
+            fm.replace(R.id.loginContainerID, fragmentForgetPassword).commit()
         }
 
         binding.registerNow.setOnClickListener {
@@ -118,14 +119,14 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
             val intent = Intent()
             intent.action = Intent.ACTION_VIEW
             intent.data =
-                Uri.parse("https://accounts.google.com/v3/signin/identifier?dsh=S-620025444%3A1673854670857931&authuser=0&continue=http%3A%2F%2Fsupport.google.com%2Fmail%2Fanswer%2F8494%3Fhl%3Dvi%26co%3DGENIE.Platform%253DDesktop&ec=GAlAdQ&hl=vi&flowName=GlifWebSignIn&flowEntry=AddSession")
+                "https://accounts.google.com/v3/signin/identifier?dsh=S-620025444%3A1673854670857931&authuser=0&continue=http%3A%2F%2Fsupport.google.com%2Fmail%2Fanswer%2F8494%3Fhl%3Dvi%26co%3DGENIE.Platform%253DDesktop&ec=GAlAdQ&hl=vi&flowName=GlifWebSignIn&flowEntry=AddSession".toUri()
             startActivity(intent)
         }
 
         binding.facebook.setOnClickListener {
             val intent = Intent()
             intent.action = Intent.ACTION_VIEW
-            intent.data = Uri.parse("https://www.facebook.com")
+            intent.data = "https://www.facebook.com".toUri()
             startActivity(intent)
         }
     }
@@ -133,34 +134,40 @@ class FragmentLogin : BaseFragment<LoginViewModel>() {
     private fun saveAccount(email: String, password: String) {
         if (binding.checkForgetPassword.isChecked) {
             viewModel.mPreferenceUtil.defaultPref()
-                .edit().putBoolean(PreferenceKey.SAVE_ACCOUNT, true)
-                .apply()
+                .edit {
+                    putBoolean(PreferenceKey.SAVE_ACCOUNT, true)
+                }
             viewModel.mPreferenceUtil.defaultPref()
-                .edit().putString(PreferenceKey.USER_EMAIL,email)
-                .apply()
+                .edit {
+                    putString(PreferenceKey.USER_EMAIL, email)
+                }
             viewModel.mPreferenceUtil.defaultPref()
-                .edit().putString(PreferenceKey.USER_PASSWORD,password)
-                .apply()
+                .edit {
+                    putString(PreferenceKey.USER_PASSWORD, password)
+                }
         } else {
             viewModel.mPreferenceUtil.defaultPref()
-                .edit().putBoolean(PreferenceKey.SAVE_ACCOUNT, false)
-                .apply()
+                .edit {
+                    putBoolean(PreferenceKey.SAVE_ACCOUNT, false)
+                }
             viewModel.mPreferenceUtil.defaultPref()
-                .edit().putString(PreferenceKey.USER_EMAIL,"")
-                .apply()
+                .edit {
+                    putString(PreferenceKey.USER_EMAIL, "")
+                }
             viewModel.mPreferenceUtil.defaultPref()
-                .edit().putString(PreferenceKey.USER_PASSWORD,"")
-                .apply()
+                .edit {
+                    putString(PreferenceKey.USER_PASSWORD, "")
+                }
         }
     }
 
     private fun checkSaveAccount() {
         checkSave = viewModel.mPreferenceUtil.defaultPref()
-            .getBoolean(PreferenceKey.SAVE_ACCOUNT,false)
+            .getBoolean(PreferenceKey.SAVE_ACCOUNT, false)
         strEmail = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.USER_EMAIL,"").toString()
+            .getString(PreferenceKey.USER_EMAIL, "").toString()
         strPassword = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.USER_PASSWORD,"").toString()
+            .getString(PreferenceKey.USER_PASSWORD, "").toString()
 
 
         binding.edtEnterEmailLogin.setText(strEmail)

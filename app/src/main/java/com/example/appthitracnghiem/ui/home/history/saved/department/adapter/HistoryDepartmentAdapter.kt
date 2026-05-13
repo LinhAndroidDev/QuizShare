@@ -18,7 +18,7 @@ import com.example.appthitracnghiem.utils.loadNetworkImage
 class HistoryDepartmentAdapter(val context: Context, private val listTest: List<Department>) :
     RecyclerView.Adapter<HistoryDepartmentAdapter.DepartmentViewHolder>() {
 
-    class DepartmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class DepartmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.topic)
         var image: ImageView = itemView.findViewById(R.id.image)
         var description: TextView = itemView.findViewById(R.id.detail)
@@ -28,7 +28,7 @@ class HistoryDepartmentAdapter(val context: Context, private val listTest: List<
         parent: ViewGroup,
         viewType: Int
     ): DepartmentViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_general,parent,false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_general, parent, false)
         return DepartmentViewHolder(itemView)
     }
 
@@ -36,7 +36,7 @@ class HistoryDepartmentAdapter(val context: Context, private val listTest: List<
         holder: DepartmentViewHolder,
         position: Int
     ) {
-        val department : Department = listTest[position]
+        val department: Department = listTest[position]
         holder.title.text = department.title
         holder.image.loadNetworkImage(department.image)
         holder.description.text = department.description
@@ -48,7 +48,7 @@ class HistoryDepartmentAdapter(val context: Context, private val listTest: List<
             bundle.putInt("department_id_saved", department.id)
             bundle.putString("department_name_saved", department.title)
             val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-            fm.add(R.id.changeIdHome,fragmentHistorySubjectSaved).addToBackStack(null).commit()
+            fm.add(R.id.changeIdHome, fragmentHistorySubjectSaved).addToBackStack(null).commit()
             fragmentHistorySubjectSaved.arguments = bundle
         }
     }

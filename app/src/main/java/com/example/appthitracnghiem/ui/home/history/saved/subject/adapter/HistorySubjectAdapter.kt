@@ -16,9 +16,10 @@ import com.example.appthitracnghiem.ui.home.history.saved.test.FragmentHistoryTe
 import com.example.appthitracnghiem.utils.findAppCompatActivity
 import com.example.appthitracnghiem.utils.loadNetworkImage
 
-class HistorySubjectAdapter(val context: Context, private val listSubject: ArrayList<SaveSubjectResponse.Result>?) : RecyclerView.Adapter<HistorySubjectAdapter.SubjectViewHolder>() {
+class HistorySubjectAdapter(val context: Context, private val listSubject: ArrayList<SaveSubjectResponse.Result>?) :
+    RecyclerView.Adapter<HistorySubjectAdapter.SubjectViewHolder>() {
 
-    class SubjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class SubjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.topic)
         var image: ImageView = itemView.findViewById(R.id.image)
         var description: TextView = itemView.findViewById(R.id.detail)
@@ -28,13 +29,13 @@ class HistorySubjectAdapter(val context: Context, private val listSubject: Array
         parent: ViewGroup,
         viewType: Int
     ): SubjectViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_general,parent,false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_general, parent, false)
         return SubjectViewHolder(itemView)
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
-        val savedSubject : SaveSubjectResponse.Result = listSubject!![position]
+        val savedSubject: SaveSubjectResponse.Result = listSubject!![position]
         holder.title.text = savedSubject.title
         holder.image.loadNetworkImage(savedSubject.image)
         holder.description.text = context.getString(
@@ -49,7 +50,7 @@ class HistorySubjectAdapter(val context: Context, private val listSubject: Array
             bundle.putInt("subject_saved_id", savedSubject.id)
             val fragmentHistoryTestSaved = FragmentHistoryTestSaved()
             val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-            fm.add(R.id.changeIdHome,fragmentHistoryTestSaved).addToBackStack(null).commit()
+            fm.add(R.id.changeIdHome, fragmentHistoryTestSaved).addToBackStack(null).commit()
             fragmentHistoryTestSaved.arguments = bundle
         }
     }

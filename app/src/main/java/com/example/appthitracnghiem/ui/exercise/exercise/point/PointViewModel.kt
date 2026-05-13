@@ -35,6 +35,7 @@ class PointViewModel @Inject constructor(
                     wrongNumberLiveData.value = result.data.result?.wrong_number
                     examIdHistory.value = result.data.result?.exam_history_id
                 }
+
                 is ResultState.Error -> errorApiLiveData.value = result.message
             }
         }

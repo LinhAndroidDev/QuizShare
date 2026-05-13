@@ -33,24 +33,26 @@ class FragmentHistorySubjectSaved : BaseFragment<HistorySubjectSavedViewModel>()
         val loading = ProgressDialog(requireActivity())
         loading.setTitle(getString(R.string.dialog_title_notice))
         loading.setMessage(getString(R.string.loading_please_wait))
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
+            if (it) {
                 loading.show()
-            }else{
+            } else {
                 loading.dismiss()
             }
         }
 
         val userId = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.USER_ID,0)
+            .getInt(PreferenceKey.USER_ID, 0)
         val departmentId: Int = requireArguments().getInt("department_id_saved")
         viewModel.saveSubject(RequestSubjectSaved(userId, departmentId))
 
-        viewModel.listSubjectSaved.observe(viewLifecycleOwner){
-            val linear = LinearLayoutManager(requireActivity(),
-                LinearLayoutManager.VERTICAL,false)
+        viewModel.listSubjectSaved.observe(viewLifecycleOwner) {
+            val linear = LinearLayoutManager(
+                requireActivity(),
+                LinearLayoutManager.VERTICAL, false
+            )
             binding.rcvSubjectHistory.layoutManager = linear
-            historySubjectAdapter = HistorySubjectAdapter(requireActivity(),it)
+            historySubjectAdapter = HistorySubjectAdapter(requireActivity(), it)
             binding.rcvSubjectHistory.adapter = historySubjectAdapter
         }
     }
