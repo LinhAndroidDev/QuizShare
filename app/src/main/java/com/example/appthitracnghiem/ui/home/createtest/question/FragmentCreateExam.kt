@@ -13,27 +13,27 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentCreateExamBinding
 import com.example.appthitracnghiem.model.CreateAnswer
 import com.example.appthitracnghiem.model.CreateQuestion
 import com.example.appthitracnghiem.model.createexam.CreateExamSlotProgress
-import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.createtest.question.adapter.PositiveQuestionAdapter
+import com.example.appthitracnghiem.ui.home.createtest.review.CreateExamViewModel
 import com.example.appthitracnghiem.ui.home.createtest.review.FragmentReviewCreateExam
 import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
-class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
+class FragmentCreateExam : BaseFragment<CreateExamViewModel>() {
     private var _binding: FragmentCreateExamBinding? = null
     private val binding get() = _binding!!
 
-    private val draftViewModel: CreateExamDraftViewModel by activityViewModels()
+    override fun viewModelStoreOwner(): ViewModelStoreOwner = requireActivity()
 
     lateinit var positiveQuestionAdapter: PositiveQuestionAdapter
     private var numberQuiz: Int = 0
@@ -63,8 +63,8 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
         listCheckboxAnswer.add(binding.isAnswer3)
         listCheckboxAnswer.add(binding.isAnswer4)
 
-        /** Create List RecyclerView question **/
-        numberQuiz = requireArguments().getInt(CreateTestIntentExtras.NUMBER_QUESTION, -1)
+        val form = viewModel.requireForm()
+        numberQuiz = form.numberQuestion
         val linearLayoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         binding.recycleListNumber.layoutManager = linearLayoutManager
@@ -75,7 +75,7 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
         }
 
         /** Danh sách câu nháp trong ViewModel (phạm vi Activity). */
-        draftViewModel.initQuestionSlots(numberQuiz)
+        viewModel.initQuestionSlots(numberQuiz)
 
         slotProgress = CreateExamSlotProgress(numberQuiz)
 
@@ -92,7 +92,7 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
 
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     private fun initUi() {
-        val time = requireArguments().getInt(CreateTestIntentExtras.TIME_MINUTES, 0)
+        val time = viewModel.requireForm().timeMinutes
         binding.txtTime.text = getString(R.string.format_minutes_suffix, time)
 
         level = 0
@@ -162,13 +162,10 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
 
         binding.completeCreateTest.setOnClickListener {
             saveExam()
-            val bundle = Bundle()
-            bundle.putInt("numberQuiz", numberQuiz)
             val fragmentReviewCreateExam = FragmentReviewCreateExam()
             val fm: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
             fm?.add(R.id.changeIdCreateExam, fragmentReviewCreateExam)
                 ?.addToBackStack(null)?.commit()
-            fragmentReviewCreateExam.arguments = bundle
         }
 
         binding.backCreateTest.setOnClickListener {
@@ -199,7 +196,7 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
     }
 
     private fun setTextView() {
-        val q = draftViewModel.questions.getOrNull(questionIndex) ?: return
+        val q = viewModel.questions.getOrNull(questionIndex) ?: return
         if (q.question_title.isNotEmpty()) {
             binding.questionCreate.setText(q.question_title)
             binding.answerCreate1.setText(q.answer_list.getOrNull(0)?.content)
@@ -251,7 +248,7 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
         answers.add(CreateAnswer(answer3, "", 3, "", listResults[2]))
         answers.add(CreateAnswer(answer4, "", 4, "", listResults[3]))
 
-        draftViewModel.setQuestionAt(
+        viewModel.setQuestionAt(
             questionIndex,
             CreateQuestion(answers, "", "", level, questionIndex + 1, question),
         )

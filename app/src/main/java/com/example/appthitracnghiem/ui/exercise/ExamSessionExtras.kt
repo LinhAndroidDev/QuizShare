@@ -30,4 +30,9 @@ object ExamSessionExtras {
     const val ARG_TOPIC_UI_MODE = "exam_session_arg_topic_ui_mode"
     const val ARG_TOPIC_USER_NAME = "exam_session_arg_topic_user_name"
     const val ARG_TOPIC_USER_AVATAR = "exam_session_arg_topic_user_avatar"
+
+    /**
+     * Chỉ số đáp án đã chọn theo từng câu (-1 = chưa chọn), từ [ExamViewModel.snapshotIndices] khi mở [com.example.appthitracnghiem.ui.exercise.exercise.point.FragmentPoint].
+     */
+    const val ARG_ANSWER_OPTION_INDICES = "exam_session_arg_answer_option_indices"
 }

@@ -7,14 +7,12 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.activityViewModels
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.data.remote.dto.request.RequestPoint
 import com.example.appthitracnghiem.databinding.FragmentPointBinding
 import com.example.appthitracnghiem.model.ExamQuestion
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.ExamActivity
-import com.example.appthitracnghiem.ui.exercise.exercise.ExamSessionViewModel
 import com.example.appthitracnghiem.ui.exercise.exercise.answer.FragmentAnswer
 import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
 import com.example.appthitracnghiem.ui.home.HomeActivity
@@ -26,20 +24,25 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import dagger.hilt.android.AndroidEntryPoint
+
 @AndroidEntryPoint
 class FragmentPoint : BaseFragment<PointViewModel>() {
     private var _binding: FragmentPointBinding? = null
     private val binding get() = _binding!!
 
-    private val examSessionViewModel: ExamSessionViewModel by activityViewModels()
-
     private lateinit var listExamQuestion: ArrayList<ExamQuestion>
 
     private var lastExamHistoryId: Int = 0
 
+    /** Snapshot đáp án do [FragmentExam] truyền bundle (không đọc [ExamViewModel]). */
+    private fun answerOptionIndicesFromArgs(): ArrayList<Int> {
+        val list = requireArguments().getIntegerArrayList(ExamSessionExtras.ARG_ANSWER_OPTION_INDICES)
+        return if (list != null) ArrayList(list) else ArrayList()
+    }
+
     /** Đồng bộ độ dài với số câu hỏi (tránh lệch nếu snapshot rỗng). */
     private fun paddedExamAnswers(): ArrayList<Int> {
-        val raw = examSessionViewModel.snapshotIndices()
+        val raw = answerOptionIndicesFromArgs()
         val n = if (::listExamQuestion.isInitialized) listExamQuestion.size else raw.size
         val out = ArrayList(raw)
         while (out.size < n) {
@@ -85,23 +88,25 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
 
         viewModel.getResult(requestPoint)
 
-        viewModel.scoreLiveData.observe(viewLifecycleOwner){
-            binding.progressPoint.apply {
-                progressMax = 100f
-                setProgressWithAnimation(it,3000)
+        viewModel.scoreLiveData.observe(viewLifecycleOwner){ score ->
+            score?.let {
+                binding.progressPoint.apply {
+                    progressMax = 100f
+                    setProgressWithAnimation(it,3000)
+                }
+
+                binding.txtPoint.text = it.toInt().toString()
+                binding.notifiPoint.text = getString(R.string.format_points_earned, it.toInt())
+                binding.completePercent.text = getString(R.string.format_percent_int, it.toInt())
             }
-
-            binding.txtPoint.text = it.toInt().toString()
-            binding.notifiPoint.text = getString(R.string.format_points_earned, it.toInt())
-            binding.completePercent.text = getString(R.string.format_percent_int, it.toInt())
         }
 
-        viewModel.numberCorrectLiveData.observe(viewLifecycleOwner){
-            binding.numberCorrect.text = getString(R.string.format_question_count, it)
+        viewModel.numberCorrectLiveData.observe(viewLifecycleOwner) { n ->
+            binding.numberCorrect.text = getString(R.string.format_question_count, n ?: 0)
         }
 
-        viewModel.wrongNumberLiveData.observe(viewLifecycleOwner){
-            binding.wrongNumber.text = it.toString()
+        viewModel.wrongNumberLiveData.observe(viewLifecycleOwner) { n ->
+            binding.wrongNumber.text = (n ?: 0).toString()
         }
 
         viewModel.examIdHistory.observe(viewLifecycleOwner) { id ->

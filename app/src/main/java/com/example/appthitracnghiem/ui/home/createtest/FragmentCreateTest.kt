@@ -22,6 +22,7 @@ import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.department.listdepartment.ListDepartmentViewModel
 import com.example.appthitracnghiem.data.remote.dto.request.RequestDepartmentInfo
 import com.example.appthitracnghiem.ui.home.createtest.adapter.CreateDepartmentAdapter
+import com.example.appthitracnghiem.ui.home.createtest.question.CreateExamFormState
 import com.example.appthitracnghiem.ui.home.createtest.question.CreateTestActivity
 import com.example.appthitracnghiem.ui.home.createtest.question.CreateTestIntentExtras
 import com.example.appthitracnghiem.utils.PreferenceKey
@@ -234,15 +235,18 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
                         Toast.LENGTH_SHORT,
                     ).show()
                 } else {
+                    val form = CreateExamFormState(
+                        numberQuestion = numberQuiz.toInt(),
+                        title = title,
+                        timeMinutes = time.toInt(),
+                        status = createStatus,
+                        subjectId = createSubjectApiId,
+                        departmentLabel = department,
+                        describe = describe,
+                        coverUri = uriImage,
+                    )
                     val intent = Intent(requireActivity(), CreateTestActivity::class.java).apply {
-                        putExtra(CreateTestIntentExtras.NUMBER_QUESTION, numberQuiz.toInt())
-                        putExtra(CreateTestIntentExtras.TITLE, title)
-                        putExtra(CreateTestIntentExtras.TIME_MINUTES, time.toInt())
-                        putExtra(CreateTestIntentExtras.STATUS, createStatus)
-                        putExtra(CreateTestIntentExtras.SUBJECT_ID, createSubjectApiId)
-                        putExtra(CreateTestIntentExtras.DEPARTMENT_LABEL, department)
-                        putExtra(CreateTestIntentExtras.DESCRIBE, describe)
-                        putExtra(CreateTestIntentExtras.COVER_URI, uriImage)
+                        putExtra(CreateTestIntentExtras.FORM_STATE, form)
                     }
                     startActivity(intent)
                 }

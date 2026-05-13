@@ -4,41 +4,29 @@ package com.example.appthitracnghiem.ui.home.createtest.review
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.data.remote.dto.request.RequestCreateExam
 import com.example.appthitracnghiem.databinding.FragmentReviewCreateExamBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.createtest.manager.FragmentManageExam
-import com.example.appthitracnghiem.ui.home.createtest.question.CreateExamDraftViewModel
-import com.example.appthitracnghiem.ui.home.createtest.question.CreateTestIntentExtras
-import com.example.appthitracnghiem.utils.Const
 import com.example.appthitracnghiem.utils.PreferenceKey
-import com.example.appthitracnghiem.utils.UriConvertFile
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.File
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
     private var _binding: FragmentReviewCreateExamBinding? = null
     private val binding get() = _binding!!
 
-    private val draftViewModel: CreateExamDraftViewModel by activityViewModels()
+    override fun viewModelStoreOwner(): ViewModelStoreOwner = requireActivity()
 
     lateinit var positionReviewAdapter: PositionReviewAdapter
     var questionIndex: Int = 0
@@ -55,7 +43,7 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
         listTextViewAnswer.add(binding.answerReview3)
         listTextViewAnswer.add(binding.answerReview4)
 
-        numberQuiz = requireArguments().getInt("numberQuiz")
+        numberQuiz = viewModel.requireForm().numberQuestion
         positionReviewAdapter = PositionReviewAdapter(numberQuiz, requireActivity())
         val linear = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         binding.recycleListNumberReview.layoutManager = linear
@@ -96,7 +84,7 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
     }
 
     private fun setTextExam(index: Int) {
-        val listQuestion = draftViewModel.questions
+        val listQuestion = viewModel.questions
         val q = listQuestion.getOrNull(index) ?: return
         binding.txtQuestionReview.text = q.question_title
         binding.answerReview1.text = q.answer_list.getOrNull(0)?.content
@@ -114,7 +102,7 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
 
     @SuppressLint("SetTextI18n")
     private fun initUi() {
-        time = requireActivity().intent.getIntExtra(CreateTestIntentExtras.TIME_MINUTES, 0)
+        time = viewModel.requireForm().timeMinutes
         binding.txtTimeReview.text = getString(R.string.format_minutes_suffix, time)
 
         setTextExam(questionIndex)
@@ -145,36 +133,19 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
         binding.doneExamReview.setOnClickListener {
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID, 0)
-            val intent = requireActivity().intent
-            val title = intent.getStringExtra(CreateTestIntentExtras.TITLE).orEmpty()
-            val number = intent.getIntExtra(CreateTestIntentExtras.NUMBER_QUESTION, -1)
-            val status = intent.getIntExtra(CreateTestIntentExtras.STATUS, 0)
-            val subjectId = intent.getIntExtra(CreateTestIntentExtras.SUBJECT_ID, -1)
-            val listQuestionCreate = draftViewModel.questions
+            val form = viewModel.requireForm()
+            val listQuestionCreate = viewModel.questions
 
             val requestCreateExam = RequestCreateExam(
-                listQuestionCreate, userId, subjectId, title, time, number, status
+                listQuestionCreate,
+                userId,
+                form.subjectId,
+                form.title,
+                form.timeMinutes,
+                form.numberQuestion,
+                form.status,
             )
             viewModel.createExam(requestCreateExam)
-
-            val strImage = intent.getStringExtra(CreateTestIntentExtras.COVER_URI).orEmpty()
-//            val uriImage: Uri = strImage.toUri()
-//            val strPath: String = UriConvertFile.getFileFromUri(requireActivity(), uriImage).toString()
-//            val file = File(strPath)
-//            val requestBodyImage: RequestBody =
-//                file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-//            val multipartBodyImage: MultipartBody.Part =
-//                MultipartBody.Part.createFormData(Const.file, file.name, requestBodyImage)
-//            val requestBodyId: RequestBody =
-//                userId.toString().toRequestBody("multipart/form-data".toMediaTypeOrNull())
-//            val folder = "exam"
-//            val requestBodyFolder: RequestBody =
-//                folder.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-//            val fileName = "23471341347.jpg"
-//            val requestBodyFileName: RequestBody =
-//                fileName.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-//
-//            viewModel.postUploadFile(requestBodyId, multipartBodyImage, requestBodyFolder, requestBodyFileName)
         }
 
         binding.backReview.setOnClickListener {

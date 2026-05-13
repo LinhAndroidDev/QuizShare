@@ -6,15 +6,53 @@ import com.example.appthitracnghiem.core.ResultState
 import com.example.appthitracnghiem.data.remote.ApiService
 import com.example.appthitracnghiem.data.remote.dto.request.RequestCreateExam
 import com.example.appthitracnghiem.data.remote.safeApiCall
+import com.example.appthitracnghiem.model.CreateQuestion
 import com.example.appthitracnghiem.ui.base.BaseViewModel
+import com.example.appthitracnghiem.ui.home.createtest.question.CreateExamFormState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * Phạm vi [com.example.appthitracnghiem.ui.home.createtest.question.CreateTestActivity]:
+ * form tạo đề, danh sách câu nháp, và gọi API tạo đề / upload.
+ */
 @HiltViewModel
-class CreateExamViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
+class CreateExamViewModel @Inject constructor(
+    private val apiService: ApiService,
+) : BaseViewModel() {
+
+    private var formState: CreateExamFormState? = null
+
+    private lateinit var _questions: ArrayList<CreateQuestion?>
+
+    val questions: ArrayList<CreateQuestion?>
+        get() = _questions
+
+    fun bindForm(state: CreateExamFormState) {
+        formState = state
+    }
+
+    fun requireForm(): CreateExamFormState =
+        checkNotNull(formState) {
+            "CreateExamFormState missing — open CreateTestActivity with CreateTestIntentExtras.FORM_STATE"
+        }
+
+    fun initQuestionSlots(count: Int) {
+        if (!::_questions.isInitialized || _questions.size != count) {
+            _questions = ArrayList(List(count) { null })
+        }
+    }
+
+    fun setQuestionAt(index: Int, question: CreateQuestion?) {
+        if (!::_questions.isInitialized) return
+        if (index in _questions.indices) {
+            _questions[index] = question
+        }
+    }
+
     var isLoadingLiveData = MutableLiveData<Boolean>()
     var isSuccessfulLiveData = MutableLiveData<Boolean>()
     var uploadSuccessfulLiveData = MutableLiveData<Boolean>()

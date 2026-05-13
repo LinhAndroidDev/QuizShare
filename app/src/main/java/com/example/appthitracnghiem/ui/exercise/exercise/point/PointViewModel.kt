@@ -12,13 +12,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PointViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
-    var scoreLiveData = MutableLiveData<Float>()
-    var numberCorrectLiveData = MutableLiveData<Int>()
-    var skipNumberLiveData = MutableLiveData<Int>()
-    var wrongNumberLiveData = MutableLiveData<Int>()
+class PointViewModel @Inject constructor(
+    private val apiService: ApiService,
+) : BaseViewModel() {
+    var scoreLiveData = MutableLiveData<Float?>()
+    var numberCorrectLiveData = MutableLiveData<Int?>()
+    var skipNumberLiveData = MutableLiveData<Int?>()
+    var wrongNumberLiveData = MutableLiveData<Int?>()
     var isLoadingLiveData = MutableLiveData<Boolean>()
-    var examIdHistory = MutableLiveData<Int>()
+    var examIdHistory = MutableLiveData<Int?>()
 
     fun getResult(requestPoint: RequestPoint) {
         isLoadingLiveData.value = true

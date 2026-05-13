@@ -10,8 +10,8 @@ import android.view.*
 import android.widget.PopupWindow
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +23,6 @@ import com.example.appthitracnghiem.model.PositiveQuestion
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.exercise.exercise.point.FragmentPoint
 import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
-import com.example.appthitracnghiem.ui.exercise.exercise.ExamSessionViewModel
 import com.example.appthitracnghiem.ui.exercise.exercise.adapter.MenuQuestionAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +33,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
     private var _binding: FragmentExamBinding? = null
     private val binding get() = _binding!!
 
-    private val examSessionViewModel: ExamSessionViewModel by activityViewModels()
+    override fun viewModelStoreOwner(): ViewModelStoreOwner = requireActivity()
 
     private lateinit var menuQuestionAdapter: MenuQuestionAdapter
 
@@ -78,13 +77,15 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             }
         }
 
-        viewModel.listExamQuestionLiveData.observe(viewLifecycleOwner) {
-            listExamQuestion = it
-            sizeListQuestion = it.size
-            examSessionViewModel.initWithQuestions(it)
-            binding.txtPositionQuiz.text =
-                getString(R.string.format_exam_question_position, positiveQuestion + 1, sizeListQuestion)
-            setTextView(positiveQuestion)
+        viewModel.listExamQuestionLiveData.observe(viewLifecycleOwner) { examQuestions ->
+            examQuestions?.let {
+                listExamQuestion = it
+                sizeListQuestion = it.size
+                viewModel.initWithQuestions(it)
+                binding.txtPositionQuiz.text =
+                    getString(R.string.format_exam_question_position, positiveQuestion + 1, sizeListQuestion)
+                setTextView(positiveQuestion)
+            }
         }
 
         val userId = viewModel.mPreferenceUtil.defaultPref()
@@ -117,6 +118,10 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                         putString(
                             ExamSessionExtras.ARG_EXAM_START_TIMESTAMP,
                             requireArguments().getString(ExamSessionExtras.ARG_EXAM_START_TIMESTAMP).orEmpty(),
+                        )
+                        putIntegerArrayList(
+                            ExamSessionExtras.ARG_ANSWER_OPTION_INDICES,
+                            viewModel.snapshotIndices(),
                         )
                     }
                     fragmentPoint.arguments = pointBundle
@@ -213,8 +218,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         binding.recyclerExamAnswerOptions.itemAnimator = null
         examAnswerAdapter.onOptionClick = { optionIndex ->
             if (::listExamQuestion.isInitialized) {
-                examSessionViewModel.setSelection(positiveQuestion, optionIndex)
-                examSessionViewModel.questionAt(positiveQuestion)?.let { examAnswerAdapter.submit(it) }
+                viewModel.setSelection(positiveQuestion, optionIndex)
+                viewModel.questionAt(positiveQuestion)?.let { examAnswerAdapter.submit(it) }
             }
         }
 
@@ -230,6 +235,10 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                 putString(
                     ExamSessionExtras.ARG_EXAM_START_TIMESTAMP,
                     requireArguments().getString(ExamSessionExtras.ARG_EXAM_START_TIMESTAMP).orEmpty(),
+                )
+                putIntegerArrayList(
+                    ExamSessionExtras.ARG_ANSWER_OPTION_INDICES,
+                    viewModel.snapshotIndices(),
                 )
             }
             fragmentPoint.arguments = bundle
@@ -256,7 +265,7 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
             alertDialog.setIcon(R.drawable.icon_app_thitn)
             alertDialog.setMessage(getString(R.string.dialog_exit_exam_message))
             alertDialog.setPositiveButton(getString(R.string.btn_still_exit)) { _, _ ->
-                examSessionViewModel.markAllUnanswered(sizeListQuestion)
+                viewModel.markAllUnanswered(sizeListQuestion)
                 activity?.onBackPressedDispatcher?.onBackPressed()
             }
             alertDialog.setNegativeButton(getString(R.string.btn_no)) { _, _ -> }
@@ -289,14 +298,14 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
         popupWindow.showAtLocation(this, Gravity.BOTTOM, 0, 290)
 
         listQuestion = mutableListOf()
-        for (i in 0 until sizeListQuestion) {
+        for (i in 0..sizeListQuestion) {
             listQuestion.add(PositiveQuestion(i + 1,null))
         }
 
         menuQuestionAdapter = MenuQuestionAdapter(
             requireActivity(),
             listQuestion,
-            isExamQuestionAnswered = { examSessionViewModel.isQuestionAnswered(it) },
+            isExamQuestionAnswered = { viewModel.isQuestionAnswered(it) },
         )
         menuQuestionAdapter.onClickItem = { positionItem ->
             positiveQuestion = positionItem
@@ -314,8 +323,8 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
 
     @SuppressLint("ResourceAsColor")
     fun setTextView(psQuestion: Int) {
-        examSessionViewModel.ensureVisited(psQuestion)
-        val taking = examSessionViewModel.questionAt(psQuestion) ?: return
+        viewModel.ensureVisited(psQuestion)
+        val taking = viewModel.questionAt(psQuestion) ?: return
         binding.titleExam.text = taking.source.question_title
         examAnswerAdapter.submit(taking)
     }

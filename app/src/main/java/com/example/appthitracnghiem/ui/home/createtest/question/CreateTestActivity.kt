@@ -2,6 +2,7 @@ package com.example.appthitracnghiem.ui.home.createtest.question
 
 import android.graphics.Rect
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
@@ -9,6 +10,7 @@ import com.example.appthitracnghiem.databinding.ActivityCreateTestBinding
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseActivity
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.home.createtest.review.CreateExamViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
@@ -16,18 +18,16 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreateTestActivity : BaseActivity<EmptyViewModel>() {
     private lateinit var binding: ActivityCreateTestBinding
 
+    private val createExamViewModel: CreateExamViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        replaceFragment(
-            FragmentCreateExam().apply {
-                arguments = Bundle().apply {
-                    intent.extras?.let { putAll(it) }
-                }
-            },
-        )
+        bindCreateExamFormFromIntent()
+
+        replaceFragment(FragmentCreateExam())
 
         /** Check keyboard show **/
         binding.changeIdCreateExam.viewTreeObserver
@@ -49,6 +49,13 @@ class CreateTestActivity : BaseActivity<EmptyViewModel>() {
                     }
                 }
             }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun bindCreateExamFormFromIntent() {
+        val state = intent.getSerializableExtra(CreateTestIntentExtras.FORM_STATE) as? CreateExamFormState
+            ?: return
+        createExamViewModel.bindForm(state)
     }
 
     private fun replaceFragment(fg: Fragment) {
