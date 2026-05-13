@@ -10,12 +10,11 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.Department
+import android.os.Bundle
+import com.example.appthitracnghiem.ui.department.DepartmentNavExtras
 import com.example.appthitracnghiem.ui.department.listdepartment.FragmentListDepartment
-import com.example.appthitracnghiem.utils.PreferenceKey
-import com.example.appthitracnghiem.utils.PreferenceUtil
 import com.example.appthitracnghiem.utils.findAppCompatActivity
 import com.example.appthitracnghiem.utils.loadNetworkImage
-import androidx.core.content.edit
 
 class DepartmentAdapter(
     private val listQuiz: List<Department>,
@@ -42,14 +41,12 @@ class DepartmentAdapter(
 
         holder.itemView.setOnClickListener { v ->
             val activity = v.context.findAppCompatActivity() ?: return@setOnClickListener
-            val mPreferenceUtil = PreferenceUtil(activity)
-            mPreferenceUtil.defaultPref().edit {
-                putInt(PreferenceKey.TYPE, 0)
+            val fragmentListDepartment = FragmentListDepartment().apply {
+                arguments = Bundle().apply {
+                    putInt(DepartmentNavExtras.ARG_DEPARTMENT_ID, quiz.id)
+                    putInt(DepartmentNavExtras.ARG_LIST_SOURCE_TYPE, 0)
+                }
             }
-            mPreferenceUtil.defaultPref().edit {
-                putInt(PreferenceKey.ID_DEPARTMENT, quiz.id)
-            }
-            val fragmentListDepartment = FragmentListDepartment()
             val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
             fm.add(R.id.changeIdHome, fragmentListDepartment).addToBackStack(null).commit()
         }

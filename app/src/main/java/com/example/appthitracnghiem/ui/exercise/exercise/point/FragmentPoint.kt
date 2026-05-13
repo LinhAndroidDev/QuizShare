@@ -26,9 +26,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.core.content.edit
-
-@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class FragmentPoint : BaseFragment<PointViewModel>() {
     private var _binding: FragmentPointBinding? = null
@@ -37,6 +34,8 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
     private val examSessionViewModel: ExamSessionViewModel by activityViewModels()
 
     private lateinit var listExamQuestion: ArrayList<ExamQuestion>
+
+    private var lastExamHistoryId: Int = 0
 
     /** Đồng bộ độ dài với số câu hỏi (tránh lệch nếu snapshot rỗng). */
     private fun paddedExamAnswers(): ArrayList<Int> {
@@ -77,8 +76,7 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
             }
         }
 
-        val startTime = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.START_DO_TEST,"").toString()
+        val startTime = requireArguments().getString(ExamSessionExtras.ARG_EXAM_START_TIMESTAMP).orEmpty()
 
         val sdf = SimpleDateFormat("yyyy/MM/dd hh:mm:ss")
         val finishTime = sdf.format(Date()).toString()
@@ -106,11 +104,8 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
             binding.wrongNumber.text = it.toString()
         }
 
-        viewModel.examIdHistory.observe(viewLifecycleOwner){
-            viewModel.mPreferenceUtil.defaultPref()
-                .edit {
-                    putInt(PreferenceKey.EXAM_ID_HISTORY, it)
-                }
+        viewModel.examIdHistory.observe(viewLifecycleOwner) { id ->
+            id?.let { if (it > 0) lastExamHistoryId = it }
         }
 
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner){
@@ -185,6 +180,7 @@ class FragmentPoint : BaseFragment<PointViewModel>() {
                     ExamSessionExtras.ARG_EXAM_ID,
                     requireArguments().getInt(ExamSessionExtras.ARG_EXAM_ID, 0),
                 )
+                putInt(ExamSessionExtras.ARG_EXAM_HISTORY_ID, lastExamHistoryId)
             }
             fragmentAnswer.arguments = bundle
             val fm: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()

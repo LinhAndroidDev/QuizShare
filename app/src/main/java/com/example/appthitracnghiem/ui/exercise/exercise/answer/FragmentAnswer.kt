@@ -104,9 +104,8 @@ class FragmentAnswer : BaseFragment<AnswerViewModel>() {
 
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
-        val idHistoryExam = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.EXAM_ID_HISTORY, 0)
         val idExam = requireArguments().getInt(ExamSessionExtras.ARG_EXAM_ID, 0)
+        val idHistoryExam = requireArguments().getInt(ExamSessionExtras.ARG_EXAM_HISTORY_ID, 0)
         viewModel.getExamListQuestion(RequestExamQuestion(userId, idExam))
         viewModel.getExamResult(RequestAnswer(userId, idHistoryExam))
 

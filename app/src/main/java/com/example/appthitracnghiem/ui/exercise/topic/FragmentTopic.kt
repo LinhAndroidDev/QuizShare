@@ -20,7 +20,6 @@ import com.example.appthitracnghiem.utils.loadNetworkImage
 import java.text.SimpleDateFormat
 import java.util.*
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.core.content.edit
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -37,22 +36,25 @@ class FragmentTopic : BaseFragment<TopicViewModel>() {
     override fun bindData() {
         super.bindData()
 
-        val name = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.USER_NAME,"")
-        val avt = viewModel.mPreferenceUtil.defaultPref()
-            .getString(PreferenceKey.USER_AVATAR,"")
+        val name = requireArguments().getString(ExamSessionExtras.ARG_TOPIC_USER_NAME).orEmpty()
+        val avt = requireArguments().getString(ExamSessionExtras.ARG_TOPIC_USER_AVATAR).orEmpty()
 
-        val type = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.TYPE,-1)
+        val type = requireArguments().getInt(ExamSessionExtras.ARG_TOPIC_UI_MODE, -1)
         if(type == 0){
             binding.infoTopic.visibility = View.GONE
             binding.memoryTopic.visibility = View.GONE
         }else if(type == 1){
             binding.infoTopic.visibility = View.VISIBLE
             binding.memoryTopic.visibility = View.VISIBLE
-            binding.nameTopic.text = name
+            val displayName = name.ifEmpty {
+                viewModel.mPreferenceUtil.defaultPref().getString(PreferenceKey.USER_NAME, "").orEmpty()
+            }
+            val displayAvatar = avt.ifEmpty {
+                viewModel.mPreferenceUtil.defaultPref().getString(PreferenceKey.USER_AVATAR, "").orEmpty()
+            }
+            binding.nameTopic.text = displayName
             binding.avtTopic.loadNetworkImage(
-                avt,
+                displayAvatar,
                 emptyUrlRes = R.drawable.logo6,
                 errorRes = R.drawable.logo6,
             )
@@ -111,15 +113,12 @@ class FragmentTopic : BaseFragment<TopicViewModel>() {
         binding.doTestNow.setOnClickListener {
             val sdf = SimpleDateFormat("yyyy/MM/dd hh:mm:ss")
             val currentDate = sdf.format(Date()).toString()
-            viewModel.mPreferenceUtil.defaultPref()
-                .edit {
-                    putString(PreferenceKey.START_DO_TEST, currentDate)
-                }
             val examId = requireArguments().getInt(ExamSessionExtras.ARG_EXAM_ID, 0)
             val timeMinutes = requireArguments().getInt(ExamSessionExtras.ARG_TIME_MINUTES, 0)
             val intent = Intent(requireActivity(), ExamActivity::class.java).apply {
                 putExtra(ExamSessionExtras.INTENT_EXAM_ID, examId)
                 putExtra(ExamSessionExtras.INTENT_TIME_MINUTES, timeMinutes)
+                putExtra(ExamSessionExtras.INTENT_EXAM_START_TIMESTAMP, currentDate)
             }
             startActivity(intent)
         }

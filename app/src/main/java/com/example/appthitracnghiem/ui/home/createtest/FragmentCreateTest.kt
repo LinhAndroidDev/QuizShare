@@ -23,10 +23,10 @@ import com.example.appthitracnghiem.ui.department.listdepartment.ListDepartmentV
 import com.example.appthitracnghiem.data.remote.dto.request.RequestDepartmentInfo
 import com.example.appthitracnghiem.ui.home.createtest.adapter.CreateDepartmentAdapter
 import com.example.appthitracnghiem.ui.home.createtest.question.CreateTestActivity
+import com.example.appthitracnghiem.ui.home.createtest.question.CreateTestIntentExtras
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.core.content.edit
 import androidx.core.net.toUri
 
 @Suppress("DEPRECATION")
@@ -36,7 +36,10 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
     private val binding get() = _binding!!
 
     private var selectedDepartmentId: Int = -1
-    private var subjectId: Int = -1
+    /** API subject id (1-based index from subject picker row). */
+    private var createSubjectApiId: Int = -1
+    /** 0 = unset, 1 = public, 2 = private. */
+    private var createStatus: Int = 0
     private var uriImage = ""
 
     companion object {
@@ -168,11 +171,8 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
             }
             val createDepartmentAdapter = CreateDepartmentAdapter(listSubjectTitles, requireActivity())
             createDepartmentAdapter.onClickItem = {
-                subjectId = it
+                createSubjectApiId = it + 1
                 popupWindow.dismiss()
-                viewModel.mPreferenceUtil.defaultPref().edit {
-                    putInt(PreferenceKey.CREATE_SUBJECT_ID, it + 1)
-                }
             }
             createDepartmentAdapter.getStringItem = {
                 binding.edtSelectSubject.text = it
@@ -196,19 +196,13 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
 
             public.setOnClickListener {
                 binding.edtSelectLevel.text = getString(R.string.txtModePublic)
-                viewModel.mPreferenceUtil.defaultPref()
-                    .edit {
-                        putInt(PreferenceKey.CREATE_STATUS, 1)
-                    }
+                createStatus = 1
                 popupWindow.dismiss()
             }
 
             private.setOnClickListener {
                 binding.edtSelectLevel.text = getString(R.string.txtModePrivate)
-                viewModel.mPreferenceUtil.defaultPref()
-                    .edit {
-                        putInt(PreferenceKey.CREATE_STATUS, 2)
-                    }
+                createStatus = 2
                 popupWindow.dismiss()
             }
         }
@@ -233,48 +227,23 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
 
                 if(title.isEmpty() || department.isEmpty() || time.isEmpty() || numberQuiz.isEmpty() || describe.isEmpty()){
                     Toast.makeText(requireActivity(), getString(R.string.toast_create_test_incomplete), Toast.LENGTH_SHORT).show()
-                }else{
-                    viewModel.mPreferenceUtil.defaultPref()
-                        .edit {
-                            putString(PreferenceKey.CREATE_TITLE, title)
-                        }
-                    viewModel.mPreferenceUtil.defaultPref()
-                        .edit {
-                            putString(
-                                PreferenceKey.CREATE_DEPARTMENT,
-                                department
-                            )
-                        }
-                    viewModel.mPreferenceUtil.defaultPref()
-                        .edit {
-                            putInt(PreferenceKey.TIME_EXAM, time.toInt())
-                        }
-                    viewModel.mPreferenceUtil.defaultPref()
-                        .edit {
-                            putString(
-                                PreferenceKey.CREATE_DESCRIBE_QUIZ,
-                                describe
-                            )
-                        }
-                    if(uriImage.isEmpty()){
-                        viewModel.mPreferenceUtil.defaultPref()
-                            .edit {
-                                putString(
-                                    PreferenceKey.CREATE_URI_IMAGE_SUBJECT,
-                                    ""
-                                )
-                            }
-                    }else{
-                        viewModel.mPreferenceUtil.defaultPref()
-                            .edit {
-                                putString(
-                                    PreferenceKey.CREATE_URI_IMAGE_SUBJECT,
-                                    uriImage
-                                )
-                            }
+                } else if (createSubjectApiId < 1) {
+                    Toast.makeText(
+                        requireActivity(),
+                        getString(R.string.toast_create_test_incomplete),
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                } else {
+                    val intent = Intent(requireActivity(), CreateTestActivity::class.java).apply {
+                        putExtra(CreateTestIntentExtras.NUMBER_QUESTION, numberQuiz.toInt())
+                        putExtra(CreateTestIntentExtras.TITLE, title)
+                        putExtra(CreateTestIntentExtras.TIME_MINUTES, time.toInt())
+                        putExtra(CreateTestIntentExtras.STATUS, createStatus)
+                        putExtra(CreateTestIntentExtras.SUBJECT_ID, createSubjectApiId)
+                        putExtra(CreateTestIntentExtras.DEPARTMENT_LABEL, department)
+                        putExtra(CreateTestIntentExtras.DESCRIBE, describe)
+                        putExtra(CreateTestIntentExtras.COVER_URI, uriImage)
                     }
-                    val intent = Intent(requireActivity(), CreateTestActivity::class.java)
-                    intent.putExtra("number_question",numberQuiz.toInt())
                     startActivity(intent)
                 }
         }

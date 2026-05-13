@@ -50,13 +50,19 @@ class HistoryTestAdapter(val context: Context, private val listTestSaved: ArrayL
 
         holder.itemView.setOnClickListener {
             val activity = context.findAppCompatActivity() ?: return@setOnClickListener
-            val mPreferenceUtil = PreferenceUtil(activity)
-            mPreferenceUtil.defaultPref().edit()
-                .putInt(PreferenceKey.TYPE, 1)
-                .apply()
             val intent = Intent(activity, ExerciseActivity::class.java).apply {
                 putExtra(ExamSessionExtras.INTENT_EXAM_ID, examSaved.id)
                 putExtra(ExamSessionExtras.INTENT_TIME_MINUTES, examSaved.time)
+                putExtra(ExamSessionExtras.INTENT_TOPIC_UI_MODE, 1)
+                val prefs = PreferenceUtil(activity).defaultPref()
+                putExtra(
+                    ExamSessionExtras.INTENT_TOPIC_USER_NAME,
+                    prefs.getString(PreferenceKey.USER_NAME, "").orEmpty(),
+                )
+                putExtra(
+                    ExamSessionExtras.INTENT_TOPIC_USER_AVATAR,
+                    prefs.getString(PreferenceKey.USER_AVATAR, "").orEmpty(),
+                )
             }
             activity.startActivity(intent)
         }

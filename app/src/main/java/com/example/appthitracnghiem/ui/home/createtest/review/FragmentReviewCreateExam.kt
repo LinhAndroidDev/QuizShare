@@ -20,6 +20,7 @@ import com.example.appthitracnghiem.databinding.FragmentReviewCreateExamBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.createtest.manager.FragmentManageExam
 import com.example.appthitracnghiem.ui.home.createtest.question.CreateExamDraftViewModel
+import com.example.appthitracnghiem.ui.home.createtest.question.CreateTestIntentExtras
 import com.example.appthitracnghiem.utils.Const
 import com.example.appthitracnghiem.utils.PreferenceKey
 import com.example.appthitracnghiem.utils.UriConvertFile
@@ -113,8 +114,7 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
 
     @SuppressLint("SetTextI18n")
     private fun initUi() {
-        time = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.TIME_EXAM, 0)
+        time = requireActivity().intent.getIntExtra(CreateTestIntentExtras.TIME_MINUTES, 0)
         binding.txtTimeReview.text = getString(R.string.format_minutes_suffix, time)
 
         setTextExam(questionIndex)
@@ -145,13 +145,11 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
         binding.doneExamReview.setOnClickListener {
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID, 0)
-            val title = viewModel.mPreferenceUtil.defaultPref()
-                .getString(PreferenceKey.CREATE_TITLE, "").toString()
-            val number: Int = activity?.intent!!.getIntExtra("number_question", -1)
-            val status = viewModel.mPreferenceUtil.defaultPref()
-                .getInt(PreferenceKey.CREATE_STATUS, 0)
-            val subjectId = viewModel.mPreferenceUtil.defaultPref()
-                .getInt(PreferenceKey.CREATE_SUBJECT_ID, -1)
+            val intent = requireActivity().intent
+            val title = intent.getStringExtra(CreateTestIntentExtras.TITLE).orEmpty()
+            val number = intent.getIntExtra(CreateTestIntentExtras.NUMBER_QUESTION, -1)
+            val status = intent.getIntExtra(CreateTestIntentExtras.STATUS, 0)
+            val subjectId = intent.getIntExtra(CreateTestIntentExtras.SUBJECT_ID, -1)
             val listQuestionCreate = draftViewModel.questions
 
             val requestCreateExam = RequestCreateExam(
@@ -159,25 +157,24 @@ class FragmentReviewCreateExam : BaseFragment<CreateExamViewModel>() {
             )
             viewModel.createExam(requestCreateExam)
 
-            val strImage = viewModel.mPreferenceUtil.defaultPref()
-                .getString(PreferenceKey.CREATE_URI_IMAGE_SUBJECT, "").toString()
-            val uriImage: Uri = strImage.toUri()
-            val strPath: String = UriConvertFile.getFileFromUri(requireActivity(), uriImage).toString()
-            val file = File(strPath)
-            val requestBodyImage: RequestBody =
-                file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-            val multipartBodyImage: MultipartBody.Part =
-                MultipartBody.Part.createFormData(Const.file, file.name, requestBodyImage)
-            val requestBodyId: RequestBody =
-                userId.toString().toRequestBody("multipart/form-data".toMediaTypeOrNull())
-            val folder = "exam"
-            val requestBodyFolder: RequestBody =
-                folder.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-            val fileName = "23471341347.jpg"
-            val requestBodyFileName: RequestBody =
-                fileName.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-
-            viewModel.postUploadFile(requestBodyId, multipartBodyImage, requestBodyFolder, requestBodyFileName)
+            val strImage = intent.getStringExtra(CreateTestIntentExtras.COVER_URI).orEmpty()
+//            val uriImage: Uri = strImage.toUri()
+//            val strPath: String = UriConvertFile.getFileFromUri(requireActivity(), uriImage).toString()
+//            val file = File(strPath)
+//            val requestBodyImage: RequestBody =
+//                file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+//            val multipartBodyImage: MultipartBody.Part =
+//                MultipartBody.Part.createFormData(Const.file, file.name, requestBodyImage)
+//            val requestBodyId: RequestBody =
+//                userId.toString().toRequestBody("multipart/form-data".toMediaTypeOrNull())
+//            val folder = "exam"
+//            val requestBodyFolder: RequestBody =
+//                folder.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+//            val fileName = "23471341347.jpg"
+//            val requestBodyFileName: RequestBody =
+//                fileName.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+//
+//            viewModel.postUploadFile(requestBodyId, multipartBodyImage, requestBodyFolder, requestBodyFileName)
         }
 
         binding.backReview.setOnClickListener {

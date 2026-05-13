@@ -1,27 +1,14 @@
 package com.example.appthitracnghiem.ui.home.createtest.question
 
-import android.content.Intent
 import android.graphics.Rect
-import android.graphics.Typeface
 import android.os.Bundle
-import android.provider.MediaStore
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
-import android.widget.PopupWindow
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.ActivityCreateTestBinding
-import com.example.appthitracnghiem.model.PositiveQuestion
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseActivity
 import com.example.appthitracnghiem.ui.base.BaseFragment
-import com.example.appthitracnghiem.ui.home.createtest.question.adapter.PositiveQuestionAdapter
-import com.example.appthitracnghiem.utils.PreferenceKey
 import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
@@ -34,7 +21,13 @@ class CreateTestActivity : BaseActivity<EmptyViewModel>() {
         binding = ActivityCreateTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        replaceFragment(FragmentCreateExam())
+        replaceFragment(
+            FragmentCreateExam().apply {
+                arguments = Bundle().apply {
+                    intent.extras?.let { putAll(it) }
+                }
+            },
+        )
 
         /** Check keyboard show **/
         binding.changeIdCreateExam.viewTreeObserver
@@ -48,17 +41,17 @@ class CreateTestActivity : BaseActivity<EmptyViewModel>() {
                 val keypadHeight: Int = screenHeight - r.bottom
 
                 val fm: Fragment? = supportFragmentManager.findFragmentById(R.id.changeIdCreateExam)
-                if(fm is FragmentCreateExam){
+                if (fm is FragmentCreateExam) {
                     if (keypadHeight > screenHeight * 0.15) {
                         fm.visibleComplete(true)
-                    }else{
+                    } else {
                         fm.visibleComplete(false)
                     }
                 }
             }
     }
 
-    private fun replaceFragment(fg: Fragment){
+    private fun replaceFragment(fg: Fragment) {
         val fm: FragmentTransaction = supportFragmentManager.beginTransaction()
         fm.replace(R.id.changeIdCreateExam, fg).addToBackStack(null)
             .commit()

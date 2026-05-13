@@ -18,10 +18,16 @@ class ExerciseActivity : AppCompatActivity() {
 
         val examId = intent.getIntExtra(ExamSessionExtras.INTENT_EXAM_ID, 0)
         val timeMinutes = intent.getIntExtra(ExamSessionExtras.INTENT_TIME_MINUTES, 0)
+        val topicUiMode = intent.getIntExtra(ExamSessionExtras.INTENT_TOPIC_UI_MODE, -1)
+        val topicUserName = intent.getStringExtra(ExamSessionExtras.INTENT_TOPIC_USER_NAME).orEmpty()
+        val topicUserAvatar = intent.getStringExtra(ExamSessionExtras.INTENT_TOPIC_USER_AVATAR).orEmpty()
         val topic = FragmentTopic().apply {
             arguments = Bundle().apply {
                 putInt(ExamSessionExtras.ARG_EXAM_ID, examId)
                 putInt(ExamSessionExtras.ARG_TIME_MINUTES, timeMinutes)
+                putInt(ExamSessionExtras.ARG_TOPIC_UI_MODE, topicUiMode)
+                putString(ExamSessionExtras.ARG_TOPIC_USER_NAME, topicUserName)
+                putString(ExamSessionExtras.ARG_TOPIC_USER_AVATAR, topicUserAvatar)
             }
         }
         replaceFragment(topic)

@@ -16,6 +16,7 @@ import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.data.remote.dto.request.RequestListExam
 import com.example.appthitracnghiem.databinding.FragmentListTestBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.department.DepartmentNavExtras
 import com.example.appthitracnghiem.ui.department.listtest.adapter.TestAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +27,7 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
     private var _binding: FragmentListTestBinding? = null
     private val binding get() = _binding!!
     lateinit var testAdapter: TestAdapter
+    private var listSourceType: Int = 5
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,13 +37,13 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
         val title: String = bundle.getString("title").toString()
         binding.textNatural.text = title
 
-        val type = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.TYPE, 5)
+        val type = bundle.getInt(DepartmentNavExtras.ARG_LIST_SOURCE_TYPE, 5)
+        listSourceType = type
         val userId = viewModel.mPreferenceUtil.defaultPref()
             .getInt(PreferenceKey.USER_ID, 0)
 
         // Adapter must exist before initUi: restoreViewState can fire TextWatcher before API returns.
-        testAdapter = TestAdapter(requireActivity(), mutableListOf())
+        testAdapter = TestAdapter(requireActivity(), mutableListOf(), listSourceType)
         binding.recycleListTest.layoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         binding.recycleListTest.adapter = testAdapter
@@ -68,7 +70,7 @@ class FragmentListTest : BaseFragment<ListTestViewModel>() {
         }
 
         viewModel.listTestLiveData.observe(viewLifecycleOwner) {
-            testAdapter = TestAdapter(requireActivity(), it)
+            testAdapter = TestAdapter(requireActivity(), it, listSourceType)
             binding.recycleListTest.adapter = testAdapter
         }
     }

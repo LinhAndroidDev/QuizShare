@@ -12,11 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.HistoryExam
 import com.example.appthitracnghiem.ui.home.history.test.topic.HistoryTopicActivity
-import com.example.appthitracnghiem.utils.PreferenceKey
-import com.example.appthitracnghiem.utils.PreferenceUtil
+import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
 import com.example.appthitracnghiem.utils.findAppCompatActivity
 import com.example.appthitracnghiem.utils.loadNetworkImage
-import androidx.core.content.edit
 
 class HistoryTestAdapter(val context: Context, private val listTest: ArrayList<HistoryExam>) : RecyclerView.Adapter<HistoryTestAdapter.TestViewHolder>() {
 
@@ -46,13 +44,10 @@ class HistoryTestAdapter(val context: Context, private val listTest: ArrayList<H
 
         holder.itemView.setOnClickListener{
             val activity = it.context.findAppCompatActivity() ?: return@setOnClickListener
-            val mPreferenceUtils = PreferenceUtil(activity)
-            historyExam.exam_history_id?.let { id ->
-                mPreferenceUtils.defaultPref().edit {
-                    putInt(PreferenceKey.EXAM_ID_HISTORY, id)
-                }
+            val historyId = historyExam.exam_history_id ?: return@setOnClickListener
+            val intent = Intent(activity, HistoryTopicActivity::class.java).apply {
+                putExtra(ExamSessionExtras.INTENT_EXAM_HISTORY_ID, historyId)
             }
-            val intent = Intent(activity, HistoryTopicActivity::class.java)
             activity.startActivity(intent)
         }
     }

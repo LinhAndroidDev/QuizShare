@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.databinding.FragmentSystemBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.department.DepartmentNavExtras
 import com.example.appthitracnghiem.ui.department.listdepartment.FragmentListDepartment
 import com.example.appthitracnghiem.ui.home.home.system.adapter.DepartmentAdapter
-import com.example.appthitracnghiem.utils.PreferenceKey
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.core.content.edit
 
 @AndroidEntryPoint
 class FragmentSystem : BaseFragment<SystemViewModel>() {
@@ -33,10 +32,12 @@ class FragmentSystem : BaseFragment<SystemViewModel>() {
         binding.recycleListLiveQuizzes.layoutManager = linearLayoutManager
 
         binding.seeAllSystem.setOnClickListener {
-            viewModel.mPreferenceUtil.defaultPref().edit {
-                remove(PreferenceKey.ID_DEPARTMENT)
+            val fragmentListDepartment = FragmentListDepartment().apply {
+                arguments = Bundle().apply {
+                    putInt(DepartmentNavExtras.ARG_DEPARTMENT_ID, -1)
+                    putInt(DepartmentNavExtras.ARG_LIST_SOURCE_TYPE, 0)
+                }
             }
-            val fragmentListDepartment = FragmentListDepartment()
             val fm: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
             fm.add(R.id.changeIdHome,fragmentListDepartment).addToBackStack(null).commit()
         }

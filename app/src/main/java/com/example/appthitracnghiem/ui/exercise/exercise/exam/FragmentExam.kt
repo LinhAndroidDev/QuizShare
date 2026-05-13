@@ -114,6 +114,10 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                             ExamSessionExtras.ARG_EXAM_ID,
                             requireArguments().getInt(ExamSessionExtras.ARG_EXAM_ID, 0),
                         )
+                        putString(
+                            ExamSessionExtras.ARG_EXAM_START_TIMESTAMP,
+                            requireArguments().getString(ExamSessionExtras.ARG_EXAM_START_TIMESTAMP).orEmpty(),
+                        )
                     }
                     fragmentPoint.arguments = pointBundle
                     val fm: FragmentTransaction? =
@@ -222,6 +226,10 @@ class FragmentExam : BaseFragment<ExamViewModel>() {
                 putInt(
                     ExamSessionExtras.ARG_EXAM_ID,
                     requireArguments().getInt(ExamSessionExtras.ARG_EXAM_ID, 0),
+                )
+                putString(
+                    ExamSessionExtras.ARG_EXAM_START_TIMESTAMP,
+                    requireArguments().getString(ExamSessionExtras.ARG_EXAM_START_TIMESTAMP).orEmpty(),
                 )
             }
             fragmentPoint.arguments = bundle

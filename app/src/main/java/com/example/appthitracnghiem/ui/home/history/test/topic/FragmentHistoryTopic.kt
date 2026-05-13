@@ -48,10 +48,12 @@ class FragmentHistoryTopic : BaseFragment<HistoryTopicViewModel>() {
             if (fm.isStateSaved) return@observe
             if (fm.findFragmentByTag(TAG_HISTORY_ANSWER) != null) return@observe
 
+            val examHistoryId = requireArguments().getInt(ExamSessionExtras.ARG_EXAM_HISTORY_ID, 0)
             val fragmentAnswer = FragmentAnswer()
             val bundle = Bundle().apply {
                 putString("title", getString(R.string.txtHistoryTest))
                 putInt(ExamSessionExtras.ARG_EXAM_ID, examId)
+                putInt(ExamSessionExtras.ARG_EXAM_HISTORY_ID, examHistoryId)
             }
             fragmentAnswer.arguments = bundle
             fm.beginTransaction()
@@ -86,8 +88,7 @@ class FragmentHistoryTopic : BaseFragment<HistoryTopicViewModel>() {
         binding.seeAgainHistory.setOnClickListener {
             val userId = viewModel.mPreferenceUtil.defaultPref()
                 .getInt(PreferenceKey.USER_ID, 0)
-            val examHistoryId = viewModel.mPreferenceUtil.defaultPref()
-                .getInt(PreferenceKey.EXAM_ID_HISTORY, -1)
+            val examHistoryId = requireArguments().getInt(ExamSessionExtras.ARG_EXAM_HISTORY_ID, -1)
             viewModel.getIdExam(userId, examHistoryId)
         }
     }

@@ -10,17 +10,21 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.Exam
 import com.example.appthitracnghiem.ui.exercise.topic.ExerciseActivity
 import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
+import com.example.appthitracnghiem.utils.PreferenceKey
+import com.example.appthitracnghiem.utils.PreferenceUtil
 import com.example.appthitracnghiem.utils.loadNetworkImage
 
 class TestAdapter(
     val context: Context,
-    private var listTest: MutableList<Exam>
-    ) :
+    private var listTest: MutableList<Exam>,
+    private val listSourceType: Int,
+) :
     RecyclerView.Adapter<TestAdapter.TestViewHolder>(), Filterable{
 
     var listTestOld: MutableList<Exam> = listTest
@@ -49,9 +53,26 @@ class TestAdapter(
         holder.description.text = context.getString(R.string.format_exam_mc_count, exam.number)
 
         holder.itemView.setOnClickListener {
+            val topicUiMode = when (listSourceType) {
+                0 -> 0
+                1 -> 1
+                else -> -1
+            }
             val intent = Intent(context, ExerciseActivity::class.java).apply {
                 putExtra(ExamSessionExtras.INTENT_EXAM_ID, exam.id)
                 putExtra(ExamSessionExtras.INTENT_TIME_MINUTES, exam.time)
+                putExtra(ExamSessionExtras.INTENT_TOPIC_UI_MODE, topicUiMode)
+                if (topicUiMode == 1 && context is AppCompatActivity) {
+                    val prefs = PreferenceUtil(context).defaultPref()
+                    putExtra(
+                        ExamSessionExtras.INTENT_TOPIC_USER_NAME,
+                        prefs.getString(PreferenceKey.USER_NAME, "").orEmpty(),
+                    )
+                    putExtra(
+                        ExamSessionExtras.INTENT_TOPIC_USER_AVATAR,
+                        prefs.getString(PreferenceKey.USER_AVATAR, "").orEmpty(),
+                    )
+                }
             }
             context.startActivity(intent)
         }

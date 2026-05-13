@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,7 +32,14 @@ class HistoryTopicActivity : AppCompatActivity() {
         )
 
         if (savedInstanceState == null) {
-            replaceFragment(FragmentHistoryTopic())
+            val historyId = intent.getIntExtra(ExamSessionExtras.INTENT_EXAM_HISTORY_ID, -1)
+            replaceFragment(
+                FragmentHistoryTopic().apply {
+                    arguments = Bundle().apply {
+                        putInt(ExamSessionExtras.ARG_EXAM_HISTORY_ID, historyId)
+                    }
+                },
+            )
         }
     }
 

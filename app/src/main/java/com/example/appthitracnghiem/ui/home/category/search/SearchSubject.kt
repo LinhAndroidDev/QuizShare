@@ -65,10 +65,6 @@ class SearchSubject : BaseActivity<SearchViewModel>() {
 
     private fun initUi() {
 
-        viewModel.mPreferenceUtil.defaultPref()
-            .edit().putInt(PreferenceKey.TYPE, 1)
-            .apply()
-
         setStatusBar()
 
         binding.backSearchSubject.setOnClickListener {

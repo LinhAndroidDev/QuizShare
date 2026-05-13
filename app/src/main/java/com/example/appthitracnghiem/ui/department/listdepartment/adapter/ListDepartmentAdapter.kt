@@ -17,6 +17,7 @@ import com.example.appthitracnghiem.model.Subject
 class ListDepartmentAdapter(
     val context: Context,
     initialList: MutableList<DetailDepartment>,
+    private val listSourceType: Int,
 ) : RecyclerView.Adapter<ListDepartmentAdapter.ViewholderDepartment>(), Filterable {
 
     /** Full tree (departments + all subjects) used when clearing search or re-filtering. */
@@ -58,7 +59,7 @@ class ListDepartmentAdapter(
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         holder.recycleViewListSubjectDepartment.layoutManager = linearLayoutManager
 
-        val subjectAdapter = SubjectAdapter(holder.txtSeeAll.context, detailDepartment.subjects)
+        val subjectAdapter = SubjectAdapter(holder.txtSeeAll.context, detailDepartment.subjects, listSourceType)
         holder.recycleViewListSubjectDepartment.adapter = subjectAdapter
     }
 

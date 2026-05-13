@@ -12,11 +12,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.model.DetailDepartment
 import com.example.appthitracnghiem.model.Subject
+import com.example.appthitracnghiem.ui.department.DepartmentNavExtras
 import com.example.appthitracnghiem.ui.department.listtest.FragmentListTest
 import com.example.appthitracnghiem.utils.findAppCompatActivity
 import com.example.appthitracnghiem.utils.loadNetworkImage
 
-class SubjectAdapter(val context: Context, private val listSubject: List<Subject>) :
+class SubjectAdapter(
+    val context: Context,
+    private val listSubject: List<Subject>,
+    private val listSourceType: Int,
+) :
     RecyclerView.Adapter<SubjectAdapter.ViewHolderSubject>() {
 
     class ViewHolderSubject(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -41,9 +46,11 @@ class SubjectAdapter(val context: Context, private val listSubject: List<Subject
         holder.description.text = subject.description
 
         holder.itemView.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putInt("ID", subject.id)
-            bundle.putString("title", subject.title)
+            val bundle = Bundle().apply {
+                putInt("ID", subject.id)
+                putString("title", subject.title)
+                putInt(DepartmentNavExtras.ARG_LIST_SOURCE_TYPE, listSourceType)
+            }
             val activity = context.findAppCompatActivity() ?: return@setOnClickListener
             val fragmentListTest = FragmentListTest()
             val fm: FragmentTransaction = activity.supportFragmentManager.beginTransaction()

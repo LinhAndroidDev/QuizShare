@@ -21,12 +21,10 @@ import com.example.appthitracnghiem.databinding.FragmentCreateExamBinding
 import com.example.appthitracnghiem.model.CreateAnswer
 import com.example.appthitracnghiem.model.CreateQuestion
 import com.example.appthitracnghiem.model.createexam.CreateExamSlotProgress
-import com.example.appthitracnghiem.model.createexam.CreateQuestionSlotStatus
 import com.example.appthitracnghiem.ui.EmptyViewModel
 import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.home.createtest.question.adapter.PositiveQuestionAdapter
 import com.example.appthitracnghiem.ui.home.createtest.review.FragmentReviewCreateExam
-import com.example.appthitracnghiem.utils.PreferenceKey
 import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
@@ -66,7 +64,7 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
         listCheckboxAnswer.add(binding.isAnswer4)
 
         /** Create List RecyclerView question **/
-        numberQuiz = activity?.intent!!.getIntExtra("number_question", -1)
+        numberQuiz = requireArguments().getInt(CreateTestIntentExtras.NUMBER_QUESTION, -1)
         val linearLayoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         binding.recycleListNumber.layoutManager = linearLayoutManager
@@ -94,8 +92,7 @@ class FragmentCreateExam : BaseFragment<EmptyViewModel>() {
 
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     private fun initUi() {
-        val time = viewModel.mPreferenceUtil.defaultPref()
-            .getInt(PreferenceKey.TIME_EXAM, 0)
+        val time = requireArguments().getInt(CreateTestIntentExtras.TIME_MINUTES, 0)
         binding.txtTime.text = getString(R.string.format_minutes_suffix, time)
 
         level = 0

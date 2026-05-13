@@ -47,10 +47,12 @@ class ExamActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             val examId = intent.getIntExtra(ExamSessionExtras.INTENT_EXAM_ID, 0)
             val timeMinutes = intent.getIntExtra(ExamSessionExtras.INTENT_TIME_MINUTES, 0)
+            val startTimestamp = intent.getStringExtra(ExamSessionExtras.INTENT_EXAM_START_TIMESTAMP).orEmpty()
             val examFragment = FragmentExam().apply {
                 arguments = Bundle().apply {
                     putInt(ExamSessionExtras.ARG_EXAM_ID, examId)
                     putInt(ExamSessionExtras.ARG_TIME_MINUTES, timeMinutes)
+                    putString(ExamSessionExtras.ARG_EXAM_START_TIMESTAMP, startTimestamp)
                 }
             }
             replaceFragment(examFragment)

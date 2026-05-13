@@ -10,10 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.appthitracnghiem.R
 import com.example.appthitracnghiem.data.remote.dto.request.RequestDepartmentInfo
 import com.example.appthitracnghiem.databinding.FragmentListDepartmentBinding
 import com.example.appthitracnghiem.ui.base.BaseFragment
+import com.example.appthitracnghiem.ui.department.DepartmentNavExtras
 import com.example.appthitracnghiem.ui.department.listdepartment.adapter.ListDepartmentAdapter
 import com.example.appthitracnghiem.utils.PreferenceKey
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,8 +50,8 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
         }
 
         viewModel.listDepartmentLiveData.observe(viewLifecycleOwner) { apiDepartments ->
-            val selectedId = viewModel.mPreferenceUtil.defaultPref()
-                .getInt(PreferenceKey.ID_DEPARTMENT, -1)
+            val selectedId = arguments?.getInt(DepartmentNavExtras.ARG_DEPARTMENT_ID, -1) ?: -1
+            val listSourceType = arguments?.getInt(DepartmentNavExtras.ARG_LIST_SOURCE_TYPE, 5) ?: 5
             val displayList = if (selectedId > 0) {
                 apiDepartments.filter { it.id == selectedId }.toMutableList()
             } else {
@@ -59,7 +59,7 @@ class FragmentListDepartment : BaseFragment<ListDepartmentViewModel>() {
             }
 
             if (!::listDepartmentAdapter.isInitialized) {
-                listDepartmentAdapter = ListDepartmentAdapter(requireActivity(), displayList)
+                listDepartmentAdapter = ListDepartmentAdapter(requireActivity(), displayList, listSourceType)
                 val linear = LinearLayoutManager(
                     requireActivity(),
                     LinearLayoutManager.VERTICAL,
