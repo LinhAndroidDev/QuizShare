@@ -4,12 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.LayoutGeneralBinding
 import com.example.appthitracnghiem.model.HistoryExam
 import com.example.appthitracnghiem.ui.home.history.test.topic.HistoryTopicActivity
 import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
@@ -19,31 +17,27 @@ import com.example.appthitracnghiem.utils.loadNetworkImage
 class HistoryTestAdapter(val context: Context, private val listTest: ArrayList<HistoryExam>) :
     RecyclerView.Adapter<HistoryTestAdapter.TestViewHolder>() {
 
-    class TestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var title: TextView = itemView.findViewById(R.id.topic)
-        var image: ImageView = itemView.findViewById(R.id.image)
-        var description: TextView = itemView.findViewById(R.id.detail)
-    }
+    class TestViewHolder(val binding: LayoutGeneralBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): TestViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_general, parent, false)
-        return TestViewHolder(itemView)
+        val binding = LayoutGeneralBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return TestViewHolder(binding)
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: TestViewHolder, position: Int) {
         val historyExam: HistoryExam = listTest[position]
-        holder.image.loadNetworkImage(historyExam.image)
-        holder.title.text = historyExam.title
-        holder.description.text = context.getString(
+        holder.binding.image.loadNetworkImage(historyExam.image)
+        holder.binding.topic.text = historyExam.title
+        holder.binding.detail.text = context.getString(
             R.string.format_score_short,
             historyExam.score?.toInt() ?: 0,
         )
 
-        holder.itemView.setOnClickListener {
+        holder.binding.root.setOnClickListener {
             val activity = it.context.findAppCompatActivity() ?: return@setOnClickListener
             val historyId = historyExam.exam_history_id ?: return@setOnClickListener
             val intent = Intent(activity, HistoryTopicActivity::class.java).apply {

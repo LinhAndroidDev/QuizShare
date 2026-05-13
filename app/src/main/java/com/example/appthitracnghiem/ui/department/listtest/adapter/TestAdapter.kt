@@ -4,15 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.LayoutGeneralBinding
 import com.example.appthitracnghiem.model.Exam
 import com.example.appthitracnghiem.ui.exercise.topic.ExerciseActivity
 import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
@@ -33,26 +31,21 @@ class TestAdapter(
         listTestOld = listTest
     }
 
-    class TestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var title: TextView = itemView.findViewById(R.id.topic)
-        var image: ImageView = itemView.findViewById(R.id.image)
-        var description: TextView = itemView.findViewById(R.id.detail)
-    }
+    class TestViewHolder(val binding: LayoutGeneralBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestViewHolder {
-        val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.layout_general, parent, false)
-        return TestViewHolder(itemView)
+        val binding = LayoutGeneralBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return TestViewHolder(binding)
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: TestViewHolder, position: Int) {
         val exam: Exam = listTest[position]
-        holder.image.loadNetworkImage(exam.image)
-        holder.title.text = exam.title
-        holder.description.text = context.getString(R.string.format_exam_mc_count, exam.number)
+        holder.binding.image.loadNetworkImage(exam.image)
+        holder.binding.topic.text = exam.title
+        holder.binding.detail.text = context.getString(R.string.format_exam_mc_count, exam.number)
 
-        holder.itemView.setOnClickListener {
+        holder.binding.root.setOnClickListener {
             val topicUiMode = when (listSourceType) {
                 0 -> 0
                 1 -> 1

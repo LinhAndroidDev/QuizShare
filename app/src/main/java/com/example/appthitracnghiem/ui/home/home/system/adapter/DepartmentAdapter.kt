@@ -1,16 +1,14 @@
 package com.example.appthitracnghiem.ui.home.home.system.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.LayoutGeneralBinding
 import com.example.appthitracnghiem.model.Department
-import android.os.Bundle
 import com.example.appthitracnghiem.ui.department.DepartmentNavExtras
 import com.example.appthitracnghiem.ui.department.listdepartment.FragmentListDepartment
 import com.example.appthitracnghiem.utils.findAppCompatActivity
@@ -21,25 +19,20 @@ class DepartmentAdapter(
     val context: Context
 ) : RecyclerView.Adapter<DepartmentAdapter.ViewHolderQuiz>() {
 
-    class ViewHolderQuiz(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var image: ImageView = itemView.findViewById(R.id.image)
-        var title: TextView = itemView.findViewById(R.id.topic)
-        var description: TextView = itemView.findViewById(R.id.detail)
-    }
+    class ViewHolderQuiz(val binding: LayoutGeneralBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderQuiz {
-        val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.layout_general, parent, false)
-        return ViewHolderQuiz(itemView)
+        val binding = LayoutGeneralBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolderQuiz(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolderQuiz, position: Int) {
         val quiz: Department = listQuiz[position]
-        holder.image.loadNetworkImage(quiz.image)
-        holder.title.text = quiz.title
-        holder.description.text = quiz.description
+        holder.binding.image.loadNetworkImage(quiz.image)
+        holder.binding.topic.text = quiz.title
+        holder.binding.detail.text = quiz.description
 
-        holder.itemView.setOnClickListener { v ->
+        holder.binding.root.setOnClickListener { v ->
             val activity = v.context.findAppCompatActivity() ?: return@setOnClickListener
             val fragmentListDepartment = FragmentListDepartment().apply {
                 arguments = Bundle().apply {

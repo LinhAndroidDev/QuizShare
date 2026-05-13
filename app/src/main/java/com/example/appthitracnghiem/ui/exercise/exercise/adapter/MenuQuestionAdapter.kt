@@ -5,12 +5,12 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.LayoutMenuQuestionBinding
 import com.example.appthitracnghiem.model.PositiveQuestion
 import com.example.appthitracnghiem.model.QuestionReviewChipState
 
@@ -25,24 +25,22 @@ class MenuQuestionAdapter(
 
     var onClickItem: ((Int) -> Unit)? = null
 
-    class ViewHolderQuestion(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val txtQuestion: TextView = itemView.findViewById(R.id.txtQuestion)
-    }
+    class ViewHolderQuestion(val binding: LayoutMenuQuestionBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): ViewHolderQuestion {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_menu_question, parent, false)
-        return ViewHolderQuestion(itemView)
+        val binding = LayoutMenuQuestionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolderQuestion(binding)
     }
 
     @SuppressLint("ResourceAsColor", "NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolderQuestion, position: Int) {
         val positiveQuestion = listQuestion[position]
-        holder.txtQuestion.text = positiveQuestion.number.toString()
+        holder.binding.txtQuestion.text = positiveQuestion.number.toString()
 
-        holder.itemView.setOnClickListener {
+        holder.binding.root.setOnClickListener {
             notifyDataSetChanged()
             onClickItem?.invoke(position)
         }
@@ -57,7 +55,7 @@ class MenuQuestionAdapter(
     }
 
     private fun bindReviewMode(holder: ViewHolderQuestion, position: Int, state: QuestionReviewChipState) {
-        val tv = holder.txtQuestion
+        val tv: TextView = holder.binding.txtQuestion
         val (bg, textColor) = when (state) {
             QuestionReviewChipState.CORRECT ->
                 R.drawable.bg_review_chip_correct to ContextCompat.getColor(context, R.color.black)
@@ -74,21 +72,21 @@ class MenuQuestionAdapter(
 
         val isCurrent = currentQuestionIndex >= 0 && position == currentQuestionIndex
         tv.typeface = if (isCurrent) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
-        holder.itemView.elevation = if (isCurrent) 8f else 0f
+        holder.binding.root.elevation = if (isCurrent) 8f else 0f
     }
 
     private fun bindExamMode(holder: ViewHolderQuestion, position: Int, positiveQuestion: PositiveQuestion) {
-        holder.itemView.elevation = 0f
-        holder.txtQuestion.typeface = Typeface.DEFAULT
+        holder.binding.root.elevation = 0f
+        holder.binding.txtQuestion.typeface = Typeface.DEFAULT
 
         positiveQuestion.isSelect = isExamQuestionAnswered(position)
 
         if (positiveQuestion.isSelect == true) {
-            holder.txtQuestion.setBackgroundResource(R.drawable.selected_sentence)
-            holder.txtQuestion.setTextColor(Color.WHITE)
+            holder.binding.txtQuestion.setBackgroundResource(R.drawable.selected_sentence)
+            holder.binding.txtQuestion.setTextColor(Color.WHITE)
         } else {
-            holder.txtQuestion.setBackgroundResource(R.drawable.un_selected_sentence)
-            holder.txtQuestion.setTextColor(ContextCompat.getColor(context, R.color.backgroundIntro))
+            holder.binding.txtQuestion.setBackgroundResource(R.drawable.un_selected_sentence)
+            holder.binding.txtQuestion.setTextColor(ContextCompat.getColor(context, R.color.backgroundIntro))
         }
     }
 

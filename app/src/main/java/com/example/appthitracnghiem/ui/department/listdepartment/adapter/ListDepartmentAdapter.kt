@@ -3,14 +3,12 @@ package com.example.appthitracnghiem.ui.department.listdepartment.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.LayoutDetailDepartmentBinding
 import com.example.appthitracnghiem.model.DetailDepartment
 import com.example.appthitracnghiem.model.Subject
 
@@ -27,12 +25,7 @@ class ListDepartmentAdapter(
     var listDepartment: MutableList<DetailDepartment> = snapshotDepartments(fullList)
         private set
 
-    class ViewholderDepartment(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var txtNameDepartment: TextView = itemView.findViewById(R.id.txtNameDepartment)
-        var txtSeeAll: TextView = itemView.findViewById(R.id.txtSeeAllDepartment)
-        var recycleViewListSubjectDepartment: RecyclerView =
-            itemView.findViewById(R.id.listSubjectDepartment)
-    }
+    class ViewholderDepartment(val binding: LayoutDetailDepartmentBinding) : RecyclerView.ViewHolder(binding.root)
 
     @SuppressLint("NotifyDataSetChanged")
     fun replaceAll(departments: MutableList<DetailDepartment>) {
@@ -45,9 +38,8 @@ class ListDepartmentAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): ViewholderDepartment {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_detail_department, parent, false)
-        return ViewholderDepartment(itemView)
+        val binding = LayoutDetailDepartmentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewholderDepartment(binding)
     }
 
     override fun onBindViewHolder(
@@ -55,13 +47,13 @@ class ListDepartmentAdapter(
         position: Int,
     ) {
         val detailDepartment: DetailDepartment = listDepartment[position]
-        holder.txtNameDepartment.text = detailDepartment.title
+        holder.binding.txtNameDepartment.text = detailDepartment.title
         val linearLayoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        holder.recycleViewListSubjectDepartment.layoutManager = linearLayoutManager
+        holder.binding.listSubjectDepartment.layoutManager = linearLayoutManager
 
-        val subjectAdapter = SubjectAdapter(holder.txtSeeAll.context, detailDepartment.subjects, listSourceType)
-        holder.recycleViewListSubjectDepartment.adapter = subjectAdapter
+        val subjectAdapter = SubjectAdapter(holder.binding.root.context, detailDepartment.subjects, listSourceType)
+        holder.binding.listSubjectDepartment.adapter = subjectAdapter
     }
 
     override fun getItemCount(): Int = listDepartment.size

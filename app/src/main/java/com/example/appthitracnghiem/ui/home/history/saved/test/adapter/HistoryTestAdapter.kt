@@ -5,12 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.LayoutGeneralBinding
 import com.example.appthitracnghiem.model.ExamSaved
 import com.example.appthitracnghiem.ui.exercise.topic.ExerciseActivity
 import com.example.appthitracnghiem.ui.exercise.ExamSessionExtras
@@ -22,34 +20,30 @@ import com.example.appthitracnghiem.utils.loadNetworkImage
 class HistoryTestAdapter(val context: Context, private val listTestSaved: ArrayList<ExamSaved>) :
     RecyclerView.Adapter<HistoryTestAdapter.TestViewHolder>() {
 
-    class TestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var title: TextView = itemView.findViewById(R.id.topic)
-        var image: ImageView = itemView.findViewById(R.id.image)
-        var description: TextView = itemView.findViewById(R.id.detail)
-    }
+    class TestViewHolder(val binding: LayoutGeneralBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): TestViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_general, parent, false)
-        return TestViewHolder(itemView)
+        val binding = LayoutGeneralBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return TestViewHolder(binding)
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: TestViewHolder, position: Int) {
         val examSaved: ExamSaved = listTestSaved[position]
-        holder.title.text = examSaved.title
-        holder.image.loadNetworkImage(examSaved.image)
-        holder.description.maxLines = 1
-        holder.description.ellipsize = TextUtils.TruncateAt.END
-        holder.description.text = context.getString(
+        holder.binding.topic.text = examSaved.title
+        holder.binding.image.loadNetworkImage(examSaved.image)
+        holder.binding.detail.maxLines = 1
+        holder.binding.detail.ellipsize = TextUtils.TruncateAt.END
+        holder.binding.detail.text = context.getString(
             R.string.format_history_test_meta,
             examSaved.saved_num.toString(),
             examSaved.author_name,
         )
 
-        holder.itemView.setOnClickListener {
+        holder.binding.root.setOnClickListener {
             val activity = context.findAppCompatActivity() ?: return@setOnClickListener
             val intent = Intent(activity, ExerciseActivity::class.java).apply {
                 putExtra(ExamSessionExtras.INTENT_EXAM_ID, examSaved.id)

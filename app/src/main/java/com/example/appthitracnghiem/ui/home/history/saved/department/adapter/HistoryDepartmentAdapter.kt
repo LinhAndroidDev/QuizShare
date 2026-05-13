@@ -3,13 +3,11 @@ package com.example.appthitracnghiem.ui.home.history.saved.department.adapter
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
+import com.example.appthitracnghiem.databinding.LayoutGeneralBinding
 import com.example.appthitracnghiem.model.Department
 import com.example.appthitracnghiem.ui.home.history.saved.subject.FragmentHistorySubjectSaved
 import com.example.appthitracnghiem.utils.findAppCompatActivity
@@ -18,18 +16,14 @@ import com.example.appthitracnghiem.utils.loadNetworkImage
 class HistoryDepartmentAdapter(val context: Context, private val listTest: List<Department>) :
     RecyclerView.Adapter<HistoryDepartmentAdapter.DepartmentViewHolder>() {
 
-    class DepartmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var title: TextView = itemView.findViewById(R.id.topic)
-        var image: ImageView = itemView.findViewById(R.id.image)
-        var description: TextView = itemView.findViewById(R.id.detail)
-    }
+    class DepartmentViewHolder(val binding: LayoutGeneralBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): DepartmentViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.layout_general, parent, false)
-        return DepartmentViewHolder(itemView)
+        val binding = LayoutGeneralBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return DepartmentViewHolder(binding)
     }
 
     override fun onBindViewHolder(
@@ -37,11 +31,11 @@ class HistoryDepartmentAdapter(val context: Context, private val listTest: List<
         position: Int
     ) {
         val department: Department = listTest[position]
-        holder.title.text = department.title
-        holder.image.loadNetworkImage(department.image)
-        holder.description.text = department.description
+        holder.binding.topic.text = department.title
+        holder.binding.image.loadNetworkImage(department.image)
+        holder.binding.detail.text = department.description
 
-        holder.itemView.setOnClickListener {
+        holder.binding.root.setOnClickListener {
             val activity = context.findAppCompatActivity() ?: return@setOnClickListener
             val fragmentHistorySubjectSaved = FragmentHistorySubjectSaved()
             val bundle = Bundle()
