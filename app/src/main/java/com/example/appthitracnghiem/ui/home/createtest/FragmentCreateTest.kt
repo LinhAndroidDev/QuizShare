@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appthitracnghiem.R
@@ -22,6 +23,7 @@ import com.example.appthitracnghiem.ui.base.BaseFragment
 import com.example.appthitracnghiem.ui.department.listdepartment.ListDepartmentViewModel
 import com.example.appthitracnghiem.data.remote.dto.request.RequestDepartmentInfo
 import com.example.appthitracnghiem.ui.home.createtest.adapter.CreateDepartmentAdapter
+import com.example.appthitracnghiem.ui.home.createtest.manager.FragmentManageExam
 import com.example.appthitracnghiem.ui.home.createtest.question.CreateExamFormState
 import com.example.appthitracnghiem.ui.home.createtest.question.CreateTestActivity
 import com.example.appthitracnghiem.ui.home.createtest.question.CreateTestIntentExtras
@@ -314,6 +316,13 @@ class FragmentCreateTest : BaseFragment<ListDepartmentViewModel>() {
         val focusable = true
 
         val popupWindow = PopupWindow(popView, width, height, focusable)
+        popView.findViewById<View>(R.id.popupRowManageExam).setOnClickListener {
+            popupWindow.dismiss()
+            val fm: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+            fm.add(R.id.changeIdHome, FragmentManageExam())
+                .addToBackStack(null)
+                .commit()
+        }
         popupWindow.showAsDropDown(anchor, x, y, position)
     }
 
